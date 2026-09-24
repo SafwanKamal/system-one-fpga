@@ -1,0 +1,341 @@
+{
+  "config": {
+    "n_buckets": 16384,
+    "dim": 64,
+    "hidden": 256,
+    "n_classes": 151,
+    "use_bigrams": true,
+    "max_tokens": 256,
+    "use_trigrams": true,
+    "char_ngrams": [
+      3,
+      5
+    ],
+    "seed": 0
+  },
+  "bits": [
+    4,
+    8,
+    8
+  ],
+  "qat": true,
+  "temperature": 1.2818561126675876,
+  "majority_floor": 0.18181818181818182,
+  "float32": {
+    "n": 5500,
+    "combined_accuracy": 0.8230909090909091,
+    "majority_floor": 0.18181818181818182,
+    "lift_over_floor": 0.6412727272727272,
+    "in_scope_accuracy": 0.9077777777777778,
+    "in_scope_n": 4500,
+    "oos_recall": 0.442,
+    "oos_n": 1000,
+    "in_scope_false_oos_rate": 0.009777777777777778,
+    "brier": 0.25775787234306335,
+    "nll": 0.8248914480209351,
+    "ece_equal_width": 0.024690905533053666,
+    "ece_equal_mass": 0.025125517807223583,
+    "mean_confidence": 0.8206114768981934,
+    "oos_auroc_by_maxprob": 0.9210695555555556,
+    "oos_auroc_by_oos_prob": 0.9430595555555555,
+    "selective": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.9995280504226685,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9918181818181818,
+        "threshold": 0.9982638955116272,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9890909090909091,
+        "threshold": 0.9956557750701904,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9872727272727273,
+        "threshold": 0.9892984628677368,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9858181818181818,
+        "threshold": 0.9742785096168518,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9763636363636363,
+        "threshold": 0.926825225353241,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9555844155844155,
+        "threshold": 0.8064194917678833,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9247727272727273,
+        "threshold": 0.5895735621452332,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8797979797979798,
+        "threshold": 0.3396454155445099,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.8230909090909091,
+        "threshold": 0.06958878040313721,
+        "n_kept": 5500
+      }
+    ]
+  },
+  "integer": {
+    "n": 5500,
+    "combined_accuracy": 0.8234545454545454,
+    "majority_floor": 0.18181818181818182,
+    "lift_over_floor": 0.6416363636363636,
+    "in_scope_accuracy": 0.9071111111111111,
+    "in_scope_n": 4500,
+    "oos_recall": 0.447,
+    "oos_n": 1000,
+    "in_scope_false_oos_rate": 0.009777777777777778,
+    "brier": 0.25748338646580426,
+    "nll": 0.822819592571142,
+    "ece_equal_width": 0.024400409409134387,
+    "ece_equal_mass": 0.023692748427994213,
+    "mean_confidence": 0.8200750214957886,
+    "oos_auroc_by_maxprob": 0.9202006666666667,
+    "oos_auroc_by_oos_prob": 0.9429833333333333,
+    "selective": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.9995051116156155,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9918181818181818,
+        "threshold": 0.998220013196329,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9890909090909091,
+        "threshold": 0.9954778428018203,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9877272727272727,
+        "threshold": 0.9892521680557808,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9858181818181818,
+        "threshold": 0.974044607443136,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9769696969696969,
+        "threshold": 0.9264342245412233,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9571428571428572,
+        "threshold": 0.8057633128615239,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.925,
+        "threshold": 0.5884352298862127,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.878989898989899,
+        "threshold": 0.34213536719520493,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.8234545454545454,
+        "threshold": 0.0732034449695322,
+        "n_kept": 5500
+      }
+    ]
+  },
+  "reliability_int": [
+    {
+      "bin": "(0.0, 0.1]",
+      "n": 9,
+      "mean_conf": 0.08677294162815305,
+      "accuracy": 0.2222222222222222,
+      "gap": 0.13544928059406916
+    },
+    {
+      "bin": "(0.1, 0.2]",
+      "n": 156,
+      "mean_conf": 0.1602867544584677,
+      "accuracy": 0.3141025641025641,
+      "gap": 0.15381580964409639
+    },
+    {
+      "bin": "(0.2, 0.3]",
+      "n": 289,
+      "mean_conf": 0.2493283711966079,
+      "accuracy": 0.28719723183391005,
+      "gap": 0.03786886063730216
+    },
+    {
+      "bin": "(0.3, 0.4]",
+      "n": 232,
+      "mean_conf": 0.35215132515047143,
+      "accuracy": 0.44396551724137934,
+      "gap": 0.09181419209090791
+    },
+    {
+      "bin": "(0.4, 0.5]",
+      "n": 223,
+      "mean_conf": 0.45209303347281965,
+      "accuracy": 0.48878923766816146,
+      "gap": 0.03669620419534181
+    },
+    {
+      "bin": "(0.5, 0.6]",
+      "n": 222,
+      "mean_conf": 0.552389587995865,
+      "accuracy": 0.581081081081081,
+      "gap": 0.028691493085216013
+    },
+    {
+      "bin": "(0.6, 0.7]",
+      "n": 248,
+      "mean_conf": 0.6516824651527193,
+      "accuracy": 0.6693548387096774,
+      "gap": 0.017672373556958054
+    },
+    {
+      "bin": "(0.7, 0.8]",
+      "n": 257,
+      "mean_conf": 0.7553624392424567,
+      "accuracy": 0.7354085603112841,
+      "gap": -0.01995387893117262
+    },
+    {
+      "bin": "(0.8, 0.9]",
+      "n": 387,
+      "mean_conf": 0.8548418985331464,
+      "accuracy": 0.8294573643410853,
+      "gap": -0.025384534192061103
+    },
+    {
+      "bin": "(0.9, 1.0]",
+      "n": 3477,
+      "mean_conf": 0.9838525951598789,
+      "accuracy": 0.9715271786022434,
+      "gap": -0.012325416557635527
+    }
+  ],
+  "accumulator_widths": {
+    "emb_sum_max": 360,
+    "emb_sum_bits": 10,
+    "pooled_max": 109,
+    "pooled_bits": 8,
+    "acc1_max": 108965,
+    "acc1_bits": 18,
+    "requant1_product_bits": 29,
+    "acc2_max": 408225,
+    "acc2_bits": 20,
+    "requant2_product_bits": 37
+  },
+  "payload_stats": {
+    "n": 5500,
+    "chars_mean": 40.175636363636364,
+    "chars_p95": 69.0,
+    "tokens_mean": 95.63345454545454,
+    "tokens_p95": 166.0,
+    "payload_token_ids_mean": 197.26690909090908,
+    "payload_token_ids_p95": 338.0,
+    "payload_raw_text_mean": 46.175636363636364,
+    "payload_raw_text_p95": 75.0
+  },
+  "latency_budgets": [
+    {
+      "framing": "token ids (host tokenises)",
+      "link": "uart",
+      "payload_bytes": 197.3,
+      "compute_us": 13.08,
+      "transport_us": 17100.69,
+      "total_us": 17113.77,
+      "transport_share": 0.9992,
+      "cycles": 1308
+    },
+    {
+      "framing": "token ids (host tokenises)",
+      "link": "ethernet",
+      "payload_bytes": 197.3,
+      "compute_us": 13.08,
+      "transport_us": 146.27,
+      "total_us": 159.35,
+      "transport_share": 0.9179,
+      "cycles": 1308
+    },
+    {
+      "framing": "raw text (on-chip hashing)",
+      "link": "uart",
+      "payload_bytes": 46.2,
+      "compute_us": 13.08,
+      "transport_us": 3993.06,
+      "total_us": 4006.14,
+      "transport_share": 0.9967,
+      "cycles": 1308
+    },
+    {
+      "framing": "raw text (on-chip hashing)",
+      "link": "ethernet",
+      "payload_bytes": 46.2,
+      "compute_us": 13.08,
+      "transport_us": 126.13,
+      "total_us": 139.21,
+      "transport_share": 0.906,
+      "cycles": 1308
+    }
+  ],
+  "resources": {
+    "embedding_KiB": 512.0,
+    "head_KiB": 53.75,
+    "bram_KiB_available": 607.5,
+    "fits_all_in_bram": true,
+    "head_only_bram_utilisation": 0.08847736625514403,
+    "dsp_used_estimate": 64,
+    "dsp_available": 240,
+    "dsp_utilisation": 0.26666666666666666,
+    "note": "DSP count assumes one DSP48E1 per MAC lane. 8-bit operands can be packed two-per-DSP on Artix-7, so the real DSP count may be about half this; 4-bit and ternary lanes map to LUTs instead and would trade DSP pressure for slice pressure."
+  },
+  "storage": {
+    "embedding_bits": 4194304,
+    "embedding_KiB": 512.0,
+    "head_bits": 440320,
+    "head_KiB": 53.75,
+    "aux_bits": 26048,
+    "aux_KiB": 3.1796875,
+    "total_KiB": 568.9296875
+  }
+}

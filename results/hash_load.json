@@ -1,0 +1,65 @@
+{
+  "1024": {
+    "n_buckets": 1024,
+    "distinct_word_types": 5175,
+    "buckets_used": 1017,
+    "load_factor": 5.0537109375,
+    "types_in_colliding_buckets": 5144,
+    "collision_rate": 0.9940096618357488,
+    "token_occurrences": 127998
+  },
+  "2048": {
+    "n_buckets": 2048,
+    "distinct_word_types": 5175,
+    "buckets_used": 1889,
+    "load_factor": 2.52685546875,
+    "types_in_colliding_buckets": 4773,
+    "collision_rate": 0.9223188405797101,
+    "token_occurrences": 127998
+  },
+  "4096": {
+    "n_buckets": 4096,
+    "distinct_word_types": 5175,
+    "buckets_used": 2938,
+    "load_factor": 1.263427734375,
+    "types_in_colliding_buckets": 3739,
+    "collision_rate": 0.722512077294686,
+    "token_occurrences": 127998
+  },
+  "8192": {
+    "n_buckets": 8192,
+    "distinct_word_types": 5175,
+    "buckets_used": 3895,
+    "load_factor": 0.6317138671875,
+    "types_in_colliding_buckets": 2336,
+    "collision_rate": 0.4514009661835749,
+    "token_occurrences": 127998
+  },
+  "16384": {
+    "n_buckets": 16384,
+    "distinct_word_types": 5175,
+    "buckets_used": 4461,
+    "load_factor": 0.31585693359375,
+    "types_in_colliding_buckets": 1366,
+    "collision_rate": 0.2639613526570048,
+    "token_occurrences": 127998
+  },
+  "32768": {
+    "n_buckets": 32768,
+    "distinct_word_types": 5175,
+    "buckets_used": 4788,
+    "load_factor": 0.157928466796875,
+    "types_in_colliding_buckets": 752,
+    "collision_rate": 0.14531400966183575,
+    "token_occurrences": 127998
+  },
+  "65536": {
+    "n_buckets": 65536,
+    "distinct_word_types": 5175,
+    "buckets_used": 4966,
+    "load_factor": 0.0789642333984375,
+    "types_in_colliding_buckets": 412,
+    "collision_rate": 0.0796135265700483,
+    "token_occurrences": 127998
+  }
+}

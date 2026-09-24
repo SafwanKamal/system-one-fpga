@@ -1,0 +1,14 @@
+{
+  "source": "Verilator simulation of rtl/ (dense_engine head, pipelined), CLINC150 test set",
+  "n": 5500,
+  "identical_to_golden": true,
+  "metrics": {
+    "in_scope_accuracy": 0.9071111111111111,
+    "oos_recall": 0.447,
+    "combined_accuracy": 0.8234545454545454,
+    "brier": 0.25748338646580426,
+    "ece_equal_width": 0.024400409409134387,
+    "ece_equal_mass": 0.023692748427994213,
+    "oos_auroc_by_maxprob": 0.9202006666666667
+  }
+}

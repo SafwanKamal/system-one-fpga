@@ -1,0 +1,56 @@
+{
+  "question": "cost of halving the embedding table (V 16384 -> 8192, D=64, H=256, 4-bit QAT emb, 8-bit head, full features) to make room for a decoder",
+  "command": "scripts/train_student.py --buckets V --dim 64 --hidden 256 --bits 4 --head-bits 8 --epochs 24 --qat --trigrams --char-ngrams 3-5 --max-tokens 256 --seed S",
+  "numpy": "2.4.4",
+  "metric_source": "integer path, CLINC150 test",
+  "runs": {
+    "V8192_seed0": {
+      "in_scope_accuracy": 0.9077777777777778,
+      "oos_recall": 0.357,
+      "ece_equal_width": 0.019194863504881813,
+      "brier": 0.27076776336140046,
+      "oos_auroc_by_maxprob": 0.9228568888888888,
+      "storage_KiB": 312.9296875
+    },
+    "V8192_seed1": {
+      "in_scope_accuracy": 0.9093333333333333,
+      "oos_recall": 0.364,
+      "ece_equal_width": 0.013526351341143137,
+      "brier": 0.26707669313479815,
+      "oos_auroc_by_maxprob": 0.9147193333333333,
+      "storage_KiB": 312.9296875
+    },
+    "V8192_seed2": {
+      "in_scope_accuracy": 0.9006666666666666,
+      "oos_recall": 0.328,
+      "ece_equal_width": 0.017525668571229513,
+      "brier": 0.2825240827975575,
+      "oos_auroc_by_maxprob": 0.918388,
+      "storage_KiB": 312.9296875
+    },
+    "V16384_seed0": {
+      "in_scope_accuracy": 0.9071111111111111,
+      "oos_recall": 0.447,
+      "ece_equal_width": 0.024400409409134387,
+      "brier": 0.25748338646580426,
+      "oos_auroc_by_maxprob": 0.9202006666666667,
+      "storage_KiB": 568.9296875
+    },
+    "V16384_seed1": {
+      "in_scope_accuracy": 0.9068888888888889,
+      "oos_recall": 0.396,
+      "ece_equal_width": 0.020954934774990337,
+      "brier": 0.26743187884401787,
+      "oos_auroc_by_maxprob": 0.922654,
+      "storage_KiB": 568.9296875
+    },
+    "V16384_seed2": {
+      "in_scope_accuracy": 0.9066666666666666,
+      "oos_recall": 0.416,
+      "ece_equal_width": 0.013177698511222805,
+      "brier": 0.2599877275875276,
+      "oos_auroc_by_maxprob": 0.9188973333333333,
+      "storage_KiB": 568.9296875
+    }
+  }
+}

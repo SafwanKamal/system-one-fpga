@@ -1,0 +1,157 @@
+{
+  "inventory": {
+    "unigram_types": 5175,
+    "bigram_types": 26217,
+    "total_feature_types": 31392,
+    "unigrams_seen_once": 2327,
+    "bigrams_seen_once": 16834,
+    "features_seen_at_least_5x": 5241,
+    "test_unigram_oov_rate": 0.3982987240430323,
+    "table_rows_for_zero_collisions_approx": 1048576,
+    "ddr2_rows_at_D64_8b": 2097152,
+    "ddr2_rows_at_D128_8b": 1048576,
+    "ddr2_rows_at_D64_4b": 4194304
+  },
+  "collisions": [
+    {
+      "V": 32768,
+      "rows_ever_addressed": 20239,
+      "rows_never_addressed": 12529,
+      "fraction_of_table_wasted": 0.382354736328125,
+      "distinct_features": 31392,
+      "features_in_colliding_rows": 19308,
+      "collision_rate": 0.6150611620795107
+    },
+    {
+      "V": 131072,
+      "rows_ever_addressed": 27919,
+      "rows_never_addressed": 103153,
+      "fraction_of_table_wasted": 0.7869949340820312,
+      "distinct_features": 31392,
+      "features_in_colliding_rows": 6674,
+      "collision_rate": 0.21260193679918452
+    },
+    {
+      "V": 524288,
+      "rows_ever_addressed": 30499,
+      "rows_never_addressed": 493789,
+      "fraction_of_table_wasted": 0.9418277740478516,
+      "distinct_features": 31392,
+      "features_in_colliding_rows": 1769,
+      "collision_rate": 0.05635193679918451
+    },
+    {
+      "V": 2097152,
+      "rows_ever_addressed": 31148,
+      "rows_never_addressed": 2066004,
+      "fraction_of_table_wasted": 0.9851474761962891,
+      "distinct_features": 31392,
+      "features_in_colliding_rows": 485,
+      "collision_rate": 0.01544979612640163
+    }
+  ],
+  "big_tables": [
+    {
+      "storage_MiB": 2.0215682983398438,
+      "in_scope": 0.8846666666666667,
+      "f32_in_scope": 0.8866666666666667,
+      "oos_recall": 0.418,
+      "ece": 0.017197661208309224,
+      "brier": 0.28041771593087716,
+      "train_acc": 0.9998013245033113,
+      "n_train": 15100,
+      "seconds": 8.10741662979126,
+      "V": 32768,
+      "params": 2118039
+    },
+    {
+      "storage_MiB": 8.021568298339844,
+      "in_scope": 0.894,
+      "f32_in_scope": 0.8971111111111111,
+      "oos_recall": 0.524,
+      "ece": 0.03353063003867472,
+      "brier": 0.2580381117049968,
+      "train_acc": 0.9998675496688741,
+      "n_train": 15100,
+      "seconds": 8.791309595108032,
+      "V": 131072,
+      "params": 8409495
+    },
+    {
+      "storage_MiB": 32.021568298339844,
+      "in_scope": 0.8795555555555555,
+      "f32_in_scope": 0.894,
+      "oos_recall": 0.579,
+      "ece": 0.050967329953110416,
+      "brier": 0.26263330042047195,
+      "train_acc": 0.9998013245033113,
+      "n_train": 15100,
+      "seconds": 11.368607521057129,
+      "V": 524288,
+      "params": 33575319
+    },
+    {
+      "storage_MiB": 128.02156829833984,
+      "in_scope": 0.8651111111111112,
+      "f32_in_scope": 0.8971111111111111,
+      "oos_recall": 0.649,
+      "ece": 0.09745432632199302,
+      "brier": 0.2782911165478361,
+      "train_acc": 0.9999337748344371,
+      "n_train": 15100,
+      "seconds": 21.495006561279297,
+      "V": 2097152,
+      "params": 134238615
+    }
+  ],
+  "learning_curve": [
+    {
+      "storage_MiB": 8.021568298339844,
+      "in_scope": 0.6255555555555555,
+      "f32_in_scope": 0.6295555555555555,
+      "oos_recall": 0.272,
+      "ece": 0.08815249260071581,
+      "brier": 0.5859627595630335,
+      "train_acc": 0.9986754966887417,
+      "n_train": 1510,
+      "seconds": 2.240708112716675,
+      "frac": 0.1
+    },
+    {
+      "storage_MiB": 8.021568298339844,
+      "in_scope": 0.8137777777777778,
+      "f32_in_scope": 0.8168888888888889,
+      "oos_recall": 0.358,
+      "ece": 0.051509778966812844,
+      "brier": 0.37912569996123735,
+      "train_acc": 1.0,
+      "n_train": 3775,
+      "seconds": 3.126817226409912,
+      "frac": 0.25
+    },
+    {
+      "storage_MiB": 8.021568298339844,
+      "in_scope": 0.8604444444444445,
+      "f32_in_scope": 0.8646666666666667,
+      "oos_recall": 0.388,
+      "ece": 0.031035306284337327,
+      "brier": 0.3178225240756139,
+      "train_acc": 1.0,
+      "n_train": 7550,
+      "seconds": 4.947999715805054,
+      "frac": 0.5
+    },
+    {
+      "storage_MiB": 8.021568298339844,
+      "in_scope": 0.894,
+      "f32_in_scope": 0.8971111111111111,
+      "oos_recall": 0.524,
+      "ece": 0.03353063003867472,
+      "brier": 0.2580381117049968,
+      "train_acc": 0.9998675496688741,
+      "n_train": 15100,
+      "seconds": 8.457696676254272,
+      "frac": 1.0
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+[project]
+name = "system-one-fpga"
+version = "0.2.0"
+description = "Tiny calibrated System One classifier: NumPy student, bit-exact integer path, and SystemVerilog for the Nexys 4 DDR"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    # Pinned exactly: training is not bit-reproducible across NumPy versions
+    # (about 0.4 points of in-scope accuracy), and export/student_bram_max was
+    # trained with 2.4.4. The integer path is unaffected.
+    "numpy==2.4.4",
+    # host side of the raw-Ethernet protocol (scripts/sysone_ethernet_client.py)
+    "scapy>=2.6,<3",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8,<10",
+    # an independent witness for src/sysone/metrics.py and the TF-IDF reference
+    # in scripts/feature_ablation.py; the library itself does not need it
+    "scikit-learn>=1.5,<2",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "src"]

@@ -1,0 +1,2162 @@
+[
+  {
+    "n_buckets": 2048,
+    "dim": 32,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 77463,
+    "head_params": 11927,
+    "temperature": 1.5459370932503138,
+    "train_seconds": 5.2,
+    "best_val_acc": 0.7645161290322581,
+    "float32": {
+      "combined_accuracy": 0.6658181818181819,
+      "in_scope_accuracy": 0.7888888888888889,
+      "oos_recall": 0.112,
+      "brier": 0.4465034604072571,
+      "ece_equal_width": 0.026255120201544312,
+      "ece_equal_mass": 0.026170710227706222,
+      "nll": 1.6128437519073486,
+      "oos_auroc_by_maxprob": 0.8577536666666666,
+      "in_scope_false_oos_rate": 0.008666666666666666,
+      "mean_confidence": 0.6563855409622192
+    },
+    "int": {
+      "combined_accuracy": 0.6649090909090909,
+      "in_scope_accuracy": 0.7882222222222223,
+      "oos_recall": 0.11,
+      "brier": 0.44698381030615253,
+      "ece_equal_width": 0.02875066140264048,
+      "ece_equal_mass": 0.025404372476073182,
+      "nll": 1.610480962371044,
+      "oos_auroc_by_maxprob": 0.8575837777777777,
+      "in_scope_false_oos_rate": 0.008666666666666666,
+      "mean_confidence": 0.6554520556708193
+    },
+    "int_minus_float_in_scope": -0.0006666666666665932,
+    "storage": {
+      "embedding_bits": 524288,
+      "embedding_KiB": 64.0,
+      "head_bits": 93696,
+      "head_KiB": 11.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 77.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.12694187242798355,
+      "embedding_location": "BRAM",
+      "head_KiB": 13.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9818181818181818,
+        "threshold": 0.9860768337690283,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.98,
+        "threshold": 0.9608092695771636,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9727272727272728,
+        "threshold": 0.9137546953289357,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9590909090909091,
+        "threshold": 0.8343264089488861,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9352727272727273,
+        "threshold": 0.7247140785757887,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.8948484848484849,
+        "threshold": 0.5803435357116588,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.8420779220779221,
+        "threshold": 0.4424376333952557,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.7845454545454545,
+        "threshold": 0.3271033046363384,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.7244444444444444,
+        "threshold": 0.22486747993819928,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.6649090909090909,
+        "threshold": 0.06455414324908983,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 2048,
+    "dim": 64,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 145047,
+    "head_params": 13975,
+    "temperature": 1.2022201495391134,
+    "train_seconds": 7.6,
+    "best_val_acc": 0.7845161290322581,
+    "float32": {
+      "combined_accuracy": 0.6930909090909091,
+      "in_scope_accuracy": 0.8048888888888889,
+      "oos_recall": 0.19,
+      "brier": 0.4092860519886017,
+      "ece_equal_width": 0.027258657737211735,
+      "ece_equal_mass": 0.02650448442047292,
+      "nll": 1.3917560577392578,
+      "oos_auroc_by_maxprob": 0.8718453333333334,
+      "in_scope_false_oos_rate": 0.014888888888888889,
+      "mean_confidence": 0.6810204386711121
+    },
+    "int": {
+      "combined_accuracy": 0.6921818181818182,
+      "in_scope_accuracy": 0.8033333333333333,
+      "oos_recall": 0.192,
+      "brier": 0.4094825231621405,
+      "ece_equal_width": 0.027238054884147954,
+      "ece_equal_mass": 0.026641636919541654,
+      "nll": 1.3900603566884449,
+      "oos_auroc_by_maxprob": 0.871602,
+      "in_scope_false_oos_rate": 0.01577777777777778,
+      "mean_confidence": 0.6801326386169357
+    },
+    "int_minus_float_in_scope": -0.0015555555555555323,
+    "storage": {
+      "embedding_bits": 1048576,
+      "embedding_KiB": 128.0,
+      "head_bits": 110080,
+      "head_KiB": 13.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 143.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.23558384773662552,
+      "embedding_location": "BRAM",
+      "head_KiB": 15.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9872727272727273,
+        "threshold": 0.9912588691253501,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9836363636363636,
+        "threshold": 0.9721215868445106,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9818181818181818,
+        "threshold": 0.9361419635564112,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9690909090909091,
+        "threshold": 0.8736773680156324,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9534545454545454,
+        "threshold": 0.7652531708492417,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.923030303030303,
+        "threshold": 0.6292313667902205,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.8706493506493507,
+        "threshold": 0.4843383573840506,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8143181818181818,
+        "threshold": 0.35042360057300104,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.7517171717171717,
+        "threshold": 0.2353623289449303,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.6921818181818182,
+        "threshold": 0.06540357454527045,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 2048,
+    "dim": 128,
+    "hidden": 128,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 298135,
+    "head_params": 35991,
+    "temperature": 1.7097926579060208,
+    "train_seconds": 12.3,
+    "best_val_acc": 0.802258064516129,
+    "float32": {
+      "combined_accuracy": 0.704,
+      "in_scope_accuracy": 0.826,
+      "oos_recall": 0.155,
+      "brier": 0.39157891273498535,
+      "ece_equal_width": 0.01824287096478722,
+      "ece_equal_mass": 0.02302584494785829,
+      "nll": 1.3968900442123413,
+      "oos_auroc_by_maxprob": 0.8819985555555555,
+      "in_scope_false_oos_rate": 0.0071111111111111115,
+      "mean_confidence": 0.7036868929862976
+    },
+    "int": {
+      "combined_accuracy": 0.7041818181818181,
+      "in_scope_accuracy": 0.8257777777777778,
+      "oos_recall": 0.157,
+      "brier": 0.39117612066224433,
+      "ece_equal_width": 0.018409005117937055,
+      "ece_equal_mass": 0.02145611933744836,
+      "nll": 1.3918804958693691,
+      "oos_auroc_by_maxprob": 0.8817433333333333,
+      "in_scope_false_oos_rate": 0.0077777777777777776,
+      "mean_confidence": 0.7032451880789047
+    },
+    "int_minus_float_in_scope": -0.00022222222222212373,
+    "storage": {
+      "embedding_bits": 2097152,
+      "embedding_KiB": 256.0,
+      "head_bits": 285696,
+      "head_KiB": 34.875,
+      "aux_bits": 17856,
+      "aux_KiB": 2.1796875,
+      "total_KiB": 293.0546875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.4823945473251029,
+      "embedding_location": "BRAM",
+      "head_KiB": 37.0546875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.98,
+        "threshold": 0.9949129479318204,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9845454545454545,
+        "threshold": 0.9831974291535058,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9836363636363636,
+        "threshold": 0.9612596890455122,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9754545454545455,
+        "threshold": 0.9143531096445189,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9650909090909091,
+        "threshold": 0.8309192976544784,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9342424242424242,
+        "threshold": 0.6857841447571665,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.8893506493506493,
+        "threshold": 0.5154584249061138,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8334090909090909,
+        "threshold": 0.36093186920642845,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.7668686868686869,
+        "threshold": 0.23559404518400429,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7041818181818181,
+        "threshold": 0.05599842710538818,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 4096,
+    "dim": 32,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 142999,
+    "head_params": 11927,
+    "temperature": 1.5326256871324888,
+    "train_seconds": 5.4,
+    "best_val_acc": 0.8067741935483871,
+    "float32": {
+      "combined_accuracy": 0.7203636363636363,
+      "in_scope_accuracy": 0.8391111111111111,
+      "oos_recall": 0.186,
+      "brier": 0.37931743264198303,
+      "ece_equal_width": 0.02532853935523468,
+      "ece_equal_mass": 0.025035847495902663,
+      "nll": 1.3246575593948364,
+      "oos_auroc_by_maxprob": 0.8934017777777777,
+      "in_scope_false_oos_rate": 0.009111111111111111,
+      "mean_confidence": 0.7025020122528076
+    },
+    "int": {
+      "combined_accuracy": 0.7190909090909091,
+      "in_scope_accuracy": 0.8384444444444444,
+      "oos_recall": 0.182,
+      "brier": 0.379829035978464,
+      "ece_equal_width": 0.02279789935876385,
+      "ece_equal_mass": 0.02120294986513258,
+      "nll": 1.323812948117285,
+      "oos_auroc_by_maxprob": 0.8929931111111111,
+      "in_scope_false_oos_rate": 0.01,
+      "mean_confidence": 0.7013063432169648
+    },
+    "int_minus_float_in_scope": -0.0006666666666667043,
+    "storage": {
+      "embedding_bits": 1048576,
+      "embedding_KiB": 128.0,
+      "head_bits": 93696,
+      "head_KiB": 11.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 141.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.23229166666666667,
+      "embedding_location": "BRAM",
+      "head_KiB": 13.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.990909090909091,
+        "threshold": 0.9933525762012181,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9890909090909091,
+        "threshold": 0.9795316125251324,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9842424242424243,
+        "threshold": 0.9550818216277411,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9781818181818182,
+        "threshold": 0.9110373267959302,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9658181818181818,
+        "threshold": 0.8252092429781356,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.94,
+        "threshold": 0.679415083022247,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.8963636363636364,
+        "threshold": 0.5151442974464882,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8415909090909091,
+        "threshold": 0.36090308405855315,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.7795959595959596,
+        "threshold": 0.2317889130235736,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7190909090909091,
+        "threshold": 0.051029583571730756,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 4096,
+    "dim": 64,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 276119,
+    "head_params": 13975,
+    "temperature": 1.4911783888136765,
+    "train_seconds": 7.7,
+    "best_val_acc": 0.8241935483870968,
+    "float32": {
+      "combined_accuracy": 0.7321818181818182,
+      "in_scope_accuracy": 0.842,
+      "oos_recall": 0.238,
+      "brier": 0.3641921877861023,
+      "ece_equal_width": 0.016353881979530485,
+      "ece_equal_mass": 0.014508824706077573,
+      "nll": 1.2092535495758057,
+      "oos_auroc_by_maxprob": 0.8982834444444444,
+      "in_scope_false_oos_rate": 0.010666666666666666,
+      "mean_confidence": 0.720841109752655
+    },
+    "int": {
+      "combined_accuracy": 0.732909090909091,
+      "in_scope_accuracy": 0.8435555555555555,
+      "oos_recall": 0.235,
+      "brier": 0.3645250946740319,
+      "ece_equal_width": 0.0178675629692529,
+      "ece_equal_mass": 0.015662115161647686,
+      "nll": 1.2098727607549375,
+      "oos_auroc_by_maxprob": 0.8979682222222222,
+      "in_scope_false_oos_rate": 0.010888888888888889,
+      "mean_confidence": 0.7198289053332861
+    },
+    "int_minus_float_in_scope": 0.0015555555555555323,
+    "storage": {
+      "embedding_bits": 2097152,
+      "embedding_KiB": 256.0,
+      "head_bits": 110080,
+      "head_KiB": 13.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 271.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.44628343621399175,
+      "embedding_location": "BRAM",
+      "head_KiB": 15.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9945454545454545,
+        "threshold": 0.9964740541419554,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9890909090909091,
+        "threshold": 0.9877061934414921,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9866666666666667,
+        "threshold": 0.971086770179992,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9790909090909091,
+        "threshold": 0.9326675751241946,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9687272727272728,
+        "threshold": 0.863978733912288,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9463636363636364,
+        "threshold": 0.7291255526538902,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9054545454545454,
+        "threshold": 0.544496205851386,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8502272727272727,
+        "threshold": 0.36931601015761234,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.7923232323232323,
+        "threshold": 0.23566832987208305,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.732909090909091,
+        "threshold": 0.053240741384622335,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 4096,
+    "dim": 128,
+    "hidden": 128,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 560279,
+    "head_params": 35991,
+    "temperature": 1.3990858367676613,
+    "train_seconds": 12.9,
+    "best_val_acc": 0.8367741935483871,
+    "float32": {
+      "combined_accuracy": 0.7372727272727273,
+      "in_scope_accuracy": 0.8573333333333333,
+      "oos_recall": 0.197,
+      "brier": 0.35253554582595825,
+      "ece_equal_width": 0.006316023626110774,
+      "ece_equal_mass": 0.01004298847371881,
+      "nll": 1.224706768989563,
+      "oos_auroc_by_maxprob": 0.9086026666666667,
+      "in_scope_false_oos_rate": 0.008,
+      "mean_confidence": 0.7406995296478271
+    },
+    "int": {
+      "combined_accuracy": 0.7374545454545455,
+      "in_scope_accuracy": 0.8573333333333333,
+      "oos_recall": 0.198,
+      "brier": 0.3531694834023184,
+      "ece_equal_width": 0.005711395623567096,
+      "ece_equal_mass": 0.009339825195851189,
+      "nll": 1.227156025140748,
+      "oos_auroc_by_maxprob": 0.9083386666666666,
+      "in_scope_false_oos_rate": 0.007555555555555556,
+      "mean_confidence": 0.7396626124461074
+    },
+    "int_minus_float_in_scope": 0.0,
+    "storage": {
+      "embedding_bits": 4194304,
+      "embedding_KiB": 512.0,
+      "head_bits": 285696,
+      "head_KiB": 34.875,
+      "aux_bits": 17856,
+      "aux_KiB": 2.1796875,
+      "total_KiB": 549.0546875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.9037937242798354,
+      "embedding_location": "BRAM",
+      "head_KiB": 37.0546875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9945454545454545,
+        "threshold": 0.9977174024620646,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.9920401878111823,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9878787878787879,
+        "threshold": 0.9786539134278707,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9813636363636363,
+        "threshold": 0.9515163945070406,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9752727272727273,
+        "threshold": 0.8957603975775295,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9548484848484848,
+        "threshold": 0.7809124580480242,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9181818181818182,
+        "threshold": 0.5939600766877801,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8606818181818182,
+        "threshold": 0.3901821290690365,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.7997979797979798,
+        "threshold": 0.24799654095923507,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7374545454545455,
+        "threshold": 0.054823629865841966,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 8192,
+    "dim": 32,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 274071,
+    "head_params": 11927,
+    "temperature": 1.3858325490444554,
+    "train_seconds": 5.4,
+    "best_val_acc": 0.8364516129032258,
+    "float32": {
+      "combined_accuracy": 0.7534545454545455,
+      "in_scope_accuracy": 0.8595555555555555,
+      "oos_recall": 0.276,
+      "brier": 0.34067097306251526,
+      "ece_equal_width": 0.015550904597748437,
+      "ece_equal_mass": 0.01614812118356878,
+      "nll": 1.2082428932189941,
+      "oos_auroc_by_maxprob": 0.90841,
+      "in_scope_false_oos_rate": 0.009333333333333334,
+      "mean_confidence": 0.7450639009475708
+    },
+    "int": {
+      "combined_accuracy": 0.7534545454545455,
+      "in_scope_accuracy": 0.8595555555555555,
+      "oos_recall": 0.276,
+      "brier": 0.34071215798328747,
+      "ece_equal_width": 0.018310636087411042,
+      "ece_equal_mass": 0.02068510210412264,
+      "nll": 1.2059944512537821,
+      "oos_auroc_by_maxprob": 0.9076648888888889,
+      "in_scope_false_oos_rate": 0.009555555555555555,
+      "mean_confidence": 0.7432888010118138
+    },
+    "int_minus_float_in_scope": 0.0,
+    "storage": {
+      "embedding_bits": 2097152,
+      "embedding_KiB": 256.0,
+      "head_bits": 93696,
+      "head_KiB": 11.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 269.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.4429912551440329,
+      "embedding_location": "BRAM",
+      "head_KiB": 13.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9963636363636363,
+        "threshold": 0.9972755166692088,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9936363636363637,
+        "threshold": 0.9920007961865827,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9872727272727273,
+        "threshold": 0.9807236640715905,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.98,
+        "threshold": 0.9539071454581662,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9716363636363636,
+        "threshold": 0.9033780103918185,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9572727272727273,
+        "threshold": 0.7898055535364807,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9283116883116883,
+        "threshold": 0.6011967120957842,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8720454545454546,
+        "threshold": 0.41067997309593174,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8143434343434344,
+        "threshold": 0.24663378600744748,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7534545454545455,
+        "threshold": 0.058001776169422065,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 8192,
+    "dim": 64,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 538263,
+    "head_params": 13975,
+    "temperature": 1.3562554151646218,
+    "train_seconds": 7.6,
+    "best_val_acc": 0.8461290322580645,
+    "float32": {
+      "combined_accuracy": 0.7554545454545455,
+      "in_scope_accuracy": 0.8657777777777778,
+      "oos_recall": 0.259,
+      "brier": 0.330658882856369,
+      "ece_equal_width": 0.015138501801274074,
+      "ece_equal_mass": 0.014981987893581385,
+      "nll": 1.1704615354537964,
+      "oos_auroc_by_maxprob": 0.9104072222222223,
+      "in_scope_false_oos_rate": 0.009555555555555555,
+      "mean_confidence": 0.7479632496833801
+    },
+    "int": {
+      "combined_accuracy": 0.7552727272727273,
+      "in_scope_accuracy": 0.8655555555555555,
+      "oos_recall": 0.259,
+      "brier": 0.3311563876990399,
+      "ece_equal_width": 0.01462530517697544,
+      "ece_equal_mass": 0.01591242040354208,
+      "nll": 1.1711659379500448,
+      "oos_auroc_by_maxprob": 0.9096297777777778,
+      "in_scope_false_oos_rate": 0.009333333333333334,
+      "mean_confidence": 0.7466045576697266
+    },
+    "int_minus_float_in_scope": -0.00022222222222223476,
+    "storage": {
+      "embedding_bits": 4194304,
+      "embedding_KiB": 512.0,
+      "head_bits": 110080,
+      "head_KiB": 13.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 527.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.8676826131687243,
+      "embedding_location": "BRAM",
+      "head_KiB": 15.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9981818181818182,
+        "threshold": 0.998210262077164,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9918181818181818,
+        "threshold": 0.9940089478864786,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9903030303030304,
+        "threshold": 0.9841680866281579,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9895454545454545,
+        "threshold": 0.9622309770839245,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9752727272727273,
+        "threshold": 0.9119180865007307,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9621212121212122,
+        "threshold": 0.7980869339738016,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9322077922077923,
+        "threshold": 0.6020816503371895,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8784090909090909,
+        "threshold": 0.40006244203487146,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8193939393939393,
+        "threshold": 0.24861800474027004,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7552727272727273,
+        "threshold": 0.06526240758744409,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 8192,
+    "dim": 128,
+    "hidden": 128,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 1084567,
+    "head_params": 35991,
+    "temperature": 1.1804356485320708,
+    "train_seconds": 13.3,
+    "best_val_acc": 0.8583870967741936,
+    "float32": {
+      "combined_accuracy": 0.7678181818181818,
+      "in_scope_accuracy": 0.8768888888888889,
+      "oos_recall": 0.277,
+      "brier": 0.31862834095954895,
+      "ece_equal_width": 0.011385520485314446,
+      "ece_equal_mass": 0.009526399856263933,
+      "nll": 1.075654149055481,
+      "oos_auroc_by_maxprob": 0.9131211111111112,
+      "in_scope_false_oos_rate": 0.008666666666666666,
+      "mean_confidence": 0.7721635103225708
+    },
+    "int": {
+      "combined_accuracy": 0.766,
+      "in_scope_accuracy": 0.8755555555555555,
+      "oos_recall": 0.273,
+      "brier": 0.3189454239541186,
+      "ece_equal_width": 0.008483855963376547,
+      "ece_equal_mass": 0.009113651154830635,
+      "nll": 1.0763872388716815,
+      "oos_auroc_by_maxprob": 0.9125211111111111,
+      "in_scope_false_oos_rate": 0.008888888888888889,
+      "mean_confidence": 0.7703765653909472
+    },
+    "int_minus_float_in_scope": -0.0013333333333334085,
+    "storage": {
+      "embedding_bits": 8388608,
+      "embedding_KiB": 1024.0,
+      "head_bits": 285696,
+      "head_KiB": 34.875,
+      "aux_bits": 17856,
+      "aux_KiB": 2.1796875,
+      "total_KiB": 1061.0546875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 1.7465920781893005,
+      "embedding_location": "DDR2",
+      "head_KiB": 37.0546875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9963636363636363,
+        "threshold": 0.9989145785913585,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9918181818181818,
+        "threshold": 0.9959871851144796,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9890909090909091,
+        "threshold": 0.9891962037035403,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9863636363636363,
+        "threshold": 0.9739769628699192,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.978909090909091,
+        "threshold": 0.9377130802483605,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9663636363636363,
+        "threshold": 0.8478676731566182,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9348051948051948,
+        "threshold": 0.6714402158687625,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8886363636363637,
+        "threshold": 0.44916935284445364,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8284848484848485,
+        "threshold": 0.2711704156749357,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.766,
+        "threshold": 0.0722025469388467,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 16384,
+    "dim": 32,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 536215,
+    "head_params": 11927,
+    "temperature": 1.3102381983389235,
+    "train_seconds": 5.6,
+    "best_val_acc": 0.8558064516129033,
+    "float32": {
+      "combined_accuracy": 0.7621818181818182,
+      "in_scope_accuracy": 0.8657777777777778,
+      "oos_recall": 0.296,
+      "brier": 0.31887516379356384,
+      "ece_equal_width": 0.015785634561018492,
+      "ece_equal_mass": 0.01608870425007561,
+      "nll": 1.0891562700271606,
+      "oos_auroc_by_maxprob": 0.9054511111111111,
+      "in_scope_false_oos_rate": 0.012444444444444444,
+      "mean_confidence": 0.7608158588409424
+    },
+    "int": {
+      "combined_accuracy": 0.7621818181818182,
+      "in_scope_accuracy": 0.8657777777777778,
+      "oos_recall": 0.296,
+      "brier": 0.3197805492708747,
+      "ece_equal_width": 0.018683149829183395,
+      "ece_equal_mass": 0.017248935896644207,
+      "nll": 1.0892557309080317,
+      "oos_auroc_by_maxprob": 0.9043053333333333,
+      "in_scope_false_oos_rate": 0.012666666666666666,
+      "mean_confidence": 0.7576279418439921
+    },
+    "int_minus_float_in_scope": 0.0,
+    "storage": {
+      "embedding_bits": 4194304,
+      "embedding_KiB": 512.0,
+      "head_bits": 93696,
+      "head_KiB": 11.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 525.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": true,
+      "bram_utilisation_if_onchip": 0.8643904320987654,
+      "embedding_location": "BRAM",
+      "head_KiB": 13.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.998402906940175,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.990909090909091,
+        "threshold": 0.994401009356382,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9866666666666667,
+        "threshold": 0.9857365049265311,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9804545454545455,
+        "threshold": 0.9660273813708373,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9763636363636363,
+        "threshold": 0.9213203303980262,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9669696969696969,
+        "threshold": 0.8216098179594273,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9402597402597402,
+        "threshold": 0.6303653975648281,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.8881818181818182,
+        "threshold": 0.42849447318130707,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8256565656565656,
+        "threshold": 0.26280072624318335,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7621818181818182,
+        "threshold": 0.08413070353031296,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 16384,
+    "dim": 64,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 1062551,
+    "head_params": 13975,
+    "temperature": 1.260295605879521,
+    "train_seconds": 8.0,
+    "best_val_acc": 0.8616129032258064,
+    "float32": {
+      "combined_accuracy": 0.7830909090909091,
+      "in_scope_accuracy": 0.8868888888888888,
+      "oos_recall": 0.316,
+      "brier": 0.301161527633667,
+      "ece_equal_width": 0.0182685586200519,
+      "ece_equal_mass": 0.017231463074684147,
+      "nll": 1.003089189529419,
+      "oos_auroc_by_maxprob": 0.9176531111111111,
+      "in_scope_false_oos_rate": 0.009555555555555555,
+      "mean_confidence": 0.7780902981758118
+    },
+    "int": {
+      "combined_accuracy": 0.7838181818181819,
+      "in_scope_accuracy": 0.8864444444444445,
+      "oos_recall": 0.322,
+      "brier": 0.3016026432722733,
+      "ece_equal_width": 0.01996500845399404,
+      "ece_equal_mass": 0.017700799873483802,
+      "nll": 1.0010034343189798,
+      "oos_auroc_by_maxprob": 0.9156915555555556,
+      "in_scope_false_oos_rate": 0.010222222222222223,
+      "mean_confidence": 0.7758000798782736
+    },
+    "int_minus_float_in_scope": -0.0004444444444443585,
+    "storage": {
+      "embedding_bits": 8388608,
+      "embedding_KiB": 1024.0,
+      "head_bits": 110080,
+      "head_KiB": 13.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 1039.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 1.7104809670781893,
+      "embedding_location": "DDR2",
+      "head_KiB": 15.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.999094955488086,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.9968528282688105,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9903030303030304,
+        "threshold": 0.9920320127721726,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9831818181818182,
+        "threshold": 0.9794272702904505,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9803636363636363,
+        "threshold": 0.9501076887520887,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9690909090909091,
+        "threshold": 0.8655056875592463,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9420779220779221,
+        "threshold": 0.6769816242415612,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9025,
+        "threshold": 0.46286778518253235,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8460606060606061,
+        "threshold": 0.27060090764371914,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7838181818181819,
+        "threshold": 0.062219831468660336,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 16384,
+    "dim": 128,
+    "hidden": 128,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 2133143,
+    "head_params": 35991,
+    "temperature": 1.2092742020008584,
+    "train_seconds": 14.0,
+    "best_val_acc": 0.8761290322580645,
+    "float32": {
+      "combined_accuracy": 0.7898181818181819,
+      "in_scope_accuracy": 0.8877777777777778,
+      "oos_recall": 0.349,
+      "brier": 0.29139161109924316,
+      "ece_equal_width": 0.01877442922646349,
+      "ece_equal_mass": 0.01619641933657906,
+      "nll": 0.9885910749435425,
+      "oos_auroc_by_maxprob": 0.9181495555555556,
+      "in_scope_false_oos_rate": 0.011777777777777778,
+      "mean_confidence": 0.7880536317825317
+    },
+    "int": {
+      "combined_accuracy": 0.7898181818181819,
+      "in_scope_accuracy": 0.8862222222222222,
+      "oos_recall": 0.356,
+      "brier": 0.2914175724407474,
+      "ece_equal_width": 0.02087456310839531,
+      "ece_equal_mass": 0.016418775482968183,
+      "nll": 0.9849833542219153,
+      "oos_auroc_by_maxprob": 0.9172468888888888,
+      "in_scope_false_oos_rate": 0.012444444444444444,
+      "mean_confidence": 0.7856877007224967
+    },
+    "int_minus_float_in_scope": -0.0015555555555555323,
+    "storage": {
+      "embedding_bits": 16777216,
+      "embedding_KiB": 2048.0,
+      "head_bits": 285696,
+      "head_KiB": 34.875,
+      "aux_bits": 17856,
+      "aux_KiB": 2.1796875,
+      "total_KiB": 2085.0546875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 3.4321887860082305,
+      "embedding_location": "DDR2",
+      "head_KiB": 37.0546875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9963636363636363,
+        "threshold": 0.9994359686661003,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.9977973238189884,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9884848484848485,
+        "threshold": 0.9937328994635581,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.985909090909091,
+        "threshold": 0.984251027272076,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9792727272727273,
+        "threshold": 0.9584413684631913,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9715151515151516,
+        "threshold": 0.8945028365488327,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9498701298701299,
+        "threshold": 0.715686712255351,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9077272727272727,
+        "threshold": 0.47961581744799364,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8486868686868687,
+        "threshold": 0.27025051593100025,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.7898181818181819,
+        "threshold": 0.05203222373739546,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 32768,
+    "dim": 32,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 1060503,
+    "head_params": 11927,
+    "temperature": 1.153835035547794,
+    "train_seconds": 5.6,
+    "best_val_acc": 0.8748387096774194,
+    "float32": {
+      "combined_accuracy": 0.8021818181818182,
+      "in_scope_accuracy": 0.8873333333333333,
+      "oos_recall": 0.419,
+      "brier": 0.28812912106513977,
+      "ece_equal_width": 0.029607154063203137,
+      "ece_equal_mass": 0.0276778375452215,
+      "nll": 0.9155358672142029,
+      "oos_auroc_by_maxprob": 0.9039037777777778,
+      "in_scope_false_oos_rate": 0.014444444444444444,
+      "mean_confidence": 0.7885733246803284
+    },
+    "int": {
+      "combined_accuracy": 0.8,
+      "in_scope_accuracy": 0.884,
+      "oos_recall": 0.422,
+      "brier": 0.28925190743410645,
+      "ece_equal_width": 0.02691230027854538,
+      "ece_equal_mass": 0.026721265046014204,
+      "nll": 0.914364775263365,
+      "oos_auroc_by_maxprob": 0.9008844444444445,
+      "in_scope_false_oos_rate": 0.015555555555555555,
+      "mean_confidence": 0.7843352949545531
+    },
+    "int_minus_float_in_scope": -0.0033333333333332993,
+    "storage": {
+      "embedding_bits": 8388608,
+      "embedding_KiB": 1024.0,
+      "head_bits": 93696,
+      "head_KiB": 11.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 1037.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 1.7071887860082304,
+      "embedding_location": "DDR2",
+      "head_KiB": 13.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9963636363636363,
+        "threshold": 0.9992006857990464,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.99,
+        "threshold": 0.9970663330991286,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9860606060606061,
+        "threshold": 0.9923524809670354,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9854545454545455,
+        "threshold": 0.9805176699340926,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9781818181818182,
+        "threshold": 0.9471121433493424,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9696969696969697,
+        "threshold": 0.8643911205475007,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9436363636363636,
+        "threshold": 0.6938843561825292,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9059090909090909,
+        "threshold": 0.48974548295051334,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8539393939393939,
+        "threshold": 0.3047524497891128,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.8,
+        "threshold": 0.0746059723659363,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 32768,
+    "dim": 64,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 2111127,
+    "head_params": 13975,
+    "temperature": 1.0574187584652415,
+    "train_seconds": 8.1,
+    "best_val_acc": 0.8809677419354839,
+    "float32": {
+      "combined_accuracy": 0.8112727272727273,
+      "in_scope_accuracy": 0.8837777777777778,
+      "oos_recall": 0.485,
+      "brier": 0.26698097586631775,
+      "ece_equal_width": 0.019548926694826635,
+      "ece_equal_mass": 0.020737622006372962,
+      "nll": 0.8426126837730408,
+      "oos_auroc_by_maxprob": 0.8989193333333333,
+      "in_scope_false_oos_rate": 0.01622222222222222,
+      "mean_confidence": 0.8023701906204224
+    },
+    "int": {
+      "combined_accuracy": 0.8109090909090909,
+      "in_scope_accuracy": 0.8831111111111111,
+      "oos_recall": 0.486,
+      "brier": 0.2681486120825411,
+      "ece_equal_width": 0.021922216019324668,
+      "ece_equal_mass": 0.023376351946400833,
+      "nll": 0.8408573628598629,
+      "oos_auroc_by_maxprob": 0.8969251111111111,
+      "in_scope_false_oos_rate": 0.016888888888888887,
+      "mean_confidence": 0.7975140018234028
+    },
+    "int_minus_float_in_scope": -0.0006666666666667043,
+    "storage": {
+      "embedding_bits": 16777216,
+      "embedding_KiB": 2048.0,
+      "head_bits": 110080,
+      "head_KiB": 13.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 2063.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 3.3960776748971195,
+      "embedding_location": "DDR2",
+      "head_KiB": 15.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.9994327911711665,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.99,
+        "threshold": 0.9978140438589462,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9872727272727273,
+        "threshold": 0.9938084657311576,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.985,
+        "threshold": 0.9836712040473045,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9814545454545455,
+        "threshold": 0.957474160873153,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9748484848484849,
+        "threshold": 0.8865170506398031,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.954025974025974,
+        "threshold": 0.7304624897881876,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9188636363636363,
+        "threshold": 0.5197704495102794,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.86989898989899,
+        "threshold": 0.3271211637881726,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.8109090909090909,
+        "threshold": 0.0749056904121196,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 32768,
+    "dim": 128,
+    "hidden": 128,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 4230295,
+    "head_params": 35991,
+    "temperature": 1.1318761793568948,
+    "train_seconds": 13.5,
+    "best_val_acc": 0.8841935483870967,
+    "float32": {
+      "combined_accuracy": 0.8074545454545454,
+      "in_scope_accuracy": 0.8964444444444445,
+      "oos_recall": 0.407,
+      "brier": 0.27341020107269287,
+      "ece_equal_width": 0.026658420294523262,
+      "ece_equal_mass": 0.024930215326222513,
+      "nll": 0.8929833769798279,
+      "oos_auroc_by_maxprob": 0.917852,
+      "in_scope_false_oos_rate": 0.011111111111111112,
+      "mean_confidence": 0.8084846138954163
+    },
+    "int": {
+      "combined_accuracy": 0.8065454545454546,
+      "in_scope_accuracy": 0.8953333333333333,
+      "oos_recall": 0.407,
+      "brier": 0.27392321594846725,
+      "ece_equal_width": 0.024488991183492747,
+      "ece_equal_mass": 0.020782124260584536,
+      "nll": 0.8902094610818101,
+      "oos_auroc_by_maxprob": 0.9160171111111111,
+      "in_scope_false_oos_rate": 0.010666666666666666,
+      "mean_confidence": 0.8042007459109397
+    },
+    "int_minus_float_in_scope": -0.0011111111111111738,
+    "storage": {
+      "embedding_bits": 33554432,
+      "embedding_KiB": 4096.0,
+      "head_bits": 285696,
+      "head_KiB": 34.875,
+      "aux_bits": 17856,
+      "aux_KiB": 2.1796875,
+      "total_KiB": 4133.0546875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 6.803382201646091,
+      "embedding_location": "DDR2",
+      "head_KiB": 37.0546875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9927272727272727,
+        "threshold": 0.9996401554351695,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.990909090909091,
+        "threshold": 0.9986326455611955,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9884848484848485,
+        "threshold": 0.9960445367495565,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.985909090909091,
+        "threshold": 0.9895655282418881,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9778181818181818,
+        "threshold": 0.9695251465666235,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9709090909090909,
+        "threshold": 0.9123090260392499,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9535064935064935,
+        "threshold": 0.765488148546686,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9186363636363636,
+        "threshold": 0.5350403414904509,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8628282828282828,
+        "threshold": 0.31060543097891463,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.8065454545454546,
+        "threshold": 0.05994074260892097,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 65536,
+    "dim": 32,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 2109079,
+    "head_params": 11927,
+    "temperature": 1.111286726558349,
+    "train_seconds": 5.6,
+    "best_val_acc": 0.8706451612903225,
+    "float32": {
+      "combined_accuracy": 0.8123636363636364,
+      "in_scope_accuracy": 0.8871111111111111,
+      "oos_recall": 0.476,
+      "brier": 0.26936784386634827,
+      "ece_equal_width": 0.022023275540633616,
+      "ece_equal_mass": 0.020758875353769832,
+      "nll": 0.8786740303039551,
+      "oos_auroc_by_maxprob": 0.8983802222222222,
+      "in_scope_false_oos_rate": 0.014888888888888889,
+      "mean_confidence": 0.7980829477310181
+    },
+    "int": {
+      "combined_accuracy": 0.8132727272727273,
+      "in_scope_accuracy": 0.8851111111111111,
+      "oos_recall": 0.49,
+      "brier": 0.27104036915663404,
+      "ece_equal_width": 0.028019956744718286,
+      "ece_equal_mass": 0.029056807686797158,
+      "nll": 0.8747695800269116,
+      "oos_auroc_by_maxprob": 0.8929717777777778,
+      "in_scope_false_oos_rate": 0.01622222222222222,
+      "mean_confidence": 0.7899834545374393
+    },
+    "int_minus_float_in_scope": -0.0020000000000000018,
+    "storage": {
+      "embedding_bits": 16777216,
+      "embedding_KiB": 2048.0,
+      "head_bits": 93696,
+      "head_KiB": 11.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 2061.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 3.3927854938271604,
+      "embedding_location": "DDR2",
+      "head_KiB": 13.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9963636363636363,
+        "threshold": 0.9989057320917055,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.990909090909091,
+        "threshold": 0.9961909777923472,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9896969696969697,
+        "threshold": 0.9907822641102634,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9868181818181818,
+        "threshold": 0.9772714586612518,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9825454545454545,
+        "threshold": 0.9426581424185796,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9721212121212122,
+        "threshold": 0.8636138584043621,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9524675324675325,
+        "threshold": 0.7210759522628437,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9163636363636364,
+        "threshold": 0.509386985278185,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8707070707070707,
+        "threshold": 0.32305674160465203,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.8132727272727273,
+        "threshold": 0.06402351383612274,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 65536,
+    "dim": 64,
+    "hidden": 64,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 4208279,
+    "head_params": 13975,
+    "temperature": 1.182275239613749,
+    "train_seconds": 8.2,
+    "best_val_acc": 0.8858064516129033,
+    "float32": {
+      "combined_accuracy": 0.8116363636363636,
+      "in_scope_accuracy": 0.8902222222222222,
+      "oos_recall": 0.458,
+      "brier": 0.2709008455276489,
+      "ece_equal_width": 0.02654415123435587,
+      "ece_equal_mass": 0.022778128222985694,
+      "nll": 0.8741077780723572,
+      "oos_auroc_by_maxprob": 0.907477,
+      "in_scope_false_oos_rate": 0.014666666666666666,
+      "mean_confidence": 0.8046314716339111
+    },
+    "int": {
+      "combined_accuracy": 0.814,
+      "in_scope_accuracy": 0.8895555555555555,
+      "oos_recall": 0.474,
+      "brier": 0.2725021287756323,
+      "ece_equal_width": 0.029287812273551025,
+      "ece_equal_mass": 0.029191565410277606,
+      "nll": 0.8687421077955928,
+      "oos_auroc_by_maxprob": 0.90405,
+      "in_scope_false_oos_rate": 0.016444444444444446,
+      "mean_confidence": 0.7966174703671988
+    },
+    "int_minus_float_in_scope": -0.0006666666666667043,
+    "storage": {
+      "embedding_bits": 33554432,
+      "embedding_KiB": 4096.0,
+      "head_bits": 110080,
+      "head_KiB": 13.4375,
+      "aux_bits": 13760,
+      "aux_KiB": 1.6796875,
+      "total_KiB": 4111.1171875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 6.7672710905349795,
+      "embedding_location": "DDR2",
+      "head_KiB": 15.1171875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.990909090909091,
+        "threshold": 0.999303378292775,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.990909090909091,
+        "threshold": 0.9976718435333021,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9878787878787879,
+        "threshold": 0.9934980990904716,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.9845454545454545,
+        "threshold": 0.9838379279650904,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9803636363636363,
+        "threshold": 0.9602344083914713,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9715151515151516,
+        "threshold": 0.8915367927969963,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9503896103896103,
+        "threshold": 0.7348699478644258,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9170454545454545,
+        "threshold": 0.5225356129170309,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8670707070707071,
+        "threshold": 0.3044744155650241,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.814,
+        "threshold": 0.06405997113716166,
+        "n_kept": 5500
+      }
+    ]
+  },
+  {
+    "n_buckets": 65536,
+    "dim": 128,
+    "hidden": 128,
+    "bits": [
+      8,
+      8,
+      8
+    ],
+    "qat": false,
+    "seed": 0,
+    "params": 8424599,
+    "head_params": 35991,
+    "temperature": 1.107665662789612,
+    "train_seconds": 13.9,
+    "best_val_acc": 0.8877419354838709,
+    "float32": {
+      "combined_accuracy": 0.8170909090909091,
+      "in_scope_accuracy": 0.9028888888888889,
+      "oos_recall": 0.431,
+      "brier": 0.26247385144233704,
+      "ece_equal_width": 0.02289938658475878,
+      "ece_equal_mass": 0.02113440363515507,
+      "nll": 0.8518401384353638,
+      "oos_auroc_by_maxprob": 0.9164608888888889,
+      "in_scope_false_oos_rate": 0.009777777777777778,
+      "mean_confidence": 0.8118988871574402
+    },
+    "int": {
+      "combined_accuracy": 0.8145454545454546,
+      "in_scope_accuracy": 0.8982222222222223,
+      "oos_recall": 0.438,
+      "brier": 0.26393187443948246,
+      "ece_equal_width": 0.021705591711791504,
+      "ece_equal_mass": 0.023884864586425362,
+      "nll": 0.8469233194234234,
+      "oos_auroc_by_maxprob": 0.9132575555555555,
+      "in_scope_false_oos_rate": 0.010666666666666666,
+      "mean_confidence": 0.8047545526398691
+    },
+    "int_minus_float_in_scope": -0.004666666666666597,
+    "storage": {
+      "embedding_bits": 67108864,
+      "embedding_KiB": 8192.0,
+      "head_bits": 285696,
+      "head_KiB": 34.875,
+      "aux_bits": 17856,
+      "aux_KiB": 2.1796875,
+      "total_KiB": 8229.0546875
+    },
+    "board": {
+      "bram_KiB": 607.5,
+      "embedding_fits_bram": false,
+      "bram_utilisation_if_onchip": 13.545769032921811,
+      "embedding_location": "DDR2",
+      "head_KiB": 37.0546875
+    },
+    "selective_int": [
+      {
+        "coverage": 0.1,
+        "accuracy": 0.9981818181818182,
+        "threshold": 0.999619061594318,
+        "n_kept": 550
+      },
+      {
+        "coverage": 0.2,
+        "accuracy": 0.9954545454545455,
+        "threshold": 0.9984366000097158,
+        "n_kept": 1100
+      },
+      {
+        "coverage": 0.3,
+        "accuracy": 0.9896969696969697,
+        "threshold": 0.9956188656237581,
+        "n_kept": 1650
+      },
+      {
+        "coverage": 0.4,
+        "accuracy": 0.985,
+        "threshold": 0.9887259379556604,
+        "n_kept": 2200
+      },
+      {
+        "coverage": 0.5,
+        "accuracy": 0.9810909090909091,
+        "threshold": 0.9708511717818321,
+        "n_kept": 2750
+      },
+      {
+        "coverage": 0.6,
+        "accuracy": 0.9757575757575757,
+        "threshold": 0.9163137653030107,
+        "n_kept": 3300
+      },
+      {
+        "coverage": 0.7,
+        "accuracy": 0.9571428571428572,
+        "threshold": 0.7624778887629954,
+        "n_kept": 3850
+      },
+      {
+        "coverage": 0.8,
+        "accuracy": 0.9206818181818182,
+        "threshold": 0.5248331767801309,
+        "n_kept": 4400
+      },
+      {
+        "coverage": 0.9,
+        "accuracy": 0.8725252525252525,
+        "threshold": 0.31670998207406276,
+        "n_kept": 4950
+      },
+      {
+        "coverage": 1.0,
+        "accuracy": 0.8145454545454546,
+        "threshold": 0.057789283942178804,
+        "n_kept": 5500
+      }
+    ]
+  }
+]
