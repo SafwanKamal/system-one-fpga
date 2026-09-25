@@ -1,0 +1,981 @@
+{
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "summary": [
+    {
+      "config": "baseline (weight 10, 100 OOS)",
+      "rule": "argmax",
+      "seeds": 3,
+      "in_scope_accuracy": 0.906888888888889,
+      "in_scope_accuracy_sd": 0.00022222222222223476,
+      "oos_recall": 0.41966666666666663,
+      "oos_recall_sd": 0.02569695182961071,
+      "combined_accuracy": 0.8183030303030302,
+      "combined_accuracy_sd": 0.004784041423482657,
+      "ece_equal_width": 0.019511014231782507,
+      "ece_equal_width_sd": 0.005748999032514185,
+      "brier": 0.2616343309657832,
+      "brier_sd": 0.005174611305577042,
+      "oos_auroc_by_maxprob": 0.920584,
+      "oos_auroc_by_maxprob_sd": 0.0019074444800424397
+    },
+    {
+      "config": "baseline (weight 10, 100 OOS)",
+      "rule": "oos_offset",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8358518518518517,
+      "in_scope_accuracy_sd": 0.005534775953547442,
+      "oos_recall": 0.8833333333333333,
+      "oos_recall_sd": 0.011015141094572214,
+      "combined_accuracy": 0.8444848484848485,
+      "combined_accuracy_sd": 0.003011456545164815,
+      "ece_equal_width": 0.04027715212174917,
+      "ece_equal_width_sd": 0.008173093432220838,
+      "brier": 0.23747541130938962,
+      "brier_sd": 0.007745450564326419,
+      "oos_auroc_by_maxprob": 0.5452433333333334,
+      "oos_auroc_by_maxprob_sd": 0.007277403454326032
+    },
+    {
+      "config": "baseline (weight 10, 100 OOS)",
+      "rule": "max_prob",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8483703703703703,
+      "in_scope_accuracy_sd": 0.020560459875403215,
+      "oos_recall": 0.8916666666666666,
+      "oos_recall_sd": 0.026633312473917595,
+      "combined_accuracy": 0.8562424242424242,
+      "combined_accuracy_sd": 0.01211014646413985,
+      "ece_equal_width": 0.019511014231782507,
+      "ece_equal_width_sd": 0.005748999032514185,
+      "brier": 0.2616343309657832,
+      "brier_sd": 0.005174611305577042,
+      "oos_auroc_by_maxprob": 0.920584,
+      "oos_auroc_by_maxprob_sd": 0.0019074444800424397
+    },
+    {
+      "config": "baseline (weight 10, 100 OOS)",
+      "rule": "max_prob_1pt",
+      "seeds": 3,
+      "in_scope_accuracy": 0.9012592592592593,
+      "in_scope_accuracy_sd": 0.0013578002059128574,
+      "oos_recall": 0.7076666666666668,
+      "oos_recall_sd": 0.01497776129244066,
+      "combined_accuracy": 0.8660606060606062,
+      "combined_accuracy_sd": 0.0024416044943616523,
+      "ece_equal_width": 0.019511014231782507,
+      "ece_equal_width_sd": 0.005748999032514185,
+      "brier": 0.2616343309657832,
+      "brier_sd": 0.005174611305577042,
+      "oos_auroc_by_maxprob": 0.920584,
+      "oos_auroc_by_maxprob_sd": 0.0019074444800424397
+    },
+    {
+      "config": "weight 30",
+      "rule": "argmax",
+      "seeds": 3,
+      "in_scope_accuracy": 0.9066666666666666,
+      "in_scope_accuracy_sd": 0.002119864892037608,
+      "oos_recall": 0.36366666666666664,
+      "oos_recall_sd": 0.011239810200058252,
+      "combined_accuracy": 0.8079393939393938,
+      "combined_accuracy_sd": 0.0031614063892715046,
+      "ece_equal_width": 0.015560632806949413,
+      "ece_equal_width_sd": 0.002267823002563178,
+      "brier": 0.268878494843731,
+      "brier_sd": 0.0036692649782453673,
+      "oos_auroc_by_maxprob": 0.9167314814814814,
+      "oos_auroc_by_maxprob_sd": 0.002035221228407324
+    },
+    {
+      "config": "weight 30",
+      "rule": "oos_offset",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8394814814814815,
+      "in_scope_accuracy_sd": 0.03552660858702209,
+      "oos_recall": 0.8500000000000001,
+      "oos_recall_sd": 0.050119856344566664,
+      "combined_accuracy": 0.8413939393939395,
+      "combined_accuracy_sd": 0.020336291163631837,
+      "ece_equal_width": 0.04191141007090415,
+      "ece_equal_width_sd": 0.012517020575068974,
+      "brier": 0.24363608919741253,
+      "brier_sd": 0.02953953242821895,
+      "oos_auroc_by_maxprob": 0.5772522222222222,
+      "oos_auroc_by_maxprob_sd": 0.12232755156243118
+    },
+    {
+      "config": "weight 30",
+      "rule": "max_prob",
+      "seeds": 3,
+      "in_scope_accuracy": 0.841037037037037,
+      "in_scope_accuracy_sd": 0.030445525798584318,
+      "oos_recall": 0.9049999999999999,
+      "oos_recall_sd": 0.03306055050963311,
+      "combined_accuracy": 0.8526666666666666,
+      "combined_accuracy_sd": 0.019045255658178967,
+      "ece_equal_width": 0.015560632806949413,
+      "ece_equal_width_sd": 0.002267823002563178,
+      "brier": 0.268878494843731,
+      "brier_sd": 0.0036692649782453673,
+      "oos_auroc_by_maxprob": 0.9167314814814814,
+      "oos_auroc_by_maxprob_sd": 0.002035221228407324
+    },
+    {
+      "config": "weight 30",
+      "rule": "max_prob_1pt",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8994074074074074,
+      "in_scope_accuracy_sd": 0.0022369879808209784,
+      "oos_recall": 0.7126666666666667,
+      "oos_recall_sd": 0.004041451884327384,
+      "combined_accuracy": 0.8654545454545454,
+      "combined_accuracy_sd": 0.001135454181526964,
+      "ece_equal_width": 0.015560632806949413,
+      "ece_equal_width_sd": 0.002267823002563178,
+      "brier": 0.268878494843731,
+      "brier_sd": 0.0036692649782453673,
+      "oos_auroc_by_maxprob": 0.9167314814814814,
+      "oos_auroc_by_maxprob_sd": 0.002035221228407324
+    },
+    {
+      "config": "weight 100",
+      "rule": "argmax",
+      "seeds": 3,
+      "in_scope_accuracy": 0.9017037037037037,
+      "in_scope_accuracy_sd": 0.004710552028321422,
+      "oos_recall": 0.324,
+      "oos_recall_sd": 0.016822603841260737,
+      "combined_accuracy": 0.7966666666666667,
+      "combined_accuracy_sd": 0.0030004591016937155,
+      "ece_equal_width": 0.012771215995146678,
+      "ece_equal_width_sd": 0.004899821120939062,
+      "brier": 0.28127056015640056,
+      "brier_sd": 0.0054926818440698385,
+      "oos_auroc_by_maxprob": 0.9146146666666667,
+      "oos_auroc_by_maxprob_sd": 0.0047256168765778764
+    },
+    {
+      "config": "weight 100",
+      "rule": "oos_offset",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8293333333333334,
+      "in_scope_accuracy_sd": 0.020785797620395764,
+      "oos_recall": 0.8543333333333334,
+      "oos_recall_sd": 0.021779194965226196,
+      "combined_accuracy": 0.8338787878787879,
+      "combined_accuracy_sd": 0.01322698635532968,
+      "ece_equal_width": 0.04285822466566886,
+      "ece_equal_width_sd": 0.014369956061768462,
+      "brier": 0.2528142152417493,
+      "brier_sd": 0.020828029260580617,
+      "oos_auroc_by_maxprob": 0.5445806666666667,
+      "oos_auroc_by_maxprob_sd": 0.043741594257611725
+    },
+    {
+      "config": "weight 100",
+      "rule": "max_prob",
+      "seeds": 3,
+      "in_scope_accuracy": 0.828962962962963,
+      "in_scope_accuracy_sd": 0.03900891530472268,
+      "oos_recall": 0.9049999999999999,
+      "oos_recall_sd": 0.028930952282978827,
+      "combined_accuracy": 0.8427878787878789,
+      "combined_accuracy_sd": 0.026685392873957558,
+      "ece_equal_width": 0.012771215995146678,
+      "ece_equal_width_sd": 0.004899821120939062,
+      "brier": 0.28127056015640056,
+      "brier_sd": 0.0054926818440698385,
+      "oos_auroc_by_maxprob": 0.9146146666666667,
+      "oos_auroc_by_maxprob_sd": 0.0047256168765778764
+    },
+    {
+      "config": "weight 100",
+      "rule": "max_prob_1pt",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8942962962962963,
+      "in_scope_accuracy_sd": 0.006372523322667612,
+      "oos_recall": 0.715,
+      "oos_recall_sd": 0.025238858928247888,
+      "combined_accuracy": 0.8616969696969697,
+      "combined_accuracy_sd": 0.00183026289339898,
+      "ece_equal_width": 0.012771215995146678,
+      "ece_equal_width_sd": 0.004899821120939062,
+      "brier": 0.28127056015640056,
+      "brier_sd": 0.0054926818440698385,
+      "oos_auroc_by_maxprob": 0.9146146666666667,
+      "oos_auroc_by_maxprob_sd": 0.0047256168765778764
+    },
+    {
+      "config": "oos_plus (250 OOS), weight 10",
+      "rule": "argmax",
+      "seeds": 3,
+      "in_scope_accuracy": 0.902888888888889,
+      "in_scope_accuracy_sd": 0.00135172500673295,
+      "oos_recall": 0.451,
+      "oos_recall_sd": 0.03251153641401773,
+      "combined_accuracy": 0.8207272727272726,
+      "combined_accuracy_sd": 0.006987592309300206,
+      "ece_equal_width": 0.01892114877875585,
+      "ece_equal_width_sd": 0.0026183670364175265,
+      "brier": 0.25665427385273815,
+      "brier_sd": 0.008389081414279584,
+      "oos_auroc_by_maxprob": 0.8878728148148148,
+      "oos_auroc_by_maxprob_sd": 0.0046397516766955305
+    },
+    {
+      "config": "oos_plus (250 OOS), weight 10",
+      "rule": "oos_offset",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8423703703703703,
+      "in_scope_accuracy_sd": 0.02768636811544391,
+      "oos_recall": 0.8603333333333333,
+      "oos_recall_sd": 0.023028967265887854,
+      "combined_accuracy": 0.8456363636363636,
+      "combined_accuracy_sd": 0.019930457608792345,
+      "ece_equal_width": 0.0392234434621051,
+      "ece_equal_width_sd": 0.01698421053325998,
+      "brier": 0.23524660645764398,
+      "brier_sd": 0.029148822728422504,
+      "oos_auroc_by_maxprob": 0.5441112592592593,
+      "oos_auroc_by_maxprob_sd": 0.07520692923990097
+    },
+    {
+      "config": "oos_plus (250 OOS), weight 10",
+      "rule": "max_prob",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8439259259259261,
+      "in_scope_accuracy_sd": 0.023455061664712656,
+      "oos_recall": 0.8976666666666667,
+      "oos_recall_sd": 0.020231987873991376,
+      "combined_accuracy": 0.8536969696969697,
+      "combined_accuracy_sd": 0.01573156361153943,
+      "ece_equal_width": 0.01892114877875585,
+      "ece_equal_width_sd": 0.0026183670364175265,
+      "brier": 0.25665427385273815,
+      "brier_sd": 0.008389081414279584,
+      "oos_auroc_by_maxprob": 0.8878728148148148,
+      "oos_auroc_by_maxprob_sd": 0.0046397516766955305
+    },
+    {
+      "config": "oos_plus (250 OOS), weight 10",
+      "rule": "max_prob_1pt",
+      "seeds": 3,
+      "in_scope_accuracy": 0.892962962962963,
+      "in_scope_accuracy_sd": 0.0023129622216290424,
+      "oos_recall": 0.75,
+      "oos_recall_sd": 0.018000000000000016,
+      "combined_accuracy": 0.8669696969696971,
+      "combined_accuracy_sd": 0.0023165472549838066,
+      "ece_equal_width": 0.01892114877875585,
+      "ece_equal_width_sd": 0.0026183670364175265,
+      "brier": 0.25665427385273815,
+      "brier_sd": 0.008389081414279584,
+      "oos_auroc_by_maxprob": 0.8878728148148148,
+      "oos_auroc_by_maxprob_sd": 0.0046397516766955305
+    },
+    {
+      "config": "oos_plus, weight 30",
+      "rule": "argmax",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8977037037037037,
+      "in_scope_accuracy_sd": 0.0022259228446395284,
+      "oos_recall": 0.39633333333333337,
+      "oos_recall_sd": 0.021501937897160175,
+      "combined_accuracy": 0.8065454545454545,
+      "combined_accuracy_sd": 0.00346886982333435,
+      "ece_equal_width": 0.014835651559516883,
+      "ece_equal_width_sd": 0.004489045788239507,
+      "brier": 0.2703259819126599,
+      "brier_sd": 0.005191891359450043,
+      "oos_auroc_by_maxprob": 0.8730789629629628,
+      "oos_auroc_by_maxprob_sd": 0.008616983449534267
+    },
+    {
+      "config": "oos_plus, weight 30",
+      "rule": "oos_offset",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8144444444444444,
+      "in_scope_accuracy_sd": 0.01943777663452866,
+      "oos_recall": 0.8733333333333334,
+      "oos_recall_sd": 0.02909180869821151,
+      "combined_accuracy": 0.8251515151515152,
+      "combined_accuracy_sd": 0.010633384716232963,
+      "ece_equal_width": 0.05265734443708802,
+      "ece_equal_width_sd": 0.009907599065498918,
+      "brier": 0.26966964820949274,
+      "brier_sd": 0.01767907016917763,
+      "oos_auroc_by_maxprob": 0.4424620000000001,
+      "oos_auroc_by_maxprob_sd": 0.06745300749996345
+    },
+    {
+      "config": "oos_plus, weight 30",
+      "rule": "max_prob",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8420740740740742,
+      "in_scope_accuracy_sd": 0.02383723960045598,
+      "oos_recall": 0.8863333333333333,
+      "oos_recall_sd": 0.030237945256470965,
+      "combined_accuracy": 0.8501212121212122,
+      "combined_accuracy_sd": 0.01400629531817552,
+      "ece_equal_width": 0.014835651559516883,
+      "ece_equal_width_sd": 0.004489045788239507,
+      "brier": 0.2703259819126599,
+      "brier_sd": 0.005191891359450043,
+      "oos_auroc_by_maxprob": 0.8730789629629628,
+      "oos_auroc_by_maxprob_sd": 0.008616983449534267
+    },
+    {
+      "config": "oos_plus, weight 30",
+      "rule": "max_prob_1pt",
+      "seeds": 3,
+      "in_scope_accuracy": 0.8880740740740741,
+      "in_scope_accuracy_sd": 0.0012636090451282587,
+      "oos_recall": 0.7356666666666666,
+      "oos_recall_sd": 0.010115993936995688,
+      "combined_accuracy": 0.8603636363636363,
+      "combined_accuracy_sd": 0.0028574970264548276,
+      "ece_equal_width": 0.014835651559516883,
+      "ece_equal_width_sd": 0.004489045788239507,
+      "brier": 0.2703259819126599,
+      "brier_sd": 0.005191891359450043,
+      "oos_auroc_by_maxprob": 0.8730789629629628,
+      "oos_auroc_by_maxprob_sd": 0.008616983449534267
+    }
+  ],
+  "runs": [
+    {
+      "config": "baseline (weight 10, 100 OOS)",
+      "seed": 0,
+      "oos_weight": 10.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.9071111111111111,
+        "oos_recall": 0.447,
+        "combined_accuracy": 0.8234545454545454,
+        "ece_equal_width": 0.024400409409134387,
+        "brier": 0.25748338646580426,
+        "oos_auroc_by_maxprob": 0.9202006666666667
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8331111111111111,
+        "oos_recall": 0.894,
+        "combined_accuracy": 0.8441818181818181,
+        "ece_equal_width": 0.04681312766872541,
+        "brier": 0.23864298953390534,
+        "oos_auroc_by_maxprob": 0.5368402222222223,
+        "offset_lsb": 4500,
+        "offset_logit": 5.201087349641408
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8488888888888889,
+        "oos_recall": 0.885,
+        "combined_accuracy": 0.8554545454545455,
+        "ece_equal_width": 0.024400409409134387,
+        "brier": 0.25748338646580426,
+        "oos_auroc_by_maxprob": 0.9202006666666667,
+        "threshold": 0.66
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.9024444444444445,
+        "oos_recall": 0.712,
+        "combined_accuracy": 0.8678181818181818,
+        "ece_equal_width": 0.024400409409134387,
+        "brier": 0.25748338646580426,
+        "oos_auroc_by_maxprob": 0.9202006666666667,
+        "threshold": 0.32
+      }
+    },
+    {
+      "config": "baseline (weight 10, 100 OOS)",
+      "seed": 1,
+      "oos_weight": 10.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.9068888888888889,
+        "oos_recall": 0.396,
+        "combined_accuracy": 0.814,
+        "ece_equal_width": 0.020954934774990337,
+        "brier": 0.26743187884401787,
+        "oos_auroc_by_maxprob": 0.922654
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8322222222222222,
+        "oos_recall": 0.884,
+        "combined_accuracy": 0.8416363636363636,
+        "ece_equal_width": 0.04290494453317363,
+        "brier": 0.24457078720783784,
+        "oos_auroc_by_maxprob": 0.5494075555555555,
+        "offset_lsb": 4750,
+        "offset_logit": 5.343934831319681
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8275555555555556,
+        "oos_recall": 0.921,
+        "combined_accuracy": 0.8445454545454546,
+        "ece_equal_width": 0.020954934774990337,
+        "brier": 0.26743187884401787,
+        "oos_auroc_by_maxprob": 0.922654,
+        "threshold": 0.72
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.9015555555555556,
+        "oos_recall": 0.691,
+        "combined_accuracy": 0.8632727272727273,
+        "ece_equal_width": 0.020954934774990337,
+        "brier": 0.26743187884401787,
+        "oos_auroc_by_maxprob": 0.922654,
+        "threshold": 0.315
+      }
+    },
+    {
+      "config": "baseline (weight 10, 100 OOS)",
+      "seed": 2,
+      "oos_weight": 10.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.9066666666666666,
+        "oos_recall": 0.416,
+        "combined_accuracy": 0.8174545454545454,
+        "ece_equal_width": 0.013177698511222805,
+        "brier": 0.2599877275875276,
+        "oos_auroc_by_maxprob": 0.9188973333333333
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8422222222222222,
+        "oos_recall": 0.872,
+        "combined_accuracy": 0.8476363636363636,
+        "ece_equal_width": 0.031113384163348464,
+        "brier": 0.22921245718642574,
+        "oos_auroc_by_maxprob": 0.5494822222222222,
+        "offset_lsb": 4000,
+        "offset_logit": 5.00201187707434
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8686666666666667,
+        "oos_recall": 0.869,
+        "combined_accuracy": 0.8687272727272727,
+        "ece_equal_width": 0.013177698511222805,
+        "brier": 0.2599877275875276,
+        "oos_auroc_by_maxprob": 0.9188973333333333,
+        "threshold": 0.58
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8997777777777778,
+        "oos_recall": 0.72,
+        "combined_accuracy": 0.8670909090909091,
+        "ece_equal_width": 0.013177698511222805,
+        "brier": 0.2599877275875276,
+        "oos_auroc_by_maxprob": 0.9188973333333333,
+        "threshold": 0.335
+      }
+    },
+    {
+      "config": "weight 30",
+      "seed": 0,
+      "oos_weight": 30.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.9086666666666666,
+        "oos_recall": 0.361,
+        "combined_accuracy": 0.8090909090909091,
+        "ece_equal_width": 0.01812781898330474,
+        "brier": 0.26935291337536943,
+        "oos_auroc_by_maxprob": 0.9188415555555556
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.878,
+        "oos_recall": 0.802,
+        "combined_accuracy": 0.8641818181818182,
+        "ece_equal_width": 0.02902230619593773,
+        "brier": 0.2112438125841382,
+        "oos_auroc_by_maxprob": 0.6982646666666666,
+        "offset_lsb": 3750,
+        "offset_logit": 4.318226685940433
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8713333333333333,
+        "oos_recall": 0.869,
+        "combined_accuracy": 0.8709090909090909,
+        "ece_equal_width": 0.01812781898330474,
+        "brier": 0.26935291337536943,
+        "oos_auroc_by_maxprob": 0.9188415555555556,
+        "threshold": 0.59
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.9017777777777778,
+        "oos_recall": 0.709,
+        "combined_accuracy": 0.8667272727272727,
+        "ece_equal_width": 0.01812781898330474,
+        "brier": 0.26935291337536943,
+        "oos_auroc_by_maxprob": 0.9188415555555556,
+        "threshold": 0.325
+      }
+    },
+    {
+      "config": "weight 30",
+      "seed": 1,
+      "oos_weight": 30.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.9044444444444445,
+        "oos_recall": 0.354,
+        "combined_accuracy": 0.8043636363636364,
+        "ece_equal_width": 0.013829616515414735,
+        "brier": 0.2722874754760392,
+        "oos_auroc_by_maxprob": 0.9147804444444444
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8324444444444444,
+        "oos_recall": 0.846,
+        "combined_accuracy": 0.8349090909090909,
+        "ece_equal_width": 0.042692124523788746,
+        "brier": 0.2505780777357219,
+        "oos_auroc_by_maxprob": 0.5798413333333333,
+        "offset_lsb": 4750,
+        "offset_logit": 5.404172760214363
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8104444444444444,
+        "oos_recall": 0.934,
+        "combined_accuracy": 0.8329090909090909,
+        "ece_equal_width": 0.013829616515414735,
+        "brier": 0.2722874754760392,
+        "oos_auroc_by_maxprob": 0.9147804444444444,
+        "threshold": 0.76
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8973333333333333,
+        "oos_recall": 0.717,
+        "combined_accuracy": 0.8645454545454545,
+        "ece_equal_width": 0.013829616515414735,
+        "brier": 0.2722874754760392,
+        "oos_auroc_by_maxprob": 0.9147804444444444,
+        "threshold": 0.335
+      }
+    },
+    {
+      "config": "weight 30",
+      "seed": 2,
+      "oos_weight": 30.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.9068888888888889,
+        "oos_recall": 0.376,
+        "combined_accuracy": 0.8103636363636364,
+        "ece_equal_width": 0.014724462922128763,
+        "brier": 0.26499509567978435,
+        "oos_auroc_by_maxprob": 0.9165724444444444
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.808,
+        "oos_recall": 0.902,
+        "combined_accuracy": 0.8250909090909091,
+        "ece_equal_width": 0.054019799492985965,
+        "brier": 0.26908637727237744,
+        "oos_auroc_by_maxprob": 0.45365066666666665,
+        "offset_lsb": 5250,
+        "offset_logit": 6.264638829425169
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8413333333333334,
+        "oos_recall": 0.912,
+        "combined_accuracy": 0.8541818181818182,
+        "ece_equal_width": 0.014724462922128763,
+        "brier": 0.26499509567978435,
+        "oos_auroc_by_maxprob": 0.9165724444444444,
+        "threshold": 0.67
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8991111111111111,
+        "oos_recall": 0.712,
+        "combined_accuracy": 0.8650909090909091,
+        "ece_equal_width": 0.014724462922128763,
+        "brier": 0.26499509567978435,
+        "oos_auroc_by_maxprob": 0.9165724444444444,
+        "threshold": 0.32
+      }
+    },
+    {
+      "config": "weight 100",
+      "seed": 0,
+      "oos_weight": 100.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.906,
+        "oos_recall": 0.305,
+        "combined_accuracy": 0.7967272727272727,
+        "ece_equal_width": 0.018259310417854523,
+        "brier": 0.2811187662953753,
+        "oos_auroc_by_maxprob": 0.9183691111111111
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8175555555555556,
+        "oos_recall": 0.872,
+        "combined_accuracy": 0.8274545454545454,
+        "ece_equal_width": 0.05820811450349127,
+        "brier": 0.26790058212355,
+        "oos_auroc_by_maxprob": 0.5060004444444445,
+        "offset_lsb": 5750,
+        "offset_logit": 6.868236874351003
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8491111111111111,
+        "oos_recall": 0.893,
+        "combined_accuracy": 0.8570909090909091,
+        "ece_equal_width": 0.018259310417854523,
+        "brier": 0.2811187662953753,
+        "oos_auroc_by_maxprob": 0.9183691111111111,
+        "threshold": 0.65
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.9002222222222223,
+        "oos_recall": 0.687,
+        "combined_accuracy": 0.8614545454545455,
+        "ece_equal_width": 0.018259310417854523,
+        "brier": 0.2811187662953753,
+        "oos_auroc_by_maxprob": 0.9183691111111111,
+        "threshold": 0.315
+      }
+    },
+    {
+      "config": "weight 100",
+      "seed": 1,
+      "oos_weight": 100.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.8966666666666666,
+        "oos_recall": 0.33,
+        "combined_accuracy": 0.7936363636363636,
+        "ece_equal_width": 0.011218328606311464,
+        "brier": 0.2868375656096061,
+        "oos_auroc_by_maxprob": 0.9093082222222222
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8171111111111111,
+        "oos_recall": 0.861,
+        "combined_accuracy": 0.8250909090909091,
+        "ece_equal_width": 0.04064050419625519,
+        "brier": 0.26149163455199176,
+        "oos_auroc_by_maxprob": 0.5356395555555555,
+        "offset_lsb": 4000,
+        "offset_logit": 5.856298428027931
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.784,
+        "oos_recall": 0.938,
+        "combined_accuracy": 0.812,
+        "ece_equal_width": 0.011218328606311464,
+        "brier": 0.2868375656096061,
+        "oos_auroc_by_maxprob": 0.9093082222222222,
+        "threshold": 0.77
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8875555555555555,
+        "oos_recall": 0.736,
+        "combined_accuracy": 0.86,
+        "ece_equal_width": 0.011218328606311464,
+        "brier": 0.2868375656096061,
+        "oos_auroc_by_maxprob": 0.9093082222222222,
+        "threshold": 0.34500000000000003
+      }
+    },
+    {
+      "config": "weight 100",
+      "seed": 2,
+      "oos_weight": 100.0,
+      "variant": "full",
+      "argmax": {
+        "in_scope_accuracy": 0.9024444444444445,
+        "oos_recall": 0.337,
+        "combined_accuracy": 0.7996363636363636,
+        "ece_equal_width": 0.008836008961274044,
+        "brier": 0.2758553485642203,
+        "oos_auroc_by_maxprob": 0.9161666666666667
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8533333333333334,
+        "oos_recall": 0.83,
+        "combined_accuracy": 0.8490909090909091,
+        "ece_equal_width": 0.02972605529726014,
+        "brier": 0.2290504290497061,
+        "oos_auroc_by_maxprob": 0.592102,
+        "offset_lsb": 4250,
+        "offset_logit": 5.501477233632256
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8537777777777777,
+        "oos_recall": 0.884,
+        "combined_accuracy": 0.8592727272727273,
+        "ece_equal_width": 0.008836008961274044,
+        "brier": 0.2758553485642203,
+        "oos_auroc_by_maxprob": 0.9161666666666667,
+        "threshold": 0.59
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8951111111111111,
+        "oos_recall": 0.722,
+        "combined_accuracy": 0.8636363636363636,
+        "ece_equal_width": 0.008836008961274044,
+        "brier": 0.2758553485642203,
+        "oos_auroc_by_maxprob": 0.9161666666666667,
+        "threshold": 0.33
+      }
+    },
+    {
+      "config": "oos_plus (250 OOS), weight 10",
+      "seed": 0,
+      "oos_weight": 10.0,
+      "variant": "oos_plus",
+      "argmax": {
+        "in_scope_accuracy": 0.9037777777777778,
+        "oos_recall": 0.464,
+        "combined_accuracy": 0.8238181818181818,
+        "ece_equal_width": 0.021683558537052623,
+        "brier": 0.25407341684612106,
+        "oos_auroc_by_maxprob": 0.883102
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8568888888888889,
+        "oos_recall": 0.835,
+        "combined_accuracy": 0.852909090909091,
+        "ece_equal_width": 0.03217672392092027,
+        "brier": 0.2242128472152108,
+        "oos_auroc_by_maxprob": 0.5872911111111111,
+        "offset_lsb": 4000,
+        "offset_logit": 4.506074888871787
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8177777777777778,
+        "oos_recall": 0.921,
+        "combined_accuracy": 0.8365454545454546,
+        "ece_equal_width": 0.021683558537052623,
+        "brier": 0.25407341684612106,
+        "oos_auroc_by_maxprob": 0.883102,
+        "threshold": 0.75
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8922222222222222,
+        "oos_recall": 0.768,
+        "combined_accuracy": 0.8696363636363637,
+        "ece_equal_width": 0.021683558537052623,
+        "brier": 0.25407341684612106,
+        "oos_auroc_by_maxprob": 0.883102,
+        "threshold": 0.37
+      }
+    },
+    {
+      "config": "oos_plus (250 OOS), weight 10",
+      "seed": 1,
+      "oos_weight": 10.0,
+      "variant": "oos_plus",
+      "argmax": {
+        "in_scope_accuracy": 0.9013333333333333,
+        "oos_recall": 0.414,
+        "combined_accuracy": 0.8127272727272727,
+        "ece_equal_width": 0.016475676460075476,
+        "brier": 0.26603055851411417,
+        "oos_auroc_by_maxprob": 0.8881471111111111
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8104444444444444,
+        "oos_recall": 0.88,
+        "combined_accuracy": 0.8230909090909091,
+        "ece_equal_width": 0.058596762703276996,
+        "brier": 0.2683015685137001,
+        "oos_auroc_by_maxprob": 0.45727022222222224,
+        "offset_lsb": 5250,
+        "offset_logit": 6.260251069617416
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8508888888888889,
+        "oos_recall": 0.885,
+        "combined_accuracy": 0.8570909090909091,
+        "ece_equal_width": 0.016475676460075476,
+        "brier": 0.26603055851411417,
+        "oos_auroc_by_maxprob": 0.8881471111111111,
+        "threshold": 0.62
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8911111111111111,
+        "oos_recall": 0.75,
+        "combined_accuracy": 0.8654545454545455,
+        "ece_equal_width": 0.016475676460075476,
+        "brier": 0.26603055851411417,
+        "oos_auroc_by_maxprob": 0.8881471111111111,
+        "threshold": 0.355
+      }
+    },
+    {
+      "config": "oos_plus (250 OOS), weight 10",
+      "seed": 2,
+      "oos_weight": 10.0,
+      "variant": "oos_plus",
+      "argmax": {
+        "in_scope_accuracy": 0.9035555555555556,
+        "oos_recall": 0.475,
+        "combined_accuracy": 0.8256363636363636,
+        "ece_equal_width": 0.018604211339139448,
+        "brier": 0.2498588461979792,
+        "oos_auroc_by_maxprob": 0.8923693333333333
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8597777777777778,
+        "oos_recall": 0.866,
+        "combined_accuracy": 0.860909090909091,
+        "ece_equal_width": 0.026896843762118035,
+        "brier": 0.2132254036440211,
+        "oos_auroc_by_maxprob": 0.5877724444444444,
+        "offset_lsb": 3750,
+        "offset_logit": 4.405634552591551
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8631111111111112,
+        "oos_recall": 0.887,
+        "combined_accuracy": 0.8674545454545455,
+        "ece_equal_width": 0.018604211339139448,
+        "brier": 0.2498588461979792,
+        "oos_auroc_by_maxprob": 0.8923693333333333,
+        "threshold": 0.5700000000000001
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8955555555555555,
+        "oos_recall": 0.732,
+        "combined_accuracy": 0.8658181818181818,
+        "ece_equal_width": 0.018604211339139448,
+        "brier": 0.2498588461979792,
+        "oos_auroc_by_maxprob": 0.8923693333333333,
+        "threshold": 0.325
+      }
+    },
+    {
+      "config": "oos_plus, weight 30",
+      "seed": 0,
+      "oos_weight": 30.0,
+      "variant": "oos_plus",
+      "argmax": {
+        "in_scope_accuracy": 0.9,
+        "oos_recall": 0.396,
+        "combined_accuracy": 0.8083636363636364,
+        "ece_equal_width": 0.012335597740135772,
+        "brier": 0.26941590717072833,
+        "oos_auroc_by_maxprob": 0.8742124444444445
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8111111111111111,
+        "oos_recall": 0.876,
+        "combined_accuracy": 0.8229090909090909,
+        "ece_equal_width": 0.05515364684387487,
+        "brier": 0.27403203240906715,
+        "oos_auroc_by_maxprob": 0.42530866666666667,
+        "offset_lsb": 5000,
+        "offset_logit": 6.689152824070048
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8682222222222222,
+        "oos_recall": 0.853,
+        "combined_accuracy": 0.8654545454545455,
+        "ece_equal_width": 0.012335597740135772,
+        "brier": 0.26941590717072833,
+        "oos_auroc_by_maxprob": 0.8742124444444445,
+        "threshold": 0.52
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8891111111111111,
+        "oos_recall": 0.742,
+        "combined_accuracy": 0.8623636363636363,
+        "ece_equal_width": 0.012335597740135772,
+        "brier": 0.26941590717072833,
+        "oos_auroc_by_maxprob": 0.8742124444444445,
+        "threshold": 0.355
+      }
+    },
+    {
+      "config": "oos_plus, weight 30",
+      "seed": 1,
+      "oos_weight": 30.0,
+      "variant": "oos_plus",
+      "argmax": {
+        "in_scope_accuracy": 0.8975555555555556,
+        "oos_recall": 0.375,
+        "combined_accuracy": 0.8025454545454546,
+        "ece_equal_width": 0.020018086162219353,
+        "brier": 0.27591274013158745,
+        "oos_auroc_by_maxprob": 0.8810731111111111
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.8353333333333334,
+        "oos_recall": 0.843,
+        "combined_accuracy": 0.8367272727272728,
+        "ece_equal_width": 0.04174033213410909,
+        "brier": 0.25021776634009346,
+        "oos_auroc_by_maxprob": 0.5168355555555556,
+        "offset_lsb": 4250,
+        "offset_logit": 6.006657502992589
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8364444444444444,
+        "oos_recall": 0.894,
+        "combined_accuracy": 0.846909090909091,
+        "ece_equal_width": 0.020018086162219353,
+        "brier": 0.27591274013158745,
+        "oos_auroc_by_maxprob": 0.8810731111111111,
+        "threshold": 0.63
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8884444444444445,
+        "oos_recall": 0.741,
+        "combined_accuracy": 0.8616363636363636,
+        "ece_equal_width": 0.020018086162219353,
+        "brier": 0.27591274013158745,
+        "oos_auroc_by_maxprob": 0.8810731111111111,
+        "threshold": 0.35000000000000003
+      }
+    },
+    {
+      "config": "oos_plus, weight 30",
+      "seed": 2,
+      "oos_weight": 30.0,
+      "variant": "oos_plus",
+      "argmax": {
+        "in_scope_accuracy": 0.8955555555555555,
+        "oos_recall": 0.418,
+        "combined_accuracy": 0.8087272727272727,
+        "ece_equal_width": 0.012153270776195522,
+        "brier": 0.26564929843566387,
+        "oos_auroc_by_maxprob": 0.8639513333333333
+      },
+      "oos_offset": {
+        "in_scope_accuracy": 0.7968888888888889,
+        "oos_recall": 0.901,
+        "combined_accuracy": 0.8158181818181818,
+        "ece_equal_width": 0.061078054333280084,
+        "brier": 0.28475914587931767,
+        "oos_auroc_by_maxprob": 0.3852417777777778,
+        "offset_lsb": 4500,
+        "offset_logit": 6.665784122990546
+      },
+      "max_prob": {
+        "in_scope_accuracy": 0.8215555555555556,
+        "oos_recall": 0.912,
+        "combined_accuracy": 0.838,
+        "ece_equal_width": 0.012153270776195522,
+        "brier": 0.26564929843566387,
+        "oos_auroc_by_maxprob": 0.8639513333333333,
+        "threshold": 0.67
+      },
+      "max_prob_1pt": {
+        "in_scope_accuracy": 0.8866666666666667,
+        "oos_recall": 0.724,
+        "combined_accuracy": 0.8570909090909091,
+        "ece_equal_width": 0.012153270776195522,
+        "brier": 0.26564929843566387,
+        "oos_auroc_by_maxprob": 0.8639513333333333,
+        "threshold": 0.355
+      }
+    }
+  ]
+}

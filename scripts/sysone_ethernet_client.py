@@ -44,6 +44,21 @@ def load_calibration(export_dir: Path) -> tuple[float, list[str] | None]:
     return manifest["arithmetic"]["s_out"], labels
 
 
+OOS_CLASS = 150
+
+# Answer "oos" when the top probability is below this. Chosen on the validation
+# split to give up at most 1 point of in-scope accuracy (scripts/oos_tradeoff.py):
+# on the test split OOS recall goes from 0.447 to 0.712 while in-scope accuracy
+# goes from 0.9071 to 0.9024. Over three training seeds: 0.708 +- 0.015 recall.
+# The probabilities themselves are unchanged, so calibration is unaffected.
+DEFAULT_OOS_THRESHOLD = 0.32
+
+
+def decide(p: np.ndarray, threshold: float) -> int:
+    """The board's argmax, or oos when the model is not confident enough."""
+    return OOS_CLASS if p.max() < threshold else int(p.argmax())
+
+
 def probabilities(logits: list[int], s_out: float) -> np.ndarray:
     z = np.asarray(logits, dtype=np.float64) * s_out
     z -= z.max()
@@ -100,6 +115,8 @@ def main() -> None:
     ap.add_argument("--export", default=str(ROOT / "export/student_bram_max"))
     ap.add_argument("--test-set", type=int, default=0,
                     help="send the first N CLINC150 test utterances and report accuracy and latency")
+    ap.add_argument("--oos-threshold", type=float, default=DEFAULT_OOS_THRESHOLD,
+                    help="answer oos below this top probability (0 = plain argmax)")
     ap.add_argument("--list-interfaces", action="store_true")
     args = ap.parse_args()
 
@@ -117,8 +134,11 @@ def main() -> None:
     for text in args.text:
         result, elapsed = board.classify(text)
         p = probabilities(result.logits, s_out)
-        name = labels[result.class_index] if labels else str(result.class_index)
-        print(f"{text!r}\n  -> {name}  p={p[result.class_index]:.3f}  margin={result.margin}"
+        decision = decide(p, args.oos_threshold)
+        name = labels[decision] if labels else str(decision)
+        if decision != result.class_index:
+            name += f" (board argmax {labels[result.class_index] if labels else result.class_index}, p below threshold)"
+        print(f"{text!r}\n  -> {name}  p={p.max():.3f}  margin={result.margin}"
               f"  features={result.feature_count}  round trip {elapsed * 1e3:.2f} ms")
 
     if args.test_set:
@@ -128,7 +148,8 @@ def main() -> None:
         correct, times = 0, []
         for i in range(n):
             result, elapsed = board.classify(ds.test.texts[i])
-            correct += int(result.class_index == ds.test.y[i])
+            decision = decide(probabilities(result.logits, s_out), args.oos_threshold)
+            correct += int(decision == ds.test.y[i])
             times.append(elapsed)
         t = np.asarray(times) * 1e3
         print(f"{n} test utterances: accuracy {correct / n:.4f} (combined, in-scope + OOS)")

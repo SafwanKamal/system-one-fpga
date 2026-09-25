@@ -345,11 +345,27 @@ confirms it catches a single flipped hex word.
 
 ## Known limitations
 
-* **OOS recall is poor (0.37).** The training split has 100 out-of-scope examples
-  against 15,000 in-scope. A 10× class weight helps but does not fix a 150:1
-  imbalance. Options not yet tried: much higher weighting, oversampling, or
-  synthetic OOS generation. Reported separately from in-scope accuracy throughout
-  precisely so it cannot hide inside a pooled number.
+* **OOS recall under the plain argmax is low (0.447 on the exported model,
+  0.420 ± 0.026 over three seeds), and the fix is the decision rule, not training.**
+  `scripts/oos_study.py` (3 seeds each) and `scripts/oos_tradeoff.py`:
+
+  | | in-scope | OOS recall | combined | ECE |
+  |---|---|---|---|---|
+  | argmax (the board's decision) | 0.9069 ± 0.0002 | 0.420 ± 0.026 | 0.818 | 0.0195 |
+  | **oos if top probability < τ, τ tuned on val for ≤ 1 point in-scope** | **0.9013 ± 0.0014** | **0.708 ± 0.015** | **0.866** | 0.0195 |
+  | same rule, tuned for balanced accuracy | 0.848 ± 0.021 | 0.892 ± 0.027 | 0.856 | 0.0195 |
+  | OOS class weight 30 / 100 (argmax) | 0.907 / 0.902 | 0.364 / 0.324 | | |
+  | 250 OOS training examples (`data_oos_plus`, argmax) | 0.903 | 0.451 ± 0.033 | | |
+
+  Heavier OOS weighting makes argmax recall *worse*, and the extra OOS data buys
+  ~3 points within noise. The ranking was always fine (AUROC 0.92); only the
+  threshold was mis-set. The probability threshold changes no probabilities, so
+  calibration is untouched, and it needs no retraining and no RTL change: the
+  board already sends all 151 logits, and `sysone_ethernet_client.py` applies
+  τ = 0.32 by default. On the exported model that moves the test set from 0.9071 /
+  0.447 to 0.9024 / 0.712. A board-only variant (oos if top − second logit < m)
+  is weaker at the same in-scope budget (0.559 recall), and adding a constant to
+  the oos logit (an exact edit of `B2[150]`) sits in between (0.660) but worsens ECE.
 * **No teacher yet.** The distillation hook exists (`backward(..., soft_targets=)`)
   but every number here is from gold labels alone. Comparison against Laya /
   GLiClass and a fine-tuned DeBERTa teacher needs GPU and model-hub access that
