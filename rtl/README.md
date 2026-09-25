@@ -69,7 +69,21 @@ To build for the board, from the repository root in a Vivado 2025 shell:
 ```
 vivado -mode batch -source scripts/build_sysone.tcl                 # sysone_top, bitstream
 vivado -mode batch -source scripts/build_sysone.tcl -tclargs core   # sysone_core alone, 100 MHz
+vivado -mode batch -source scripts/program_board.tcl                # load build/top/sysone_top.bit over JTAG
 ```
+
+Then, with an Ethernet cable straight from the PC to the board:
+
+```
+uv run python scripts/sysone_ethernet_client.py --list-interfaces
+uv run python scripts/sysone_ethernet_client.py -i "<interface>" "what is my credit score"
+uv run python scripts/sysone_ethernet_client.py -i "<interface>" --test-set 500
+```
+
+`--test-set` checks every returned logit against the NumPy golden model. A board
+that matches simulation prints `bit-exact against the golden model: 500/500` and
+`accuracy 0.8640` (500 utterances spread over the test split, 91 out of scope,
+with the default oos threshold).
 
 Needs `uv sync` in the repository root (the Makefile runs Python through `uv run`)
 and **Verilator 5.040 or newer**. Verilator 5.020 cannot

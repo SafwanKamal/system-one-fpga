@@ -54,10 +54,10 @@ read_verilog -sv $sources
 read_mem [glob [file join $repo_dir memory *.mem]]
 
 if {$target eq "top"} {
-    read_xdc [file join $repo_dir constraints sysone_top.xdc]
-    synth_design -top sysone_top -part $part -include_dirs $rtl_dir
+    read_xdc [list [file join $repo_dir constraints sysone_top.xdc]]
+    synth_design -top sysone_top -part $part -include_dirs [list $rtl_dir]
 } elseif {$target eq "core"} {
-    synth_design -top sysone_core -part $part -include_dirs $rtl_dir -mode out_of_context
+    synth_design -top sysone_core -part $part -include_dirs [list $rtl_dir] -mode out_of_context
     create_clock -name clk -period 10.000 [get_ports clk]
 } else {
     error "unknown target '$target': use top or core"

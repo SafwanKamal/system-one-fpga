@@ -2,7 +2,7 @@
 
     uv run python scripts/sysone_ethernet_client.py --list-interfaces
     uv run python scripts/sysone_ethernet_client.py -i "Ethernet 2" "what is my credit score"
-    uv run python scripts/sysone_ethernet_client.py -i "Ethernet 2" --test-set 500    # accuracy + latency
+    uv run python scripts/sysone_ethernet_client.py -i "Ethernet 2" --test-set 500  # bit-exact, accuracy, latency
 
 Uses scapy, like Genome-Classifier's decode_ethernet_result.py; on Windows that
 needs Npcap. Raw frames need no IP configuration, but the host must be on the same
@@ -142,20 +142,46 @@ def main() -> None:
               f"  features={result.feature_count}  round trip {elapsed * 1e3:.2f} ms")
 
     if args.test_set:
+        # The board is supposed to be bit-exact, so every logit it returns is checked
+        # against the NumPy golden model, not just the accuracy.
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from rtl_pack import load_qm
         from sysone.data import load_clinc150
+        from sysone.hashing import encode_corpus
+
         ds = load_clinc150()
         n = min(args.test_set, len(ds.test.texts))
-        correct, times = 0, []
-        for i in range(n):
+        # spread over the whole test split, so out-of-scope utterances are included
+        picks = np.linspace(0, len(ds.test.texts) - 1, n).astype(int)
+        texts = [ds.test.texts[i] for i in picks]
+
+        qm, man = load_qm(Path(args.export))
+        m = man["model"]
+        flat, offs = encode_corpus(texts, m["n_buckets"], m["use_bigrams"], m["max_tokens"],
+                                   m["use_trigrams"], tuple(m["char_ngrams"]))
+        golden = qm.forward_int(flat, offs)
+
+        correct, mismatched, times = 0, 0, []
+        for k, i in enumerate(picks):
             result, elapsed = board.classify(ds.test.texts[i])
+            if result.logits != [int(v) for v in golden[k]]:
+                mismatched += 1
+                if mismatched <= 5:
+                    print(f"  logits differ from the golden model on test utterance {i}: "
+                          f"{ds.test.texts[i]!r}")
             decision = decide(probabilities(result.logits, s_out), args.oos_threshold)
             correct += int(decision == ds.test.y[i])
             times.append(elapsed)
+            if (k + 1) % 100 == 0:
+                print(f"  {k + 1}/{n}", flush=True)
+
         t = np.asarray(times) * 1e3
-        print(f"{n} test utterances: accuracy {correct / n:.4f} (combined, in-scope + OOS)")
+        print(f"{n} test utterances ({int(ds.test.is_oos[picks].sum())} out of scope)")
+        print(f"bit-exact against the golden model: {n - mismatched}/{n}"
+              + ("" if mismatched == 0 else "  <-- the board does not match simulation"))
+        print(f"accuracy {correct / n:.4f} (combined, with the oos threshold {args.oos_threshold})")
         print(f"round trip ms: median {np.median(t):.3f}  p95 {np.percentile(t, 95):.3f}"
               f"  min {t.min():.3f}  (host-measured)")
-
 
 if __name__ == "__main__":
     main()
