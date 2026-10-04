@@ -1,0 +1,348 @@
+{
+  "format_version": 1,
+  "model": {
+    "n_buckets": 16384,
+    "dim": 64,
+    "hidden": 256,
+    "n_classes": 151,
+    "use_bigrams": true,
+    "max_tokens": 256,
+    "use_trigrams": true,
+    "char_ngrams": [
+      3,
+      5
+    ],
+    "seed": 0
+  },
+  "quant": {
+    "emb_bits": 4,
+    "w1_bits": 8,
+    "w2_bits": 8,
+    "act_bits": 8,
+    "logit_bits": 16,
+    "emb_percentile": 99.9,
+    "w_percentile": 100.0,
+    "act_percentile": 99.9,
+    "temperature": 1.2818561126675876
+  },
+  "arithmetic": {
+    "rounding": "round-half-up: (x*m + 2^(s-1)) >> s, arithmetic shift",
+    "recip_shift": 16,
+    "pool_gain": 5,
+    "pool_rule": "pooled = (sum * recip[n] + 2^(16-g-1)) >> (16 - g), g = pool_gain",
+    "mult_shift": 20,
+    "act_qmax": 127,
+    "logit_qmax": 32767,
+    "max_tokens": 256,
+    "s_out": 0.0011557971888092016,
+    "int4_range": "[-7, 7] (symmetric, -8 unused)",
+    "ternary_range": "{-1, 0, +1}"
+  },
+  "hashing": {
+    "algorithm": "FNV-1a/32",
+    "offset_basis": "0x811C9DC5",
+    "prime": "0x01000193",
+    "index": "hash & (n_buckets - 1)",
+    "normalisation": "ASCII case fold; token = maximal run of [a-z0-9]",
+    "bigrams": true,
+    "bigram_salt": "0x9E3779B9"
+  },
+  "tensors": {
+    "Eq": {
+      "shape": [
+        16384,
+        64
+      ],
+      "dtype": "int32",
+      "sha256": "9975c25ab91db261121dded57da0d6ffbe287074f05a8644a8e4d0e44ef0c5cc"
+    },
+    "W1q": {
+      "shape": [
+        64,
+        256
+      ],
+      "dtype": "int32",
+      "sha256": "f1f68476e1d0c7bf3a7eae5b4c29aae92a12b8d13033d76263a210d8a8924451"
+    },
+    "W2q": {
+      "shape": [
+        256,
+        151
+      ],
+      "dtype": "int32",
+      "sha256": "850a9b518585db3c8551a0dfed92060822056c032051f0a25374d4e43b5c41eb"
+    },
+    "M1": {
+      "shape": [
+        256
+      ],
+      "dtype": "int64",
+      "sha256": "9bbfa9f9b6a96b5833bc0f0bd29048973041111e547a4a41b86831c029e500fb"
+    },
+    "B1": {
+      "shape": [
+        256
+      ],
+      "dtype": "int64",
+      "sha256": "851d0ab2277a03db4137073fafa3ad659c5ed3cdce7d3662d9750c07136b00f2"
+    },
+    "M2": {
+      "shape": [
+        151
+      ],
+      "dtype": "int64",
+      "sha256": "dc61ac561c8dfc15e92754832373ed3c1c91d25e9df675efe3ac23619ab45c03"
+    },
+    "B2": {
+      "shape": [
+        151
+      ],
+      "dtype": "int64",
+      "sha256": "63752f090eb0014dc96de60abdedd693e93fd269689842771aa8446dd8214d7a"
+    },
+    "recip": {
+      "shape": [
+        257
+      ],
+      "dtype": "int64",
+      "sha256": "a272aed2e365b8506d18d0529a59cb846cbe6bba97f054fa5826016a86cec206"
+    }
+  },
+  "mem_files": {
+    "Eq": {
+      "file": "Eq.mem",
+      "sha256": "b78a2c31d083dcdbc6008c15ecc1c1549d52269f6972cf61b3b97544f8d54f5b",
+      "bits": 4,
+      "n_words": 1048576
+    },
+    "W1q": {
+      "file": "W1q.mem",
+      "sha256": "127a2b8290650335b20cce9160d1befe3b14a2fe10cfa8a2f2a15c7a89e18bc9",
+      "bits": 8,
+      "n_words": 16384
+    },
+    "W2q": {
+      "file": "W2q.mem",
+      "sha256": "53489a2f7fb57e04d0f159f81a23447ce043df9854e101482e15470e258126b0",
+      "bits": 8,
+      "n_words": 38656
+    },
+    "M1": {
+      "file": "M1.mem",
+      "sha256": "9017edff58a453dcf254550ee48e102ed84ea95913ae7189c56dd198342e2002",
+      "bits": 32,
+      "n_words": 256
+    },
+    "B1": {
+      "file": "B1.mem",
+      "sha256": "852a2a69eb588fa59ed4ae6efc981880cfecbee75e15bf648c44919b5d65a452",
+      "bits": 32,
+      "n_words": 256
+    },
+    "M2": {
+      "file": "M2.mem",
+      "sha256": "ed5afdffd08526ef71d477d5aa0d8eba816e26a96baa8e2efef142a88d492970",
+      "bits": 32,
+      "n_words": 151
+    },
+    "B2": {
+      "file": "B2.mem",
+      "sha256": "5ed75be20730a22e904a59349d7cc7a0e21b3c236aba31c280992aab888a1e85",
+      "bits": 32,
+      "n_words": 151
+    },
+    "recip": {
+      "file": "recip.mem",
+      "sha256": "ab2ff98b979fe8ab2e8dd6eec79a3afda921c31189dbc4315f10ac528143c8c2",
+      "bits": 32,
+      "n_words": 257
+    }
+  },
+  "npz_sha256": "ffa81889dd95dad7bbdaa80ee45e4cb37a09ccfe6779ab58f632a253a3347f57",
+  "storage": {
+    "embedding_bits": 4194304,
+    "embedding_KiB": 512.0,
+    "head_bits": 440320,
+    "head_KiB": 53.75,
+    "aux_bits": 26048,
+    "aux_KiB": 3.1796875,
+    "total_KiB": 568.9296875
+  },
+  "measured_accumulator_widths": {
+    "emb_sum_max": 360,
+    "emb_sum_bits": 10,
+    "pooled_max": 109,
+    "pooled_bits": 8,
+    "acc1_max": 108965,
+    "acc1_bits": 18,
+    "requant1_product_bits": 29,
+    "acc2_max": 408225,
+    "acc2_bits": 20,
+    "requant2_product_bits": 37
+  },
+  "golden_metrics": {
+    "float32": {
+      "n": 5500,
+      "combined_accuracy": 0.8230909090909091,
+      "majority_floor": 0.18181818181818182,
+      "lift_over_floor": 0.6412727272727272,
+      "in_scope_accuracy": 0.9077777777777778,
+      "in_scope_n": 4500,
+      "oos_recall": 0.442,
+      "oos_n": 1000,
+      "in_scope_false_oos_rate": 0.009777777777777778,
+      "brier": 0.25775787234306335,
+      "nll": 0.8248914480209351,
+      "ece_equal_width": 0.024690905533053666,
+      "ece_equal_mass": 0.025125517807223583,
+      "mean_confidence": 0.8206114768981934,
+      "oos_auroc_by_maxprob": 0.9210695555555556,
+      "oos_auroc_by_oos_prob": 0.9430595555555555,
+      "selective": [
+        {
+          "coverage": 0.1,
+          "accuracy": 0.9927272727272727,
+          "threshold": 0.9995280504226685,
+          "n_kept": 550
+        },
+        {
+          "coverage": 0.2,
+          "accuracy": 0.9918181818181818,
+          "threshold": 0.9982638955116272,
+          "n_kept": 1100
+        },
+        {
+          "coverage": 0.3,
+          "accuracy": 0.9890909090909091,
+          "threshold": 0.9956557750701904,
+          "n_kept": 1650
+        },
+        {
+          "coverage": 0.4,
+          "accuracy": 0.9872727272727273,
+          "threshold": 0.9892984628677368,
+          "n_kept": 2200
+        },
+        {
+          "coverage": 0.5,
+          "accuracy": 0.9858181818181818,
+          "threshold": 0.9742785096168518,
+          "n_kept": 2750
+        },
+        {
+          "coverage": 0.6,
+          "accuracy": 0.9763636363636363,
+          "threshold": 0.926825225353241,
+          "n_kept": 3300
+        },
+        {
+          "coverage": 0.7,
+          "accuracy": 0.9555844155844155,
+          "threshold": 0.8064194917678833,
+          "n_kept": 3850
+        },
+        {
+          "coverage": 0.8,
+          "accuracy": 0.9247727272727273,
+          "threshold": 0.5895735621452332,
+          "n_kept": 4400
+        },
+        {
+          "coverage": 0.9,
+          "accuracy": 0.8797979797979798,
+          "threshold": 0.3396454155445099,
+          "n_kept": 4950
+        },
+        {
+          "coverage": 1.0,
+          "accuracy": 0.8230909090909091,
+          "threshold": 0.06958878040313721,
+          "n_kept": 5500
+        }
+      ]
+    },
+    "integer": {
+      "n": 5500,
+      "combined_accuracy": 0.8234545454545454,
+      "majority_floor": 0.18181818181818182,
+      "lift_over_floor": 0.6416363636363636,
+      "in_scope_accuracy": 0.9071111111111111,
+      "in_scope_n": 4500,
+      "oos_recall": 0.447,
+      "oos_n": 1000,
+      "in_scope_false_oos_rate": 0.009777777777777778,
+      "brier": 0.25748338646580426,
+      "nll": 0.822819592571142,
+      "ece_equal_width": 0.024400409409134387,
+      "ece_equal_mass": 0.023692748427994213,
+      "mean_confidence": 0.8200750214957886,
+      "oos_auroc_by_maxprob": 0.9202006666666667,
+      "oos_auroc_by_oos_prob": 0.9429833333333333,
+      "selective": [
+        {
+          "coverage": 0.1,
+          "accuracy": 0.9927272727272727,
+          "threshold": 0.9995051116156155,
+          "n_kept": 550
+        },
+        {
+          "coverage": 0.2,
+          "accuracy": 0.9918181818181818,
+          "threshold": 0.998220013196329,
+          "n_kept": 1100
+        },
+        {
+          "coverage": 0.3,
+          "accuracy": 0.9890909090909091,
+          "threshold": 0.9954778428018203,
+          "n_kept": 1650
+        },
+        {
+          "coverage": 0.4,
+          "accuracy": 0.9877272727272727,
+          "threshold": 0.9892521680557808,
+          "n_kept": 2200
+        },
+        {
+          "coverage": 0.5,
+          "accuracy": 0.9858181818181818,
+          "threshold": 0.974044607443136,
+          "n_kept": 2750
+        },
+        {
+          "coverage": 0.6,
+          "accuracy": 0.9769696969696969,
+          "threshold": 0.9264342245412233,
+          "n_kept": 3300
+        },
+        {
+          "coverage": 0.7,
+          "accuracy": 0.9571428571428572,
+          "threshold": 0.8057633128615239,
+          "n_kept": 3850
+        },
+        {
+          "coverage": 0.8,
+          "accuracy": 0.925,
+          "threshold": 0.5884352298862127,
+          "n_kept": 4400
+        },
+        {
+          "coverage": 0.9,
+          "accuracy": 0.878989898989899,
+          "threshold": 0.34213536719520493,
+          "n_kept": 4950
+        },
+        {
+          "coverage": 1.0,
+          "accuracy": 0.8234545454545454,
+          "threshold": 0.0732034449695322,
+          "n_kept": 5500
+        }
+      ]
+    },
+    "temperature": 1.2818561126675876,
+    "majority_floor": 0.18181818181818182
+  },
+  "notes": "CLINC150 (CC BY 3.0), 150 in-scope intents + oos as class 150."
+}
