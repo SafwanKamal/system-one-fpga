@@ -4,10 +4,11 @@ Phase 1 exported one value per line and deliberately left packing order to the
 RTL. This script is where that decision is made, and it is the only place.
 Memories go to memory/, named the way Genome-Classifier names its files:
 
-  * ``embedding_low.mem``   16384 x 252 bits -- dims 0..62, dim d in bits [4d+3:4d]
-  * ``embedding_high.mem``  16384 x 4 bits   -- dim 63
-      Split 252 + 4 so Vivado can map the table onto 7 x (1K x 36) BRAM columns
-      plus 2 BRAMs in 16K x 2 mode: 114 RAMB36 instead of 128.
+  * ``embedding_low.mem``   4096 x 1008 bits -- dims 0..62 of rows r, r+4096,
+      r+8192, r+12288 on line r, row r in the MSBs; within a row dim d is in
+      bits [4d+3:4d]. 4096 deep so Vivado maps it onto 112 RAMB36; 16384 x 252
+      went to 16K x 2 mode and 126.
+  * ``embedding_high.mem``  16384 x 4 bits   -- dim 63 (2 RAMB36, 114 in total)
   * ``dense_hidden_weights.mem``  256 x 512 bits -- dense_engine layout: word
       (group * 64 + input), lane 0 in the MSBs (export_fpga.pack_lanes order)
   * ``dense_output_weights.mem``  768 x 512 bits -- same layout, lanes past class
@@ -126,8 +127,12 @@ def write_mems(qm: QuantModel, out: Path) -> None:
     out.mkdir(parents=True, exist_ok=True)
     Eq = qm.Eq.astype(np.int64)
     with open(out / "embedding_low.mem", "w") as flo, open(out / "embedding_high.mem", "w") as fhi:
+        banks = 4
+        bank_rows = Eq.shape[0] // banks
+        for r in range(bank_rows):
+            flo.write("".join(pack_lanes(Eq[b * bank_rows + r, :63], 4)
+                              for b in range(banks)) + "\n")
         for r in range(Eq.shape[0]):
-            flo.write(pack_lanes(Eq[r, :63], 4) + "\n")
             fhi.write(hexw(Eq[r, 63], 4) + "\n")
 
     def pack_msb_first(vals, bits):

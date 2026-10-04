@@ -5,9 +5,14 @@
 //     pooled[d] = (summed[d] * reciprocal[n] + 2^(S-1)) >>> S,   S = 16 - POOL_GAIN
 //
 // One table row (DIMENSION x INT4) is read per clock and every dimension accumulates
-// in parallel. The row is split into 252 + 4 bits so it maps onto 7 BRAM columns in
-// 1K x 36 mode plus 2 BRAMs in 16K x 2 mode (114 RAMB36). A single 256-bit row would
-// round up to 8 x 36-bit columns (128 RAMB36) and leave no room for the head.
+// in parallel. The row is split into 252 + 4 bits: a single 256-bit row would round
+// up to 8 x 36-bit BRAM columns (128 RAMB36) and leave no room for the head.
+//
+// The 252-bit part is stored as 4096 words of 4 x 252 bits (bank b holds rows
+// b*4096 .. b*4096+4095, bank 0 in the MSBs) and the bank is picked after the read.
+// Left as a 16384-deep array, Vivado maps it in 16K x 2 mode, 126 RAMB36; at 4096
+// deep every aspect ratio it can pick packs 1008 bits into 112 RAMB36. The 4-bit
+// part is 2 RAMB36 in 16K x 2 mode, so the table is 114 in total.
 //
 // Why POOL_GAIN exists: a mean of ~96 INT4 codes concentrates, and without the gain
 // the pooled value spans only about 3 bits. The gain refills the activation width and
@@ -50,6 +55,10 @@ module embedding_bag #(
     localparam integer COUNT_WIDTH = $clog2(MAXIMUM_FEATURES + 1);
     localparam integer DIMENSION_INDEX_WIDTH = $clog2(DIMENSION);
     localparam integer PRODUCT_WIDTH = SUM_WIDTH + 18;
+    localparam integer BANK_NUMBER = 4;
+    localparam integer BANK_ROWS = ROW_NUMBER / BANK_NUMBER;
+    localparam integer BANK_INDEX_WIDTH = $clog2(BANK_NUMBER);
+    localparam integer BANK_ROW_WIDTH = INDEX_WIDTH - BANK_INDEX_WIDTH;
 
     typedef enum logic [1:0] {
         ACCUMULATE,
@@ -60,7 +69,7 @@ module embedding_bag #(
     state_t state_reg, state_next;
 
     (* rom_style = "block" *)
-    logic [LOW_WIDTH-1:0] embedding_low_ROM [0:ROW_NUMBER - 1];
+    logic [BANK_NUMBER*LOW_WIDTH-1:0] embedding_low_ROM [0:BANK_ROWS - 1];
 
     (* rom_style = "block" *)
     logic [3:0] embedding_high_ROM [0:ROW_NUMBER - 1];
@@ -74,7 +83,9 @@ module embedding_bag #(
     end
 
     // Table row for the index that arrived last clock
-    logic [LOW_WIDTH-1:0] row_low_reg;
+    logic [BANK_NUMBER*LOW_WIDTH-1:0] row_low_word_reg;
+    logic [BANK_INDEX_WIDTH-1:0] row_bank_reg;
+    logic [LOW_WIDTH-1:0] row_low;
     logic [3:0] row_high_reg;
     logic [4*DIMENSION-1:0] row;
 
@@ -97,11 +108,13 @@ module embedding_bag #(
 
     // Separate clocked block with no reset, so the table is inferred as BRAM
     always_ff @(posedge clk) begin
-        row_low_reg <= embedding_low_ROM[index_in];
+        row_low_word_reg <= embedding_low_ROM[index_in[BANK_ROW_WIDTH-1:0]];
+        row_bank_reg <= index_in[INDEX_WIDTH-1 -: BANK_INDEX_WIDTH];
         row_high_reg <= embedding_high_ROM[index_in];
     end
 
-    assign row = {row_high_reg, row_low_reg};
+    assign row_low = row_low_word_reg[(BANK_NUMBER - 1 - row_bank_reg) * LOW_WIDTH +: LOW_WIDTH];
+    assign row = {row_high_reg, row_low};
 
 
     always_ff @(posedge clk or posedge reset) begin
