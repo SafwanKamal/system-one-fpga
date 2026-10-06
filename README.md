@@ -11,6 +11,65 @@ simulation the board answers a typical request in about 75 µs wire to wire. Blo
 RAM, not the 94% bit count, is the tight constraint. A Vivado build script and a
 host client are ready; running them on the board is next. See `rtl/README.md`.
 
+**Board, 2026-10-03:** running on the Nexys 4 DDR, 500/500 test utterances
+bit-exact against the golden model over raw Ethernet, host-measured round trip
+0.58 ms median.
+
+**v2 (started 2026-10-04):** a chained, multi-task transformer encoder (intent,
+slots, multi-turn dialogue, multi-sentence input, sentence pairs) with weights in the
+board's DDR2, using a budget of milliseconds to ~100 ms per request instead of
+microseconds, and parameterised to scale to the KR260 and larger parts. Everything
+for it lives in `v2/` subfolders (`rtl/v2`, `scripts/v2`, `constraints/v2`,
+`ip/v2`, `simulation/v2`, `src/sysone/v2`, `results/v2`); start at
+`rtl/v2/README.md`. v1 below is unchanged.
+
+## Phase 3: pretrained knowledge (2026-10-04)
+
+The Phase 1 conclusion was that the gap to BERT-class accuracy is pretraining, not
+architecture. Measured, with pretrained models fine-tuned on CLINC150 on CPU
+(`scripts/v2/finetune_transformer.py`; numbers are test split, the threshold rule is
+the board's max-probability rule tuned on validation for <= 1 point of in-scope):
+
+| model | params | in-scope | combined, threshold rule | in-scope with an unseen word |
+|---|---|---|---|---|
+| board model (Phase 1 export) | 1.1M | 0.907 | 0.868 | 0.830 |
+| **board model distilled from RoBERTa, same RTL** | 1.1M | **0.931** | **0.891** | 0.862 |
+| BERT-tiny (2 x 128) | 4.4M | 0.916 | 0.863 | 0.854 |
+| BERT-tiny distilled | 4.4M | 0.926 | 0.876 | 0.870 |
+| BERT-mini (4 x 256) | 11.2M | 0.939 | 0.884 | 0.897 |
+| BERT-mini distilled (15x aug) | 11.2M | 0.947 | 0.902 | 0.900 |
+| MiniLM-L6 (6 x 384) | 22.8M | 0.958 | 0.905 | 0.925 |
+| RoBERTa-base (teacher) | 125M | 0.966 | 0.921 | 0.948 |
+
+* **The board's own model, distilled, is the deployable win.** RoBERTa-base is
+  fine-tuned, 15 copies of every training sentence are made by masking ~30% of
+  the words and refilling them from RoBERTa's masked-LM head, the teacher labels
+  all 241,600 sentences with probabilities, and the hashed embedding bag is
+  trained on those (`augment_and_label.py`, `train_student.py --distill`,
+  `distill_board.py`). 3 seeds: in-scope **0.929 ± 0.003** (from 0.907), combined
+  **0.890** (from 0.868), OOS recall with the threshold 0.743 (from 0.708).
+  Nothing in `rtl/` changes: the generated `memory/*.mem` differ and so does
+  one generated parameter, `MODEL_POOL_GAIN` 5 -> 6 (still inside the 10-bit
+  pooled bound, now checked by `rtl_pack.py`), so the bitstream is rebuilt. Bit-exact in simulation at the core and through the
+  Ethernet pins. ECE is a little worse (0.032 against 0.020). Distilling with 5
+  copies instead of 15 gave 0.926 / 0.881, so more augmented data is still paying.
+* **GloVe in the hashed table adds about half a point and nothing on top of
+  distillation** (`pretrained_study.py`); averaged GloVe without hashing tops out
+  at 0.912. Static word vectors are not where the knowledge is.
+* **A small transformer would be the next step up**, at a hardware cost.
+  BERT-mini keeps its accuracy at INT8 (and nearly at INT4 weights):
+  `scripts/v2/quantize_transformer.py`. `scripts/v2/transformer_hw_estimate.py`: its 3.2M encoder
+  weights do not fit block RAM, so they stream from DDR2 every inference (~2-4 ms),
+  and its 30,522 x 256 embedding table lives in DDR2. BERT-tiny's encoder fits
+  block RAM at INT8, but distilled it only matches the distilled board model.
+* The deployed export is named in one place, `src/sysone/deployed.py`; its
+  out-of-scope threshold is stored with it in `<export>/decision.json`.
+
+The transformer work needs torch and transformers, which are kept out of the
+board flow's environment: `uv venv ../mlenv && uv pip install --python ../mlenv
+torch transformers safetensors tokenizers`. Models are read from `models/`
+(gitignored), downloaded with `hf download`.
+
 ## Phase 1
 
 Software half of the project: a hashed embedding-bag student trained on CLINC150,

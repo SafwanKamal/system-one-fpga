@@ -1,0 +1,118 @@
+{
+  "temperature": 1.2642209815132255,
+  "argmax": {
+    "in_scope_accuracy": 0.9393333333333334,
+    "oos_recall": 0.275,
+    "combined_accuracy": 0.8185454545454546,
+    "ece_equal_width": 0.04442231472391943,
+    "brier": 0.2548011521635296,
+    "nll": 0.9685641734640882,
+    "oos_auroc_by_maxprob": 0.9382133333333333
+  },
+  "tau_rule": {
+    "threshold": 0.425,
+    "in_scope_accuracy": 0.9315555555555556,
+    "oos_recall": 0.669,
+    "combined_accuracy": 0.8838181818181818
+  },
+  "unseen_word_subset": {
+    "n": 747,
+    "accuracy": 0.8969210174029452
+  },
+  "name": "bert-mini",
+  "model_dir": "models/bert-mini",
+  "variant": "full",
+  "params": 11209367,
+  "embedding_params": 7945728,
+  "best_epoch": 11,
+  "best_val_acc": 0.9203225806451613,
+  "history": [
+    {
+      "epoch": 0,
+      "train_loss": 3.7475108998027067,
+      "val_acc": 0.7325806451612903,
+      "minutes": 1.4984577457110086
+    },
+    {
+      "epoch": 1,
+      "train_loss": 1.0078647226055726,
+      "val_acc": 0.8725806451612903,
+      "minutes": 3.0485400676727297
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.3805947502243598,
+      "val_acc": 0.902258064516129,
+      "minutes": 4.5934505740801495
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.19132233656400086,
+      "val_acc": 0.9058064516129032,
+      "minutes": 6.1195481816927595
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.10790611684322357,
+      "val_acc": 0.9109677419354839,
+      "minutes": 7.649153141180674
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.06311620189555434,
+      "val_acc": 0.9148387096774193,
+      "minutes": 9.179568596680959
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.04093473780530178,
+      "val_acc": 0.9141935483870968,
+      "minutes": 10.693815537293752
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.026256165340888184,
+      "val_acc": 0.9161290322580645,
+      "minutes": 12.244069933891296
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.01934207591764777,
+      "val_acc": 0.9180645161290323,
+      "minutes": 13.75766979455948
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.01528378300837531,
+      "val_acc": 0.9174193548387096,
+      "minutes": 15.292606433232626
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.012312124424077423,
+      "val_acc": 0.9174193548387096,
+      "minutes": 16.813884556293488
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.009677050919056136,
+      "val_acc": 0.9203225806451613,
+      "minutes": 18.36559769709905
+    }
+  ],
+  "args": {
+    "model": "models/bert-mini",
+    "name": null,
+    "variant": "full",
+    "epochs": 12,
+    "lr": 0.0001,
+    "batch": 32,
+    "max_len": 48,
+    "warmup": 0.06,
+    "weight_decay": 0.01,
+    "seed": 0,
+    "threads": 2,
+    "save": true
+  },
+  "train_minutes": 18.743225836753844
+}

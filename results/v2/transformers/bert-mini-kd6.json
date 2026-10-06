@@ -1,0 +1,73 @@
+{
+  "temperature": 1.192341732114296,
+  "argmax": {
+    "in_scope_accuracy": 0.9464444444444444,
+    "oos_recall": 0.411,
+    "combined_accuracy": 0.8490909090909091,
+    "ece_equal_width": 0.04856505692015388,
+    "brier": 0.22784219148443352,
+    "nll": 0.7888413195042873,
+    "oos_auroc_by_maxprob": 0.9480437777777778
+  },
+  "tau_rule": {
+    "threshold": 0.485,
+    "in_scope_accuracy": 0.9393333333333334,
+    "oos_recall": 0.715,
+    "combined_accuracy": 0.8985454545454545
+  },
+  "unseen_word_subset": {
+    "n": 747,
+    "accuracy": 0.9022757697456493
+  },
+  "name": "bert-mini-kd6",
+  "student": "models/bert-mini",
+  "teacher": "roberta-base",
+  "params": 11209367,
+  "best_epoch": 5,
+  "history": [
+    {
+      "epoch": 0,
+      "val_acc": 0.88,
+      "minutes": 7.01719761689504
+    },
+    {
+      "epoch": 1,
+      "val_acc": 0.93,
+      "minutes": 35.08391114473343
+    },
+    {
+      "epoch": 2,
+      "val_acc": 0.9345161290322581,
+      "minutes": 45.85201456546783
+    },
+    {
+      "epoch": 3,
+      "val_acc": 0.9367741935483871,
+      "minutes": 53.16080538431803
+    },
+    {
+      "epoch": 4,
+      "val_acc": 0.9383870967741935,
+      "minutes": 60.7073072830836
+    },
+    {
+      "epoch": 5,
+      "val_acc": 0.9390322580645162,
+      "minutes": 68.40965988238652
+    }
+  ],
+  "args": {
+    "student": "models/bert-mini",
+    "teacher": "roberta-base",
+    "name": "bert-mini-kd6",
+    "epochs": 6,
+    "lr": 0.0001,
+    "batch": 64,
+    "kd_temp": 2.0,
+    "alpha": 0.5,
+    "max_len": 48,
+    "seed": 0,
+    "threads": 2
+  },
+  "train_minutes": 68.58410173654556
+}

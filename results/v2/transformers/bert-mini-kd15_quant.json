@@ -1,0 +1,83 @@
+[
+  {
+    "temperature": 1.181138309799871,
+    "argmax": {
+      "in_scope_accuracy": 0.9466666666666667,
+      "oos_recall": 0.431,
+      "combined_accuracy": 0.852909090909091,
+      "ece_equal_width": 0.052818266480777254,
+      "brier": 0.22335671170433327,
+      "nll": 0.7507695286290653,
+      "oos_auroc_by_maxprob": 0.9479864444444445
+    },
+    "tau_rule": {
+      "threshold": 0.5700000000000001,
+      "in_scope_accuracy": 0.9377777777777778,
+      "oos_recall": 0.741,
+      "combined_accuracy": 0.902
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8995983935742972
+    },
+    "setting": {
+      "w_bits": 32,
+      "a_bits": 32,
+      "emb_bits": 32
+    }
+  },
+  {
+    "temperature": 1.1789362884586065,
+    "argmax": {
+      "in_scope_accuracy": 0.9464444444444444,
+      "oos_recall": 0.425,
+      "combined_accuracy": 0.8516363636363636,
+      "ece_equal_width": 0.0507449860279828,
+      "brier": 0.22400235288010903,
+      "nll": 0.7529871080721764,
+      "oos_auroc_by_maxprob": 0.9477268888888889
+    },
+    "tau_rule": {
+      "threshold": 0.5,
+      "in_scope_accuracy": 0.9404444444444444,
+      "oos_recall": 0.706,
+      "combined_accuracy": 0.8978181818181818
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8955823293172691
+    },
+    "setting": {
+      "w_bits": 8,
+      "a_bits": 8,
+      "emb_bits": 8
+    }
+  },
+  {
+    "temperature": 1.1737799454731586,
+    "argmax": {
+      "in_scope_accuracy": 0.946,
+      "oos_recall": 0.424,
+      "combined_accuracy": 0.8510909090909091,
+      "ece_equal_width": 0.05146495948820175,
+      "brier": 0.22473510207798506,
+      "nll": 0.7602408816714626,
+      "oos_auroc_by_maxprob": 0.9471677777777778
+    },
+    "tau_rule": {
+      "threshold": 0.5700000000000001,
+      "in_scope_accuracy": 0.9357777777777778,
+      "oos_recall": 0.736,
+      "combined_accuracy": 0.8994545454545455
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8995983935742972
+    },
+    "setting": {
+      "w_bits": 8,
+      "a_bits": 8,
+      "emb_bits": 4
+    }
+  }
+]

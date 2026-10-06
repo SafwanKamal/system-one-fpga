@@ -1,0 +1,22 @@
+{
+ "what": "CLINC150 test in-scope accuracy (4,500 utterances), float model vs IntEncoder with activation ranges from 64 or 256 training chains per dataset, reduced over chains by max, median or 0.99-quantile of each chain's 99.99th percentile of |x|",
+ "date": "2026-10-05",
+ "bert-mini-slots4": {
+  "float": 0.9315555555555556,
+  "cal64_p9999max": 0.9257777777777778,
+  "cal256_p9999max": 0.9262222222222222,
+  "cal256_p9999median": 0.9313333333333333,
+  "cal256_p9999_q99": 0.9302222222222222,
+  "n": 4500,
+  "seconds": 277.19894909858704
+ },
+ "bert-mini": {
+  "float": 0.9295555555555556,
+  "cal64_p9999max": 0.9204444444444444,
+  "cal256_p9999max": 0.9217777777777778,
+  "cal256_p9999median": 0.9268888888888889,
+  "cal256_p9999_q99": 0.9246666666666666,
+  "n": 4500,
+  "seconds": 282.87331199645996
+ }
+}

@@ -1,0 +1,71 @@
+{
+  "temperature": 1.0880028654778422,
+  "argmax": {
+    "in_scope_accuracy": 0.966,
+    "oos_recall": 0.418,
+    "combined_accuracy": 0.8663636363636363,
+    "ece_equal_width": 0.05179418134596689,
+    "brier": 0.20451863966838657,
+    "nll": 0.7295398697848543,
+    "oos_auroc_by_maxprob": 0.9570177777777777
+  },
+  "tau_rule": {
+    "threshold": 0.675,
+    "in_scope_accuracy": 0.9564444444444444,
+    "oos_recall": 0.763,
+    "combined_accuracy": 0.9212727272727272
+  },
+  "unseen_word_subset": {
+    "n": 747,
+    "accuracy": 0.9477911646586346
+  },
+  "name": "roberta-base",
+  "model_dir": "models/roberta-base",
+  "variant": "full",
+  "params": 124761751,
+  "embedding_params": 39000576,
+  "best_epoch": 3,
+  "best_val_acc": 0.9625806451612903,
+  "history": [
+    {
+      "epoch": 0,
+      "train_loss": 2.055467874016983,
+      "val_acc": 0.9180645161290323,
+      "minutes": 19.7063725511233
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.19502461413674008,
+      "val_acc": 0.9548387096774194,
+      "minutes": 40.40256745417913
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.06416225444402127,
+      "val_acc": 0.9612903225806452,
+      "minutes": 60.7297846198082
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.029066111357352195,
+      "val_acc": 0.9625806451612903,
+      "minutes": 81.54937898715337
+    }
+  ],
+  "args": {
+    "model": "models/roberta-base",
+    "name": null,
+    "variant": "full",
+    "epochs": 4,
+    "lr": 3e-05,
+    "batch": 32,
+    "max_len": 48,
+    "warmup": 0.06,
+    "weight_decay": 0.01,
+    "seed": 0,
+    "threads": 2,
+    "oos_weight": 1.0,
+    "save": true
+  },
+  "train_minutes": 88.17674041589102
+}

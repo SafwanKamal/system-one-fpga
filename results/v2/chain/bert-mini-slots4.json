@@ -1,0 +1,252 @@
+{
+  "name": "bert-mini-slots4",
+  "model": "models/bert-mini",
+  "encoder_params": 11170560,
+  "head_params": 114622,
+  "args": {
+    "model": "models/bert-mini",
+    "name": "bert-mini-slots4",
+    "epochs": 4,
+    "lr": 0.0001,
+    "batch": 32,
+    "max_len": 128,
+    "sgd_dialogues": 4000,
+    "eval_sgd": 4000,
+    "seed": 0,
+    "threads": 1,
+    "limit": 0,
+    "slot_weight": 4.0
+  },
+  "history": [
+    {
+      "epoch": 0,
+      "dev": {
+        "clinc": {
+          "intent_accuracy": 0.867741935483871,
+          "in_scope_accuracy": 0.891,
+          "oos_recall": 0.17,
+          "n": 3100
+        },
+        "atis": {
+          "intent_accuracy": 0.892,
+          "slot_f1": 0.8161120840630474,
+          "n": 500
+        },
+        "sick": {
+          "pair_accuracy": 0.672,
+          "n": 500
+        },
+        "msrp": {
+          "pair_accuracy": 0.694,
+          "n": 500
+        },
+        "multi_clinc": {
+          "intent_accuracy": 0.849811153077094,
+          "in_scope_accuracy": 0.869148207353277,
+          "oos_recall": 0.1557377049180328,
+          "n": 1500
+        },
+        "sgd": {
+          "intent_accuracy": 0.8905,
+          "slot_f1": 0.5475194261805141,
+          "n": 2000
+        }
+      },
+      "dev_mean": 0.8110088480934942,
+      "minutes": 26.254121840000153
+    },
+    {
+      "epoch": 1,
+      "dev": {
+        "clinc": {
+          "intent_accuracy": 0.9109677419354839,
+          "in_scope_accuracy": 0.93,
+          "oos_recall": 0.34,
+          "n": 3100
+        },
+        "atis": {
+          "intent_accuracy": 0.942,
+          "slot_f1": 0.8941244909831296,
+          "n": 500
+        },
+        "sick": {
+          "pair_accuracy": 0.746,
+          "n": 500
+        },
+        "msrp": {
+          "pair_accuracy": 0.712,
+          "n": 500
+        },
+        "multi_clinc": {
+          "intent_accuracy": 0.8922461675183293,
+          "in_scope_accuracy": 0.9100251198903859,
+          "oos_recall": 0.2540983606557377,
+          "n": 1500
+        },
+        "sgd": {
+          "intent_accuracy": 0.8915,
+          "slot_f1": 0.6034063260340632,
+          "n": 2000
+        }
+      },
+      "dev_mean": 0.8491189849089688,
+      "minutes": 53.55125788450241
+    },
+    {
+      "epoch": 2,
+      "dev": {
+        "clinc": {
+          "intent_accuracy": 0.9135483870967742,
+          "in_scope_accuracy": 0.9323333333333333,
+          "oos_recall": 0.35,
+          "n": 3100
+        },
+        "atis": {
+          "intent_accuracy": 0.966,
+          "slot_f1": 0.9134867462860473,
+          "n": 500
+        },
+        "sick": {
+          "pair_accuracy": 0.776,
+          "n": 500
+        },
+        "msrp": {
+          "pair_accuracy": 0.61,
+          "n": 500
+        },
+        "multi_clinc": {
+          "intent_accuracy": 0.9064652299489002,
+          "in_scope_accuracy": 0.9214432518839918,
+          "oos_recall": 0.36885245901639346,
+          "n": 1500
+        },
+        "sgd": {
+          "intent_accuracy": 0.914,
+          "slot_f1": 0.6399514268366728,
+          "n": 2000
+        }
+      },
+      "dev_mean": 0.8476689361742791,
+      "minutes": 80.89193642536799
+    },
+    {
+      "epoch": 3,
+      "dev": {
+        "clinc": {
+          "intent_accuracy": 0.9164516129032259,
+          "in_scope_accuracy": 0.9356666666666666,
+          "oos_recall": 0.34,
+          "n": 3100
+        },
+        "atis": {
+          "intent_accuracy": 0.968,
+          "slot_f1": 0.9225844004656576,
+          "n": 500
+        },
+        "sick": {
+          "pair_accuracy": 0.818,
+          "n": 500
+        },
+        "msrp": {
+          "pair_accuracy": 0.724,
+          "n": 500
+        },
+        "multi_clinc": {
+          "intent_accuracy": 0.9071317485003333,
+          "in_scope_accuracy": 0.9232701530029687,
+          "oos_recall": 0.32786885245901637,
+          "n": 1500
+        },
+        "sgd": {
+          "intent_accuracy": 0.9175,
+          "slot_f1": 0.693069306930693,
+          "n": 2000
+        }
+      },
+      "dev_mean": 0.8751805602339265,
+      "minutes": 108.49872244199118
+    }
+  ],
+  "test": {
+    "clinc": {
+      "intent_accuracy": 0.8109090909090909,
+      "in_scope_accuracy": 0.9315555555555556,
+      "oos_recall": 0.268,
+      "n": 5500
+    },
+    "atis": {
+      "intent_accuracy": 0.9585666293393057,
+      "slot_f1": 0.9114811568799298,
+      "n": 893
+    },
+    "sick": {
+      "pair_accuracy": 0.8033285975238482,
+      "n": 4927
+    },
+    "msrp": {
+      "pair_accuracy": 0.6869565217391305,
+      "n": 1725
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.8078466339723585,
+      "in_scope_accuracy": 0.9239482200647249,
+      "oos_recall": 0.2544987146529563,
+      "n": 1500
+    },
+    "sgd": {
+      "intent_accuracy": 0.868,
+      "slot_f1": 0.574438202247191,
+      "n": 4000
+    }
+  },
+  "test_sgd_without_context": {
+    "intent_accuracy": 0.5005,
+    "slot_f1": 0.4922653832932279,
+    "n": 4000
+  },
+  "test_sgd_context_turns_only": {
+    "with_context": {
+      "intent_accuracy": 0.8577777777777778,
+      "slot_f1": 0.5644687106257875,
+      "n": 3600
+    },
+    "without_context": {
+      "intent_accuracy": 0.4494444444444444,
+      "slot_f1": 0.4668304668304668,
+      "n": 3600
+    }
+  },
+  "test_int8": {
+    "clinc": {
+      "intent_accuracy": 0.8094545454545454,
+      "in_scope_accuracy": 0.9308888888888889,
+      "oos_recall": 0.263,
+      "n": 5500
+    },
+    "atis": {
+      "intent_accuracy": 0.9608062709966405,
+      "slot_f1": 0.9097283085013146,
+      "n": 893
+    },
+    "sick": {
+      "pair_accuracy": 0.7994722955145118,
+      "n": 4927
+    },
+    "msrp": {
+      "pair_accuracy": 0.688695652173913,
+      "n": 1725
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.8056174765938475,
+      "in_scope_accuracy": 0.9225997842502697,
+      "oos_recall": 0.2480719794344473,
+      "n": 1500
+    },
+    "sgd": {
+      "intent_accuracy": 0.869,
+      "slot_f1": 0.5781856689022238,
+      "n": 4000
+    }
+  },
+  "minutes": 111.53376999298732
+}

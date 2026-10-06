@@ -9,8 +9,16 @@ simulation/vectors/
 simulation/obj_dir/
 simulation/*.hex
 simulation/*.log
+simulation/v2/obj_dir/
 
-# Vivado output (scripts/build_sysone.tcl)
+# Vivado output (scripts/build_sysone.tcl, scripts/v2/create_project_v2.tcl)
 build/
 .Xil/
 *.jou
+
+# pretrained models downloaded with `hf download` (see README, Phase 3)
+models/
+
+# v2 external corpora, cloned by scripts/v2/fetch_v2_data.py
+data/v2/*/
+simulation/v2/vectors/encoder/

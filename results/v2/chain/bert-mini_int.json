@@ -1,0 +1,54 @@
+{
+  "name": "bert-mini",
+  "numpy_vs_torch_max_abs": 3.4649364573091646e-06,
+  "float": {
+    "clinc": {
+      "intent_accuracy": 0.816,
+      "in_scope_accuracy": 0.9221411192214112
+    },
+    "atis": {
+      "intent_accuracy": 0.958,
+      "slot_f1": 0.8108783994998436
+    },
+    "sick": {
+      "pair_accuracy": 0.768
+    },
+    "msrp": {
+      "pair_accuracy": 0.702
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.8045112781954887,
+      "in_scope_accuracy": 0.924496644295302
+    },
+    "sgd": {
+      "intent_accuracy": 0.892,
+      "slot_f1": 0.4522613065326633
+    }
+  },
+  "integer": {
+    "clinc": {
+      "intent_accuracy": 0.82,
+      "in_scope_accuracy": 0.9221411192214112
+    },
+    "atis": {
+      "intent_accuracy": 0.956,
+      "slot_f1": 0.8129272840273463
+    },
+    "sick": {
+      "pair_accuracy": 0.764
+    },
+    "msrp": {
+      "pair_accuracy": 0.7
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.7928913192071086,
+      "in_scope_accuracy": 0.9161073825503355
+    },
+    "sgd": {
+      "intent_accuracy": 0.886,
+      "slot_f1": 0.428927680798005
+    }
+  },
+  "decision_agreement": 0.9363288333669152,
+  "per_dataset": 500
+}

@@ -1,0 +1,82 @@
+{
+  "temperature": 1.0521683779419289,
+  "argmax": {
+    "in_scope_accuracy": 0.9577777777777777,
+    "oos_recall": 0.315,
+    "combined_accuracy": 0.8409090909090909,
+    "ece_equal_width": 0.05755724993146507,
+    "brier": 0.22744398485975445,
+    "nll": 0.8310414754078892,
+    "oos_auroc_by_maxprob": 0.9517493333333333
+  },
+  "tau_rule": {
+    "threshold": 0.5650000000000001,
+    "in_scope_accuracy": 0.9504444444444444,
+    "oos_recall": 0.699,
+    "combined_accuracy": 0.9047272727272727
+  },
+  "unseen_word_subset": {
+    "n": 747,
+    "accuracy": 0.9250334672021419
+  },
+  "name": "minilm-l6",
+  "model_dir": "models/all-MiniLM-L6-v2",
+  "variant": "full",
+  "params": 22771351,
+  "embedding_params": 11918592,
+  "best_epoch": 5,
+  "best_val_acc": 0.9467741935483871,
+  "history": [
+    {
+      "epoch": 0,
+      "train_loss": 2.660840039916386,
+      "val_acc": 0.8893548387096775,
+      "minutes": 3.598272136847178
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.3966667592920215,
+      "val_acc": 0.9374193548387096,
+      "minutes": 9.14845343430837
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.1299901377957388,
+      "val_acc": 0.9425806451612904,
+      "minutes": 12.556714117527008
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.05991611137048693,
+      "val_acc": 0.9432258064516129,
+      "minutes": 16.03770282268524
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.03283037563724234,
+      "val_acc": 0.9441935483870968,
+      "minutes": 19.412326312065126
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.023708194564805916,
+      "val_acc": 0.9467741935483871,
+      "minutes": 22.83321855068207
+    }
+  ],
+  "args": {
+    "model": "models/all-MiniLM-L6-v2",
+    "name": "minilm-l6",
+    "variant": "full",
+    "epochs": 6,
+    "lr": 8e-05,
+    "batch": 32,
+    "max_len": 48,
+    "warmup": 0.06,
+    "weight_decay": 0.01,
+    "seed": 0,
+    "threads": 2,
+    "save": true
+  },
+  "train_minutes": 23.790416852633157
+}

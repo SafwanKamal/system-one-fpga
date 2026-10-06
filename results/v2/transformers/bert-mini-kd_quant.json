@@ -1,0 +1,137 @@
+[
+  {
+    "temperature": 1.1701588817044213,
+    "argmax": {
+      "in_scope_accuracy": 0.9426666666666667,
+      "oos_recall": 0.362,
+      "combined_accuracy": 0.8370909090909091,
+      "ece_equal_width": 0.04323744996176,
+      "brier": 0.23968317180976095,
+      "nll": 0.8275867461516897,
+      "oos_auroc_by_maxprob": 0.9371555555555555
+    },
+    "tau_rule": {
+      "threshold": 0.51,
+      "in_scope_accuracy": 0.9308888888888889,
+      "oos_recall": 0.713,
+      "combined_accuracy": 0.8912727272727273
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8969210174029452
+    },
+    "setting": {
+      "w_bits": 32,
+      "a_bits": 32,
+      "emb_bits": 32
+    }
+  },
+  {
+    "temperature": 1.17040507517477,
+    "argmax": {
+      "in_scope_accuracy": 0.9426666666666667,
+      "oos_recall": 0.365,
+      "combined_accuracy": 0.8376363636363636,
+      "ece_equal_width": 0.043330700281587364,
+      "brier": 0.23929224509819283,
+      "nll": 0.8252772480300214,
+      "oos_auroc_by_maxprob": 0.937178
+    },
+    "tau_rule": {
+      "threshold": 0.52,
+      "in_scope_accuracy": 0.9304444444444444,
+      "oos_recall": 0.721,
+      "combined_accuracy": 0.8923636363636364
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8955823293172691
+    },
+    "setting": {
+      "w_bits": 8,
+      "a_bits": 32,
+      "emb_bits": 8
+    }
+  },
+  {
+    "temperature": 1.1684714465552268,
+    "argmax": {
+      "in_scope_accuracy": 0.9431111111111111,
+      "oos_recall": 0.363,
+      "combined_accuracy": 0.8376363636363636,
+      "ece_equal_width": 0.044448887750567066,
+      "brier": 0.23953123957476688,
+      "nll": 0.8238170943708523,
+      "oos_auroc_by_maxprob": 0.9375657777777778
+    },
+    "tau_rule": {
+      "threshold": 0.5,
+      "in_scope_accuracy": 0.9308888888888889,
+      "oos_recall": 0.705,
+      "combined_accuracy": 0.8898181818181818
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8995983935742972
+    },
+    "setting": {
+      "w_bits": 8,
+      "a_bits": 8,
+      "emb_bits": 8
+    }
+  },
+  {
+    "temperature": 1.1606788136824362,
+    "argmax": {
+      "in_scope_accuracy": 0.9428888888888889,
+      "oos_recall": 0.382,
+      "combined_accuracy": 0.8409090909090909,
+      "ece_equal_width": 0.04654010519386565,
+      "brier": 0.23761047771468483,
+      "nll": 0.8150806077857378,
+      "oos_auroc_by_maxprob": 0.9358948888888889
+    },
+    "tau_rule": {
+      "threshold": 0.47000000000000003,
+      "in_scope_accuracy": 0.9324444444444444,
+      "oos_recall": 0.712,
+      "combined_accuracy": 0.8923636363636364
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8955823293172691
+    },
+    "setting": {
+      "w_bits": 8,
+      "a_bits": 8,
+      "emb_bits": 4
+    }
+  },
+  {
+    "temperature": 1.07732774924736,
+    "argmax": {
+      "in_scope_accuracy": 0.9375555555555556,
+      "oos_recall": 0.363,
+      "combined_accuracy": 0.8330909090909091,
+      "ece_equal_width": 0.0427369388812984,
+      "brier": 0.24345961109106354,
+      "nll": 0.833772110635319,
+      "oos_auroc_by_maxprob": 0.9313726666666666
+    },
+    "tau_rule": {
+      "threshold": 0.42,
+      "in_scope_accuracy": 0.9297777777777778,
+      "oos_recall": 0.673,
+      "combined_accuracy": 0.883090909090909
+    },
+    "unseen_word_subset": {
+      "n": 747,
+      "accuracy": 0.8888888888888888
+    },
+    "setting": {
+      "w_bits": 4,
+      "a_bits": 8,
+      "emb_bits": 4
+    }
+  }
+]

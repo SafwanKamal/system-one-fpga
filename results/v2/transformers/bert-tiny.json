@@ -1,0 +1,136 @@
+{
+  "temperature": 1.3367447737853357,
+  "argmax": {
+    "in_scope_accuracy": 0.916,
+    "oos_recall": 0.229,
+    "combined_accuracy": 0.7910909090909091,
+    "ece_equal_width": 0.04581677590726711,
+    "brier": 0.2866448375134469,
+    "nll": 1.0678780768516487,
+    "oos_auroc_by_maxprob": 0.9196691111111112
+  },
+  "tau_rule": {
+    "threshold": 0.41000000000000003,
+    "in_scope_accuracy": 0.9031111111111111,
+    "oos_recall": 0.682,
+    "combined_accuracy": 0.862909090909091
+  },
+  "unseen_word_subset": {
+    "n": 747,
+    "accuracy": 0.8540829986613119
+  },
+  "name": "bert-tiny",
+  "model_dir": "models/bert-tiny",
+  "variant": "full",
+  "params": 4405399,
+  "embedding_params": 3972864,
+  "best_epoch": 7,
+  "best_val_acc": 0.8983870967741936,
+  "history": [
+    {
+      "epoch": 0,
+      "train_loss": 3.756898385294226,
+      "val_acc": 0.6806451612903226,
+      "minutes": 0.5304666956265768
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.9336992480265384,
+      "val_acc": 0.8429032258064516,
+      "minutes": 1.0629994551340738
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.350851048823224,
+      "val_acc": 0.8690322580645161,
+      "minutes": 1.5933857758839924
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.17383913319237185,
+      "val_acc": 0.8880645161290323,
+      "minutes": 2.138476324081421
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.0948143188270512,
+      "val_acc": 0.8896774193548387,
+      "minutes": 2.655263674259186
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.0571942289884122,
+      "val_acc": 0.8961290322580645,
+      "minutes": 3.1722674568494162
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.03993583884953663,
+      "val_acc": 0.8935483870967742,
+      "minutes": 3.709197680155436
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.026977677058601223,
+      "val_acc": 0.8983870967741936,
+      "minutes": 4.242689661184946
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.019675761687982556,
+      "val_acc": 0.895483870967742,
+      "minutes": 4.765058664480845
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.01673913790184437,
+      "val_acc": 0.896774193548387,
+      "minutes": 5.285462105274201
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.01202893586656609,
+      "val_acc": 0.8961290322580645,
+      "minutes": 5.804501513640086
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.010108762958105531,
+      "val_acc": 0.8961290322580645,
+      "minutes": 6.299032827218373
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.008875355532836934,
+      "val_acc": 0.8961290322580645,
+      "minutes": 6.807350484530131
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.006787346509094072,
+      "val_acc": 0.896774193548387,
+      "minutes": 7.3249568502108255
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.006382435716608453,
+      "val_acc": 0.8951612903225806,
+      "minutes": 7.839000300566355
+    }
+  ],
+  "args": {
+    "model": "models/bert-tiny",
+    "name": null,
+    "variant": "full",
+    "epochs": 15,
+    "lr": 0.0003,
+    "batch": 32,
+    "max_len": 48,
+    "warmup": 0.06,
+    "weight_decay": 0.01,
+    "seed": 0,
+    "threads": 2,
+    "save": true
+  },
+  "train_minutes": 7.943856867154439
+}

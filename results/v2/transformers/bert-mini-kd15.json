@@ -1,0 +1,58 @@
+{
+  "temperature": 1.181138309799871,
+  "argmax": {
+    "in_scope_accuracy": 0.9466666666666667,
+    "oos_recall": 0.431,
+    "combined_accuracy": 0.852909090909091,
+    "ece_equal_width": 0.052818266480777254,
+    "brier": 0.22335671170433327,
+    "nll": 0.7507695286290653,
+    "oos_auroc_by_maxprob": 0.9479864444444445
+  },
+  "tau_rule": {
+    "threshold": 0.5700000000000001,
+    "in_scope_accuracy": 0.9377777777777778,
+    "oos_recall": 0.741,
+    "combined_accuracy": 0.902
+  },
+  "unseen_word_subset": {
+    "n": 747,
+    "accuracy": 0.8995983935742972
+  },
+  "name": "bert-mini-kd15",
+  "student": "models/bert-mini",
+  "teacher": "roberta-base15",
+  "params": 11209367,
+  "best_epoch": 2,
+  "history": [
+    {
+      "epoch": 0,
+      "val_acc": 0.9329032258064516,
+      "minutes": 52.890458607673644
+    },
+    {
+      "epoch": 1,
+      "val_acc": 0.9387096774193548,
+      "minutes": 72.69284539620081
+    },
+    {
+      "epoch": 2,
+      "val_acc": 0.9432258064516129,
+      "minutes": 91.57042198578516
+    }
+  ],
+  "args": {
+    "student": "models/bert-mini",
+    "teacher": "roberta-base15",
+    "name": "bert-mini-kd15",
+    "epochs": 3,
+    "lr": 0.0001,
+    "batch": 64,
+    "kd_temp": 2.0,
+    "alpha": 0.5,
+    "max_len": 48,
+    "seed": 0,
+    "threads": 2
+  },
+  "train_minutes": 91.72098868290583
+}

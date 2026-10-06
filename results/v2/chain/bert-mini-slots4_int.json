@@ -1,0 +1,54 @@
+{
+  "name": "bert-mini-slots4",
+  "numpy_vs_torch_max_abs": 4.960721557090153e-06,
+  "float": {
+    "clinc": {
+      "intent_accuracy": 0.834,
+      "in_scope_accuracy": 0.9391727493917275
+    },
+    "atis": {
+      "intent_accuracy": 0.956,
+      "slot_f1": 0.9052959501557631
+    },
+    "sick": {
+      "pair_accuracy": 0.782
+    },
+    "msrp": {
+      "pair_accuracy": 0.692
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.7983595352016405,
+      "in_scope_accuracy": 0.9286912751677853
+    },
+    "sgd": {
+      "intent_accuracy": 0.892,
+      "slot_f1": 0.6174863387978142
+    }
+  },
+  "integer": {
+    "clinc": {
+      "intent_accuracy": 0.82,
+      "in_scope_accuracy": 0.9197080291970803
+    },
+    "atis": {
+      "intent_accuracy": 0.95,
+      "slot_f1": 0.8991622711759231
+    },
+    "sick": {
+      "pair_accuracy": 0.788
+    },
+    "msrp": {
+      "pair_accuracy": 0.704
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.7908407382091592,
+      "in_scope_accuracy": 0.9219798657718121
+    },
+    "sgd": {
+      "intent_accuracy": 0.886,
+      "slot_f1": 0.6174863387978142
+    }
+  },
+  "decision_agreement": 0.9474108402176104,
+  "per_dataset": 500
+}
