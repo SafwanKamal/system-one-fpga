@@ -20,7 +20,7 @@
 //
 // Widths come from worst-case bounds, not from the measured maxima:
 //     |sum| <= 7 * 256 = 1792                  -> 12 bits signed
-//     |pooled| <= 7 * 2^POOL_GAIN (+1)         -> 10 bits signed for POOL_GAIN <= 5
+//     |pooled| <= 7 * 2^POOL_GAIN (+1)         -> 10 bits signed for POOL_GAIN <= 6
 module embedding_bag #(
     parameter integer ROW_NUMBER       = 16384,
     parameter integer DIMENSION        = 64,

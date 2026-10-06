@@ -49,6 +49,14 @@ def main() -> int:
                     help="e.g. 3-5 to add character n-grams of length 3 to 5")
     ap.add_argument("--max-tokens", type=int, default=64,
                     help="hardware budget: memory reads per inference")
+    ap.add_argument("--init-table", default=None,
+                    help="start the embedding table from this .npy (pretrained_study.py "
+                         "writes export/pretrained_table.npy) instead of random")
+    ap.add_argument("--distill", default=None,
+                    help="train on teacher-labelled sentences from augment_and_label.py "
+                         "(e.g. export/v2/transformers/distill_roberta-base15.npz)")
+    ap.add_argument("--distill-alpha", type=float, default=0.5,
+                    help="weight of the gold label on the original sentences")
     ap.add_argument("--out", default="export/student")
     args = ap.parse_args()
 
@@ -75,9 +83,23 @@ def main() -> int:
     cw[ds.oos_id] = args.oos_weight
     qbits = (args.bits, args.head_bits, args.head_bits)
 
-    model, info = train(cfg, ds.train.texts, ds.train.y, ds.val.texts, ds.val.y,
+    texts, y, soft = ds.train.texts, ds.train.y, None
+    if args.distill:
+        d = np.load(args.distill, allow_pickle=True)
+        texts = list(d["texts"])
+        soft = softmax(d["logits"].astype(np.float64) / float(d["temperature"])).astype(np.float32)
+        hard = d["hard"]
+        orig = hard >= 0
+        soft[orig] *= 1.0 - args.distill_alpha
+        soft[np.where(orig)[0], hard[orig]] += args.distill_alpha
+        y = np.where(orig, hard, soft.argmax(1))
+        print(f"distilling from {args.distill}: {len(texts)} sentences ({int(orig.sum())} gold)")
+
+    model, info = train(cfg, texts, y, ds.val.texts, ds.val.y,
                         epochs=args.epochs, class_weight=cw,
-                        qat_bits=qbits if args.qat else None)
+                        qat_bits=qbits if args.qat else None,
+                        init_E=np.load(args.init_table) if args.init_table else None,
+                        soft_targets=soft)
     print(f"best val acc {info['best_val_acc']:.4f} at epoch {info['best_epoch']} "
           f"({info['train_seconds']:.1f}s)")
 

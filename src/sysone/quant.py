@@ -155,6 +155,7 @@ class QuantConfig:
     w2_bits: int = 8
     act_bits: int = 8            # hidden activation width after ReLU
     logit_bits: int = 16         # output logit width
+    max_multiplier: int = 1 << 17   # channel_requantizer: multiplier must be below this
     emb_percentile: float = 99.9
     w_percentile: float = 100.0
     act_percentile: float = 99.9
@@ -306,6 +307,13 @@ def calibrate_and_quantize(
     l_max = float(np.percentile(np.abs(fwd["logits"]), 99.99))
     s_out = max(l_max / qcfg.temperature, 1e-9) / logit_qmax
 
+    # The RTL multiplier input is 17 bits unsigned. A model with small logits
+    # (a distilled one, say) wants a fine output step and hence a large M2; when
+    # that overflows, coarsen the output step instead. The logits then use less
+    # of their 16-bit range, which costs nothing measurable at this resolution.
+    m2_float = (s_h * s_W2) / (qcfg.temperature * s_out) * (1 << MULT_SHIFT)
+    if m2_float.max() >= qcfg.max_multiplier - 1:
+        s_out *= float(m2_float.max()) / (qcfg.max_multiplier - 2)
     M2 = to_fixed_multiplier((s_h * s_W2) / (qcfg.temperature * s_out))
     B2 = to_fixed_multiplier(model.b2.astype(np.float64) / (qcfg.temperature * s_out))
 

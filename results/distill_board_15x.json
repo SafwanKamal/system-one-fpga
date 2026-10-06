@@ -1,0 +1,119 @@
+{
+  "args": {
+    "teacher": "roberta-base15",
+    "kd_temp": 1.0,
+    "alpha": 0.5,
+    "epochs": 12,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "configs": [
+      "kd"
+    ],
+    "workers": 2,
+    "out": "results/distill_board_15x.json"
+  },
+  "summary": [
+    {
+      "config": "kd",
+      "variant": "full",
+      "seeds": 3,
+      "argmax.in_scope_accuracy": 0.9294074074074073,
+      "argmax.in_scope_accuracy_sd": 0.0025660011963983534,
+      "argmax.oos_recall": 0.5486666666666667,
+      "argmax.oos_recall_sd": 0.0041633319989322695,
+      "argmax.combined_accuracy": 0.8601818181818182,
+      "argmax.combined_accuracy_sd": 0.0020246415864836435,
+      "argmax.ece_equal_width": 0.03214901243518837,
+      "argmax.ece_equal_width_sd": 0.0029293522526500607,
+      "argmax.brier": 0.21135328647938867,
+      "argmax.brier_sd": 0.0011915502031492186,
+      "argmax.oos_auroc_by_maxprob": 0.9111802222222223,
+      "argmax.oos_auroc_by_maxprob_sd": 0.001063450219977615,
+      "tau_rule.in_scope_accuracy": 0.9224444444444444,
+      "tau_rule.in_scope_accuracy_sd": 0.0034498165991689207,
+      "tau_rule.oos_recall": 0.743,
+      "tau_rule.oos_recall_sd": 0.02330236039546211,
+      "tau_rule.combined_accuracy": 0.8898181818181818,
+      "tau_rule.combined_accuracy_sd": 0.0015850541612874947,
+      "unseen_word_subset.accuracy": 0.8625613565372602,
+      "unseen_word_subset.accuracy_sd": 0.007372919072672196
+    }
+  ],
+  "runs": [
+    {
+      "config": "kd",
+      "variant": "full",
+      "seed": 0,
+      "best_epoch": 10,
+      "argmax": {
+        "in_scope_accuracy": 0.9308888888888889,
+        "oos_recall": 0.544,
+        "combined_accuracy": 0.8605454545454545,
+        "ece_equal_width": 0.034553272437339244,
+        "brier": 0.211266233947321,
+        "oos_auroc_by_maxprob": 0.9122953333333333
+      },
+      "tau_rule": {
+        "threshold": 0.38,
+        "in_scope_accuracy": 0.9222222222222223,
+        "oos_recall": 0.75,
+        "combined_accuracy": 0.8909090909090909
+      },
+      "unseen_word_subset": {
+        "n": 747,
+        "accuracy": 0.8621151271753681
+      }
+    },
+    {
+      "config": "kd",
+      "variant": "full",
+      "seed": 1,
+      "best_epoch": 5,
+      "argmax": {
+        "in_scope_accuracy": 0.9308888888888889,
+        "oos_recall": 0.552,
+        "combined_accuracy": 0.862,
+        "ece_equal_width": 0.03300740542637705,
+        "brier": 0.21020764989739857,
+        "oos_auroc_by_maxprob": 0.911068
+      },
+      "tau_rule": {
+        "threshold": 0.32,
+        "in_scope_accuracy": 0.926,
+        "oos_recall": 0.717,
+        "combined_accuracy": 0.888
+      },
+      "unseen_word_subset": {
+        "n": 747,
+        "accuracy": 0.8701472556894244
+      }
+    },
+    {
+      "config": "kd",
+      "variant": "full",
+      "seed": 2,
+      "best_epoch": 6,
+      "argmax": {
+        "in_scope_accuracy": 0.9264444444444444,
+        "oos_recall": 0.55,
+        "combined_accuracy": 0.858,
+        "ece_equal_width": 0.028886359441848808,
+        "brier": 0.21258597559344644,
+        "oos_auroc_by_maxprob": 0.9101773333333333
+      },
+      "tau_rule": {
+        "threshold": 0.41500000000000004,
+        "in_scope_accuracy": 0.9191111111111111,
+        "oos_recall": 0.762,
+        "combined_accuracy": 0.8905454545454545
+      },
+      "unseen_word_subset": {
+        "n": 747,
+        "accuracy": 0.8554216867469879
+      }
+    }
+  ]
+}

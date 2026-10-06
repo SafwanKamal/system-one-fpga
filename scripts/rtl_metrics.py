@@ -22,6 +22,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from rtl_pack import EDGE_CASES                                 # noqa: E402
+from sysone.deployed import DEPLOYED_EXPORT  # noqa: E402
 from sysone.data import load_clinc150, majority_floor           # noqa: E402
 from sysone.metrics import evaluate                             # noqa: E402
 from sysone.model import softmax                                # noqa: E402
@@ -33,7 +34,7 @@ KEYS = ["in_scope_accuracy", "oos_recall", "combined_accuracy", "brier",
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--logits", default=str(ROOT / "simulation/rtl_logits.hex"))
-    ap.add_argument("--export", default=str(ROOT / "export/student_bram_max"))
+    ap.add_argument("--export", default=str(DEPLOYED_EXPORT))
     ap.add_argument("--out", default=str(ROOT / "results/rtl_sim.json"))
     args = ap.parse_args()
 

@@ -2,7 +2,7 @@
 
     uv run python scripts/oos_tradeoff.py
 
-No training: this uses export/student_bram_max and its integer logits, which is
+No training: this uses the deployed export (src/sysone/deployed.py) and its integer logits, which is
 exactly what the board sends back. It sweeps three rules that answer "oos" more
 often than the plain argmax:
 
@@ -31,6 +31,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from rtl_pack import load_qm                                     # noqa: E402
+from sysone.deployed import DEPLOYED_EXPORT  # noqa: E402
 from sysone.data import load_clinc150, majority_floor            # noqa: E402
 from sysone.hashing import encode_corpus                         # noqa: E402
 from sysone.metrics import evaluate                              # noqa: E402
@@ -65,7 +66,7 @@ def rates(pred, split, oos):
 
 
 def main() -> None:
-    qm, man = load_qm(ROOT / "export/student_bram_max")
+    qm, man = load_qm(DEPLOYED_EXPORT)
     ds = load_clinc150()
     oos = ds.oos_id
     floor, _ = majority_floor(ds.test, ds.n_classes)

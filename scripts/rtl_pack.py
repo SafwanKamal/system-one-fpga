@@ -45,6 +45,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from sysone.deployed import DEPLOYED_EXPORT  # noqa: E402
 from sysone.data import load_clinc150                         # noqa: E402
 from sysone.hashing import encode_corpus                       # noqa: E402
 from sysone.manifest import verify                             # noqa: E402
@@ -111,6 +112,8 @@ def check_widths(qm: QuantModel) -> dict:
         "|B1| < 2^31": int(np.abs(qm.B1).max()) < (1 << 31),
         "|B2| < 2^31": int(np.abs(qm.B2).max()) < (1 << 31),
         "max_tokens == 256": qm.max_tokens == 256,
+        # embedding_bag's 10-bit pooled output holds 7 * 2^POOL_GAIN + 1
+        "pool_gain <= 6": qm.pool_gain <= 6,
         "shape 16384x64x256x151": (qm.Eq.shape[0], D, H, K) == (16384, 64, 256, 151),
         "act_qmax 127, logit_qmax 32767": (qm.act_qmax, qm.logit_qmax) == (127, 32767),
     }
@@ -222,7 +225,7 @@ def write_vectors(qm: QuantModel, man: dict, texts: list[str], out: Path) -> dic
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--export", default=str(ROOT / "export/student_bram_max"))
+    ap.add_argument("--export", default=str(DEPLOYED_EXPORT))
     ap.add_argument("--mem-out", default=str(ROOT / "memory"))
     ap.add_argument("--vec-out", default=str(ROOT / "simulation/vectors"))
     ap.add_argument("--vectors", action="store_true", help="also write test vectors")

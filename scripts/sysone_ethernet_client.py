@@ -30,6 +30,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from sysone.deployed import DEPLOYED_EXPORT, oos_threshold  # noqa: E402
 from sysone import ethernet_protocol as ep      # noqa: E402
 
 
@@ -46,12 +47,11 @@ def load_calibration(export_dir: Path) -> tuple[float, list[str] | None]:
 
 OOS_CLASS = 150
 
-# Answer "oos" when the top probability is below this. Chosen on the validation
-# split to give up at most 1 point of in-scope accuracy (scripts/oos_tradeoff.py):
-# on the test split OOS recall goes from 0.447 to 0.712 while in-scope accuracy
-# goes from 0.9071 to 0.9024. Over three training seeds: 0.708 +- 0.015 recall.
-# The probabilities themselves are unchanged, so calibration is unaffected.
-DEFAULT_OOS_THRESHOLD = 0.32
+# Answer "oos" when the top probability is below a threshold. The threshold is
+# tuned per model on its validation split to give up at most 1 point of in-scope
+# accuracy (scripts/oos_tradeoff.py) and stored in <export>/decision.json; see
+# src/sysone/deployed.py. The probabilities themselves are unchanged, so
+# calibration is unaffected.
 
 
 def decide(p: np.ndarray, threshold: float) -> int:
@@ -112,11 +112,12 @@ def main() -> None:
     ap.add_argument("-i", "--interface", help="network interface wired to the board")
     ap.add_argument("--fpga-mac", default=ep.mac_string(ep.FPGA_MAC))
     ap.add_argument("--timeout", type=float, default=0.5, help="seconds to wait per try")
-    ap.add_argument("--export", default=str(ROOT / "export/student_bram_max"))
+    ap.add_argument("--export", default=str(DEPLOYED_EXPORT))
     ap.add_argument("--test-set", type=int, default=0,
                     help="send the first N CLINC150 test utterances and report accuracy and latency")
-    ap.add_argument("--oos-threshold", type=float, default=DEFAULT_OOS_THRESHOLD,
-                    help="answer oos below this top probability (0 = plain argmax)")
+    ap.add_argument("--oos-threshold", type=float, default=None,
+                    help="answer oos below this top probability (0 = plain argmax; "
+                         "default: the export's decision.json)")
     ap.add_argument("--list-interfaces", action="store_true")
     args = ap.parse_args()
 
@@ -128,6 +129,8 @@ def main() -> None:
         ap.error("--interface is required (see --list-interfaces)")
 
     s_out, labels = load_calibration(Path(args.export))
+    if args.oos_threshold is None:
+        args.oos_threshold = oos_threshold(args.export)
     board = Board(args.interface, args.fpga_mac, args.timeout)
     print(f"host {board.host_mac} -> board {args.fpga_mac} on {args.interface}")
 

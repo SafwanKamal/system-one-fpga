@@ -52,6 +52,11 @@ def train(
     qat_warmup_epochs: int = 3,
     qat_refresh_steps: int = 50,
     verbose: bool = True,
+    init_E: np.ndarray | None = None,
+    emb_lr_scale: float = 1.0,
+    freeze_emb_epochs: int = 0,
+    anchor_weight: float = 0.0,
+    soft_targets: np.ndarray | None = None,
 ) -> tuple[HashedBagClassifier, dict]:
     """Train and keep the checkpoint with the best validation accuracy.
 
@@ -67,12 +72,24 @@ def train(
     fake-quantised table is nearly all zeros, and no gradient signal survives.
     Warming up first puts the weights somewhere the quantiser can represent.
 
+    ``init_E`` starts from a pretrained table instead of the random one. The
+    table is then frozen for ``freeze_emb_epochs`` (so the head first learns to
+    read the pretrained geometry), trained at ``emb_lr_scale`` times the head's
+    learning rate, and pulled back towards ``init_E`` with ``anchor_weight``.
+
+    ``soft_targets`` (one probability row per training input) switches the loss
+    to cross-entropy against those distributions, i.e. distillation from a
+    teacher; ``train_y`` is then only used for the class weights.
+
     During QAT the validation pass is run with the same fake quantisation as
     training, so checkpoint selection is made on what the exported model will
     actually do rather than on a float score the deployed model never achieves.
     """
     rng = np.random.default_rng(cfg.seed)
     model = HashedBagClassifier(cfg)
+    if init_E is not None:
+        assert init_E.shape == model.E.shape
+        model.E = init_E.astype(np.float32).copy()
     opt = Adam(model, lr=lr, weight_decay=weight_decay)
 
     tr_flat, tr_off = encode(train_texts, cfg)
@@ -94,8 +111,10 @@ def train(
             fwd = model.forward(bf, bo, dropout=dropout, rng=rng,
                                 qat=qat if qat_on else None)
             sw = None if class_weight is None else class_weight[train_y[idx]]
-            grads = model.backward(fwd, bf, bo, train_y[idx], sample_weight=sw)
-            opt.step(grads)
+            grads = model.backward(fwd, bf, bo, train_y[idx], sample_weight=sw,
+                                   soft_targets=None if soft_targets is None else soft_targets[idx])
+            opt.step(grads, emb_lr_scale=0.0 if ep < freeze_emb_epochs else emb_lr_scale,
+                     emb_anchor=init_E, anchor_weight=anchor_weight)
             step += 1
 
         if qat_on:

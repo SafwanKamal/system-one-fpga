@@ -3,12 +3,12 @@
   "n": 5500,
   "identical_to_golden": true,
   "metrics": {
-    "in_scope_accuracy": 0.9071111111111111,
-    "oos_recall": 0.447,
-    "combined_accuracy": 0.8234545454545454,
-    "brier": 0.25748338646580426,
-    "ece_equal_width": 0.024400409409134387,
-    "ece_equal_mass": 0.023692748427994213,
-    "oos_auroc_by_maxprob": 0.9202006666666667
+    "in_scope_accuracy": 0.9308888888888889,
+    "oos_recall": 0.544,
+    "combined_accuracy": 0.8605454545454545,
+    "brier": 0.211266233947321,
+    "ece_equal_width": 0.034553272437339244,
+    "ece_equal_mass": 0.03283183573622623,
+    "oos_auroc_by_maxprob": 0.9122953333333333
   }
 }

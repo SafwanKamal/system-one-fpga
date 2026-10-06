@@ -208,7 +208,13 @@ class Adam:
         self.mE = np.zeros_like(model.E)
         self.vE = np.zeros_like(model.E)
 
-    def step(self, grads: dict) -> None:
+    def step(self, grads: dict, emb_lr_scale: float = 1.0,
+             emb_anchor: np.ndarray | None = None, anchor_weight: float = 0.0) -> None:
+        """``emb_lr_scale`` slows (or with 0 freezes) the table relative to the
+        head. ``emb_anchor`` / ``anchor_weight`` add an L2 pull of every touched
+        row back towards a pretrained table, so fine-tuning on a small labelled set
+        cannot drift the rows of seen words far from where the pretrained rows of
+        unseen words still are."""
         self.t += 1
         bc1 = 1.0 - self.b1 ** self.t
         bc2 = 1.0 - self.b2 ** self.t
@@ -223,6 +229,8 @@ class Adam:
             v *= self.b2; v += (1 - self.b2) * (g * g)
             p -= self.lr * (m / bc1) / (np.sqrt(v / bc2) + self.eps)
 
+        if emb_lr_scale == 0.0:
+            return
         rows = grads["emb_rows"]
         g = grads["g_emb_flat"]
         # A row can appear several times in one batch; accumulate before updating
@@ -230,12 +238,14 @@ class Adam:
         uniq, inv = np.unique(rows, return_inverse=True)
         acc = np.zeros((len(uniq), g.shape[1]), dtype=np.float32)
         np.add.at(acc, inv, g)
+        if emb_anchor is not None and anchor_weight > 0.0:
+            acc += anchor_weight * (self.m.E[uniq] - emb_anchor[uniq])
 
         m, v = self.mE[uniq], self.vE[uniq]
         m = self.b1 * m + (1 - self.b1) * acc
         v = self.b2 * v + (1 - self.b2) * (acc * acc)
         self.mE[uniq], self.vE[uniq] = m, v
-        self.m.E[uniq] -= self.lr * (m / bc1) / (np.sqrt(v / bc2) + self.eps)
+        self.m.E[uniq] -= emb_lr_scale * self.lr * (m / bc1) / (np.sqrt(v / bc2) + self.eps)
 
 
 def encode(texts: list[str], cfg: ModelConfig) -> tuple[np.ndarray, np.ndarray]:

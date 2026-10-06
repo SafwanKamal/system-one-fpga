@@ -30,6 +30,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from rtl_pack import EDGE_CASES, load_qm                         # noqa: E402
+from sysone.deployed import DEPLOYED_EXPORT  # noqa: E402
 from sysone import ethernet_protocol as ep                       # noqa: E402
 from sysone.data import load_clinc150                            # noqa: E402
 from sysone.hashing import encode_corpus                         # noqa: E402
@@ -121,7 +122,7 @@ def build_cases(limit: int) -> list[dict]:
 
 def write_vectors(limit: int, out: Path) -> None:
     out.mkdir(parents=True, exist_ok=True)
-    qm, man = load_qm(ROOT / "export/student_bram_max")
+    qm, man = load_qm(DEPLOYED_EXPORT)
     cases = build_cases(limit)
 
     answered = [c for c in cases if c["text"] is not None]
