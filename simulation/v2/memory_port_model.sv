@@ -14,7 +14,8 @@ module memory_port_model #(
     parameter integer QUEUE_DEPTH = 4,
     parameter integer LATENCY = 12,
     parameter integer STALL_PERCENT = 20,
-    parameter string IMAGE = "image.hex"
+    parameter string IMAGE = "image.hex",
+    parameter longint BASE = 0                       // byte address of word 0 (the image base)
 ) (
     input logic clk,
     input logic reset,
@@ -54,7 +55,7 @@ module memory_port_model #(
 
     assign read_request_ready = !reset && (queue_count < QUEUE_DEPTH) && !stall_request;
     assign read_valid = !reset && (queue_count > 0) && (wait_count == 0) && !stall_data;
-    assign read_data = memory[(queue_address[head] >> 4) + beat];
+    assign read_data = memory[((queue_address[head] - ADDRESS_WIDTH'(BASE)) >> 4) + beat];
     assign read_last = (beat == int'(queue_beats[head]) - 1);
 
     always_ff @(posedge clk or posedge reset) begin
@@ -83,7 +84,8 @@ module memory_port_model #(
             end
             if (read_request_valid && read_request_ready) begin
                 if (read_request_address[3:0] != 0 || read_request_beats == 0
-                        || (read_request_address >> 4) + read_request_beats > WORDS) begin
+                        || longint'(read_request_address) < BASE
+                        || ((longint'(read_request_address) - BASE) >> 4) + read_request_beats > WORDS) begin
                     $fatal(1, "memory_port_model: bad request address %h beats %0d",
                            read_request_address, read_request_beats);
                 end

@@ -60,6 +60,18 @@ Arithmetic (exactly `int_encoder.py`)
                       + type[d], +-32767)   (each requant clamped to +-32767 first)
     head pooling      (sum of rows * recip[count] + 2^15) >> 16, then the head's
                       LINEAR in raw INT32 mode; logit * scale[c] is the float logit.
+    POOL              that pooling, as an instruction: rows [first, first + count) of
+                      src -> row `out` of dst (INT8), recip from the table in the image
+
+Heads on the FPGA (optional)
+----------------------------
+The image's program ends after the encoder. Heads can run on the host (the board
+returns X) or on the FPGA: `head_program` builds a small per-request program of POOL
+and raw-INT32 LINEAR instructions over the head streams, which the host writes to
+board memory next to the image and runs after the encoder. LINEAR's optional `rows`
+field (0 = the run's token count) sets how many rows it reads, so pooled segment rows
+can go through a head. Raw INT32 output rows are ceil(out / 4) words; the columns
+padding the last word are written as 0.
 """
 
 from __future__ import annotations
@@ -86,12 +98,12 @@ MAX_SECTIONS = 27              # 128 + 32 * 27 = 992 < 1024
 # limits the encoder RTL is built for (rtl/v2/encoder): 17-bit requant multipliers, and
 # shifts small enough that the rounding constant fits each requantiser's product width
 MAX_MULTIPLIER = (1 << 17) - 1
-MAX_SHIFT = {"linear": 47, "softmax": 38, "context": 39, "skip": 24}
+MAX_SHIFT = {"linear": 47, "softmax": 38, "context": 39, "skip": 24, "embed": 24}
 
 # opcodes
-EMBED, LAYERNORM, LINEAR, ATTENTION, ADD_SKIP, END = 0x01, 0x02, 0x03, 0x04, 0x05, 0x0F
+EMBED, LAYERNORM, LINEAR, ATTENTION, ADD_SKIP, POOL, END = 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x0F
 OPNAMES = {EMBED: "EMBED", LAYERNORM: "LAYERNORM", LINEAR: "LINEAR", ATTENTION: "ATTENTION",
-           ADD_SKIP: "ADD_SKIP", END: "END"}
+           ADD_SKIP: "ADD_SKIP", POOL: "POOL", END: "END"}
 # on-chip activation buffers (tokens x width); the sequencer maps them to RAMs
 BUF_X, BUF_Q, BUF_K, BUF_V, BUF_CTX, BUF_R, BUF_A, BUF_G = range(8)
 BUFNAMES = ["X", "Q", "K", "V", "CTX", "R", "A", "G"]
@@ -106,9 +118,11 @@ KIND_OF = {"intent": HEAD_SEGMENT, "slots": HEAD_TOKEN, "pair": HEAD_ALL}
 PAYLOAD = {
     EMBED: "<IHIHHIIBIB",        # word, word_stride, pos, pos_stride, max_pos, type, Mw, Sw, Mp, Sp
     LAYERNORM: "<IHB",           # params (g int32[n], b int32[n]), n, fraction bits
-    LINEAR: "<IIHHBBiiIHH",      # stream, bytes, in, out, S, mode, lo, hi, lut (0 = none), TI, TO
+    LINEAR: "<IIHHBBiiIHHH",     # stream, bytes, in, out, S, mode, lo, hi, lut (0 = none), TI, TO,
+                                 # rows (0 = the run's token count)
     ATTENTION: "<HHIBIBIH",      # heads, head_dim, Msm, Ssm, Mctx, Sctx, exp table, exp steps
     ADD_SKIP: "<IB",             # M, S
+    POOL: "<HHHI",               # first row, rows, out row, recip table
     END: "<",
 }
 HEADER_FMT = "<8sHHIII32sHHHHHIHHHHBBBB"  # see compile_image()
@@ -264,6 +278,10 @@ def compile_image(ie: IntEncoder, name: str, head_labels: dict | None = None, *,
     pos_addr = bld.put(_fits("pos", ie.pos_q[:max_tokens], -127, 127).astype(np.int8).tobytes())
     type_addr = bld.put(_i32("type", ie.emb_type).tobytes())
     (Mw, Sw), (Mp, Sp) = ie.emb_word_m, ie.emb_pos_m
+    # the EMBED engine multiplies INT8 by a 17-bit unsigned M in 26 bits
+    _fits("emb Mw", Mw, 0, MAX_MULTIPLIER)
+    _fits("emb Mp", Mp, 0, MAX_MULTIPLIER)
+    _fits("emb Sw/Sp", np.array([Sw, Sp]), 0, MAX_SHIFT["embed"])
     mw_addr = bld.put(_i32("emb Mw", Mw).tobytes())
     mp_addr = bld.put(_i32("emb Mp", Mp).tobytes())
     eln = bld.put(_i32("emb ln g", ie.e_ln["g"]).tobytes() + _i32("emb ln b", ie.e_ln["b"]).tobytes())
@@ -281,7 +299,7 @@ def compile_image(ie: IntEncoder, name: str, head_labels: dict | None = None, *,
             a = bld.put(s)
             _fits(f"layer {i} {key}.S", np.array([P_["S"]]), 1, MAX_SHIFT["linear"])
             return _instr(LINEAR, a, len(s), P_["W"].shape[0], P_["W"].shape[1], P_["S"],
-                          OUT_CLAMP, int(P_["lo"]), int(P_["hi"]), lut, tile_in, tile_out,
+                          OUT_CLAMP, int(P_["lo"]), int(P_["hi"]), lut, tile_in, tile_out, 0,
                           src=src, dst=dst, layer=i)
 
         gelu = bld.put(np.concatenate([_fits("gelu", Lq["gelu_table"], -127, 127), [0]])
@@ -472,9 +490,11 @@ def describe(image: bytes) -> str:
             extra = f"M={a[0]} S={a[1]}"
         elif ins["op"] == EMBED:
             extra = f"word @ {a[0]:#x}, pos @ {a[2]:#x}, max {a[4]} tokens"
+        elif ins["op"] == POOL:
+            extra = f"rows {a[0]}..{a[0] + a[1] - 1} -> row {a[2]}"
         if ins["op"] in (ATTENTION, ADD_SKIP):
             bufs = f"{BUFNAMES[ins['src']]},{BUFNAMES[ins['src2']]}->{BUFNAMES[ins['dst']]}"
-        elif ins["op"] in (LINEAR, LAYERNORM):
+        elif ins["op"] in (LINEAR, LAYERNORM, POOL):
             bufs = f"{BUFNAMES[ins['src']]}->{BUFNAMES[ins['dst']]}"
         else:
             bufs = "->R" if ins["op"] == EMBED else ""
@@ -527,7 +547,9 @@ class ImageMachine:
         return self._cache[k]
 
     def _linear(self, x, a):
-        stream, _, n_in, n_out, S, mode, lo, hi, lut, ti, to = a
+        stream, _, n_in, n_out, S, mode, lo, hi, lut, ti, to, rows = a
+        if rows:
+            x = x[:rows]
         W, b, M = self._stream(stream, n_in, n_out, ti, to)
         acc = x @ W + b
         self._note("linear_acc", acc)
@@ -577,13 +599,18 @@ class ImageMachine:
 
     def hidden(self, ids: np.ndarray, on_step=None) -> np.ndarray:
         """Run the program; `on_step(k, instruction, buffers)` after every instruction."""
-        ids = np.asarray(ids, dtype=np.int64)
-        n = len(ids)
-        H = self.h["hidden"]
         buf: dict[int, np.ndarray] = {}
-        for k, ins in enumerate(self.program):
+        self.run(self.program, buf, ids, on_step)
+        return buf[BUF_X]
+
+    def run(self, program: list[dict], buf: dict, ids=None, on_step=None) -> dict:
+        """Execute decoded instructions on `buf` (buffer number -> array), until END."""
+        H = self.h["hidden"]
+        for k, ins in enumerate(program):
             op, a = ins["op"], ins["args"]
             if op == EMBED:
+                ids = np.asarray(ids, dtype=np.int64)
+                n = len(ids)
                 word, ws, pos, ps, max_pos, typ, mw, sw, mp, sp = a
                 if n > max_pos:
                     raise ValueError(f"{n} tokens > {max_pos}")
@@ -605,11 +632,27 @@ class ImageMachine:
                 M, S = a
                 sk = np.clip(_rq(buf[ins["src2"]], M, S), -32767, 32767)
                 buf[ins["dst"]] = self._clip("residual", buf[ins["src"]] + sk, -32767, 32767)
+            elif op == POOL:
+                first, count, out_row, recip = a
+                x = np.asarray(buf[ins["src"]], dtype=np.int64)
+                r = int(self.mem.array(recip + 4 * count, 1, "<u4")[0])
+                pooled = (x[first:first + count].sum(0) * r + (1 << 15)) >> 16
+                _fits("pooled row", pooled, -127, 127)
+                old = buf.get(ins["dst"])
+                rows_now = 0 if old is None else len(old)
+                if old is None or old.shape[1] != H or rows_now <= out_row:
+                    new = np.zeros((out_row + 1, H), dtype=np.int64)
+                    if old is not None and old.shape[1] == H:
+                        new[:rows_now] = old[:out_row + 1]
+                    old = new
+                old = old.copy()
+                old[out_row] = pooled
+                buf[ins["dst"]] = old
             elif op == END:
                 break
             if on_step is not None:
                 on_step(k, ins, buf)
-        return buf[BUF_X]
+        return buf
 
     def head_logits(self, x: np.ndarray, head: str, rows: np.ndarray | None = None):
         """INT32 logits and float32 per-class scales, as IntEncoder.head_logits."""
@@ -617,10 +660,68 @@ class ImageMachine:
         W, b, _ = self._stream(hd["stream"], hd["in"], hd["classes"], self.h["tile_in"],
                                self.h["tile_out"])
         scale = self.mem.array(hd["scales"], hd["classes"], "<f4").astype(np.float64)
+        # INT8 x INT8 sums over <= a few thousand inputs are far below 2^53, so a float64
+        # matmul is exact and several times faster than NumPy's integer one
+        k = ("wf", hd["stream"])
+        if k not in self._cache:
+            self._cache[k] = W.astype(np.float64)
+        Wf = self._cache[k]
+
+        def matmul(v):
+            return np.rint(np.asarray(v, dtype=np.float64) @ Wf).astype(np.int64) + b
+
         x = np.asarray(x, dtype=np.int64)
         if hd["kind"] == HEAD_TOKEN:
-            return x[rows] @ W + b, scale
+            return matmul(x[rows]), scale
         rows = np.arange(len(x)) if rows is None else rows
         recip = self.mem.array(hd["recip"] + 4 * len(rows), 1, "<u4")[0]
         pooled = (x[rows].sum(0) * recip + (1 << 15)) >> 16
-        return pooled @ W + b, scale
+        return matmul(pooled), scale
+
+
+def head_program(heads: dict, names: list[str], n: int, segments: list[tuple[int, int]],
+                 tile_in: int, tile_out: int) -> tuple[bytes, list[dict]]:
+    """A per-request program that runs heads on the FPGA after the encoder.
+
+    `heads` is `decode_heads(image)`; `names` the heads to run, in order; `segments`
+    [start, end) token rows of each segment (segment heads pool each one). Pooled rows
+    go to CTX, logits (raw INT32) to A; every head overwrites the previous one's, so
+    the host reads A after each head's LINEAR (single-step) or runs one head per start.
+    Returns the program blob (16-byte count header + instructions, as the image's
+    program section) and, per instruction, what it produces.
+    """
+    lo, hi = -(1 << 31), (1 << 31) - 1
+    prog, what = [], []
+    for nm in names:
+        hd = heads[nm]
+        lin = dict(stream=hd["stream"], size=hd["bytes"], n_in=hd["in"], classes=hd["classes"])
+
+        def linear(src, rows):
+            return _instr(LINEAR, lin["stream"], lin["size"], lin["n_in"], lin["classes"], 0,
+                          OUT_RAW32, lo, hi, 0, tile_in, tile_out, rows, src=src, dst=BUF_A)
+
+        if hd["kind"] == HEAD_TOKEN:
+            prog.append(linear(BUF_X, 0))
+            what.append({"head": nm, "kind": "logits", "rows": n})
+            continue
+        segs = [(0, n)] if hd["kind"] == HEAD_ALL else segments
+        for j, (s0, s1) in enumerate(segs):
+            prog.append(_instr(POOL, s0, s1 - s0, j, hd["recip"], src=BUF_X, dst=BUF_CTX))
+            what.append({"head": nm, "kind": "pool", "row": j})
+        prog.append(linear(BUF_CTX, len(segs)))
+        what.append({"head": nm, "kind": "logits", "rows": len(segs)})
+    prog.append(_instr(END))
+    blob = struct.pack("<I12x", len(prog)) + b"".join(prog)
+    return blob, what
+
+
+def decode_instructions(blob: bytes) -> list[dict]:
+    """Decode a program blob (count header + instructions), e.g. from head_program."""
+    n = struct.unpack_from("<I", blob)[0]
+    out = []
+    for k in range(n):
+        raw = blob[BEAT + INSTR_BYTES * k: BEAT + INSTR_BYTES * (k + 1)]
+        op, src, src2, dst, layer = struct.unpack_from("<BBBBB", raw)
+        out.append({"op": op, "src": src, "src2": src2, "dst": dst, "layer": layer,
+                    "args": struct.unpack_from(PAYLOAD[op], raw, 8)})
+    return out

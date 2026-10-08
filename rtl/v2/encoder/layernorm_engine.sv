@@ -13,6 +13,8 @@ module layernorm_engine
     import encoder_pkg::*;
 #(
     parameter integer MAX_WIDTH = 768,
+    // elements normalised per clock (1, 2 or 4; two DSP48E1 products each)
+    parameter integer NORM_LANES = 2,
     parameter integer ADDRESS_WIDTH = 27,
     parameter integer BEATS_WIDTH = 16,
     parameter integer BUFFER_ADDRESS_WIDTH = 14
@@ -49,8 +51,6 @@ module layernorm_engine
 
     localparam integer DIVIDER_WIDTH = 48;
     localparam integer GROUPS = MAX_WIDTH / 4;
-    // elements normalised per clock (2 x two DSP48E1 products each); 1, 2 or 4
-    localparam integer NORM_LANES = 2;
     localparam integer NORM_LOG = $clog2(NORM_LANES);
 
     typedef enum logic [4:0] {

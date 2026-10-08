@@ -2,6 +2,8 @@
 #
 #   vivado -mode batch -source scripts/v2/program_board_v2.tcl
 #   vivado -mode batch -source scripts/v2/program_board_v2.tcl -tclargs ddr_test
+#   vivado -mode batch -source scripts/v2/program_board_v2.tcl -tclargs encoder
+#   vivado -mode batch -source scripts/v2/program_board_v2.tcl -tclargs encoder_packed
 #   vivado -mode batch -source scripts/v2/program_board_v2.tcl -tclargs <file.bit>
 
 set repo_dir [file normalize [file join [file dirname [info script]] .. ..]]
@@ -10,6 +12,10 @@ if {[llength $argv] == 0} {
     set bitstream [file join $build_dir nexys4ddr_link_top.bit]
 } elseif {[lindex $argv 0] eq "ddr_test"} {
     set bitstream [file join $build_dir nexys4ddr_ddr_test_top.bit]
+} elseif {[lindex $argv 0] eq "encoder"} {
+    set bitstream [file join $build_dir nexys4ddr_encoder_top.bit]
+} elseif {[lindex $argv 0] eq "encoder_packed"} {
+    set bitstream [file join $build_dir nexys4ddr_encoder_packed_top.bit]
 } else {
     set bitstream [file normalize [lindex $argv 0]]
 }

@@ -1,0 +1,7 @@
+{
+  "fpga_build": ["run the vivado build", "synthesize the encoder design", "start implementation and generate the bitstream", "rebuild the fpga project"],
+  "fpga_program": ["program the board", "flash the bitstream to the nexys", "load the new bitstream onto the fpga", "download the design to the board"],
+  "timing_report": ["did the design meet timing", "show me the worst negative slack", "what is the timing summary", "check the setup and hold slack"],
+  "electronics_help": ["how do I wire an h-bridge", "why is my motor driver overheating", "how should I build a buck converter", "which mosfet should I use for the motor"],
+  "lab_inventory": ["do we have any spare resistors", "order more jumper wires", "how many breadboards are left", "add capacitors to the parts list"]
+}

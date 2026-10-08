@@ -44,7 +44,7 @@ def decisions(enc_obj, x, item, labels, integer: bool):
     """Head outputs for one encoded chain: list of (kind, head, pred, gold, extra)."""
     out = []
     seg = np.asarray(item["seg"])
-    for s, head, y in item["targets"]:
+    for s, head, y, *_ in item["targets"]:
         rows = np.where(seg == s)[0]
         if integer:
             lg, sc = enc_obj.head_logits(x, "intent", head, rows)
@@ -136,9 +136,9 @@ def main() -> None:
                        {k: len(v) for k, v in labels["tags"].items()},
                        {k: len(v) for k, v in labels["pair"].items()})
     state = torch.load(d / "chain_model.pt")
-    model.load_state_dict(state)
+    model.load_state_dict(state, strict=False)      # v3 checkpoints carry training-only prototypes
     model.eval()
-    corpus = load_all()
+    corpus = load_all(hwu="hwu" in labels["intent"])
     enc = Encoder(tok, 128)
     fe = FloatEncoder(state, cfg, {"intent": labels["intent"], "slots": labels["tags"],
                                    "pair": labels["pair"]})

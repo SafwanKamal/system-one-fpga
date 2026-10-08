@@ -8,9 +8,18 @@
 // Prints the clock count of every instruction.
 `timescale 1ns / 1ps
 
-module encoder_layer_tb;
+module encoder_layer_tb #(
+    // the Nexys 4 DDR build by default; the KR260 profile: make encoder-kr260
+    parameter integer TILE_OUT = 12,
+    parameter integer DRAIN_LANES = 1,
+    parameter integer NORM_LANES = 2,
+    parameter integer MAC_PACK = 0,
+    parameter integer ATTENTION_LANES = TILE_OUT,
+    parameter integer ACCUMULATORS_IN_LUTS = 0,
+    parameter integer ADDRESS_WIDTH = 27,
+    parameter longint MEMORY_BASE = 0
+);
 
-    localparam integer ADDRESS_WIDTH = 27;
     localparam integer BUFFER_ADDRESS_WIDTH = 14;
     localparam string DIR = "vectors/encoder";
 
@@ -38,10 +47,17 @@ module encoder_layer_tb;
     logic [15:0] host_write_enable;
 
     encoder_layer #(
-        .TILE_OUT(12),
+        .TILE_OUT(TILE_OUT),
+        .DRAIN_LANES(DRAIN_LANES),
+        .NORM_LANES(NORM_LANES),
+        .MAC_PACK(MAC_PACK),
+        .ATTENTION_LANES(ATTENTION_LANES),
+        .ACCUMULATORS_IN_LUTS(ACCUMULATORS_IN_LUTS),
         .MAX_TOKENS(128),
         .MAX_HEAD_DIM(64),
-        .MAX_HIDDEN(384)
+        .MAX_HIDDEN(384),
+        .FPGA_HEADS(1),
+        .ADDRESS_WIDTH(ADDRESS_WIDTH)
     ) dut (
         .clk(clk),
         .reset(reset),
@@ -75,6 +91,7 @@ module encoder_layer_tb;
     memory_port_model #(
         .WORDS(1 << 21),
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
+        .BASE(MEMORY_BASE),
         .STALL_PERCENT(20),
         .IMAGE({DIR, "/image.hex"})
     ) memory_inst (
@@ -144,7 +161,7 @@ module encoder_layer_tb;
         logic [127:0] x0 [];
         logic [127:0] word, got;
         longint clocks;
-        longint per_op [0:15];
+        longint per_op [0:255];
         string path;
 
         start = 1'b0;
@@ -244,7 +261,7 @@ module encoder_layer_tb;
     end
 
     initial begin
-        #2_000_000_000;
+        #20_000_000_000;
         $fatal(1, "timeout");
     end
 

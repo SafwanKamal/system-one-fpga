@@ -4,15 +4,19 @@
 #
 #   vivado -mode batch -source scripts/v2/synth_encoder.tcl                     # both, 75 MHz
 #   vivado -mode batch -source scripts/v2/synth_encoder.tcl -tclargs minilm 10.0
+#   vivado -mode batch -source scripts/v2/synth_encoder.tcl -tclargs both 13.333 1   # heads on the FPGA
 #
 # Configurations (first argument):
 #   both       MAX_HIDDEN 384, MAX_HEAD_DIM 64: runs the bert-mini and MiniLM-L6 images
 #   minilm     MAX_HIDDEN 384, MAX_HEAD_DIM 32: MiniLM-L6 only
 #   bert-mini  MAX_HIDDEN 256, MAX_HEAD_DIM 64: bert-mini only
+#   both-t24   as both, with 16 x 24 tiles packed two products per DSP48E1 (MAC_PACK),
+#              attention on 12 lanes, LINEAR accumulators in LUT RAM, 2 drain lanes:
+#              the faster option (needs images built with --tile 16x24)
 # Second argument: clock period in ns (default 13.333 = the MIG's 75 MHz ui_clk).
-# All configurations: MAX_TOKENS 128, 16 x 12 multiplier array.
+# All configurations: MAX_TOKENS 128; 16 x 12 multiplier array unless noted.
 #
-# Writes build/v2/encoder_ooc/<config>/: utilization.txt (flat and hierarchical),
+# Writes build/v2/encoder_ooc/<config>[-fpga-heads]/: utilization.txt (flat and hierarchical),
 # timing_summary.txt, timing_groups.txt (failing paths by block), the routed
 # checkpoint, and summary.txt with the headline numbers.
 # The tool's numbers are estimates for this block alone; the MIG, the Ethernet link
@@ -25,17 +29,21 @@ set repo_dir [file normalize [file join [file dirname [info script]] .. ..]]
 set part xc7a100tcsg324-1
 set config [expr {[llength $argv] > 0 ? [lindex $argv 0] : "both"}]
 set period [expr {[llength $argv] > 1 ? [lindex $argv 1] : 13.333}]
+# third argument: 1 = heads on the FPGA (POOL + raw INT32 LINEAR), 0 = heads on the host
+set fpga_heads [expr {[llength $argv] > 2 ? [lindex $argv 2] : 0}]
 
 set configs [dict create \
-    both      [list MAX_HIDDEN=384 MAX_HEAD_DIM=64] \
-    minilm    [list MAX_HIDDEN=384 MAX_HEAD_DIM=32] \
-    bert-mini [list MAX_HIDDEN=256 MAX_HEAD_DIM=64]]
+    both      [list MAX_HIDDEN=384 MAX_HEAD_DIM=64 TILE_OUT=12] \
+    minilm    [list MAX_HIDDEN=384 MAX_HEAD_DIM=32 TILE_OUT=12] \
+    bert-mini [list MAX_HIDDEN=256 MAX_HEAD_DIM=64 TILE_OUT=12] \
+    both-t24  [list MAX_HIDDEN=384 MAX_HEAD_DIM=64 TILE_OUT=24 MAC_PACK=1 ATTENTION_LANES=12 \
+                    ACCUMULATORS_IN_LUTS=1 DRAIN_LANES=2]]
 if {![dict exists $configs $config]} {
-    error "unknown configuration '$config' (both, minilm, bert-mini)"
+    error "unknown configuration '$config' (both, minilm, bert-mini, both-t24)"
 }
-set generics [concat [dict get $configs $config] [list MAX_TOKENS=128 TILE_OUT=12]]
+set generics [concat [dict get $configs $config] [list MAX_TOKENS=128 FPGA_HEADS=$fpga_heads]]
 
-set out_dir [file join $repo_dir build v2 encoder_ooc $config]
+set out_dir [file join $repo_dir build v2 encoder_ooc [expr {$fpga_heads ? "$config-fpga-heads" : $config}]]
 file mkdir $out_dir
 
 set rtl_dir [file join $repo_dir rtl v2]
@@ -48,6 +56,8 @@ set sources [list \
     [file join $rtl_dir encoder attention_engine.sv] \
     [file join $rtl_dir encoder add_skip_engine.sv] \
     [file join $rtl_dir encoder layernorm_engine.sv] \
+    [file join $rtl_dir encoder embed_engine.sv] \
+    [file join $rtl_dir encoder pool_engine.sv] \
     [file join $rtl_dir encoder encoder_layer.sv]]
 foreach f $sources {
     read_verilog -sv [list $f]

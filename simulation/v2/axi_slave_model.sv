@@ -8,7 +8,10 @@ module axi_slave_model #(
     parameter integer ADDRESS_WIDTH = 40,
     parameter integer DATA_WIDTH = 128,
     parameter integer BUSY_PERCENT = 25,
-    parameter integer READ_LATENCY = 30
+    parameter integer READ_LATENCY = 30,
+    // optional: memory contents at start, one word per line, word 0 at PRELOAD_BASE
+    parameter string PRELOAD = "",
+    parameter longint PRELOAD_BASE = 0
 ) (
     input logic clk,
     input logic reset,
@@ -47,6 +50,24 @@ module axi_slave_model #(
     localparam integer BEAT_BYTES = DATA_WIDTH / 8;
 
     logic [DATA_WIDTH-1:0] memory [logic [ADDRESS_WIDTH-1:0]];
+
+    initial begin
+        if (PRELOAD != "") begin
+            int fd, r, n;
+            logic [DATA_WIDTH-1:0] word;
+            fd = $fopen(PRELOAD, "r");
+            if (fd == 0) $fatal(1, "axi_slave_model: cannot open %s", PRELOAD);
+            n = 0;
+            while (!$feof(fd)) begin
+                r = $fscanf(fd, "%h\n", word);
+                if (r != 1) break;
+                memory[ADDRESS_WIDTH'(PRELOAD_BASE + longint'(n) * BEAT_BYTES)] = word;
+                n++;
+            end
+            $fclose(fd);
+            $display("axi_slave_model: %0d words preloaded from %s", n, PRELOAD);
+        end
+    end
 
     // read bursts: address, beats, cycle when data may start
     logic [ADDRESS_WIDTH-1:0] read_queue_address [$];

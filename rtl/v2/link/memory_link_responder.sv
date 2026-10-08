@@ -3,20 +3,21 @@
 // appends the FCS).
 //
 //   0..5 host MAC, 6..11 LOCAL_MAC, 12..13 EtherType, 14 version 2,
-//   15 type (0x21 write ack / 0x23 read data), 16..19 sequence, 20..23 address,
-//   24..25 beats, then for a read the beats from the read-data FIFO, byte at the
-//   lowest address first (bits [7:0] of each beat first).
+//   15 type (0x21 write ack / 0x23 read data / 0x25 run done), 16..19 sequence,
+//   20..23 address, 24..25 beats, then for a read or a run the beats from the
+//   read-data FIFO, byte at the lowest address first (bits [7:0] of each beat first).
 module memory_link_responder #(
     parameter logic [47:0] LOCAL_MAC = 48'h02_00_00_00_00_02,
     parameter logic [15:0] ETHERTYPE = 16'h88B5,
     parameter logic [7:0] PROTOCOL_VERSION = 8'd2,
     parameter logic [7:0] MESSAGE_WRITE_ACK = 8'h21,
-    parameter logic [7:0] MESSAGE_READ_DATA = 8'h23
+    parameter logic [7:0] MESSAGE_READ_DATA = 8'h23,
+    parameter logic [7:0] MESSAGE_RUN_DONE = 8'h25
 ) (
     input logic clk,
     input logic reset,
 
-    input logic [119:0] response_in,
+    input logic [120:0] response_in,
     input logic response_empty_in,
     output logic response_pop_out,
 
@@ -41,13 +42,15 @@ module memory_link_responder #(
     } state_t;
 
     state_t state_reg, state_next;
-    logic [119:0] response_reg, response_next;
+    logic [120:0] response_reg, response_next;
     logic [4:0] byte_index_reg, byte_index_next;
     logic [3:0] beat_byte_reg, beat_byte_next;
     logic [6:0] beats_left_reg, beats_left_next;
     logic sent_reg, sent_next;
 
+    wire is_run = response_reg[120];
     wire is_read = response_reg[119];
+    wire has_data = is_read | is_run;
     wire [31:0] sequence_number = response_reg[118:87];
     wire [31:0] address = response_reg[86:55];
     wire [6:0] beats = response_reg[54:48];
@@ -83,7 +86,7 @@ module memory_link_responder #(
             5'd12: header_byte = ETHERTYPE[15:8];
             5'd13: header_byte = ETHERTYPE[7:0];
             5'd14: header_byte = PROTOCOL_VERSION;
-            5'd15: header_byte = is_read ? MESSAGE_READ_DATA : MESSAGE_WRITE_ACK;
+            5'd15: header_byte = is_run ? MESSAGE_RUN_DONE : is_read ? MESSAGE_READ_DATA : MESSAGE_WRITE_ACK;
             5'd16: header_byte = sequence_number[31:24];
             5'd17: header_byte = sequence_number[23:16];
             5'd18: header_byte = sequence_number[15:8];
@@ -124,11 +127,11 @@ module memory_link_responder #(
 
             HEADER: begin
                 valid_out = 1'b1;
-                last_out = (byte_index_reg == HEADER_BYTES - 1) && !is_read;
+                last_out = (byte_index_reg == HEADER_BYTES - 1) && !has_data;
                 if (ready_in) begin
                     byte_index_next = byte_index_reg + 1'b1;
                     if (byte_index_reg == HEADER_BYTES - 1) begin
-                        if (is_read) begin
+                        if (has_data) begin
                             beat_byte_next = '0;
                             beats_left_next = beats;
                             state_next = DATA;

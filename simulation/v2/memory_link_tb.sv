@@ -39,7 +39,7 @@ module memory_link_tb;
     logic [1:0] rmii_txd;
     logic rmii_tx_en;
 
-    logic accepted, rejected, replied, rx_error, dropped, memory_busy;
+    logic accepted, rejected, replied, rx_error, dropped, memory_busy, run_active;
     integer rx_error_count = 0, dropped_count = 0, rejected_count = 0;
 
     logic read_request_valid, read_request_ready, read_valid, read_ready, read_last;
@@ -72,6 +72,8 @@ module memory_link_tb;
         .write_request_valid(write_request_valid), .write_request_ready(write_request_ready),
         .write_request_address(write_request_address), .write_request_beats(write_request_beats),
         .write_valid(write_valid), .write_ready(write_ready), .write_data(write_data),
+        .run_start_out(), .run_descriptor_out(), .run_active_out(run_active),
+        .run_done_in(run_active), .run_result_in(128'h80 << 64),
         .memory_busy_out(memory_busy)
     );
 

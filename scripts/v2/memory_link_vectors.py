@@ -9,7 +9,9 @@ The traffic: writes of every size from 1 to 64 beats at scattered addresses
 memory never written (zeros), a short write frame (declares more beats than it
 carries: the ack must report what was written), overlapping rewrites, broadcast
 requests, and frames that must be ignored (bad FCS, another MAC, unaligned address,
-0 or 65 beats, an address past the end, a v1 frame, a runt).
+0 or 65 beats, an address past the end, a v1 frame, a runt). RUN commands are
+answered by this testbench's stand-in for the encoder with status 0x80 (no encoder),
+as a link-only bitstream does; a RUN of two beats must be ignored.
 
 The checker replays the traffic on a Python model of the memory and compares every
 reply: type, sequence number, address, beat count and every data byte.
@@ -60,6 +62,13 @@ def build(seed: int = 0):
         expected.append({"kind": mp.READ_DATA, "seq": seq, "address": address, "beats": beats,
                          "data": data.hex()})
 
+    def run(descriptor):
+        nonlocal seq
+        seq += 1
+        frames.append((mp.run_frame(seq, descriptor, HOST), True, "run"))
+        expected.append({"kind": mp.RUN_DONE, "seq": seq, "address": 0, "beats": 1,
+                         "data": mp.RunResult(0, 0, mp.STATUS_NO_ENCODER, 0).pack().hex()})
+
     def ignored(frame, why):
         frames.append((frame, False, why))
 
@@ -83,6 +92,8 @@ def build(seed: int = 0):
     write(3 << 24, bytes(rng.randrange(256) for _ in range(80)), declared=10)   # short frame
     read(3 << 24, 10)
     read(0, 4, dst=b"\xff" * 6)                          # broadcast is answered
+    run(mp.run_descriptor(0x400, 12, 256, 0x100000, 0x200000))
+    read(a, b)                                           # the link works after a run
 
     seq += 1
     bad = bytearray(mp.read_frame(seq, 0, 4, HOST))
@@ -97,6 +108,7 @@ def build(seed: int = 0):
     v1[14] = 1
     ignored(bytes(v1) + mp.fcs(bytes(v1)), "v1 version byte")
     ignored(mp.FPGA_MAC + HOST + b"\x88\xb5\x02", "runt")
+    ignored(mp.encode(mp.RUN, seq, 0, 2, bytes(32), HOST), "run of two beats")
     read(0, 4)                                           # still alive afterwards
     return frames, expected
 
@@ -134,7 +146,7 @@ def check(expected) -> int:
             errors += 1
             continue
         got = {"kind": m.kind, "seq": m.sequence, "address": m.address, "beats": m.beats}
-        if m.kind == mp.READ_DATA:
+        if m.kind in (mp.READ_DATA, mp.RUN_DONE):
             got["data"] = m.data.hex()
         if got != exp or m.source != mp.FPGA_MAC:
             errors += 1

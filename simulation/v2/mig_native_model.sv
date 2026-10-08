@@ -13,7 +13,10 @@ module mig_native_model #(
     parameter integer ADDRESS_WIDTH = 27,
     parameter integer DATA_WIDTH = 128,
     parameter integer READ_LATENCY = 22,
-    parameter integer BUSY_PERCENT = 20
+    parameter integer BUSY_PERCENT = 20,
+    // optional: memory contents at start, one 128-bit word per line from byte 0
+    // (e.g. a DDR image, as written by scripts/v2/system_vectors.py)
+    parameter string PRELOAD = ""
 ) (
     input logic clk,
     input logic reset,
@@ -38,6 +41,24 @@ module mig_native_model #(
     logic [DATA_WIDTH-1:0] memory [logic [ADDRESS_WIDTH-1:0]];
     logic [DATA_WIDTH-1:0] pipe_data [0:READ_LATENCY-1];
     logic pipe_valid [0:READ_LATENCY-1];
+
+    initial begin
+        if (PRELOAD != "") begin
+            int fd, r, n;
+            logic [DATA_WIDTH-1:0] word;
+            fd = $fopen(PRELOAD, "r");
+            if (fd == 0) $fatal(1, "mig_native_model: cannot open %s", PRELOAD);
+            n = 0;
+            while (!$feof(fd)) begin
+                r = $fscanf(fd, "%h\n", word);
+                if (r != 1) break;
+                memory[ADDRESS_WIDTH'(n * (DATA_WIDTH / 16))] = word;   // app_addr counts 16-bit words
+                n++;
+            end
+            $fclose(fd);
+            $display("mig_native_model: %0d words preloaded from %s", n, PRELOAD);
+        end
+    end
 
     always_ff @(posedge clk) begin
         if (reset) begin

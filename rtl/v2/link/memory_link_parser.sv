@@ -7,6 +7,8 @@
 //                  the frame has delivered all its beats, or ended early, a write
 //                  command for the whole beats received is pushed
 //   0x22 read   -> a read command is pushed after the header
+//   0x24 run    -> exactly one beat (the run descriptor, see memory_protocol.py),
+//                  taken like a write's data; then a run command
 // Everything else, and requests that are unaligned, outside MEMORY_BYTES, or ask
 // for 0 or more than MAX_BEATS beats, is drained and counted on rejected_out.
 //
@@ -18,6 +20,7 @@ module memory_link_parser #(
     parameter logic [7:0] PROTOCOL_VERSION = 8'd2,
     parameter logic [7:0] MESSAGE_WRITE = 8'h20,
     parameter logic [7:0] MESSAGE_READ = 8'h22,
+    parameter logic [7:0] MESSAGE_RUN = 8'h24,
     parameter longint MEMORY_BYTES = 64'd134217728,
     parameter integer MAX_BEATS = 64
 ) (
@@ -35,8 +38,8 @@ module memory_link_parser #(
     output logic beat_push_out,
     input logic beat_full_in,
 
-    // commands: {is_read, sequence[31:0], address[31:0], beats[6:0], host_mac[47:0]}
-    output logic [119:0] command_out,
+    // commands: {is_run, is_read, sequence[31:0], address[31:0], beats[6:0], host_mac[47:0]}
+    output logic [120:0] command_out,
     output logic command_push_out,
     input logic command_full_in,
 
@@ -59,6 +62,7 @@ module memory_link_parser #(
     logic broadcast_match_reg, broadcast_match_next;
     logic header_ok_reg, header_ok_next;
     logic is_read_reg, is_read_next;
+    logic is_run_reg, is_run_next;
     logic [47:0] host_mac_reg, host_mac_next;
     logic [31:0] sequence_reg, sequence_next;
     logic [31:0] address_reg, address_next;
@@ -83,6 +87,7 @@ module memory_link_parser #(
             broadcast_match_reg <= 1'b1;
             header_ok_reg <= 1'b1;
             is_read_reg <= 1'b0;
+            is_run_reg <= 1'b0;
             host_mac_reg <= '0;
             sequence_reg <= '0;
             address_reg <= '0;
@@ -99,6 +104,7 @@ module memory_link_parser #(
             broadcast_match_reg <= broadcast_match_next;
             header_ok_reg <= header_ok_next;
             is_read_reg <= is_read_next;
+            is_run_reg <= is_run_next;
             host_mac_reg <= host_mac_next;
             sequence_reg <= sequence_next;
             address_reg <= address_next;
@@ -119,6 +125,7 @@ module memory_link_parser #(
         broadcast_match_next = broadcast_match_reg;
         header_ok_next = header_ok_reg;
         is_read_next = is_read_reg;
+        is_run_next = is_run_reg;
         host_mac_next = host_mac_reg;
         sequence_next = sequence_reg;
         address_next = address_reg;
@@ -132,7 +139,7 @@ module memory_link_parser #(
         ready_out = 1'b0;
         beat_out = beat_reg;
         beat_push_out = 1'b0;
-        command_out = {is_read_reg, sequence_reg, address_reg, beats_received_reg, host_mac_reg};
+        command_out = {is_run_reg, is_read_reg, sequence_reg, address_reg, beats_received_reg, host_mac_reg};
         command_push_out = 1'b0;
 
         accept = 1'b0;
@@ -162,8 +169,10 @@ module memory_link_parser #(
                         header_ok_with_byte = header_ok_reg && (data_in == PROTOCOL_VERSION);
                     end else if (byte_index_reg == 15) begin
                         header_ok_with_byte = header_ok_reg
-                                              && (data_in == MESSAGE_WRITE || data_in == MESSAGE_READ);
+                                              && (data_in == MESSAGE_WRITE || data_in == MESSAGE_READ
+                                                  || data_in == MESSAGE_RUN);
                         is_read_next = (data_in == MESSAGE_READ);
+                        is_run_next = (data_in == MESSAGE_RUN);
                     end else if (byte_index_reg < 20) begin
                         sequence_next = {sequence_reg[23:0], data_in};
                     end else if (byte_index_reg < 24) begin
@@ -180,7 +189,8 @@ module memory_link_parser #(
                                         && (address_reg[3:0] == 4'h0)
                                         && (64'(address_reg) < MEMORY_BYTES)
                                         && (beats_with_byte != 0)
-                                        && (beats_with_byte <= MAX_BEATS);
+                                        && (beats_with_byte <= MAX_BEATS)
+                                        && (!is_run_reg || beats_with_byte == 16'd1);
                         beats_received_next = '0;
                         beat_byte_next = '0;
 
@@ -188,7 +198,7 @@ module memory_link_parser #(
                             rejected_next = 1'b1;
                             state_next = last_in ? HEADER : DRAIN;
                         end else if (is_read_reg) begin
-                            command_out = {1'b1, sequence_reg, address_reg, beats_with_byte[6:0],
+                            command_out = {1'b0, 1'b1, sequence_reg, address_reg, beats_with_byte[6:0],
                                            host_mac_reg};
                             command_push_out = 1'b1;
                             accepted_next = 1'b1;
@@ -230,7 +240,7 @@ module memory_link_parser #(
                         || last_in) begin
                         // done: write the whole beats that arrived
                         if (beats_received_next != 0) begin
-                            command_out = {1'b0, sequence_reg, address_reg, beats_received_next,
+                            command_out = {is_run_reg, 1'b0, sequence_reg, address_reg, beats_received_next,
                                            host_mac_reg};
                             command_push_out = 1'b1;
                             accepted_next = 1'b1;

@@ -52,6 +52,60 @@ multi-turn dialogue, SICK, MSRP, and synthetic 2–4-utterance chains):
   0.905 -> 0.899, SGD slot F1 0.618 -> 0.618, pairs and SGD intent within 1.2 points,
   but CLINC in-scope 0.939 -> 0.920 on that subset. On the whole CLINC test set
   (4,500 in-scope) the loss is smaller, 0.932 -> 0.926 (old bert-mini 0.930 -> 0.920).
+* **And for MiniLM-L6** (`minilm-l6-slots4`, `--slot-weight 4`, lr 5e-5, 3 epochs,
+  2026-10-06; test): ATIS slot F1 0.782 -> **0.868**, SGD slot F1 0.496 -> **0.582**,
+  SGD intent with context 0.879 -> 0.882 (without 0.511), CLINC in-scope 0.953 -> 0.951,
+  SICK 0.862 -> 0.863, MSRP 0.751 -> 0.753, multi-sentence in-scope 0.944 -> 0.944, but
+  **ATIS intent 0.959 -> 0.920** (bert-mini-slots4 kept it at 0.959). Integer reference
+  (max range, 500/dataset): every task within 0.6 points except SICK 0.850 -> 0.830
+  (ATIS slot F1 0.864 -> 0.864, SGD slot F1 0.590 -> 0.591, CLINC in-scope 0.956 -> 0.954);
+  97% of decisions equal to float. Image `export/v2/image/minilm-l6-slots4` (22,811,648 B,
+  `check`: 600 chains, 0 mismatches; same widths as before), also `-t24`; the encoder RTL
+  runs it bit-exact (whole program and a whole request through the Ethernet pins).
+  Choice between minilm-l6 and minilm-l6-slots4 depends on whether slots or ATIS intent
+  matter more; the image swaps without any RTL change.
+* **v3: wider coverage and an embedding head** (`minilm-l6-v3b`, 2026-10-07; trained on
+  the user's laptop CPU, ~1.7 h for 2 epochs; test). Adds HWU64 (64 home-assistant intents
+  over 18 scenarios: alarms, calendar, email, IoT, music, news, lists, Q&A, transport...,
+  with slots) and an **embedding head** (384-d, an intent-kind head on the board: one more
+  matrix on the host) trained with a cosine classifier over every intent set plus
+  distillation (weight 10) towards the pretrained all-MiniLM-L6-v2 sentence encoder, also
+  on the SICK/MSRP sentences. Warm start from `minilm-l6`; heads at lr 1e-3, encoder 4e-5.
+
+  | test | minilm-l6 | minilm-l6-v3b |
+  |---|---|---|
+  | CLINC in-scope (argmax) | 0.953 | **0.961** |
+  | ATIS intent / slot F1 | 0.959 / 0.782 | **0.976 / 0.876** |
+  | HWU64 intent / slot F1 | - | **0.916 / 0.696** |
+  | SGD intent (context) / slot F1 | 0.879 / 0.496 | 0.868 / 0.506 |
+  | multi-sentence in-scope | 0.944 | **0.959** |
+  | SICK / MSRP | 0.862 / 0.751 | 0.858 / **0.713** |
+  | unseen intents, nearest centroid of k examples: Banking77 1 / 5 / 10-shot | - | 0.526 / **0.760** / 0.800 |
+  | SNIPS 1 / 5 / 10-shot | - | 0.809 / **0.900** / 0.934 |
+
+  For reference, the pretrained sentence encoder itself (`embed_eval.py --teacher`):
+  Banking77 0.537 / 0.764 / 0.808, SNIPS 0.722 / 0.865 / 0.905; so the board's embedding
+  is as good as the off-the-shelf model on unseen intents while the task heads improved.
+  INT8 (fake-quant) costs at most ~0.8 points anywhere (Banking77 5-shot 0.758). The one
+  regression is MSRP (-3.8 points). ATIS slots now match `minilm-l6-slots4` without its
+  ATIS-intent loss.
+
+  **Image** (built and checked on the laptop, 2026-10-07): `export/v2/image/minilm-l6-v3b`,
+  23,035,904 bytes (sha256 91331a85...; 36 s to build). `check`: 1,400 chains (200 per
+  dataset, 40,999 tokens), hidden state and all 1,274,135 head logits identical between
+  ImageMachine and IntEncoder. Widest values: linear accumulator 19 bits (18 before),
+  attention scores 18, P.V 16, LayerNorm sum of squares 34, LayerNorm affine 29: inside
+  the RTL's widths, so the same bitstream runs it. Out-of-scope threshold 0.48 (table
+  below, combined 0.9025, the best so far); HWU threshold see problem 21. Few-shot on the
+  integer image (`embed_eval.py --image`, i.e. what the board computes): SNIPS 1 / 5 /
+  10-shot 0.799 / 0.905 / 0.930 (float 0.809 / 0.900 / 0.934), Banking77 0.516 / 0.752 /
+  0.795 (float 0.526 / 0.760 / 0.800): the integer embedding loses under a point.
+  (Banking77 on ImageMachine took 5.7 h on the laptop - NumPy integer arithmetic, ~5k
+  sentences; the same run through the board or the KR260 would take minutes.)
+
+  The first attempt (`minilm-l6-v3`, 1 epoch, one learning rate,
+  distillation weight 1) is kept for the record: HWU slot F1 0.277, Banking77 5-shot 0.548
+  (see "Problems hit", 16-17).
 * **Calibration statistic.** Each activation's clamp range is the max over
   calibration chains of the per-chain 99.99th percentile. Taking the median instead
   (`int_reference.py --range median --calibration 256`) removes bert-mini-slots4's
@@ -303,24 +357,182 @@ link.
   128 tokens are 695k (bert-mini) and 1,412k (MiniLM-L6), the 4-requantiser
   context write-out adding ~5k / ~7k.
 
-**Out-of-context implementation** (not yet run; Vivado is not available in the cloud
-workspace):
+**Out-of-context implementation** (run by the user on the laptop, Vivado 2025.2):
 
     vivado -mode batch -source scripts/v2/synth_encoder.tcl                      # both, 75 MHz
     vivado -mode batch -source scripts/v2/synth_encoder.tcl -tclargs minilm      # MiniLM only
     vivado -mode batch -source scripts/v2/synth_encoder.tcl -tclargs bert-mini 10.0
 
-Synthesises, places and routes `encoder_layer` alone on the xc7a100t (configurations
-`both` = MAX_HIDDEN 384 + head_dim 64, `minilm`, `bert-mini`) and writes
-`build/v2/encoder_ooc/<config>/summary.txt` (LUT, FF, DSP, BRAM, WNS/WHS) plus full
-utilisation and timing reports. The MIG, Ethernet link and clocking add a few BRAM
-tiles and a few thousand LUTs on top.
+Synthesises (with retiming), places and routes `encoder_layer` alone on the xc7a100t
+(configurations `both` = MAX_HIDDEN 384 + head_dim 64, `minilm`, `bert-mini`) and
+writes `build/v2/encoder_ooc/<config>/summary.txt` (LUT, FF, DSP, BRAM, WNS/WHS),
+`timing_groups.txt` (failing setup paths grouped by start and end block) and the
+full utilisation and timing reports. The MIG, Ethernet link and clocking come on top.
 
-Not done yet:
-* EMBED (token ids -> rows) and the heads run on the host side of the testbench;
-  they come with the v2 request protocol in step 5.
-* The GELU table in the linear engine is still written 16 entries per beat (flip-flops,
-  2 Kbit); the attention accumulators (12 x 64 x 23 bits) are flip-flops.
+Results, configuration `both`, 13.333 ns (the MIG's 75 MHz):
+
+| run (2026-10-06) | LUT | LUTRAM | FF | BRAM tiles | DSP | WNS |
+|---|---|---|---|---|---|---|
+| first fit | 42,135 | 6,068 | 17,751 | 127 | 235 | -21.4 ns |
+| pipelined | 38,781 | 4,995 | 20,987 | 133 | 235 | +0.226 ns |
+| squares in 2 clocks, exp tables in LUT RAM | 40,847 | 6,243 | 21,569 | 127 / 135 | 235 / 240 | +0.252 ns |
+
+The first fit failed timing on whole-function single-clock paths (worst: buffer
+block RAM -> the LayerNorm output, 34 logic levels). The pipelining:
+* **Buffer reads take `READ_LATENCY` = 3 clocks** (`encoder_pkg`): the mapped address is
+  registered at each buffer, then the block RAM, then each port's data is registered
+  after the physical-buffer multiplexer. Writes are mapped and registered too. Every
+  engine delays its issue flags by READ_LATENCY; the host port reads in 3 clocks.
+* **LayerNorm** output in 6 stages (c, c x inv, z, z x g, + b and rounding, shift and
+  clamp); the squares pass as |c| -> partial products h^2, h*l, l^2 (|c| = h 2^9 + l)
+  -> c^2 -> sum of 8 -> accumulate.
+* **Attention**: score dot products registered before the accumulate and max;
+  exponentials in 5 stages; P.V probabilities registered (exponent row read a clock
+  early); the context write-out in 4 stages, with a WRITE_FLUSH state before done.
+* **Linear**: the accumulator read and the weight-tile release moved to the clock
+  before the source data; requantisation in 6 stages. **Add-skip** in 3.
+* The 12 exp-table copies are forced to LUT RAM (`ram_style = "distributed"`):
+  Vivado had moved them to 12 RAMB18, leaving 2 of 135 block RAM tiles.
+
+Cost: 711k -> 718k clocks per bert-mini layer at 128 tokens, 1,436k -> 1,444k per
+MiniLM layer. Still bit-exact on all four layer tests. The worst paths left are pure
+routing (a buffer address register fanning out to 24 block RAMs, 12.0 of 12.4 ns in
+the wires) at 94% block RAM and 98% DSP; in the board top those registers can be
+replicated (max_fanout) before anything else.
+
+### Step 5, part 1: EMBED, the whole encoder from token ids (2026-10-06)
+
+`embed_engine.sv` runs the EMBED instruction: the per-dimension type, Mw and Mp
+vectors are fetched once; for every token, the id (an INT16 element of buffer X,
+written by the host before the run), the word row (`word + id * stride`, H / 16 beats)
+and the position row are fetched and two elements per clock go out to R
+(4 products in LUTs; `compile_image` now refuses Mw, Mp >= 2^17 or shifts > 24).
+Memory-bound by design: 26k clocks for 128 tokens, under 1% of the encoder.
+
+    make encoder-vectors ENCODER_MODEL=bert-mini-slots4 ENCODER_VECTORS=--full
+    make encoder
+
+`--full` single-steps the whole program (EMBED, the embedding LayerNorm, every layer)
+and compares every destination buffer, then runs it in one go and compares the final X.
+
+| image, whole program | cases | words compared | mismatches | clocks, 128 tokens |
+|---|---|---|---|---|
+| bert-mini-slots4 (46 instructions) | 9 | 514,368 | 0 | 2.95M (39 ms at 75 MHz) |
+| MiniLM-L6 (68 instructions) | 9 | 1,137,024 | 0 | 8.76M (117 ms at 75 MHz) |
+
+### Step 5, part 2: the heads, two versions (2026-10-06)
+
+The image's program ends with the encoder; the heads (`intent.*` and `pair.*` pool rows
+then one linear layer, `slots.*` one linear layer per token, all raw INT32 logits with
+float per-class scales) can run in either place. One RTL source, parameter
+`FPGA_HEADS` of `encoder_layer`:
+
+* **Heads on the host (`FPGA_HEADS = 0`, the version developed further).** The board
+  returns the final X (n x H INT8); the host computes `ImageMachine.head_logits`, which is
+  bit-exact with `IntEncoder`. No head hardware.
+* **Heads on the FPGA (`FPGA_HEADS = 1`).** Two additions: a POOL instruction
+  (`pool_engine.sv`: rows [first, first + count) of X -> one INT8 row,
+  `(sum * recip[count] + 2^15) >> 16`, recip from the image's table; one DSP48E1) and a raw
+  INT32 mode for LINEAR (4-byte elements, rows of ceil(out / 4) words) with an optional
+  `rows` field (0 = the run's token count) so pooled rows can go through a head. The host
+  builds a per-request head program (`ddr_image.head_program`: POOL per segment, then the
+  head's LINEAR; pooled rows in CTX, logits in A), writes it next to the image and runs it
+  after the encoder. `make encoder-vectors ENCODER_VECTORS=--heads` + `make encoder`: all
+  seven heads, segments split at [SEP]:
+
+| image | cases | words compared | mismatches | clocks for all 7 heads, 128 tokens |
+|---|---|---|---|---|
+| bert-mini-slots4 | 9 | 41,189 | 0 | 62k-67k (0.9 ms at 75 MHz) |
+| MiniLM-L6 | 9 | 43,029 | 0 | 92k-98k (1.3 ms at 75 MHz) |
+
+Compared (128 tokens, MiniLM-L6):
+
+| | heads on the host | heads on the FPGA |
+|---|---|---|
+| board time | 0 | ~1% of the encoder (98k of 8.76M clocks), memory-bound weight streaming |
+| reply | X: n x H = 48 KB | ATIS: intent 18 x 4 B per segment + slots n x 128 x 4 B = 64 KB; CLINC: 151 x 4 B per segment |
+| host work | pooling + small matmuls: all seven heads on 128 rows 6.5 ms in NumPy int64, 1.7 ms as float64 (exact here: every sum < 2^53), 2-core cloud VM; a request needs two or three heads | read logits |
+| hardware | none | 1 DSP48E1 + a few hundred LUTs (POOL), raw-mode muxes in LINEAR |
+| flexibility | any head, any rows, change without touching the board | head program per request |
+
+Nothing here argues for the FPGA version on the Nexys: the slot logits are larger than
+X itself, the integer argmax is not the float argmax (the per-class scales differ), and
+the host work is trivial. It would matter for a board with no host behind it, or a
+much larger head set. So the heads stay on the host; the FPGA version is kept,
+tested, behind the parameter.
+
+### Step 5, part 3: one request end to end, heads on the host (2026-10-06)
+
+The memory link gets a RUN command; nothing else changes on the link, and the encoder
+is a parameter of the existing top (`nexys4ddr_link_top`, `ENCODER = 1`; the Vivado
+project's `encoder` top).
+
+    host                                   board (sysone_v2_core)
+    WRITE ids (n UINT16) -> request area   memory_link_core writes DDR2
+    RUN descriptor (one beat)              executor hands the memory port to encoder_system:
+                                             ids DDR2 -> buffer X, program 0..END,
+                                             X -> DDR2 result area
+    <- RUN DONE (one beat)                 encoder clocks, request clocks, status, END index
+    READ X (n x H INT8), 64 beats/frame    memory_link_core reads DDR2
+    heads, labels (NumPy)
+
+* `rtl/v2/link`: parser accepts type 0x24 (exactly one beat), the command word gains an
+  `is_run` bit (121 bits), the executor passes the descriptor out and waits
+  (`run_active` = the memory port belongs to the encoder), puts the result beat in the
+  read-data FIFO; the responder sends it as 0x25. `make link` (now with a RUN, answered by
+  a no-encoder stub with status 0x80, and a two-beat RUN that must be ignored): PASS.
+* `rtl/v2/encoder/encoder_system.sv`: descriptor `<IHHII` (program, n, H, ids address,
+  result address), checks it, reads the ids into X through the host port, starts
+  `encoder_layer` (first 0, until END), writes X back in 64-beat bursts, counts clocks.
+* `rtl/v2/system/sysone_v2_core.sv`: the link plus, with ENCODER = 1, encoder_system and the
+  memory-port multiplexer; with ENCODER = 0 a RUN gets status 0x80 at once.
+* Host: `src/sysone/v2/memory_protocol.py` (RUN / RUN DONE), `encoder_client.py` (request
+  area after the image at the next 1 MiB: ids, X 4 KiB above; `EncoderBoard`,
+  `LocalEncoder` = ImageMachine), `wordpiece.py` (BERT uncased WordPiece in plain Python:
+  identical to the Hugging Face tokenizer on all 210,462 test segments), `host_heads.py`
+  (chain building identical to training on all 56,842 test chains; heads and labels; the
+  decisions equal `int_reference.py`'s), `scripts/v2/sysone_v2_client.py` (`load`, `check`,
+  `run`, `eval`; `--local` without a board). NumPy and scapy only.
+
+**Simulation through the RMII pins** (`make system-vectors` + `make system`;
+`encoder_system_tb.sv`: sysone_v2_core, mig_memory_port and the behavioural MIG preloaded
+with the image, frames built by the host code, replies decoded by the host decoder):
+
+| image | requests | result | board clocks, 128 tokens |
+|---|---|---|---|
+| bert-mini-slots4 | 9 (128, 64, 12, 1 random ids + 5 real test chains) | X bit-exact, status 0, stopped at END | encoder 2,952,317; request 2,963,767 = 39.5 ms at 75 MHz |
+| MiniLM-L6 | 8 (128, 12, 1 random ids + 5 real test chains) | X bit-exact, status 0, stopped at END | encoder 8,767,175; request 8,784,307 = 117.1 ms at 75 MHz |
+
+A request costs the encoder plus ~0.4% (reading the ids, writing X). Reading X back
+over the link and the heads are host-side.
+
+**On the board** (needs the user: Vivado and the Nexys 4 DDR):
+
+    vivado -mode batch -source scripts/v2/create_project_v2.tcl -tclargs build encoder
+    vivado -mode batch -source scripts/v2/program_board_v2.tcl -tclargs encoder
+    uv run python scripts/v2/sysone_v2_client.py -i "Realtek USB FE Family Controller" load
+    uv run python scripts/v2/sysone_v2_client.py -i "Realtek USB FE Family Controller" check
+    uv run python scripts/v2/sysone_v2_client.py -i "Realtek USB FE Family Controller" run --dataset atis "show me flights from denver to boston tomorrow morning"
+
+`check` compares the board's X with ImageMachine for random chains of 1, 12, 64 and 128
+tokens and prints the board's own clock counts.
+
+**On the board (2026-10-06): bit-exact.** Full build (`encoder` top: MIG, link, encoder)
+in Vivado 2025.2: WNS +0.187 ns, WHS +0.013 ns, 0 failing endpoints at 75 MHz; LUT
+50,185 / 63,400 (79%), LUT as memory 8,388, FF 27,116 (21%), block RAM 128 / 135 (95%),
+DSP 236 / 240 (98%). bert-mini-slots4 loaded (11,309,056 bytes, identical after
+read-back, 15 s host path), then `check`:
+
+| tokens | X | board: encoder clocks | encoder ms @ 75 MHz | request ms (board) | host round trip (host path, includes Ethernet) |
+|---|---|---|---|---|---|
+| 1 | bit-exact | 232,870 | 3.10 | 3.11 | 6 ms |
+| 12 | bit-exact | 291,527 | 3.89 | 3.90 | 8 ms |
+| 64 | bit-exact | 1,441,377 | 19.22 | 19.29 | 30 ms |
+| 128 | bit-exact | 2,951,462 | 39.35 | 39.49 | 60 ms |
+
+The 128-token count is within 0.03% of the simulation (2,952,317; the difference is
+real DDR2 latency against the behavioural MIG). Speed figures are the board's own clock
+counts; the host round trip is reported only as a host-path number.
 
 ## The encoder datapath (planned, after the model study fixes the model)
 
@@ -379,6 +591,278 @@ returned logits into probabilities, slot spans and decisions. A v2 request carri
 token ids, segment boundaries and which heads to run on which segments; the reply
 carries the head logits. Weights are loaded once into DDR over the same link.
 
+### Faster option: two products per DSP (2026-10-06, simulation; not yet synthesised)
+
+At 128 tokens the linear layers are ~83% of a MiniLM-L6 pass and the 16 x 12 array runs
+them at 98% of its peak, so the only way to go faster on the Nexys 4 DDR is more
+multipliers. Every DSP48E1 is in use, but the array's products always share one
+operand per input row (b[r]: the token's input, or the key / value), and the operands
+are small (INT8 weights and queries, probabilities 0..255), so one DSP48E1 can compute
+two of them: P = (a1 * 2^16 + a2) * b through the pre-adder, a2 * b = P[15:0],
+a1 * b = P[42:16] + P[15]. Exact for a in [-128, 255], b in [-128, 127] (exhaustive
+check in Python; 200k random operand sets against the plain array).
+
+Parameters (all default to the proven configuration):
+
+| parameter | default | packed option | what |
+|---|---|---|---|
+| `mac_array` / `encoder_layer` MAC_PACK | 0 | 1 | two products per DSP48E1 |
+| TILE_OUT | 12 | 24 | 16 x 24 tiles: 384 products on 192 DSPs |
+| ATTENTION_LANES | TILE_OUT | 12 | attention keeps 12 queries at a time (its per-lane softmax DSPs) |
+| ACCUMULATORS_IN_LUTS | 0 | 1 | LINEAR's accumulator banks (128 x 24 x 32 bits x 2) in LUT RAM: frees ~10 RAMB36 |
+| DRAIN_LANES | 1 | 2 | requantisers, so the drain keeps up with 24 channels |
+
+Images for it: `compile_image.py build --tile 16x24 --reuse-calibration --suffix=-t24`.
+Board build: `create_project_v2.tcl -tclargs build encoder_packed` (top parameter
+ENCODER_PACKED = 1); the default `encoder` build is unchanged.
+
+| 128 tokens, simulated, bit-exact | 16 x 12 | packed 16 x 24 | |
+|---|---|---|---|
+| bert-mini-slots4 | 2.95M clocks, 39 ms | 1.88M, 25 ms | 1.57x |
+| MiniLM-L6 | 8.76M, 117 ms | 5.20M, 69 ms | 1.69x |
+
+`make encoder-t24` (whole programs and head programs) and `make system-t24` (whole
+requests through the Ethernet pins: bert-mini-slots4-t24 8 requests, minilm-l6-t24 6,
+X bit-exact; the board reports 1,883,605 / 5,201,468 encoder clocks at 128 tokens;
+short chains are unchanged, e.g. 1 token 3.6 ms / 11.5 ms, because they are bound by
+streaming the weights from DDR2, not by the multipliers). Resources are estimates until Vivado runs it
+(`synth_encoder.tcl -tclargs both-t24`): DSP ~238 of 240, block RAM ~117 of 135, LUTs
++~8k (accumulators in LUT RAM, 12 more lanes of adder trees, the split adders), so
+~58k of 63.4k with the MIG and the link: tight. Timing risk: the split adder sits
+between the DSP output register and the engines' adder trees.
+
+### Out-of-scope rule for the CLINC head (2026-10-06)
+
+The v2 CLINC head has "oos" as a 151st class; plain argmax finds few out-of-scope
+queries. `scripts/v2/oos_threshold.py` applies v1's host-side rule (oos when the top
+probability is below tau, tau with the best out-of-scope recall on validation within
+1 point of in-scope accuracy) to the integer model the board runs (ImageMachine on
+every CLINC validation and test utterance) and writes
+`export/v2/image/<name>/decision.json`, which `host_heads.Heads` and the client apply.
+
+| CLINC test (5,500) | tau | in-scope | OOS recall | combined |
+|---|---|---|---|---|
+| bert-mini-slots4, argmax | - | 0.931 | 0.270 | 0.811 |
+| bert-mini-slots4, threshold | 0.46 | 0.923 | 0.698 | 0.882 |
+| MiniLM-L6, argmax | - | 0.952 | 0.294 | 0.832 |
+| MiniLM-L6, threshold | 0.475 | 0.944 | 0.712 | **0.902** |
+| MiniLM-L6-slots4, argmax | - | 0.950 | 0.272 | 0.827 |
+| MiniLM-L6-slots4, threshold | 0.395 | 0.945 | 0.666 | 0.894 |
+| MiniLM-L6-v3b, argmax | - | 0.956 | 0.394 | 0.854 |
+| MiniLM-L6-v3b, threshold | 0.48 | 0.947 | 0.703 | **0.9025** |
+| v1 board model (distilled, for reference) | 0.38 | 0.929 | 0.743 | 0.890 |
+
+### v3 on the host: routing, your own intents, long inputs (2026-10-07)
+
+No RTL change: everything here is host code around the same RUN request.
+
+* **`run --dataset auto`** (`host_heads.route`): one encoder pass, then in order:
+  custom intents (embedding head, nearest centroid above `--threshold`, default 0.6);
+  CLINC with its out-of-scope rule; a flight intent -> ATIS intent + slots; a service
+  intent (restaurants, hotels, cars, rides, music, weather, banking...) -> SGD intent +
+  slots unless SGD says NONE; otherwise HWU64 when its own probability clears its
+  threshold; otherwise the CLINC intent. The ATIS / SGD / HWU heads have no "none of
+  these" class, so they are only consulted after CLINC (or HWU's threshold) accepts the
+  request. Before this, an off-topic question to `--dataset atis` came back as an
+  airline intent with nonsense slots.
+* **Your own intents** (`--intents my_intents.json`, `{"name": ["example", ...]}`,
+  example `examples/v2/custom_intents.json`): the examples are encoded once by the
+  board, their mean embeddings cached next to the file per image; a request goes to the
+  nearest centroid (cosine). No retraining, no new bitstream. Accuracy to expect on
+  unseen intents: the few-shot rows of the v3 table (5 examples each: 0.76 over 77
+  banking intents, 0.90 over 7 assistant intents).
+* **Long inputs** (`doc --file text.txt`, also `--query "..."` to rank the sentences by
+  similarity). The encoder's limit stays 128 tokens per pass (see below); the host splits
+  the text into sentences and sends them as requests, so any length works. Each
+  sentence gets the `auto` routing. Measured on documents built from CLINC test
+  sentences (`scripts/v2/longtext_eval.py`, MiniLM-L6 image on ImageMachine = the
+  board's integer result), per-sentence accuracy:
+
+  | sentences per 128-token request | 100 words | 300 words | 1000 words |
+  |---|---|---|---|
+  | 1 (each alone, default) | 0.830 | 0.939 | 0.905-0.919 |
+  | at most 2 | | | 0.886 |
+  | at most 4 | 0.830 | 0.851 | 0.876 |
+  | as many as fit | 0.698 | 0.757 | 0.790 |
+
+  Sentences sharing a request attend to each other and that costs accuracy, so the
+  default is one sentence per request (`--max-segments` to trade accuracy for speed).
+  Board time for the encoder, from the measured clocks per request length (bert-mini on
+  the board; MiniLM-L6 from simulation; 75 MHz):
+
+  | 1000 words (~1,350 tokens) | 1 per request | at most 4 | as many as fit |
+  |---|---|---|---|
+  | bert-mini | ~0.50 s (125 requests) | ~0.38 s | ~0.37 s (10 requests) |
+  | MiniLM-L6 | ~2.4 s | ~1.4 s | ~1.1 s |
+
+  Packing saves only the per-request weight streaming (~3 ms bert-mini, ~11.5 ms
+  MiniLM-L6), which is why bert-mini barely gains from it.
+* **Why not a longer window in hardware.** At 128 tokens the activation buffers take
+  108 of the 135 RAMB36 (MAX_HIDDEN 384; 72 for a bert-mini-only build) and they scale
+  with the window, so 256 tokens needs ~216: it does not fit the xc7a100t, for either
+  model. Attention's share grows with the square of the length (MiniLM-L6 at 512 tokens:
+  attention ~0.2G of ~1.1G multiply-adds per layer, so still mostly linear). The KR260
+  (K26: 144 RAMB36 + 64 UltraRAM = ~18 Mbit more) could hold MiniLM-L6 buffers for ~512
+  tokens; the models would then need training on longer chains. A cheaper step on the
+  Nexys: a per-segment attention mask in the attention engine (keys of other segments
+  masked off) would let packed sentences behave like separate requests at the packed
+  speed; not done.
+
+### KR260: the same encoder as a PL block (2026-10-06, simulation only)
+
+* `rtl/v2/platform/kr260/kr260_encoder.sv`: AXI4-Lite control registers (descriptor =
+  the RUN descriptor, start / done / irq, status, clock counts, ID "SYS2", build
+  parameters), `encoder_system` (unchanged), `axi_memory_port` to the PS DDR4.
+  `TILE_OUT = 32`.
+* Images for it: `compile_image.py build --board kr260 --base 0x60000000 --suffix=-kr260`
+  (tile 16 x 32; the RTL's tile input is fixed at 16, so the `kr260` profile is now
+  16 x 32 instead of the planned 32 x 32; absolute addresses in a reserved PS DDR region).
+* `make encoder-kr260` (encoder_layer at TILE_OUT 32, 32-bit addresses, image at
+  0x60000000; whole program, 1 and 128 tokens; head programs too): bit-exact. With one
+  requantiser in the linear engine's drain it took 2.01M clocks at 128 tokens for
+  bert-mini (2.95M at TILE_OUT 12): at 32 output channels the drain (n x 32 clocks per
+  output tile) is slower than the MACs (n x in_tiles). New `DRAIN_LANES` parameter
+  (linear_engine, 1 on the Nexys, unchanged and still bit-exact there; 4 on the KR260,
+  2 DSP48E1 each): 1.46M clocks, Q/K/V 35k -> 17.6k each. What is left at 128 tokens is
+  LayerNorm (51k each, 9 per pass, ~31%): its three 48-bit sequential divisions per token
+  and 2 elements per clock; the next KR260 step is more LayerNorm lanes and dividers
+  overlapped across tokens.
+* `make kr260-vectors` + `make kr260` (`kr260_encoder_tb.sv`: AXI4 slave model of the PS
+  DDR, preloaded with the image, random stalls; runs started through the registers as the
+  ARM would): ID and BUILD registers, irq, X bit-exact for 1, 12 and 128 tokens.
+* Block design: `scripts/v2/kr260/create_project_kr260.tcl` (Zynq PS with the board
+  preset, HPM0_FPD -> registers at 0xA000_0000, encoder -> S_AXI_HP0_FPD 128-bit, pl_clk0
+  100 MHz, irq -> pl_ps_irq0) and `kr260_encoder_wrapper.v` (Verilog wrapper for the
+  module reference). Written before the board arrived and not run: a starting point.
+* ARM side: `src/sysone/v2/kr260_link.py` (`Kr260Link`: the same write / read / run
+  interface as the Ethernet link, on /dev/mem, uncached), so the whole host client runs
+  on the board: `sysone_v2_client.py --kr260 --image bert-mini-slots4-kr260 check`.
+  Not run on hardware (the block design script above is untested; Linux also needs a
+  reserved-memory node for the region).
+
+## Problems hit and how they were solved
+
+The significant failures on the way to the board run, in the order they appeared.
+Each one: what was seen, the cause, the fix, and where it lives.
+
+**Hardware and RTL**
+
+1. **Encoder timing failed by 21 ns** (first out-of-context fit, WNS -21.4 ns at
+   13.333 ns). Cause: whole operations in one clock; the worst path went buffer
+   block RAM -> LayerNorm output through 34 logic levels. Fix: pipelining everywhere:
+   buffer reads take `READ_LATENCY` = 3 (address register, block RAM, register after
+   the physical-buffer multiplexer) and every engine delays its issue flags to match;
+   LayerNorm output in 6 stages, attention exponentials in 5, the context write-out in
+   4, linear requantisation in 6, add-skip in 3 (`encoder_pkg.sv`, all engines).
+   Result +0.226 ns. Cost ~1% more clocks per layer; still bit-exact.
+2. **Block RAM ran out (133 of 135)** after pipelining. Cause: Vivado moved the 12
+   exp-table copies into 12 RAMB18. Fix: `(* ram_style = "distributed" *)` on the
+   tables, and the LayerNorm squares split as |c| = h 2^9 + l over two clocks so they
+   stay in LUTs (`attention_engine.sv`, `layernorm_engine.sv`). 127 / 135, +0.252 ns.
+3. **Remaining paths were pure routing** (a buffer address register fanning out to 24
+   block RAMs, 12.0 of 12.4 ns in wires). Fix: `(* max_fanout = 8 *)` on the read address
+   register (`encoder_layer.sv`) so Vivado replicates it. +0.341 ns out of context,
+   +0.187 ns in the full board build.
+4. **DSPs at the limit** (238 of 240 with EMBED's 3 multipliers). Fix: EMBED kept in
+   LUTs (`(* use_dsp = "no" *)`, `embed_engine.sv`); 236 / 240 in the board build.
+5. **RUN result word was 176 bits wide** in `encoder_system.sv` (a padding field too
+   wide in the concatenation of the 128-bit result). Caught as a Verilator width
+   error. Fix: 32'd0 padding, so the result beat is exactly 128 bits.
+6. **Packed DSP (two products per DSP48E1) failed at a = -256.** Cause: outside the
+   operand range the pre-adder trick is exact for. Fix: the documented and tested
+   range is a in [-128, 255], b in [-128, 127], which covers every operand the encoder
+   produces (`mac_array.sv`, `tests/test_mac_packing.py`, exhaustive).
+
+**Build and tools**
+
+7. **Vivado could not generate the MIG for the encoder project**: "Path length exceeds
+   260-Byte maximum allowed by Windows" (263 bytes under OneDrive for a MIG
+   example-design file). Cause: the longer project names `nexys4ddr_encoder/
+   sysone_v2_nexys4ddr_encoder` on top of a deep repo path. Fix: the encoder projects are
+   `build/v2/enc/enc.xpr` and `build/v2/encp/encp.xpr` (~225 bytes worst case);
+   bitstreams still land in `build/v2/nexys4ddr/` (`create_project_v2.tcl`). If it ever
+   recurs: `subst R: "<repo path>"` and build from R:.
+8. **The LINEAR activation table (`lut_reg`, 256 x 8) is built from registers** (Synth
+   8-4767, "RAM has multiple writes"): it is loaded 16 bytes per clock. Not an error:
+   ~2k flip-flops plus a read multiplexer, already inside the timing and LUT numbers.
+   Could become one byte per clock in LUT RAM if LUTs ever run short.
+
+**Host software**
+
+9. **`check` failed on the board at once: "write at 0xb00000: board wrote 1 beats"**.
+   Cause: a host bug, not the board. A 1-token request writes one 16-byte beat; the
+   frame (26-byte header + 16) is padded to Ethernet's 60-byte minimum, and the client
+   computed the beats it had sent from the frame length, (60 - 26) // 16 = 2, against
+   the board's correct 1. Writes of 2+ beats are never padded, so the 11 MB image
+   load had passed. Fix: count beats from the data, not the frame
+   (`scripts/v2/memory_link_client.py`). The same check then passed for 1-128 tokens.
+10. **Head vectors for the KR260 image ignored the image base** (0x60000000), so head
+    programs pointed at the wrong addresses. Fix: head programs are built relative to the
+    image base (`scripts/v2/encoder_vectors.py`, `ddr_image.head_program`).
+11. **A float64 matmul in `ImageMachine.hidden` made the reference much slower**
+    without changing results. Fix: kept only where it matters (`head_logits`, exact
+    host-side logits); the integer encoder stays as before (`ddr_image.py`).
+12. **The out-of-scope smoke test overwrote a real threshold**:
+    `oos_threshold.py --limit 30` wrote bert-mini-slots4's decision.json with tau 0.
+    Fix: restored tau 0.46 from `results/v2/chain/bert-mini-slots4_oos.json`; `--limit`
+    now writes nothing.
+
+**Models and evaluation**
+
+13. **CLINC out-of-scope queries mostly missed** with plain argmax over 151 classes
+    (OOS recall 0.27-0.29). Fix: v1's max-probability rule, tau tuned on validation at
+    <= 1 point of in-scope accuracy: OOS recall 0.70-0.71, combined accuracy up to
+    0.902 for MiniLM-L6 ("Out-of-scope rule" above, `decision.json` per image).
+14. **Slot F1 was weak** (ATIS 0.78, SGD 0.50 for MiniLM-L6). Fix: slot loss weighted x4
+    (`train_chain.py --slot-weight 4`): 0.87 / 0.58, at a cost of ATIS intent
+    (0.959 -> 0.920) ("Model study").
+15. **Long runs in the cloud workspace were killed by container restarts** (training,
+    out-of-scope evaluation). Fix: `train_chain.py --resume` with a checkpoint every
+    200 batches; `oos_threshold.py` caches probabilities every 250 chains
+    (`logs/oos_cache/`) and resumes.
+
+**Models and data, v3 (2026-10-07)**
+
+16. **HWU64 slot F1 was 0.28** in the first v3 run (`minilm-l6-v3`), against ~0.7-0.8
+    expected. The data parsed correctly; the cause was the optimiser: the new heads (HWU
+    intent and slots, embedding, prototypes) started from random weights and trained at
+    the encoder's learning rate (4e-5) for one epoch, so the slot head barely left
+    "everything is O". Fix: `train_chain.py --head-lr` (heads at 1e-3, encoder at 4e-5,
+    two parameter groups) and 2 epochs: HWU slot F1 0.696, intent 0.850 -> 0.916.
+17. **The embedding head was worse than the model it started from** on intents it never
+    saw (Banking77 5-shot 0.548 against 0.764 for the pretrained all-MiniLM-L6-v2). The
+    task fine-tuning had moved the encoder away from a general sentence embedding (the
+    plain `minilm-l6` chain model already scores 0.529) and a distillation weight of 1
+    could not pull it back. Fix: `--distill-weight 10`, and distillation also on the
+    SICK/MSRP sentences (they carry no intent label): Banking77 5-shot 0.760, SNIPS 0.900
+    (above the pretrained model's 0.865), with the task heads better than before.
+18. **Training on the laptop failed at once**: "Couldn't instantiate the backend
+    tokenizer". The laptop's `models/all-MiniLM-L6-v2` held only weight files (PyTorch,
+    TF, Rust, OpenVINO) - no `config.json`, no tokenizer. Fix: the three missing files
+    copied (same weights, md5-checked); `scripts/v2/fetch_models.py` now downloads a
+    complete copy for a new machine. Training also moved off the 2-core cloud workspace:
+    `pyproject.toml` group `train` (CPU PyTorch + transformers), `--threads` defaults to
+    every core; the laptop took ~1.7 h for 2 epochs against ~2.5 h in the cloud.
+19. **Packing many sentences into one request cost up to 15 points** of per-sentence
+    accuracy on long texts (sentences attend to each other; training only had 2-4 per
+    chain). Fix: one sentence per request by default (`doc --max-segments 1`); numbers
+    in "v3 on the host".
+20. **Work done twice**: an interrupted session had already added HWU64, the embedding
+    head, few-shot evaluation and custom-intent / long-text client code to the cloud
+    workspace, unknown to the next session, which started on the same features. Caught
+    by duplicate argparse options (`--intents` defined twice); the earlier, more complete
+    client code was kept and the duplicates removed. Lesson: list recently changed files
+    before starting on a request.
+
+21. **The HWU router statistics were wrong** (`oos_threshold.py --extra hwu`, first run
+    on minilm-l6-v3b): "OOS rejected" 0.405 with CLINC alone, against 0.703 OOS recall
+    from the threshold rule on the same probabilities. Cause: the statistic treated a
+    sentence as in scope whenever CLINC's top probability cleared tau, but CLINC's top
+    class can itself be "oos" (it is the 151st class), which the real router
+    (`host_heads.route`) rejects. The same error went into choosing tau_hwu (0.515).
+    Fix: the statistic now mirrors the router exactly; rerun (probabilities are cached in
+    `logs/oos_cache/`, so it takes seconds).
+
 ## Scaling across boards
 
 | | Nexys 4 DDR | KR260 (K26) | larger (ZU9EG class) |
@@ -406,5 +890,11 @@ memory-bound and extra chained segments are nearly free up to ~32–64 tokens.
    written to the board's DDR2 and read back identical, 11,309,056 bytes).
 4. Matrix engine + one encoder layer, bit-exact in simulation (done: bert-mini and
    MiniLM-L6 layers, every buffer after every instruction), then on the board.
-5. Full encoder, heads, v2 request/reply protocol and host client.
-6. KR260 port: AXI memory adapter, PS-side host, larger MAC array.
+5. Full encoder, heads, v2 request/reply protocol and host client: done in simulation
+   (whole requests through the RMII pins bit-exact, heads on the host) and **on the
+   board (2026-10-06)**: the encoder bitstream meets timing (WNS +0.187 ns) and
+   bert-mini-slots4 runs bit-exact for 1-128 tokens, 39.35 ms of encoder at 128 tokens
+   (board clocks). Next: `run` / `eval --verify` on real text, then MiniLM-L6.
+6. KR260 port: AXI memory adapter (done), the encoder as a PL block with AXI4-Lite
+   control and the ARM-side link (done in simulation, TILE_OUT 32); next: requantiser
+   lanes, the block design, the board.

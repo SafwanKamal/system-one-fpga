@@ -1,5 +1,7 @@
-// Nexys 4 DDR, v2 bring-up step 2: read and write the DDR2 from the host over raw
-// Ethernet (memory_link_core). This is how encoder weights get into the DDR2.
+// Nexys 4 DDR, v2: read and write the DDR2 from the host over raw Ethernet
+// (memory_link_core, bring-up step 2; this is how the encoder image gets into the
+// DDR2) and, with ENCODER = 1, run the encoder on the link's RUN command
+// (sysone_v2_core + encoder_system, step 5; the project's "encoder" top).
 //
 // Clocking: 100 MHz board clock -> MMCM (1000 MHz VCO)
 //   CLKOUT0 200 MHz  MIG system clock (the MIG makes the 300 MHz DDR2 clock and the
@@ -16,8 +18,14 @@
 //   2  PHY out of reset                 6  a request was rejected (sticky)
 //   3  memory side busy (stretched)     7  heartbeat
 // Seven-segment display: left = commands accepted, right = replies sent (mod 10000).
+// With ENCODER = 1, LED 3 also lights while the encoder runs.
 // BTNC resets everything, including MIG calibration.
-module nexys4ddr_link_top (
+module nexys4ddr_link_top #(
+    parameter integer ENCODER = 0,
+    // 1: the packed 16 x 24 array (two products per DSP48E1; images built with
+    // --tile 16x24), about 1.6x faster at 128 tokens; 0: the 16 x 12 array
+    parameter integer ENCODER_PACKED = 0
+) (
     input  logic clk_100MHz,
     input  logic reset,                 // BTNC, active high
 
@@ -191,11 +199,17 @@ module nexys4ddr_link_top (
     );
 
     // ------------------------------------------------------------ the link
-    logic accepted, rejected, replied, rx_error, dropped, memory_busy;
+    logic accepted, rejected, replied, rx_error, dropped, memory_busy, encoder_busy;
 
-    memory_link_core #(
+    sysone_v2_core #(
         .ADDRESS_WIDTH (ADDRESS_WIDTH),
-        .BEATS_WIDTH   (BEATS_WIDTH)
+        .BEATS_WIDTH   (BEATS_WIDTH),
+        .ENCODER       (ENCODER),
+        .TILE_OUT      (ENCODER_PACKED ? 24 : 12),
+        .MAC_PACK      (ENCODER_PACKED),
+        .ATTENTION_LANES(12),
+        .ACCUMULATORS_IN_LUTS(ENCODER_PACKED),
+        .DRAIN_LANES   (ENCODER_PACKED ? 2 : 1)
     ) link_inst (
         .ethernet_clk(clk_50MHz), .ethernet_reset(ethernet_reset),
         .rmii_rxd(rmii_rxd), .rmii_crs_dv(rmii_crs_dv), .rmii_rx_er(rmii_rx_er),
@@ -210,7 +224,7 @@ module nexys4ddr_link_top (
         .write_request_valid(write_request_valid), .write_request_ready(write_request_ready),
         .write_request_address(write_request_address), .write_request_beats(write_request_beats),
         .write_valid(write_valid), .write_ready(write_ready), .write_data(write_data),
-        .memory_busy_out(memory_busy)
+        .memory_busy_out(memory_busy), .encoder_busy_out(encoder_busy)
     );
 
     // ---------------------------------------------------------------- status
@@ -242,7 +256,7 @@ module nexys4ddr_link_top (
     (* ASYNC_REG = "TRUE" *) logic [1:0] busy_sync_reg;
     logic [19:0] busy_stretch_reg;
     always_ff @(posedge clk_50MHz) begin
-        busy_sync_reg <= {busy_sync_reg[0], memory_busy};
+        busy_sync_reg <= {busy_sync_reg[0], memory_busy || encoder_busy};
         busy_stretch_reg <= busy_sync_reg[1] ? '1 : (busy_stretch_reg != 0 ? busy_stretch_reg - 1'b1 : '0);
     end
 

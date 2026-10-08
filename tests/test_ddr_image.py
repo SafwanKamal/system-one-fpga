@@ -148,6 +148,39 @@ def test_image_machine_is_bit_exact(tiny):
         m.hidden(rng.integers(0, 100, 33))                  # longer than max_tokens
 
 
+def test_head_program_matches_head_logits(tiny):
+    """POOL + raw-INT32 LINEAR (heads on the FPGA) give exactly head_logits (heads on the host)."""
+    _, img, _, rng = tiny
+    m = di.ImageMachine(img)
+    heads = di.decode_heads(img)
+    names = sorted(heads)
+    for n in (1, 5, 32):
+        ids = rng.integers(0, 100, n)
+        x = m.hidden(ids)
+        cuts = sorted(set(rng.integers(1, n, 2).tolist())) if n > 2 else []
+        bounds = [0] + cuts + [n]
+        segments = [(a, b) for a, b in zip(bounds, bounds[1:]) if b > a]
+        blob, what = di.head_program(heads, names, n, segments, 16, 12)
+        program = di.decode_instructions(blob)
+        assert program[-1]["op"] == di.END and len(program) == len(what) + 1
+        got = {}
+
+        def on_step(k, ins, buf):
+            if what[k]["kind"] == "logits":
+                got[what[k]["head"]] = buf[di.BUF_A].copy()
+
+        m.run(program, {di.BUF_X: x}, on_step=on_step)
+        for nm in names:
+            kind = heads[nm]["kind"]
+            if kind == di.HEAD_TOKEN:
+                want, _ = m.head_logits(x, nm, np.arange(n))
+            elif kind == di.HEAD_ALL:
+                want = m.head_logits(x, nm)[0][None]
+            else:
+                want = np.stack([m.head_logits(x, nm, np.arange(a, b))[0] for a, b in segments])
+            assert np.array_equal(got[nm], want), nm
+
+
 def test_overflow_is_refused():
     ie, _ = _tiny(seed=1)
     ie.layers[0]["q"]["b"] = ie.layers[0]["q"]["b"] + 2.0**40

@@ -56,6 +56,13 @@ module memory_link_core #(
     input logic write_ready,
     output logic [127:0] write_data,
 
+    // run port (memory clock): RUN commands, see memory_link_executor
+    output logic run_start_out,
+    output logic [127:0] run_descriptor_out,
+    output logic run_active_out,
+    input logic run_done_in,
+    input logic [127:0] run_result_in,
+
     output logic memory_busy_out
 );
 
@@ -86,7 +93,7 @@ module memory_link_core #(
     logic [127:0] beat_w, beat_r, read_beat_w, read_beat_r;
     logic beat_push, beat_full, beat_empty, beat_pop;
     logic read_beat_push, read_beat_full, read_beat_empty, read_beat_pop;
-    logic [119:0] command_w, command_r, response_w, response_r;
+    logic [120:0] command_w, command_r, response_w, response_r;
     logic command_push, command_full, command_empty, command_pop;
     logic response_push, response_full, response_empty, response_pop;
 
@@ -108,7 +115,7 @@ module memory_link_core #(
         .read_data(beat_r), .empty(beat_empty)
     );
 
-    async_fifo #(.WIDTH(120), .DEPTH(8)) command_fifo_inst (
+    async_fifo #(.WIDTH(121), .DEPTH(8)) command_fifo_inst (
         .write_clk(ethernet_clk), .write_reset(ethernet_reset), .write_enable(command_push),
         .write_data(command_w), .full(command_full), .write_count(),
         .read_clk(memory_clk), .read_reset(memory_reset), .read_enable(command_pop),
@@ -133,6 +140,8 @@ module memory_link_core #(
         .write_request_valid(write_request_valid), .write_request_ready(write_request_ready),
         .write_request_address(write_request_address), .write_request_beats(write_request_beats),
         .write_valid(write_valid), .write_ready(write_ready), .write_data(write_data),
+        .run_start_out(run_start_out), .run_descriptor_out(run_descriptor_out),
+        .run_active_out(run_active_out), .run_done_in(run_done_in), .run_result_in(run_result_in),
         .busy_out(memory_busy_out)
     );
 
@@ -143,7 +152,7 @@ module memory_link_core #(
         .read_data(read_beat_r), .empty(read_beat_empty)
     );
 
-    async_fifo #(.WIDTH(120), .DEPTH(8)) response_fifo_inst (
+    async_fifo #(.WIDTH(121), .DEPTH(8)) response_fifo_inst (
         .write_clk(memory_clk), .write_reset(memory_reset), .write_enable(response_push),
         .write_data(response_w), .full(response_full), .write_count(),
         .read_clk(ethernet_clk), .read_reset(ethernet_reset), .read_enable(response_pop),

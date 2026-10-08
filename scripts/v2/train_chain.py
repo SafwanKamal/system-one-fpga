@@ -11,6 +11,12 @@ segments ([CLS] seg_1 [SEP] seg_2 [SEP] ...), with small heads on top:
   slots   each word's first sub-word state -> Linear, one head per tag set
           (atis 127, sgd 108 BIO tags)
   pair    mean of all token states -> Linear (sick 3, msrp 2)
+  embed   (--embed-dim, v3) the intent pooling -> Linear: a sentence embedding. Trained
+          with a cosine classifier over every intent label set (so sentences with the same
+          intent cluster) plus distillation towards a pretrained sentence encoder
+          (--teacher, so it stays a general-purpose embedding). On the board it is one
+          more intent-kind head ("intent.embed"); new intents are a few example
+          sentences and a nearest-centroid search on the host (src/sysone/v2/fewshot.py).
 
 Heads are tiny next to the encoder and on hardware they are a few extra rows of the
 same matrix work, so adding tasks costs almost nothing per inference. The encoder
@@ -99,12 +105,14 @@ class Encoder:
             first.append(False)
             tags.append(IGNORE)
         ids, seg_of, tags = ids[:self.max_len], seg_of[:self.max_len], tags[:self.max_len]
-        targets = [(seg_map[si], intent_head(chain), s.intent) for si, s in enumerate(segs)
-                   if si in seg_map and s.intent != IGNORE]
+        targets = [(seg_map[si], intent_head(chain), s.intent, tuple(s.words))
+                   for si, s in enumerate(segs) if si in seg_map and s.intent != IGNORE]
         slot_head = chain.dataset if any(s.tags is not None for s in segs) else None
+        distill_only = [(seg_map[si], tuple(s.words)) for si, s in enumerate(segs)
+                        if si in seg_map and s.intent == IGNORE and chain.task == "pair"]
         return {"ids": ids, "seg": seg_of, "tags": tags, "targets": targets,
                 "slot_head": slot_head, "pair": (chain.dataset, chain.pair_label)
-                if chain.task == "pair" else None}
+                if chain.task == "pair" else None, "distill_only": distill_only}
 
 
 def collate(items: list[dict], pad: int) -> dict:
@@ -127,7 +135,7 @@ def collate(items: list[dict], pad: int) -> dict:
 
 class ChainModel(nn.Module):
     def __init__(self, encoder, intent_sizes: dict, tag_sizes: dict, pair_sizes: dict,
-                 dropout: float = 0.1):
+                 dropout: float = 0.1, embed_dim: int = 0):
         super().__init__()
         self.encoder = encoder
         H = encoder.config.hidden_size
@@ -135,17 +143,30 @@ class ChainModel(nn.Module):
         self.intent = nn.ModuleDict({k: nn.Linear(H, v) for k, v in intent_sizes.items()})
         self.slots = nn.ModuleDict({k: nn.Linear(H, v) for k, v in tag_sizes.items()})
         self.pair = nn.ModuleDict({k: nn.Linear(H, v) for k, v in pair_sizes.items()})
+        self.embed_dim = embed_dim
+        if embed_dim:
+            e = nn.Linear(H, embed_dim)
+            with torch.no_grad():                # identity start: the encoder's own pooling
+                e.weight.zero_()
+                e.weight[:, :min(H, embed_dim)] += torch.eye(embed_dim, min(H, embed_dim))
+                e.bias.zero_()
+            self.intent["embed"] = e
+            # training-only prototypes of the cosine classifier, one row per intent label
+            self.proto = nn.ParameterDict({k: nn.Parameter(torch.randn(v, embed_dim) * 0.02)
+                                           for k, v in intent_sizes.items()})
 
     def forward(self, batch: dict) -> dict:
         h = self.encoder(input_ids=batch["ids"], attention_mask=batch["att"]).last_hidden_state
         h = self.drop(h)
-        out = {"intent": [], "slots": [], "pair": []}
+        out = {"intent": [], "slots": [], "pair": [], "embed": []}
         seg = batch["seg"]
         for i, x in enumerate(batch["items"]):
-            for s, head, y in x["targets"]:
+            for s, head, y, words in x["targets"]:
                 m = (seg[i] == s)
                 v = h[i][m].mean(0) if m.any() else h[i, 0]
                 out["intent"].append((head, self.intent[head](v), y, i, s))
+                if self.embed_dim:
+                    out["embed"].append((head, self.intent["embed"](v), y, words))
             if x["slot_head"] is not None:
                 m = batch["tags"][i] != IGNORE
                 if m.any():
@@ -155,7 +176,57 @@ class ChainModel(nn.Module):
                 m = batch["att"][i].bool()
                 out["pair"].append((x["pair"][0], self.pair[x["pair"][0]](h[i][m].mean(0)),
                                     x["pair"][1], i))
+            if self.embed_dim and x.get("distill_only"):
+                for s, words in x["distill_only"]:   # e.g. pair sentences: no label, teacher only
+                    m = (seg[i] == s)
+                    if m.any():
+                        out["embed"].append((None, self.intent["embed"](h[i][m].mean(0)), None, words))
         return out
+
+
+def embed_loss(model, out: dict, teacher, scale: float, embed_weight: float,
+               distill_weight: float, skip: dict) -> torch.Tensor:
+    """Cosine classifier over each target's own label set (labels in `skip`, e.g. CLINC's
+    oos, are left out: they are not one cluster) + 1 - cos to the teacher's embedding."""
+    terms = []
+    for head, e, y, words in out["embed"]:
+        en = F.normalize(e, dim=-1)
+        if embed_weight and head is not None and y != skip.get(head):
+            logit = scale * en @ F.normalize(model.proto[head], dim=-1).T
+            terms.append(embed_weight * F.cross_entropy(logit[None], torch.as_tensor([y])))
+        if distill_weight and teacher is not None:
+            terms.append(distill_weight * (1 - (en * teacher(words)).sum()))
+    return torch.stack(terms).mean() if terms else torch.zeros(())
+
+
+class Teacher:
+    """A frozen sentence encoder (sentence-transformers mean pooling over all tokens,
+    normalised); embeddings cached per sentence."""
+
+    def __init__(self, path: str, batch: int = 64):
+        from transformers import AutoModel, AutoTokenizer
+        self.tok = AutoTokenizer.from_pretrained(path)
+        self.model = AutoModel.from_pretrained(path).eval()
+        self.cache: dict[tuple, torch.Tensor] = {}
+        self.batch = batch
+
+    @torch.no_grad()
+    def fill(self, keys) -> None:
+        todo = [k for k in dict.fromkeys(keys) if k not in self.cache]
+        for b in range(0, len(todo), self.batch):
+            part = todo[b:b + self.batch]
+            enc = self.tok([" ".join(k) for k in part], padding=True, truncation=True,
+                           max_length=128, return_tensors="pt")
+            h = self.model(**enc).last_hidden_state
+            m = enc["attention_mask"].unsqueeze(-1).float()
+            e = F.normalize((h * m).sum(1) / m.sum(1), dim=-1)
+            for k, v in zip(part, e):
+                self.cache[k] = v
+
+    def __call__(self, words: tuple) -> torch.Tensor:
+        if words not in self.cache:
+            self.fill([words])
+        return self.cache[words]
 
 
 def loss_of(out: dict, slot_weight: float = 1.0) -> torch.Tensor:
@@ -198,6 +269,8 @@ def evaluate(model, enc, chains: list[Chain], corpus, batch: int = 64) -> dict:
             items = [enc.encode(cs[i]) for i in order[b:b + batch]]
             out = model(collate(items, enc.pad))
             for head, logit, y, *_ in out["intent"]:
+                if head == "embed":
+                    continue
                 p = int(logit.argmax())
                 st["intent_ok"] += int(p == y)
                 st["intent_n"] += 1
@@ -249,6 +322,29 @@ def eval_sets(corpus, split: str, sgd_n: int, seed: int = 0) -> list[Chain]:
     return [c for c in cs if c.dataset != "sgd"] + sgd[:sgd_n]
 
 
+@torch.no_grad()
+def embed_texts(model, enc, texts: list[str], batch: int = 64) -> np.ndarray:
+    """The embedding head on single-sentence chains, as the board computes it."""
+    model.eval()
+    out = []
+    for b in range(0, len(texts), batch):
+        chains = [Chain("intent", "embed", [Segment(t.split(), intent=0)]) for t in texts[b:b + batch]]
+        items = [enc.encode(c) for c in chains]
+        for it in items:
+            it["targets"] = [(0, "embed", 0, ())]
+        o = model(collate(items, enc.pad))
+        out += [logit.numpy() for _, logit, *_ in o["intent"]]
+    return np.stack(out)
+
+
+def fewshot_scores(model, enc) -> dict:
+    from sysone.v2 import fewshot
+    from sysone.v2.chain_data import load_banking77, load_snips
+    f = lambda texts: embed_texts(model, enc, texts)    # noqa: E731
+    return {"banking77": fewshot.evaluate(f, load_banking77()),
+            "snips": fewshot.evaluate(f, load_snips())}
+
+
 # ---------------------------------------------------------------------- quantising
 
 def fake_quant_int8(model: nn.Module, enc, calib: list[Chain]) -> None:
@@ -275,20 +371,34 @@ def main() -> None:
     ap.add_argument("--sgd-dialogues", type=int, default=4000)
     ap.add_argument("--eval-sgd", type=int, default=4000)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--threads", type=int, default=2)
+    ap.add_argument("--threads", type=int, default=0, help="CPU threads (0: all cores)")
     ap.add_argument("--limit", type=int, default=0, help="smoke test: use N chains per split")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue from logs/<name>_checkpoint.pt (saved every 200 batches)")
     ap.add_argument("--slot-weight", type=float, default=1.0,
                     help="weight of each utterance's slot-tagging loss against an intent/pair loss")
+    ap.add_argument("--hwu", action="store_true", help="add HWU64 (intent + slots) to the corpus")
+    ap.add_argument("--embed-dim", type=int, default=0, help="add the embedding head (0: none)")
+    ap.add_argument("--embed-weight", type=float, default=1.0, help="cosine-classifier loss weight")
+    ap.add_argument("--embed-scale", type=float, default=20.0, help="cosine-classifier scale")
+    ap.add_argument("--distill-weight", type=float, default=1.0, help="teacher distillation weight")
+    ap.add_argument("--teacher", default=None, help="sentence encoder to distil the embedding from")
+    ap.add_argument("--head-lr", type=float, default=0.0,
+                    help="learning rate of the heads (and embedding prototypes); 0: --lr. New heads "
+                         "trained at the encoder's small rate barely learn in an epoch or two")
+    ap.add_argument("--init", default=None,
+                    help="warm start: a chain_model.pt (heads that exist are kept, new ones start fresh)")
     args = ap.parse_args()
 
     from transformers import AutoModel, AutoTokenizer
 
     torch.manual_seed(args.seed)
-    torch.set_num_threads(args.threads)
+    import os
+    torch.set_num_threads(args.threads or os.cpu_count() or 1)
     random.seed(args.seed)
     name = args.name or Path(args.model).name
     t0 = time.time()
-    corpus = load_all(sgd_train_dialogues=args.sgd_dialogues, seed=args.seed)
+    corpus = load_all(sgd_train_dialogues=args.sgd_dialogues, seed=args.seed, hwu=args.hwu)
     if args.limit:
         for sp in ("train", "dev", "test"):
             cs = getattr(corpus, sp)
@@ -299,7 +409,14 @@ def main() -> None:
     model = ChainModel(AutoModel.from_pretrained(args.model),
                        {k: len(v) for k, v in corpus.intent_labels.items()},
                        {k: len(v) for k, v in corpus.tag_labels.items()},
-                       {k: len(v) for k, v in corpus.pair_labels.items()})
+                       {k: len(v) for k, v in corpus.pair_labels.items()},
+                       embed_dim=args.embed_dim)
+    if args.init:
+        missing, unexpected = model.load_state_dict(torch.load(args.init), strict=False)
+        print(f"  warm start from {args.init}; new: "
+              f"{sorted({k.rsplit('.', 1)[0] for k in missing})}", flush=True)
+    teacher = Teacher(args.teacher) if (args.embed_dim and args.teacher) else None
+    oos_skip = {"clinc": corpus.intent_labels["clinc"].index("oos")}
     n_enc = sum(p.numel() for p in model.encoder.parameters())
     n_heads = sum(p.numel() for p in model.parameters()) - n_enc
     print(f"{name}: encoder {n_enc / 1e6:.2f}M, heads {n_heads / 1e3:.0f}K; "
@@ -307,7 +424,11 @@ def main() -> None:
 
     train = corpus.train
     lengths = [sum(len(s.words) for s in c.segments) for c in train]
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
+    enc_params = list(model.encoder.parameters())
+    enc_ids = {id(p) for p in enc_params}
+    head_params = [p for p in model.parameters() if id(p) not in enc_ids]
+    opt = torch.optim.AdamW([{"params": enc_params, "lr": args.lr},
+                             {"params": head_params, "lr": args.head_lr or args.lr}], weight_decay=0.01)
     steps = args.epochs * math.ceil(len(train) / args.batch)
     warm = int(0.06 * steps)
     sched = torch.optim.lr_scheduler.LambdaLR(
@@ -316,7 +437,29 @@ def main() -> None:
     history = []
     best, best_state = -1.0, None
     rng = random.Random(args.seed)
-    for ep in range(args.epochs):
+    # end-of-epoch checkpoint, so a run on a machine that may be reclaimed can resume
+    ckpt_path = ROOT / "logs" / f"{name}_checkpoint.pt"
+    first_epoch, skip = 0, 0
+
+    def save_checkpoint(ep, batch_done, epoch_rng):
+        ckpt_path.parent.mkdir(exist_ok=True)
+        tmp = ckpt_path.with_suffix(".tmp")
+        torch.save({"model": model.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
+                    "rng": epoch_rng, "best": best, "best_state": best_state,
+                    "history": history, "epoch": ep, "batch_done": batch_done}, tmp)
+        tmp.replace(ckpt_path)
+
+    if args.resume and ckpt_path.exists():
+        ck = torch.load(ckpt_path, weights_only=False)
+        model.load_state_dict(ck["model"])
+        opt.load_state_dict(ck["opt"])
+        sched.load_state_dict(ck["sched"])
+        rng.setstate(ck["rng"])                   # the epoch's starting state
+        best, best_state, history = ck["best"], ck["best_state"], ck["history"]
+        first_epoch, skip = ck["epoch"], ck["batch_done"]
+        print(f"  resumed in epoch {first_epoch} after {skip} batches", flush=True)
+    for ep in range(first_epoch, args.epochs):
+        epoch_rng = rng.getstate()
         model.train()
         # length-bucketed shuffle: sort within random chunks of 50 batches
         idx = list(range(len(train)))
@@ -329,8 +472,15 @@ def main() -> None:
         rng.shuffle(batches)
         te = time.time()
         for k, b in enumerate(batches):
+            if k < skip:
+                continue
             out = model(collate([enc.encode(train[i]) for i in b], enc.pad))
             loss = loss_of(out, args.slot_weight)
+            if args.embed_dim:
+                if teacher is not None:
+                    teacher.fill([w for *_, w in out["embed"]])
+                loss = loss + embed_loss(model, out, teacher, args.embed_scale, args.embed_weight,
+                                         args.distill_weight, oos_skip)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             opt.step()
@@ -339,6 +489,9 @@ def main() -> None:
             if k % 200 == 0:
                 print(f"  epoch {ep} batch {k}/{len(batches)} loss {float(loss.detach()):.4f} "
                       f"({(time.time() - te) / 60:.1f} min)", flush=True)
+            if k % 200 == 199:
+                save_checkpoint(ep, k + 1, epoch_rng)
+        skip = 0
         r = evaluate(model, enc, dev, corpus)
         score = float(np.mean([v.get("intent_accuracy", v.get("pair_accuracy", 0.0))
                                for v in r.values()]))
@@ -349,6 +502,7 @@ def main() -> None:
         if score > best:
             best = score
             best_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
+        save_checkpoint(ep + 1, 0, rng.getstate())
 
     model.load_state_dict(best_state)
     test = eval_sets(corpus, "test", args.eval_sgd, args.seed)
@@ -369,8 +523,14 @@ def main() -> None:
     torch.save(model.state_dict(), out_dir / "chain_model.pt")
     tok.save_pretrained(out_dir)
     model.encoder.config.save_pretrained(out_dir)
+    intent_labels = dict(corpus.intent_labels)
+    if args.embed_dim:                         # the embedding: an intent-kind head of D outputs
+        intent_labels["embed"] = [f"e{i}" for i in range(args.embed_dim)]
     (out_dir / "labels.json").write_text(json.dumps(
-        {"intent": corpus.intent_labels, "tags": corpus.tag_labels, "pair": corpus.pair_labels}))
+        {"intent": intent_labels, "tags": corpus.tag_labels, "pair": corpus.pair_labels}))
+    if args.embed_dim:
+        res["fewshot"] = fewshot_scores(model, enc)
+        print(f"{name} few-shot (float): {json.dumps(res['fewshot'])}", flush=True)
 
     calib, seen = [], {}
     for c in corpus.train:                      # ~64 chains from every dataset
@@ -379,6 +539,9 @@ def main() -> None:
             seen[c.dataset] = seen.get(c.dataset, 0) + 1
     fake_quant_int8(model, enc, calib)
     res["test_int8"] = evaluate(model, enc, test, corpus)
+    if args.embed_dim:
+        res["fewshot_int8"] = fewshot_scores(model, enc)
+        print(f"{name} few-shot (INT8): {json.dumps(res['fewshot_int8'])}", flush=True)
     print(f"{name} INT8 test: {json.dumps(res['test_int8'])}", flush=True)
     res["minutes"] = (time.time() - t0) / 60
     rd = ROOT / "results" / "v2" / "chain"

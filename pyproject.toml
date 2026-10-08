@@ -21,6 +21,14 @@ dev = [
     "scikit-learn>=1.5,<2",
 ]
 
+# training the v2 chain models and compiling their DDR images (CPU wheels from PyPI):
+#   uv sync --group train
+#   uv run --group train python scripts/v2/train_chain.py ...
+train = [
+    "torch>=2.6",
+    "transformers>=5,<6",
+]
+
 [tool.uv]
 package = false
 

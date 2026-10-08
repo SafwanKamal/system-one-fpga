@@ -28,6 +28,13 @@ module linear_engine
     import encoder_pkg::*;
 #(
     parameter integer TILE_OUT = 12,             // TO; TI is fixed at 16 (one beat)
+    // output channels requantised per clock (1, 2 or 4; divides TILE_OUT): the drain
+    // takes n * TO / DRAIN_LANES clocks per output tile against n * in_tiles for the
+    // MACs, so wide tiles (KR260, TO = 32) need more than one. 2 DSP48E1 per lane.
+    parameter integer DRAIN_LANES = 1,
+    // 1: the two accumulator banks (MAX_TOKENS x 32 x TO bits each) in LUT RAM instead
+    // of block RAM: wide tiles need ~11 RAMB36 per bank for 128 shallow rows
+    parameter integer ACCUMULATORS_IN_LUTS = 0,
     parameter integer MAX_TOKENS = 128,
     parameter integer ADDRESS_WIDTH = 27,
     parameter integer BEATS_WIDTH = 16,
@@ -48,6 +55,7 @@ module linear_engine
     input logic signed [31:0] clamp_low,
     input logic signed [31:0] clamp_high,
     input logic [ADDRESS_WIDTH-1:0] lut_address, // 0 = no table
+    input logic raw,                             // raw INT32 output (heads): 4-byte elements
     input logic [7:0] token_count,               // 1 .. MAX_TOKENS
 
     // memory port, read side
@@ -81,13 +89,21 @@ module linear_engine
     localparam integer TOKEN_WIDTH = $clog2(MAX_TOKENS + 1);
     localparam integer COLUMN_WIDTH = $clog2(TO + 1);
 
+`ifndef SYNTHESIS
+    initial begin
+        if (TO % DRAIN_LANES != 0 || !(DRAIN_LANES == 1 || DRAIN_LANES == 2 || DRAIN_LANES == 4))
+            $fatal(1, "linear_engine: DRAIN_LANES %0d must be 1, 2 or 4 and divide TILE_OUT %0d",
+                   DRAIN_LANES, TO);
+    end
+`endif
+
     // ------------------------------------------------------- instruction latch
 
     logic running_reg;
     logic [ADDRESS_WIDTH-1:0] stream_reg;
     logic [15:0] in_tiles_reg, out_tiles_reg, out_dim_reg;
     logic [7:0] source_row_reg, destination_row_reg;
-    logic wide_reg, use_lut_reg;
+    logic wide_reg, use_lut_reg, raw_reg;
     logic [5:0] shift_reg;
     logic signed [31:0] low_reg, high_reg;
     logic [TOKEN_WIDTH-1:0] tokens_reg;
@@ -105,6 +121,7 @@ module linear_engine
             destination_row_reg <= '0;
             wide_reg <= 1'b0;
             use_lut_reg <= 1'b0;
+            raw_reg <= 1'b0;
             shift_reg <= '0;
             low_reg <= '0;
             high_reg <= '0;
@@ -115,12 +132,16 @@ module linear_engine
             stream_reg <= stream_address;
             in_tiles_reg <= (in_dim + 16'd15) >> 4;
             out_tiles_reg <= 16'((32'(out_dim) + TO - 1) / TO);
-            out_dim_reg <= out_dim;
+            // raw rows are whole words: the columns padding the last one (M = 0 in the
+            // stream) are written too, as 0
+            out_dim_reg <= raw ? ((out_dim + 16'd3) & ~16'd3) : out_dim;
             source_row_reg <= 8'((in_dim + 16'd15) >> 4);
-            wide_reg <= (clamp_high > 32'sd127);
-            destination_row_reg <= (clamp_high > 32'sd127) ? 8'((out_dim + 16'd7) >> 3)
+            wide_reg <= !raw && (clamp_high > 32'sd127);
+            raw_reg <= raw;
+            destination_row_reg <= raw ? 8'((out_dim + 16'd3) >> 2)
+                                 : (clamp_high > 32'sd127) ? 8'((out_dim + 16'd7) >> 3)
                                                            : 8'((out_dim + 16'd15) >> 4);
-            use_lut_reg <= (lut_address != '0);
+            use_lut_reg <= !raw && (lut_address != '0);
             shift_reg <= shift;
             low_reg <= clamp_low;
             high_reg <= clamp_high;
@@ -323,8 +344,6 @@ module linear_engine
 
     // ------------------------------------------------------- accumulator banks
 
-    logic [32*TO-1:0] accumulator0 [0:MAX_TOKENS-1];
-    logic [32*TO-1:0] accumulator1 [0:MAX_TOKENS-1];
     logic [TOKEN_WIDTH-1:0] bank_read_address [0:1];
     logic [32*TO-1:0] bank_read_data [0:1];
     logic accumulator_write;
@@ -332,16 +351,23 @@ module linear_engine
     logic [TOKEN_WIDTH-1:0] accumulator_write_address;
     logic [32*TO-1:0] accumulator_write_data;
 
-    always_ff @(posedge clk) begin
-        bank_read_data[0] <= accumulator0[bank_read_address[0]];
-        if (accumulator_write && !accumulator_write_bank) begin
-            accumulator0[accumulator_write_address] <= accumulator_write_data;
-        end
-    end
-    always_ff @(posedge clk) begin
-        bank_read_data[1] <= accumulator1[bank_read_address[1]];
-        if (accumulator_write && accumulator_write_bank) begin
-            accumulator1[accumulator_write_address] <= accumulator_write_data;
+    for (genvar k = 0; k < 2; k++) begin : gen_bank
+        if (ACCUMULATORS_IN_LUTS != 0) begin : gen_lut
+            (* ram_style = "distributed" *) logic [32*TO-1:0] accumulator [0:MAX_TOKENS-1];
+            always_ff @(posedge clk) begin
+                bank_read_data[k] <= accumulator[bank_read_address[k]];
+                if (accumulator_write && accumulator_write_bank == 1'(k)) begin
+                    accumulator[accumulator_write_address] <= accumulator_write_data;
+                end
+            end
+        end else begin : gen_block
+            logic [32*TO-1:0] accumulator [0:MAX_TOKENS-1];
+            always_ff @(posedge clk) begin
+                bank_read_data[k] <= accumulator[bank_read_address[k]];
+                if (accumulator_write && accumulator_write_bank == 1'(k)) begin
+                    accumulator[accumulator_write_address] <= accumulator_write_data;
+                end
+            end
         end
     end
 
@@ -606,8 +632,8 @@ module linear_engine
                     end
                 end
                 D_RUN: begin
-                    drain_column <= drain_column + 1'b1;
-                    if (drain_column == drain_columns - 1'b1) begin
+                    drain_column <= drain_column + COLUMN_WIDTH'(DRAIN_LANES);
+                    if (drain_column + COLUMN_WIDTH'(DRAIN_LANES) >= drain_columns) begin
                         drain_column <= '0;
                         drain_token <= drain_token + 1'b1;
                         if (drain_token == tokens_reg - 1'b1) begin
@@ -638,24 +664,28 @@ module linear_engine
         end
     end
 
-    // d0 issue (read row); d1 row arrives; d2 channel selected; d3 product;
-    // d4 rounded shift; d5 clamp; d6 table -> destination
+    // d0 issue (read row); d1 row arrives; d2 channels selected; d3 products;
+    // d4 rounded shift; d5 clamp; d6 table -> destination. DRAIN_LANES adjacent
+    // channels per clock (a group starts at a multiple of DRAIN_LANES, so its elements
+    // share one destination word).
     localparam int DD = 6;
+    localparam int LN = DRAIN_LANES;
     logic [DD:1] d_valid;
     logic [DD:1] d_final;
-    logic [15:0] d_column [1:DD];
+    logic [15:0] d_column [1:DD];                 // first channel of the group
+    logic [LN-1:0] d_lane_valid [1:DD];
     logic [TOKEN_WIDTH-1:0] d_token [1:DD];
     logic d1_bank;
     logic [COLUMN_WIDTH-1:0] d1_column_index;
-    logic [16:0] d1_multiplier, d2_multiplier;
-    logic signed [31:0] d2_selected;
-    logic signed [49:0] d3_product;               // INT32 x 17-bit unsigned: 2 DSP48E1
-    logic signed [49:0] d4_value;
-    logic signed [31:0] d5_value;
-    logic signed [15:0] d6_value;
+    logic [16:0] d1_multiplier [0:LN-1], d2_multiplier [0:LN-1];
+    logic signed [31:0] d2_selected [0:LN-1];
+    logic signed [49:0] d3_product [0:LN-1];      // INT32 x 17-bit unsigned: 2 DSP48E1
+    logic signed [49:0] d4_value [0:LN-1];
+    logic signed [31:0] d5_value [0:LN-1];
+    logic signed [31:0] d6_value [0:LN-1];
     logic final_issue;
 
-    assign final_issue = drain_issue && (drain_column == drain_columns - 1'b1)
+    assign final_issue = drain_issue && (drain_column + COLUMN_WIDTH'(DRAIN_LANES) >= drain_columns)
                          && (drain_token == tokens_reg - 1'b1)
                          && (drain_out_tile == out_tiles_reg - 1'b1);
 
@@ -670,39 +700,66 @@ module linear_engine
     end
 
     always_ff @(posedge clk) begin
+        for (int l = 0; l < LN; l++) begin
+            d_lane_valid[1][l] <= (drain_column + COLUMN_WIDTH'(l) < drain_columns);
+        end
         d_column[1] <= 16'(drain_out_tile * TO) + 16'(drain_column);
         d_token[1] <= drain_token;
         for (int i = 2; i <= DD; i++) begin
             d_column[i] <= d_column[i-1];
             d_token[i] <= d_token[i-1];
+            d_lane_valid[i] <= d_lane_valid[i-1];
         end
 
         d1_bank <= drain_bank;
         d1_column_index <= drain_column;
-        d1_multiplier <= multiplier[drain_bank][drain_column];
+        for (int l = 0; l < LN; l++) begin
+            logic [COLUMN_WIDTH-1:0] c;
+            c = drain_column + COLUMN_WIDTH'(l);
+            d1_multiplier[l] <= (c < COLUMN_WIDTH'(TO)) ? multiplier[drain_bank][c] : 17'd0;
 
-        d2_selected <= $signed(bank_read_data[d1_bank][32*d1_column_index +: 32]);
-        d2_multiplier <= d1_multiplier;
+            d2_selected[l] <= $signed(bank_read_data[d1_bank][32 * (32'(d1_column_index) + l) +: 32]);
+            d2_multiplier[l] <= d1_multiplier[l];
 
-        d3_product <= 50'(d2_selected) * 50'($signed({1'b0, d2_multiplier}));
+            d3_product[l] <= 50'(d2_selected[l]) * 50'($signed({1'b0, d2_multiplier[l]}));
 
-        if (shift_reg == '0) begin
-            d4_value <= d3_product;
-        end else begin
-            d4_value <= (d3_product + (50'sd1 <<< (shift_reg - 6'd1))) >>> shift_reg;
+            if (shift_reg == '0) begin
+                d4_value[l] <= d3_product[l];
+            end else begin
+                d4_value[l] <= (d3_product[l] + (50'sd1 <<< (shift_reg - 6'd1))) >>> shift_reg;
+            end
+
+            d5_value[l] <= 32'(clamp(64'(d4_value[l]), 64'(low_reg), 64'(high_reg)));
+
+            d6_value[l] <= use_lut_reg ? 32'(lut[8'(d5_value[l][7:0] + 8'd127)]) : d5_value[l];
         end
-
-        d5_value <= 32'(clamp(64'(d4_value), 64'(low_reg), 64'(high_reg)));
-
-        d6_value <= use_lut_reg ? 16'(lut[8'(d5_value[7:0] + 8'd127)]) : d5_value[15:0];
     end
 
     assign finished = d_valid[DD] && d_final[DD];
 
-    assign destination_write = d_valid[DD];
-    assign destination_address = BUFFER_ADDRESS_WIDTH'(d_token[DD] * destination_row_reg
-                                                       + element_word(d_column[DD], wide_reg));
-    assign destination_data = element_data(d6_value, wide_reg);
-    assign destination_enable = element_enable(d_column[DD], wide_reg);
+    // the group's elements into one word: INT8 (1 byte), INT16 (2) or raw INT32 (4)
+    always_comb begin
+        logic [15:0] c0;
+        c0 = d_column[DD];
+        destination_write = d_valid[DD];
+        destination_address = BUFFER_ADDRESS_WIDTH'(d_token[DD] * destination_row_reg
+                              + (raw_reg ? (c0 >> 2) : element_word(c0, wide_reg)));
+        destination_data = '0;
+        destination_enable = '0;
+        for (int l = 0; l < LN; l++) begin
+            logic [15:0] c;
+            c = c0 + 16'(l);
+            if (raw_reg) begin
+                destination_data[32 * c[1:0] +: 32] = d6_value[l];
+                if (d_lane_valid[DD][l]) destination_enable[4 * c[1:0] +: 4] = 4'hF;
+            end else if (wide_reg) begin
+                destination_data[16 * c[2:0] +: 16] = d6_value[l][15:0];
+                if (d_lane_valid[DD][l]) destination_enable[2 * c[2:0] +: 2] = 2'b11;
+            end else begin
+                destination_data[8 * c[3:0] +: 8] = d6_value[l][7:0];
+                if (d_lane_valid[DD][l]) destination_enable[c[3:0]] = 1'b1;
+            end
+        end
+    end
 
 endmodule

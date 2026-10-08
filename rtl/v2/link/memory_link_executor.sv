@@ -8,7 +8,11 @@
 //          descriptor is queued after the last beat, so the responder never has to
 //          wait for data in the middle of a frame
 //
-// Command / descriptor word: {is_read, sequence[31:0], address[31:0], beats[6:0],
+//   run:   the descriptor beat goes to the run port (run_start_out), the memory port
+//          is handed over (run_active_out) until run_done_in; the result beat goes
+//          to the read-data FIFO and a run-done descriptor is queued
+//
+// Command / descriptor word: {is_run, is_read, sequence[31:0], address[31:0], beats[6:0],
 // host_mac[47:0]}.
 module memory_link_executor #(
     parameter integer ADDRESS_WIDTH = 27,
@@ -18,7 +22,7 @@ module memory_link_executor #(
     input logic clk,
     input logic reset,
 
-    input logic [119:0] command_in,
+    input logic [120:0] command_in,
     input logic command_empty_in,
     output logic command_pop_out,
 
@@ -30,7 +34,7 @@ module memory_link_executor #(
     output logic read_beat_push_out,
     input logic read_beat_full_in,
 
-    output logic [119:0] response_out,
+    output logic [120:0] response_out,
     output logic response_push_out,
     input logic response_full_in,
 
@@ -52,20 +56,31 @@ module memory_link_executor #(
     input logic write_ready,
     output logic [DATA_WIDTH-1:0] write_data,
 
+    // run port (encoder): while run_active_out is high the memory port belongs to it
+    output logic run_start_out,
+    output logic [DATA_WIDTH-1:0] run_descriptor_out,
+    output logic run_active_out,
+    input logic run_done_in,
+    input logic [DATA_WIDTH-1:0] run_result_in,
+
     output logic busy_out
 );
 
-    typedef enum logic [2:0] {
+    typedef enum logic [3:0] {
         IDLE,
         WRITE_REQUEST,
         WRITE_DATA,
         READ_REQUEST,
         READ_DATA,
+        RUN_DESCRIPTOR,
+        RUN_WAIT,
+        RUN_RESULT,
         RESPOND
     } state_t;
 
     state_t state_reg, state_next;
-    logic [119:0] command_reg, command_next;
+    logic [120:0] command_reg, command_next;
+    logic [DATA_WIDTH-1:0] result_reg;
     logic [6:0] left_reg, left_next;
 
     wire is_read = command_reg[119];
@@ -78,10 +93,12 @@ module memory_link_executor #(
             state_reg <= IDLE;
             command_reg <= '0;
             left_reg <= '0;
+            result_reg <= '0;
         end else begin
             state_reg <= state_next;
             command_reg <= command_next;
             left_reg <= left_next;
+            if (state_reg == RUN_WAIT && run_done_in) result_reg <= run_result_in;
         end
     end
 
@@ -99,6 +116,7 @@ module memory_link_executor #(
         write_request_valid = 1'b0;
         write_valid = 1'b0;
         read_ready = 1'b0;
+        run_start_out = 1'b0;
 
         case (state_reg)
             IDLE: begin
@@ -106,7 +124,8 @@ module memory_link_executor #(
                     command_pop_out = 1'b1;
                     command_next = command_in;
                     left_next = command_in[54:48];
-                    state_next = command_in[119] ? READ_REQUEST : WRITE_REQUEST;
+                    state_next = command_in[120] ? RUN_DESCRIPTOR
+                               : command_in[119] ? READ_REQUEST : WRITE_REQUEST;
                 end
             end
 
@@ -146,6 +165,25 @@ module memory_link_executor #(
                 end
             end
 
+            RUN_DESCRIPTOR: begin
+                if (!beat_empty_in) begin
+                    beat_pop_out = 1'b1;
+                    run_start_out = 1'b1;
+                    state_next = RUN_WAIT;
+                end
+            end
+
+            RUN_WAIT: begin
+                if (run_done_in) state_next = RUN_RESULT;
+            end
+
+            RUN_RESULT: begin
+                if (!read_beat_full_in) begin
+                    read_beat_push_out = 1'b1;
+                    state_next = RESPOND;
+                end
+            end
+
             RESPOND: begin
                 if (!response_full_in) begin
                     response_push_out = 1'b1;
@@ -164,7 +202,9 @@ module memory_link_executor #(
     assign write_request_address = ADDRESS_WIDTH'(address);
     assign write_request_beats = BEATS_WIDTH'(beats);
     assign write_data = beat_in;
-    assign read_beat_out = read_data;
+    assign read_beat_out = (state_reg == RUN_RESULT) ? result_reg : read_data;
+    assign run_descriptor_out = beat_in;
+    assign run_active_out = (state_reg == RUN_WAIT);
     assign response_out = command_reg;
     assign busy_out = (state_reg != IDLE);
 

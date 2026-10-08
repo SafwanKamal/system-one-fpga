@@ -1,0 +1,56 @@
+{
+  "name": "minilm-l6-slots4",
+  "numpy_vs_torch_max_abs": 3.5640252938062833e-06,
+  "float": {
+    "clinc": {
+      "intent_accuracy": 0.842,
+      "in_scope_accuracy": 0.9562043795620438
+    },
+    "atis": {
+      "intent_accuracy": 0.918,
+      "slot_f1": 0.864290181363352
+    },
+    "sick": {
+      "pair_accuracy": 0.85
+    },
+    "msrp": {
+      "pair_accuracy": 0.75
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.820915926179084,
+      "in_scope_accuracy": 0.9488255033557047
+    },
+    "sgd": {
+      "intent_accuracy": 0.896,
+      "slot_f1": 0.5895316804407713
+    }
+  },
+  "integer": {
+    "clinc": {
+      "intent_accuracy": 0.842,
+      "in_scope_accuracy": 0.9537712895377128
+    },
+    "atis": {
+      "intent_accuracy": 0.918,
+      "slot_f1": 0.8636505460218408
+    },
+    "sick": {
+      "pair_accuracy": 0.83
+    },
+    "msrp": {
+      "pair_accuracy": 0.754
+    },
+    "multi_clinc": {
+      "intent_accuracy": 0.8202323991797676,
+      "in_scope_accuracy": 0.947986577181208
+    },
+    "sgd": {
+      "intent_accuracy": 0.89,
+      "slot_f1": 0.5911602209944751
+    }
+  },
+  "decision_agreement": 0.9681644166834575,
+  "per_dataset": 500,
+  "range": "max",
+  "calibration_per_dataset": 64
+}

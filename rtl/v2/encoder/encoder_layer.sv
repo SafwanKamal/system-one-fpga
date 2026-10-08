@@ -15,13 +15,17 @@
 //   byte 0 opcode, 1 src buffer, 2 src2 buffer, 3 dst buffer, 4 layer, payload at 8
 //   LAYERNORM  params u32 @8, n u16 @12, fraction u8 @14
 //   LINEAR     stream u32 @8, bytes u32 @12, in u16 @16, out u16 @18, S u8 @20,
-//              mode u8 @21, lo i32 @22, hi i32 @26, lut u32 @30, TI u16 @34, TO u16 @36
+//              mode u8 @21 (0 clamp, 1 raw INT32), lo i32 @22, hi i32 @26, lut u32 @30,
+//              TI u16 @34, TO u16 @36, rows u16 @38 (0 = token_count)
 //   ATTENTION  heads u16 @8, head_dim u16 @10, Msm u32 @12, Ssm u8 @16, Mctx u32 @17,
 //              Sctx u8 @21, exp table u32 @22, exp steps u16 @26   (V is buffer V)
 //   ADD_SKIP   M u32 @8, S u8 @12                                  (width = hidden)
 //   END
-// EMBED is not executed here yet (the token-id front end is step 5); it and any
-// unknown opcode, or a LINEAR tile shape other than 16 x TILE_OUT, set `error`.
+//   EMBED      word u32 @8, word stride u16 @12, pos u32 @14, pos stride u16 @18,
+//              max pos u16 @20, type u32 @22, Mw u32 @26, Sw u8 @30, Mp u32 @31, Sp u8 @35
+//              (token ids: INT16 elements of the src buffer, written by the host)
+//   POOL       first row u16 @8, rows u16 @10, out row u16 @12, recip table u32 @14
+// An unknown opcode, or a LINEAR tile shape other than 16 x TILE_OUT, sets `error`.
 module encoder_layer
     import encoder_pkg::*;
 #(
@@ -29,6 +33,19 @@ module encoder_layer
     parameter integer MAX_TOKENS = 128,
     parameter integer MAX_HEAD_DIM = 64,
     parameter integer MAX_HIDDEN = 384,                  // multiple of 16; FFN <= 4 x this
+    // 1: POOL and raw INT32 LINEAR, so the heads can run here (ddr_image.head_program);
+    // 0: the heads run on the host from X, and those instructions set `error`
+    parameter integer FPGA_HEADS = 0,
+    // output channels requantised per clock in LINEAR (linear_engine): 1 on the Nexys
+    parameter integer DRAIN_LANES = 1,
+    // elements per clock in LAYERNORM's output pass (layernorm_engine): 2 on the Nexys
+    parameter integer NORM_LANES = 2,
+    // two products per DSP48E1 in the MAC array (mac_array PACK): TILE_OUT 24 in 192 DSPs
+    parameter integer MAC_PACK = 0,
+    // queries handled together by ATTENTION (<= TILE_OUT; it uses that many array lanes)
+    parameter integer ATTENTION_LANES = TILE_OUT,
+    // LINEAR's accumulator banks in LUT RAM (frees block RAM for wide tiles)
+    parameter integer ACCUMULATORS_IN_LUTS = 0,
     parameter integer ADDRESS_WIDTH = 27,
     parameter integer BEATS_WIDTH = 16,
     // logical buffer addresses; G spans the four attention buffers
@@ -110,9 +127,11 @@ module encoder_layer
     logic attention_start, attention_busy, attention_done;
     logic add_start, add_busy, add_done;
     logic norm_start, norm_busy, norm_done;
+    logic embed_start, embed_busy, embed_done;
+    logic pool_start, pool_busy, pool_done;
 
     logic engine_done;
-    assign engine_done = linear_done | attention_done | add_done | norm_done;
+    assign engine_done = linear_done | attention_done | add_done | norm_done | embed_done | pool_done;
 
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -143,10 +162,15 @@ module encoder_layer
     end
 
     // memory port: the sequencer while fetching, otherwise the running engine
-    logic linear_request_valid, attention_request_valid, norm_request_valid;
+    logic linear_request_valid, attention_request_valid, norm_request_valid, embed_request_valid;
     logic [ADDRESS_WIDTH-1:0] linear_request_address, attention_request_address, norm_request_address;
+    logic [ADDRESS_WIDTH-1:0] embed_request_address;
     logic [BEATS_WIDTH-1:0] linear_request_beats, attention_request_beats, norm_request_beats;
-    logic linear_read_ready, attention_read_ready, norm_read_ready;
+    logic [BEATS_WIDTH-1:0] embed_request_beats;
+    logic linear_read_ready, attention_read_ready, norm_read_ready, embed_read_ready;
+    logic pool_request_valid, pool_read_ready;
+    logic [ADDRESS_WIDTH-1:0] pool_request_address;
+    logic [BEATS_WIDTH-1:0] pool_request_beats;
     logic fetch_request_valid, fetch_read_ready;
 
     always_comb begin
@@ -164,6 +188,8 @@ module encoder_layer
         attention_start = 1'b0;
         add_start = 1'b0;
         norm_start = 1'b0;
+        embed_start = 1'b0;
+        pool_start = 1'b0;
 
         case (state_reg)
             IDLE: begin
@@ -200,7 +226,8 @@ module encoder_layer
                 state_next = EXECUTE;
                 case (opcode)
                     OP_LINEAR: begin
-                        if (u16_at(34) != 16'd16 || u16_at(36) != 16'(TILE_OUT) || byte_at(21) != 8'd0) begin
+                        if (u16_at(34) != 16'd16 || u16_at(36) != 16'(TILE_OUT) || byte_at(21) > 8'd1
+                            || (FPGA_HEADS == 0 && byte_at(21) != 8'd0)) begin
                             error_next = 1'b1;
                             state_next = FINISH;
                         end else begin
@@ -210,6 +237,15 @@ module encoder_layer
                     OP_ATTENTION: attention_start = 1'b1;
                     OP_ADD_SKIP: add_start = 1'b1;
                     OP_LAYERNORM: norm_start = 1'b1;
+                    OP_EMBED: embed_start = 1'b1;
+                    OP_POOL: begin
+                        if (FPGA_HEADS != 0) begin
+                            pool_start = 1'b1;
+                        end else begin
+                            error_next = 1'b1;
+                            state_next = FINISH;
+                        end
+                    end
                     OP_END: state_next = FINISH;
                     default: begin
                         error_next = 1'b1;
@@ -266,6 +302,16 @@ module encoder_layer
             read_request_address = norm_request_address;
             read_request_beats = norm_request_beats;
             read_ready = norm_read_ready;
+        end else if (opcode == OP_EMBED) begin
+            read_request_valid = embed_request_valid;
+            read_request_address = embed_request_address;
+            read_request_beats = embed_request_beats;
+            read_ready = embed_read_ready;
+        end else if (opcode == OP_POOL) begin
+            read_request_valid = pool_request_valid;
+            read_request_address = pool_request_address;
+            read_request_beats = pool_request_beats;
+            read_ready = pool_read_ready;
         end
     end
 
@@ -381,7 +427,9 @@ module encoder_layer
     for (genvar b = 0; b < PHYSICAL_NUMBER; b++) begin : gen_buffer
         localparam integer DEPTH = (b == BUF_R || b == BUF_A) ? WIDE_DEPTH : SMALL_DEPTH;
         localparam integer AW = $clog2(DEPTH);
-        logic [BUFFER_ADDRESS_WIDTH-1:0] read_address, read_address_reg;
+        logic [BUFFER_ADDRESS_WIDTH-1:0] read_address;
+        // replicated near the RAMs: each bit drives up to 24 block RAMs
+        (* max_fanout = 8 *) logic [BUFFER_ADDRESS_WIDTH-1:0] read_address_reg;
 
         always_comb begin
             if (!busy) begin
@@ -423,6 +471,17 @@ module encoder_layer
     logic signed [7:0] linear_mac_b [0:15];
     logic signed [8:0] attention_mac_a [0:TILE_OUT-1][0:15];
     logic signed [7:0] attention_mac_b [0:15];
+    logic signed [8:0] attention_lane_a [0:ATTENTION_LANES-1][0:15];
+    logic signed [16:0] attention_product [0:ATTENTION_LANES-1][0:15];
+
+    // ATTENTION drives the first ATTENTION_LANES lanes of the array
+    always_comb begin
+        for (int c = 0; c < ATTENTION_LANES; c++) attention_mac_a[c] = attention_lane_a[c];
+        for (int c = ATTENTION_LANES; c < TILE_OUT; c++) begin
+            for (int r = 0; r < 16; r++) attention_mac_a[c][r] = 9'sd0;
+        end
+        for (int c = 0; c < ATTENTION_LANES; c++) attention_product[c] = mac_product[c];
+    end
 
     always_comb begin
         if (opcode == OP_ATTENTION) begin
@@ -434,19 +493,20 @@ module encoder_layer
         end
     end
 
-    mac_array #(.LANES(TILE_OUT)) mac_array_inst (
+    mac_array #(.LANES(TILE_OUT), .PACK(MAC_PACK)) mac_array_inst (
         .clk(clk),
         .a(mac_a),
         .b(mac_b),
         .product(mac_product)
     );
 
-    logic [BUFFER_ADDRESS_WIDTH-1:0] linear_source, add_a, add_x, norm_source;
+    logic [BUFFER_ADDRESS_WIDTH-1:0] linear_source, add_a, add_x, norm_source, embed_source, pool_source;
     logic [BUFFER_ADDRESS_WIDTH-1:0] attention_q, attention_k, attention_v;
-    logic linear_write, attention_write, add_write, norm_write;
-    logic [BUFFER_ADDRESS_WIDTH-1:0] linear_waddr, attention_waddr, add_waddr, norm_waddr;
-    logic [127:0] linear_wdata, attention_wdata, add_wdata, norm_wdata;
-    logic [15:0] linear_wen, attention_wen, add_wen, norm_wen;
+    logic linear_write, attention_write, add_write, norm_write, embed_write, pool_write;
+    logic [BUFFER_ADDRESS_WIDTH-1:0] linear_waddr, attention_waddr, add_waddr, norm_waddr, embed_waddr;
+    logic [BUFFER_ADDRESS_WIDTH-1:0] pool_waddr;
+    logic [127:0] linear_wdata, attention_wdata, add_wdata, norm_wdata, embed_wdata, pool_wdata;
+    logic [15:0] linear_wen, attention_wen, add_wen, norm_wen, embed_wen, pool_wen;
 
     always_comb begin
         port_address[0] = '0;
@@ -459,6 +519,8 @@ module encoder_layer
                 port_address[1] = add_x;
             end
             OP_LAYERNORM: port_address[0] = norm_source;
+            OP_EMBED: port_address[0] = embed_source;
+            OP_POOL: port_address[0] = pool_source;
             OP_ATTENTION: begin
                 port_address[0] = attention_q;
                 port_address[1] = attention_k;
@@ -466,17 +528,23 @@ module encoder_layer
             end
             default: ;
         endcase
-        engine_write = linear_write | attention_write | add_write | norm_write;
+        engine_write = linear_write | attention_write | add_write | norm_write | embed_write
+                       | pool_write;
         engine_write_address = linear_write ? linear_waddr : attention_write ? attention_waddr
-                               : add_write ? add_waddr : norm_waddr;
+                               : add_write ? add_waddr : norm_write ? norm_waddr
+                               : embed_write ? embed_waddr : pool_waddr;
         engine_write_data = linear_write ? linear_wdata : attention_write ? attention_wdata
-                            : add_write ? add_wdata : norm_wdata;
+                            : add_write ? add_wdata : norm_write ? norm_wdata
+                            : embed_write ? embed_wdata : pool_wdata;
         engine_write_enable = linear_write ? linear_wen : attention_write ? attention_wen
-                              : add_write ? add_wen : norm_wen;
+                              : add_write ? add_wen : norm_write ? norm_wen
+                              : embed_write ? embed_wen : pool_wen;
     end
 
     linear_engine #(
         .TILE_OUT(TILE_OUT),
+        .DRAIN_LANES(DRAIN_LANES),
+        .ACCUMULATORS_IN_LUTS(ACCUMULATORS_IN_LUTS),
         .MAX_TOKENS(MAX_TOKENS),
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
         .BEATS_WIDTH(BEATS_WIDTH),
@@ -494,7 +562,8 @@ module encoder_layer
         .clamp_low($signed(u32_at(22))),
         .clamp_high($signed(u32_at(26))),
         .lut_address(ADDRESS_WIDTH'(u32_at(30))),
-        .token_count(tokens_reg),
+        .raw(FPGA_HEADS != 0 && byte_at(21) == 8'd1),
+        .token_count((u16_at(38) != '0) ? 8'(u16_at(38)) : tokens_reg),
         .read_request_valid(linear_request_valid),
         .read_request_ready(read_request_ready),
         .read_request_address(linear_request_address),
@@ -515,7 +584,7 @@ module encoder_layer
     );
 
     attention_engine #(
-        .LANES(TILE_OUT),
+        .LANES(ATTENTION_LANES),
         .MAX_TOKENS(MAX_TOKENS),
         .MAX_HEAD_DIM(MAX_HEAD_DIM),
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
@@ -549,9 +618,9 @@ module encoder_layer
         .k_data(port_data[1]),
         .v_address(attention_v),
         .v_data(port_data[2]),
-        .mac_a(attention_mac_a),
+        .mac_a(attention_lane_a),
         .mac_b(attention_mac_b),
-        .mac_product(mac_product),
+        .mac_product(attention_product),
         .destination_write(attention_write),
         .destination_address(attention_waddr),
         .destination_data(attention_wdata),
@@ -583,6 +652,7 @@ module encoder_layer
 
     layernorm_engine #(
         .MAX_WIDTH(MAX_HIDDEN),
+        .NORM_LANES(NORM_LANES),
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
         .BEATS_WIDTH(BEATS_WIDTH),
         .BUFFER_ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH)
@@ -611,5 +681,88 @@ module encoder_layer
         .destination_data(norm_wdata),
         .destination_enable(norm_wen)
     );
+
+    embed_engine #(
+        .MAX_WIDTH(MAX_HIDDEN),
+        .ADDRESS_WIDTH(ADDRESS_WIDTH),
+        .BEATS_WIDTH(BEATS_WIDTH),
+        .BUFFER_ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH)
+    ) embed_inst (
+        .clk(clk),
+        .reset(reset),
+        .start(embed_start),
+        .busy(embed_busy),
+        .done(embed_done),
+        .word_address(ADDRESS_WIDTH'(u32_at(8))),
+        .word_stride(u16_at(12)),
+        .position_address(ADDRESS_WIDTH'(u32_at(14))),
+        .position_stride(u16_at(18)),
+        .type_address(ADDRESS_WIDTH'(u32_at(22))),
+        .word_multiplier_address(ADDRESS_WIDTH'(u32_at(26))),
+        .word_shift(instruction_reg[8*30 +: 6]),
+        .position_multiplier_address(ADDRESS_WIDTH'(u32_at(31))),
+        .position_shift(instruction_reg[8*35 +: 6]),
+        .width(hidden_reg),
+        .token_count(tokens_reg),
+        .read_request_valid(embed_request_valid),
+        .read_request_ready(read_request_ready),
+        .read_request_address(embed_request_address),
+        .read_request_beats(embed_request_beats),
+        .read_valid(read_valid),
+        .read_ready(embed_read_ready),
+        .read_data(read_data),
+        .read_last(read_last),
+        .source_address(embed_source),
+        .source_data(port_data[0]),
+        .destination_write(embed_write),
+        .destination_address(embed_waddr),
+        .destination_data(embed_wdata),
+        .destination_enable(embed_wen)
+    );
+
+    if (FPGA_HEADS != 0) begin : gen_pool
+        pool_engine #(
+            .ADDRESS_WIDTH(ADDRESS_WIDTH),
+            .BEATS_WIDTH(BEATS_WIDTH),
+            .BUFFER_ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH)
+        ) pool_inst (
+            .clk(clk),
+            .reset(reset),
+            .start(pool_start),
+            .busy(pool_busy),
+            .done(pool_done),
+            .first_row(u16_at(8)),
+            .row_count(u16_at(10)),
+            .out_row(u16_at(12)),
+            .recip_address(ADDRESS_WIDTH'(u32_at(14))),
+            .width(hidden_reg),
+            .read_request_valid(pool_request_valid),
+            .read_request_ready(read_request_ready),
+            .read_request_address(pool_request_address),
+            .read_request_beats(pool_request_beats),
+            .read_valid(read_valid),
+            .read_ready(pool_read_ready),
+            .read_data(read_data),
+            .read_last(read_last),
+            .source_address(pool_source),
+            .source_data(port_data[0]),
+            .destination_write(pool_write),
+            .destination_address(pool_waddr),
+            .destination_data(pool_wdata),
+            .destination_enable(pool_wen)
+        );
+    end else begin : gen_no_pool
+        assign pool_busy = 1'b0;
+        assign pool_done = 1'b0;
+        assign pool_request_valid = 1'b0;
+        assign pool_request_address = '0;
+        assign pool_request_beats = '0;
+        assign pool_read_ready = 1'b0;
+        assign pool_source = '0;
+        assign pool_write = 1'b0;
+        assign pool_waddr = '0;
+        assign pool_wdata = '0;
+        assign pool_wen = '0;
+    end
 
 endmodule

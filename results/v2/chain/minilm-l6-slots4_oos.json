@@ -1,0 +1,16 @@
+{
+ "name": "minilm-l6-slots4",
+ "budget": 0.01,
+ "argmax": {
+  "tau": 0.0,
+  "in_scope_accuracy": 0.9502222222222222,
+  "oos_recall": 0.272,
+  "combined_accuracy": 0.8269090909090909
+ },
+ "threshold": {
+  "tau": 0.395,
+  "in_scope_accuracy": 0.9448888888888889,
+  "oos_recall": 0.666,
+  "combined_accuracy": 0.8941818181818182
+ }
+}

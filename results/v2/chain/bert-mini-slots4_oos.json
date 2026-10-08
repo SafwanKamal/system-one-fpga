@@ -1,0 +1,16 @@
+{
+ "name": "bert-mini-slots4",
+ "budget": 0.01,
+ "argmax": {
+  "tau": 0.0,
+  "in_scope_accuracy": 0.9313333333333333,
+  "oos_recall": 0.27,
+  "combined_accuracy": 0.8110909090909091
+ },
+ "threshold": {
+  "tau": 0.46,
+  "in_scope_accuracy": 0.9226666666666666,
+  "oos_recall": 0.698,
+  "combined_accuracy": 0.8818181818181818
+ }
+}

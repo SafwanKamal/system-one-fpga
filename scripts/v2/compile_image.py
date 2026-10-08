@@ -42,7 +42,9 @@ sys.path.insert(0, str(ROOT / "scripts" / "v2"))
 from sysone.v2 import ddr_image as di                                   # noqa: E402
 from sysone.v2.int_encoder import FloatEncoder, IntEncoder              # noqa: E402
 
-BOARDS = {"nexys4ddr": (16, 12), "kr260": (32, 32)}                     # tile in x out
+# tile in x out; the encoder RTL's tile input is fixed at 16 (one 128-bit word), its
+# output width is TILE_OUT (12 on the Nexys 4 DDR, 32 planned for the KR260's K26)
+BOARDS = {"nexys4ddr": (16, 12), "kr260": (16, 32)}
 
 
 def out_dir(name: str) -> Path:
@@ -62,13 +64,13 @@ def load_model(name: str):
     return fe, tok, labels
 
 
-def calibrate(fe, tok, per_dataset: int, stat: str = "max") -> dict[str, float]:
+def calibrate(fe, tok, per_dataset: int, stat: str = "max", hwu: bool = False) -> dict[str, float]:
     """Same procedure and order as int_reference.py: first N training chains per dataset;
     each tensor's range is the max (or median) over chains of its 99.99th percentile."""
     from sysone.v2.chain_data import load_all
     from train_chain import Encoder
     enc = Encoder(tok, 128)
-    corpus = load_all()
+    corpus = load_all(hwu=hwu)
     fe.trace, seen = {}, {}
     for c in corpus.train:
         if seen.get(c.dataset, 0) < per_dataset:
@@ -85,7 +87,7 @@ def build_int(name: str, calibration: int, reuse: bool, stat: str = "max"):
         m = json.loads((out_dir(name) / "manifest.json").read_text())
         cal = m.get("calibration_range", m.get("calibration_max"))
     else:
-        cal = calibrate(fe, tok, calibration, stat)
+        cal = calibrate(fe, tok, calibration, stat, hwu="hwu" in labels["intent"])
     return IntEncoder(fe, {k: [v] for k, v in cal.items()}), cal, tok, labels
 
 
@@ -104,13 +106,14 @@ def cmd_build(a) -> None:
         man["calibration_stat"] = old.get("calibration_stat", "max")
         man["calibration_chains_per_dataset"] = old.get("calibration_chains_per_dataset")
     man["board_profile"] = a.board
-    d = out_dir(a.name)
+    out = a.name + a.suffix
+    d = out_dir(out)
     d.mkdir(parents=True, exist_ok=True)
-    (d / f"{a.name}.img").write_bytes(img)
+    (d / f"{out}.img").write_bytes(img)
     (d / "manifest.json").write_text(json.dumps(man, indent=1))
     (d / "program.txt").write_text(di.describe(img) + "\n")
     print(di.describe(img).split("\n  ", 1)[0])
-    print(f"wrote {d / (a.name + '.img')} ({len(img):,} bytes, sha256 {man['sha256'][:16]}…) "
+    print(f"wrote {d / (out + '.img')} ({len(img):,} bytes, sha256 {man['sha256'][:16]}…) "
           f"in {time.time() - t0:.0f}s")
 
 
@@ -125,7 +128,7 @@ def cmd_check(a) -> None:
     ie, _, tok, labels = build_int(a.name, 0, True)
     mach = di.ImageMachine(img)
     enc = Encoder(tok, 128)
-    test = eval_sets(load_all(), "test", a.chains, 0)
+    test = eval_sets(load_all(hwu="hwu" in labels["intent"]), "test", a.chains, 0)
     by: dict[str, list] = {}
     for c in test:
         by.setdefault(c.dataset, []).append(c)
@@ -145,7 +148,9 @@ def cmd_check(a) -> None:
             if not np.array_equal(xr, xm):
                 n_hidden_bad += 1
                 continue
-            probes = [("intent", h, np.where(seg == s)[0]) for s, h, _ in it["targets"]]
+            probes = [("intent", h, np.where(seg == s)[0]) for s, h, *_ in it["targets"]]
+            if "embed" in labels["intent"]:            # v3: the embedding head on every target
+                probes += [("intent", "embed", np.where(seg == s)[0]) for s, *_ in it["targets"]]
             if it["slot_head"] is not None:
                 probes.append(("slots", it["slot_head"], np.where(np.asarray(it["tags"]) != IGNORE)[0]))
             if it["pair"] is not None:
@@ -178,6 +183,8 @@ def main() -> None:
     b.add_argument("--board", choices=sorted(BOARDS), default="nexys4ddr")
     b.add_argument("--tile", default=None, help="override tile, e.g. 16x12 (in x out)")
     b.add_argument("--base", type=lambda s: int(s, 0), default=0)
+    b.add_argument("--suffix", default="", help="write export/v2/image/<name><suffix>/ "
+                   "(e.g. -kr260), keeping the model's own image")
     b.add_argument("--max-tokens", type=int, default=128)
     b.add_argument("--calibration", type=int, default=64, help="chains per dataset")
     b.add_argument("--range", choices=["max", "median"], default="max",

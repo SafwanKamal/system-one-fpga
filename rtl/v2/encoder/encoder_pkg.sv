@@ -9,6 +9,7 @@ package encoder_pkg;
     localparam logic [7:0] OP_LINEAR = 8'h03;
     localparam logic [7:0] OP_ATTENTION = 8'h04;
     localparam logic [7:0] OP_ADD_SKIP = 8'h05;
+    localparam logic [7:0] OP_POOL = 8'h06;
     localparam logic [7:0] OP_END = 8'h0F;
 
     // on-chip buffers (ddr_image.py BUF_*)

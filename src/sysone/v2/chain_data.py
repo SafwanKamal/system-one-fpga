@@ -21,6 +21,11 @@ Sources (all reachable from GitHub; licences recorded in data/v2/PROVENANCE.md):
   SGD        google-research-datasets/dstc8-schema-guided-dialogue  multi-turn, intent + slots
   SICK       brmson/dataset-sts data/sts/sick2014                entailment, 3 classes
   MSRP       brmson/dataset-sts data/para/msr                    paraphrase, 2 classes
+  HWU64      xliuhw/NLU-Evaluation-Data (data/v2/hwu)            intent + slots, 18 assistant
+                                                                 scenarios (MASSIVE's source)
+Few-shot evaluation only (never trained on; tests the embedding head on new intents):
+  Banking77  PolyAI-LDN/task-specific-datasets (data/v2/banking77)  77 banking intents
+  SNIPS      sonos/nlu-benchmark 2017-06 (data/v2/snips)          7 intents
 
 Words are whitespace tokens; a slot tag belongs to a word and the model predicts it
 from the word's first sub-word. Characters are kept as is (the WordPiece tokenizer
@@ -215,6 +220,92 @@ def load_msrp() -> tuple[dict, list[str]]:
     return out, ["different", "paraphrase"]
 
 
+# -------------------------------------------------------------------------- HWU64
+
+_ANN = re.compile(r"\[\s*([^:\]]+?)\s*:\s*([^\]]*?)\s*\]")
+
+
+def _hwu_words(annotation: str) -> tuple[list[str], list[str]]:
+    """'wake me up at [time : five am]' -> words and BIO slot names."""
+    words, tags, pos = [], [], 0
+    for m in _ANN.finditer(annotation):
+        for w in annotation[pos:m.start()].split():
+            words.append(w)
+            tags.append("O")
+        for k, w in enumerate(m.group(2).split()):
+            words.append(w)
+            tags.append(("B-" if k == 0 else "I-") + m.group(1).strip().replace(" ", "_"))
+        pos = m.end()
+    for w in annotation[pos:].split():
+        words.append(w)
+        tags.append("O")
+    return words, tags
+
+
+def load_hwu() -> tuple[dict, list[str], list[str]]:
+    """HWU64 (Liu et al. 2019): 25.7k utterances to a home assistant, intent
+    'scenario_intent' and bracketed slot annotations. No official split, so a fixed one:
+    rows marked irrelevant (IRR*) dropped, duplicates (same lower-cased text) kept
+    together, 80 / 10 / 10 by a hash of the text."""
+    import csv
+    import zlib
+    fn = EXT / "hwu" / "NLU-Data-Home-Domain-Annotated-All.csv"
+    rows = []
+    with open(fn, encoding="utf-8") as f:
+        for r in csv.DictReader(f, delimiter=";"):
+            ann = (r["answer_annotation"] or "").strip()
+            if not ann or ann == "null" or r["status"].startswith("IRR"):
+                continue
+            if ann.count("[") != ann.count("]"):
+                continue
+            words, tags = _hwu_words(ann)
+            if words:
+                rows.append((words, tags, f"{r['scenario']}_{r['intent']}"))
+    split_of = {}
+    out_rows = {"train": [], "dev": [], "test": []}
+    for words, tags, intent in rows:
+        key = " ".join(words).lower()
+        if key not in split_of:
+            h = zlib.crc32(key.encode()) % 10
+            split_of[key] = "test" if h == 0 else "dev" if h == 1 else "train"
+        out_rows[split_of[key]].append((words, tags, intent))
+    intents = sorted({r[2] for r in out_rows["train"]})
+    tags_ = sorted({t for r in out_rows["train"] for t in r[1]} - {"O"})
+    tags_ = ["O"] + tags_
+    ii = {l: i for i, l in enumerate(intents)}
+    ti = {t: i for i, t in enumerate(tags_)}
+    out = {}
+    for split, rs in out_rows.items():
+        out[split] = [Chain("slots", "hwu", [Segment(w, intent=ii[l], tags=[ti.get(t, 0) for t in tg])])
+                      for w, tg, l in rs if l in ii]
+    return out, intents, tags_
+
+
+# --------------------------------------------------- few-shot sets (evaluation only)
+
+def load_banking77() -> dict[str, list[tuple[str, str]]]:
+    """{'train': [(text, intent)], 'test': [...]}: Banking77 (Casanueva et al. 2020)."""
+    import csv
+    out = {}
+    for split in ("train", "test"):
+        with open(EXT / "banking77" / f"{split}.csv", encoding="utf-8") as f:
+            out[split] = [(r["text"], r["category"]) for r in csv.DictReader(f)]
+    return out
+
+
+def load_snips() -> dict[str, list[tuple[str, str]]]:
+    """{'train': [...], 'test': [...]}: SNIPS 2017 custom-intent benchmark, 7 intents
+    (train_*_full.json as the pool, validate_*.json, 100 per intent, as the test set)."""
+    out = {"train": [], "test": []}
+    for fn in sorted((EXT / "snips").glob("*_*.json")):
+        split = "train" if fn.name.startswith("train_") else "test"
+        raw = json.loads(fn.read_bytes().decode("latin-1"))
+        for intent, items in raw.items():
+            for it in items:
+                out[split].append(("".join(p["text"] for p in it["data"]).strip(), intent))
+    return out
+
+
 # ----------------------------------------------------------- synthetic multi-sentence
 
 def make_multi(pool: list[Chain], n: int, lo: int = 2, hi: int = 4, seed: int = 0,
@@ -234,20 +325,28 @@ def make_multi(pool: list[Chain], n: int, lo: int = 2, hi: int = 4, seed: int = 
     return out
 
 
-def load_all(sgd_train_dialogues: int = 4000, multi_train: int = 8000, seed: int = 0) -> Corpus:
+def load_all(sgd_train_dialogues: int = 4000, multi_train: int = 8000, seed: int = 0,
+             hwu: bool = False) -> Corpus:
+    """The training corpus. `hwu` adds HWU64 (the v3 models); models trained without it
+    keep exactly their original corpus (calibration, evaluation)."""
     clinc, clinc_labels = load_clinc()
     atis, atis_intents, atis_tags = load_atis()
     sgd, sgd_intents, sgd_tags = load_sgd(train_dialogues=sgd_train_dialogues, seed=seed)
     sick, sick_labels = load_sick()
     msrp, msrp_labels = load_msrp()
+    intents = {"clinc": clinc_labels, "atis": atis_intents, "sgd": sgd_intents}
+    tags = {"atis": atis_tags, "sgd": sgd_tags}
+    h = {"train": [], "dev": [], "test": []}
+    if hwu:
+        h, intents["hwu"], tags["hwu"] = load_hwu()
     splits = {}
     for s in ("train", "dev", "test"):
         n_multi = multi_train if s == "train" else 1500
         splits[s] = (clinc[s] + atis[s] + sgd[s] + sick[s] + msrp[s]
-                     + make_multi(clinc[s], n_multi, seed=seed + {"train": 0, "dev": 1, "test": 2}[s]))
+                     + make_multi(clinc[s], n_multi, seed=seed + {"train": 0, "dev": 1, "test": 2}[s])
+                     + h[s])
     return Corpus(splits["train"], splits["dev"], splits["test"],
-                  intent_labels={"clinc": clinc_labels, "atis": atis_intents, "sgd": sgd_intents},
-                  tag_labels={"atis": atis_tags, "sgd": sgd_tags},
+                  intent_labels=intents, tag_labels=tags,
                   pair_labels={"sick": sick_labels, "msrp": msrp_labels})
 
 

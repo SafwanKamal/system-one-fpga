@@ -106,15 +106,18 @@ class Link:
         if address % 16:
             raise ValueError("address must be a multiple of 16")
         data = data + bytes(-len(data) % 16)
-        reqs = []
+        reqs, beats = [], {}
         for off in range(0, len(data), CHUNK):
             seq = self._next()
-            reqs.append((seq, mp.write_frame(seq, address + off, data[off:off + CHUNK], self.host,
-                                             with_fcs=False)))
+            chunk = data[off:off + CHUNK]
+            beats[seq] = len(chunk) // 16
+            reqs.append((seq, mp.write_frame(seq, address + off, chunk, self.host, with_fcs=False)))
         replies = self._run(reqs)
         for seq, frame in reqs:
             m = replies[seq]
-            sent = (len(frame) - mp.HEADER_BYTES) // 16
+            # beats from the data, not the frame length: a 1-beat frame is padded to
+            # Ethernet's 60-byte minimum, which would read as 2 beats
+            sent = beats[seq]
             if m.kind != mp.WRITE_ACK or m.beats != sent:
                 raise IOError(f"write at {m.address:#x}: board wrote {m.beats} beats")
 
@@ -136,6 +139,20 @@ class Link:
                 raise IOError(f"read at {m.address:#x}: {m.beats} beats")
             out += m.data
         return bytes(out[:length])
+
+    def run(self, descriptor: bytes, timeout: float = 5.0) -> mp.RunResult:
+        """RUN (encoder bitstream): returns the board's run result. Sent again if no
+        reply in `timeout` seconds (a repeated run just runs again)."""
+        seq = self._next()
+        frame = mp.run_frame(seq, descriptor, self.host, with_fcs=False)
+        saved, self.timeout = self.timeout, timeout
+        try:
+            m = self._run([(seq, frame)])[seq]
+        finally:
+            self.timeout = saved
+        if m.kind != mp.RUN_DONE:
+            raise IOError(f"run: reply type {m.kind:#x}")
+        return mp.RunResult.parse(m.data)
 
 
 def main() -> int:

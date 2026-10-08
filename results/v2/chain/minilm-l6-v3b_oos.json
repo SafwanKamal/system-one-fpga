@@ -1,0 +1,42 @@
+{
+ "name": "minilm-l6-v3b",
+ "budget": 0.01,
+ "argmax": {
+  "tau": 0.0,
+  "in_scope_accuracy": 0.9562222222222222,
+  "oos_recall": 0.394,
+  "combined_accuracy": 0.854
+ },
+ "threshold": {
+  "tau": 0.48,
+  "in_scope_accuracy": 0.9468888888888889,
+  "oos_recall": 0.703,
+  "combined_accuracy": 0.9025454545454545
+ },
+ "hwu_router": {
+  "tau_hwu": 0.515,
+  "extra_budget": 0.03,
+  "test_without_hwu_threshold": {
+   "oos_rejected": 0.0,
+   "clinc_in_scope_accepted": 1.0,
+   "hwu_accepted": 1.0,
+   "hwu_intent_accuracy": 0.9144996059889677,
+   "hwu_accepted_and_correct": 0.9144996059889677,
+   "note": "HWU always accepts"
+  },
+  "test": {
+   "oos_rejected": 0.234,
+   "clinc_in_scope_accepted": 0.9897777777777778,
+   "hwu_accepted": 0.9736012608353034,
+   "hwu_intent_accuracy": 0.9144996059889677,
+   "hwu_accepted_and_correct": 0.9018912529550828
+  },
+  "test_clinc_only": {
+   "oos_rejected": 0.405,
+   "clinc_in_scope_accepted": 0.9782222222222222,
+   "hwu_accepted": 0.7494089834515366,
+   "hwu_intent_accuracy": 0.9144996059889677,
+   "hwu_accepted_and_correct": 0.693853427895981
+  }
+ }
+}
