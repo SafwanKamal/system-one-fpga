@@ -58,4 +58,18 @@ adapter src/sysone/v2/qwen_fpga_runtime_v9d.py, runner and deploy scripts with t
 _v9d suffix. Bit-identical to v9c. Long prompts are 13% faster (410 tokens:
 18.3 s vs 21.1 s on the same boot); short commands are about the same.
 
+## v9e (validated 2026-10-22): BF16 K/V, context 2048
+
+- Package /var/lib/sysone/qwen-fpga-decoder-v9e-candidate1 (archive 212f3f07…4411d40),
+  app sysone-qwen-decoder-v9e, compatible xlnx,qwen-decoder-v9e-1.0, adapter
+  src/sysone/v2/qwen_fpga_runtime_v9e.py (K/V scratch check uses 2 bytes per value).
+- Manifest max_context 2048; rope.bin 2048 rows (first 1024 equal v9c/v9d's).
+- deploy_qwen_fpga_v9e.py takes --baseline v8|v9d and swaps back to exactly that
+  image. I swapped from your v9d and restored it.
+- Same boot: outputs identical to v9d on the milestone and 410-token prompts;
+  1454-token prompt completed correctly in 77 s. Startup is ~0.3 s slower (RoPE
+  copy, host-side), and every kernel phase is equal or faster.
+- Not adopted on the board; v9d remains active. Long-context quality for 0.6B is
+  your evaluation question.
+
 Final recommendation: docs/research/2026-10-21-claude-hardware-recommendation.md.

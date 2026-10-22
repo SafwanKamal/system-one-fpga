@@ -4,6 +4,47 @@ Owner: Claude. Scope: docs/handoffs/claude-hardware-ownership.md. The full
 benchmark sweep was not run; every board session was reserved through
 BOARD_STATUS.json and ended with sealed v8 restored and verified.
 
+## Update 2026-10-22: v9e (BF16 K/V cache, context 2048)
+
+v9e (`sysone-qwen-decoder-v9e`, package /var/lib/sysone/qwen-fpga-decoder-v9e-candidate1,
+archive sha256 212f3f07…4411d40) is v9d with the K/V cache stored as BF16
+(round to nearest even, exact widening on read) and a 2048-token context. All
+arithmetic stays FP32. The 2048-token cache (~235 MB) fits the existing 256 MB
+scratch reservation; no boot or device-tree change.
+
+Quality basis (literature, no CPU sweep): BF16 is Qwen3's release precision and
+the default K/V precision in mainstream runtimes; it has FP32's exponent range,
+so it avoids the FP16 overflow risk seen with Qwen-family K/V outliers. Its
+rounding (~0.4% relative) is below the INT8 matrix-input quantization this design
+already applies. 8-bit and lower K/V caches are near-lossless on large models but
+unestablished for 0.6B; not adopted.
+
+Verification: exact-order BF16 reference over 2048 positions (8 tiles, exp from
+hls::expf). C simulation bit-exact (worst 0) on all 2048 prefill positions and the
+final 8 decode steps. Routed WNS +0.542 ns, WHS +0.010 ns, CLB 96.1%. Board: 4112/4112
+causal cases, worst 0.
+
+Same boot, swapped from and back to Codex-adopted v9d:
+
+| | v9d control | v9e |
+|---|---|---|
+| Milestone command | 7.052 s | 7.310 / 7.356 s |
+| — decode layers / prefill layers | 2.021 / 1.379 s | 1.980 / 1.366 s |
+| — startup | 2.86 s | 3.17–3.21 s |
+| 410-token prompt | 18.350 s | 18.103 s |
+| 1454-token prompt | impossible (limit 1024) | **76.97 s, correct tool call** |
+| Decode layer at position 1023 / 2047 | 9.04 ms / — | 7.97 ms / 11.41 ms |
+
+Generated IDs were identical to v9d on the milestone and 410-token prompts, so
+BF16 K/V changed no output token on these prompts. Every kernel phase is equal or
+faster. The ~0.3 s slower startup is host-side: the 1 MB RoPE table is copied
+4 bytes at a time. Fixing that in the runtime adapter would make v9e at least as
+fast as v9d everywhere.
+
+Recommendation: **adopt v9e** where context beyond 1024 tokens is wanted, after
+the RoPE-copy fix and Codex's own quality evaluation at long context. Otherwise
+v9d stays the right default.
+
 ## Update 2026-10-22: v9d
 
 v9d (`sysone-qwen-decoder-v9d`, package /var/lib/sysone/qwen-fpga-decoder-v9d-candidate1,
