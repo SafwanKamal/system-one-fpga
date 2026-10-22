@@ -4,7 +4,33 @@ Owner: Claude. Scope: docs/handoffs/claude-hardware-ownership.md. The full
 benchmark sweep was not run; every board session was reserved through
 BOARD_STATUS.json and ended with sealed v8 restored and verified.
 
-## Recommendation
+## Update 2026-10-22: v9d
+
+v9d (`sysone-qwen-decoder-v9d`, package /var/lib/sysone/qwen-fpga-decoder-v9d-candidate1,
+archive sha256 e4e920f5…e6fda3) scores two prefill tokens per pass over the on-chip
+K/V tile. Each token's arithmetic and order are unchanged, so it is bit-identical to
+v9c. C simulation is exact on all 300 reference positions; board smoke 616/616,
+worst 2.4e-7.
+
+| Same boot | v8 control | v9c | v9d |
+|---|---|---|---|
+| Milestone command | 9.174 s | 7.08–7.22 s (earlier session) | 7.024 / 7.090 s |
+| 410-token prompt, total | not possible | 21.120 s (same-session control) | **18.305 s (−13.3%)** |
+| 410-token prompt, prefill | — | 14.848 s | 12.074 s (−18.7%) |
+
+Generated IDs were identical: v9d matches v8 on the milestone command and
+matches the same-session v9c control on the long prompt. The gain is below my
+projection (21 s → 15–16 s): attention was about 4 ms of each ~10 ms long-context
+prefill call, not the ~7 ms I estimated. Routed: WNS +0.656 ns, WHS +0.010 ns,
+LUT 65.4%, CLB 96.2%, BRAM 84.7%, DSP 46.6%. Closing timing needed
+congestion-oriented Vivado directives (Explore / AggressiveExplore); v8 to v9c
+used the defaults. Evidence: build/v2/qwen-fpga-decoder-v9d/board-evidence-1/.
+
+Updated recommendation: **adopt v9d** if long prompts matter; it is strictly
+faster than v9c with identical numerics. Keep **v9c** as the fallback with more
+placement headroom (92% vs 96% CLB) for future changes. Either supersedes v9a.
+
+## Recommendation (2026-10-21, before v9d)
 
 1. **Adopt v9c** (`sysone-qwen-decoder-v9c`, package
    /var/lib/sysone/qwen-fpga-decoder-v9c-candidate1, archive sha256

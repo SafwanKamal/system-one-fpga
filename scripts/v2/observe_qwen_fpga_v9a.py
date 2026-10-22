@@ -10,7 +10,8 @@ from pathlib import Path
 PACKAGES={'sysone-qwen-decoder-wide-int8.bit.bin':'/var/lib/sysone/qwen-fpga-decoder-v8-startup-v2',
           'sysone-qwen-decoder-v9a.bit.bin':'/var/lib/sysone/qwen-fpga-decoder-v9a-candidate1',
           'sysone-qwen-decoder-v9a-b3.bit.bin':'/var/lib/sysone/qwen-fpga-decoder-v9a-candidate3',
-          'sysone-qwen-decoder-v9c.bit.bin':'/var/lib/sysone/qwen-fpga-decoder-v9c-candidate1'}
+          'sysone-qwen-decoder-v9c.bit.bin':'/var/lib/sysone/qwen-fpga-decoder-v9c-candidate1',
+          'sysone-qwen-decoder-v9d.bit.bin':'/var/lib/sysone/qwen-fpga-decoder-v9d-candidate1'}
 
 
 def main():

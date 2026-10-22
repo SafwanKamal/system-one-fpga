@@ -49,4 +49,13 @@ evaluation files, datasets, gold answers or results was edited.
 - Prompt-length limits in your harness can rise to 1024 total tokens. Whether
   longer histories help the 0.6B model is an evaluation question for you.
 
+## v9d (validated 2026-10-22)
+
+Same host interface, manifest and RoPE as v9c; only the app name differs:
+sysone-qwen-decoder-v9d (compatible xlnx,qwen-decoder-v9d-1.0), package
+/var/lib/sysone/qwen-fpga-decoder-v9d-candidate1 (archive e4e920f5…e6fda3),
+adapter src/sysone/v2/qwen_fpga_runtime_v9d.py, runner and deploy scripts with the
+_v9d suffix. Bit-identical to v9c. Long prompts are 13% faster (410 tokens:
+18.3 s vs 21.1 s on the same boot); short commands are about the same.
+
 Final recommendation: docs/research/2026-10-21-claude-hardware-recommendation.md.
