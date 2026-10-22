@@ -44,6 +44,31 @@ def bound(node,driver):
     return False
 
 
+OWNERSHIP=Path('/sys/class/misc/sysone_qwen_dma/ownership')
+CLAIM_INFERENCE=0x515704
+COPY_CHUNK_WORDS=16   # 64-byte writes: no bulk memset (DC ZVA) on device memory
+
+
+def _ownership_state():
+    return {k:int(v,0) for k,v in (item.split('=') for item in OWNERSHIP.read_text().split())}
+
+
+class _PyBuffer(ctypes.Structure):
+    _fields_=[('buf',ctypes.c_void_p),('obj',ctypes.c_void_p),('len',ctypes.c_ssize_t),('itemsize',ctypes.c_ssize_t),
+              ('readonly',ctypes.c_int),('ndim',ctypes.c_int),('format',ctypes.c_char_p),('shape',ctypes.POINTER(ctypes.c_ssize_t)),
+              ('strides',ctypes.POINTER(ctypes.c_ssize_t)),('suboffsets',ctypes.POINTER(ctypes.c_ssize_t)),('internal',ctypes.c_void_p)]
+
+
+def _readonly_address(mapping,stack):
+    # Readable address of a PROT_READ mapping without a writable export.
+    get=ctypes.pythonapi.PyObject_GetBuffer;get.argtypes=[ctypes.py_object,ctypes.POINTER(_PyBuffer),ctypes.c_int];get.restype=ctypes.c_int
+    release=ctypes.pythonapi.PyBuffer_Release;release.argtypes=[ctypes.POINTER(_PyBuffer)];release.restype=None
+    buf=_PyBuffer()
+    if get(mapping,ctypes.byref(buf),0)!=0:raise RuntimeError('Read-only DMA buffer export failed')
+    stack.callback(release,ctypes.byref(buf))
+    return buf.buf
+
+
 def dma_segments():
     lines=Path('/sys/class/misc/sysone_qwen_dma/buffers').read_text().splitlines()
     header={k:int(v,0) for k,v in (s.split('=') for s in lines[0].split())}
@@ -104,6 +129,19 @@ class QwenFpga:
         header,regions=dma_segments()
         if header['model_bytes']!=self.manifest['bytes']:raise RuntimeError('Wrong DMA model extent')
         self.dmafd=os.open('/dev/sysone_qwen_dma',os.O_RDWR|os.O_SYNC)
+        # ABI2 DMA modules (Codex v16) grant one exclusive, sealed inference lease
+        # per open owner; claim it exactly as qwen_dma_ownership_v16 does. ABI1
+        # modules have no ownership file and keep the original behaviour.
+        self.dma_abi=1
+        if OWNERSHIP.exists():
+            if _ownership_state().get('abi')==2:
+                try:
+                    fcntl.ioctl(self.dmafd,CLAIM_INFERENCE,0)
+                    lease=_ownership_state()
+                    if not lease['sealed'] or lease['loading'] or lease['owner_tgid']!=os.getpid():raise RuntimeError('Exclusive sealed inference lease was not acquired')
+                except Exception:
+                    os.close(self.dmafd);self.dmafd=None;raise
+                self.dma_abi=2;self.ownership_identity=lease
         try:
             # Keep the module/file owner pinned for the complete request. Verify
             # model bytes before hardware access; CPU reads here are hashing only.
@@ -120,8 +158,14 @@ class QwenFpga:
                     payload=min(1<<24,self.manifest['bytes']-index*(1<<24))
                     if region['index']!=index or not 0<payload<=region['bytes']:
                         raise RuntimeError('Resident DMA segment coverage differs')
-                    view=mappings.enter_context(mmap.mmap(self.dmafd,region['bytes'],mmap.MAP_SHARED,mmap.PROT_READ|mmap.PROT_WRITE,offset=index*(1<<24)))
-                    address=ctypes.addressof(ctypes.c_char.from_buffer(view))
+                    if self.dma_abi==2:
+                        # Sealed ABI2 weights are read-only: map PROT_READ and take
+                        # the address through the read-only buffer API (as v16 does).
+                        view=mappings.enter_context(mmap.mmap(self.dmafd,region['bytes'],mmap.MAP_SHARED,mmap.PROT_READ,offset=index*(1<<24)))
+                        address=_readonly_address(view,mappings)
+                    else:
+                        view=mappings.enter_context(mmap.mmap(self.dmafd,region['bytes'],mmap.MAP_SHARED,mmap.PROT_READ|mmap.PROT_WRITE,offset=index*(1<<24)))
+                        address=ctypes.addressof(ctypes.c_char.from_buffer(view))
                     plans.extend((address+offset,min(chunk,payload-offset)) for offset in range(0,payload,chunk))
                 def stage(index,slot):
                     address,size=plans[index]
@@ -133,6 +177,7 @@ class QwenFpga:
                         digest.update(memoryview(staging[slot]).cast('B')[:size]);copied_bytes+=size
                         if index+4<len(plans):pending[slot]=stage(index+4,slot)
                 finally:wait(pending)
+            if self.dma_abi==2 and _ownership_state()!=self.ownership_identity:raise RuntimeError('Ownership changed during startup verification')
             if copied_bytes!=self.manifest['bytes'] or digest.hexdigest()!=self.manifest['sha256']:
                 raise RuntimeError('Resident DMA weights differ from pinned Q8 model')
             self.model_verify_ms=(time.monotonic()-started)*1000
@@ -143,7 +188,11 @@ class QwenFpga:
             table=struct.pack('<'+'I'*len(regions),*[r['dma'] for r in regions]);self._copy_words(PAGES,table)
             rope=(self.package/'rope.bin').read_bytes()
             if len(rope)!=self.rope_bytes:raise RuntimeError('RoPE table extent')
-            self._copy_words(ROTARY,rope)
+            # Always rewrite: on this board, reading the 1 MB table back to check it
+            # (134 ms) costs more than a chunked write (90 ms; old loop 470 ms).
+            copy_started=time.monotonic()
+            self._copy_words(ROTARY,rope);self.rope_copy_mode='written (64-byte chunks)'
+            self.rope_copy_ms=(time.monotonic()-copy_started)*1000
             self._w(self.registers['model'],0);self._w(self.registers['model']+4,0)
             self._w(self.registers['scratch'],self.base);self._w(self.registers['scratch']+4,0)
             self.command(0,page=PAGES,rows=len(regions),token_base=self.manifest['bytes'])
@@ -155,10 +204,21 @@ class QwenFpga:
     def _copy_words(self,offset,payload):
         # /dev/mem maps this no-map reservation as device memory. A generic
         # memcpy can emit an unaligned tail store (e.g. a 156-byte page table),
-        # which AArch64 rejects. Use aligned scalar transfers for every copy.
+        # which AArch64 rejects. pack_into also memsets its whole destination
+        # first; for large sizes glibc uses DC ZVA, which faults on device memory
+        # (SIGBUS seen on the board with a 1 MB call). Short odd sizes are unsafe
+        # too: glibc's small memset uses overlapping 16-byte stores, one of them
+        # unaligned (SIGBUS on a 156-byte page table's 28-byte tail). So only full
+        # 64-byte chunks at 64-byte-aligned addresses use one call; everything
+        # else keeps the original single-word '<I' writes.
         if offset%4 or len(payload)%4:raise ValueError('Unaligned scratch transfer')
-        for index,(value,) in enumerate(struct.iter_unpack('<I',payload)):
-            struct.pack_into('<I',self.scratch,offset+4*index,value)
+        words=struct.unpack('<%dI'%(len(payload)//4),payload)
+        for start in range(0,len(words),COPY_CHUNK_WORDS):
+            chunk=words[start:start+COPY_CHUNK_WORDS];address=offset+4*start
+            if len(chunk)==COPY_CHUNK_WORDS and address%64==0:
+                struct.pack_into('<16I',self.scratch,address,*chunk)
+            else:
+                for index,value in enumerate(chunk):struct.pack_into('<I',self.scratch,address+4*index,value)
     def begin_prefix(self,prompt_ids,enabled=True):
         """Reuse only causally identical prompt KV; always recompute output tokens."""
         state=self.package/'prefix-cache.json';matched=0

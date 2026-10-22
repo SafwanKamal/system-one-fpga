@@ -17,7 +17,7 @@ COMPATIBLE='xlnx,qwen-decoder-v9e-1.0'
 SOURCES=ROOT/'hls/qwen_decoder_v9e'
 HOST_FILES=['src/sysone/v2/qwen_fpga_runtime_v9e.py','src/sysone/v2/qwen_tokenizer_v1.py',
             'scripts/v2/run_qwen_fpga_command_v9e.py','scripts/v2/deploy_qwen_fpga_v9e.py',
-            'scripts/v2/smoke_qwen_fpga_v9e.py']
+            'scripts/v2/smoke_qwen_fpga_v9e.py','scripts/v2/bench_scratch_copy_v9e.py']
 
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -117,6 +117,7 @@ def main():
         'attention beyond 256 positions: tiled online softmax (identical to v9a within one tile)','prefill attention scores two tokens per K/V pass; per-token arithmetic and order identical to v9c',
         'K/V cache stored as BF16 (round to nearest even), widened exactly to FP32 on read',
         'reference: scripts/v2/prepare_qwen_fpga_v9e_long.py (BF16 K/V) with hls::expf oracle; same INT8 matrix arithmetic']
+    manifest['host_runtime']='candidate5: full 64-byte chunks at 64-byte-aligned addresses in one pack_into, all other words written singly (bulk memset uses DC ZVA and small odd memsets use unaligned overlapping stores; both raised SIGBUS on device memory); RoPE table always rewritten (board: chunked write 90 ms < readback 134 ms < old loop 470 ms); ABI2 DMA inference lease and read-only weight mapping when the module reports abi=2'
     manifest['tokenizer_sha256']=v8_build['tokenizer_sha256'];manifest['compiled_tokenizer_sha256']=v8_build['compiled_tokenizer_sha256']
     (app/'build.json').write_text(json.dumps(manifest,indent=2)+'\n')
     hashes={str(p.relative_to(stage)).replace('\\','/'):sha(p) for p in stage.rglob('*') if p.is_file() and p.name!='package-sha256.json'}

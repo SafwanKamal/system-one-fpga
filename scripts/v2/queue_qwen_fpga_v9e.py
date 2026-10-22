@@ -12,9 +12,10 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 BUILD=ROOT/'build/v2/qwen-fpga-decoder-v9e'
 ARCHIVE=BUILD/'qwen-fpga-v9e-deployment.tar'
-REMOTE_TAR='/home/ubuntu/sysone-qwen-fpga-decoder-v9e-candidate1.tar'
-PACKAGE='/var/lib/sysone/qwen-fpga-decoder-v9e-candidate1'
-EVIDENCE='/var/lib/sysone/qwen-v9e-evidence-1'
+REMOTE_TAR='/home/ubuntu/sysone-qwen-fpga-decoder-v9e-candidate5.tar'
+PACKAGE='/var/lib/sysone/qwen-fpga-decoder-v9e-candidate5'
+OLD_PACKAGE='/var/lib/sysone/qwen-fpga-decoder-v9e-candidate1'
+EVIDENCE='/var/lib/sysone/qwen-v9e-evidence-5'
 V8_PACKAGE='/var/lib/sysone/qwen-fpga-decoder-v8-startup-v2'
 V9D_PACKAGE='/var/lib/sysone/qwen-fpga-decoder-v9d-candidate1'
 QUERY="Read the Linux boot ID from '/proc/sys/kernel/random/boot_id'."
@@ -53,6 +54,8 @@ print(json.dumps(dict(
  python_processes=[l for l in run(['ps','-eo','pid,etimes,args']).splitlines() if 'python' in l and 'ps -eo' not in l],
  mvp_service=run(['systemctl','show','-p','ActiveState','-p','SubState','sysone-qwen06b-mvp.service']).split(),
  r5_loaded=Path('/sys/class/misc/sysone_r5_smoke/status').exists(),
+ dma_ownership=Path('/sys/class/misc/sysone_qwen_dma/ownership').read_text().strip() if Path('/sys/class/misc/sysone_qwen_dma/ownership').exists() else None,
+ dma_module=run(['sh','-c','lsmod | grep -i sysone']),
  xmutil=run(['xmutil','listapps'])),indent=1))
 EOF'''
 
@@ -66,7 +69,7 @@ def main():
     digest=hashlib.sha256(ARCHIVE.read_bytes()).hexdigest()
     # Staged, not queued: the window runs anything in queue/, so jobs are moved
     # there one gate at a time after the reservation and each check.
-    queue=args.work/'pending';queue.mkdir(parents=True,exist_ok=False);(args.work/'queue').mkdir(exist_ok=True);(args.work/'results').mkdir(exist_ok=True)
+    queue=args.work/'pending5';queue.mkdir(parents=True,exist_ok=False);(args.work/'queue').mkdir(exist_ok=True);(args.work/'results').mkdir(exist_ok=True)
     py='python3 -X faulthandler '
     extract=f'''python3 - <<'EOF'
 import hashlib,json,tarfile
@@ -80,27 +83,37 @@ print(json.dumps(dict(extracted=str(p),files=len(hashes),archive_sha256={digest!
 EOF'''
     command=lambda package,runner,out:(py+f'{package}/scripts/v2/{runner} --package {package} --no-prefix-cache '
                                        f'--query {shlex.quote(QUERY)} --out {EVIDENCE}/{out}')
+    clear_rope=f'''python3 - <<'EOF'
+import fcntl,mmap,os,struct
+from pathlib import Path
+# Zero the RoPE area so the next v9e run must take the write path. Runs under the
+# inference lock; every runtime rewrites or verifies this table before use.
+dt=Path('/sys/firmware/devicetree/base');r=list((dt/'reserved-memory').glob('sysone@*'))[0]
+base,size=struct.unpack('>QQ',(r/'reg').read_bytes())
+lock=Path('/run/lock/sysone-inference.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+fd=os.open('/dev/mem',os.O_RDWR|os.O_SYNC);m=mmap.mmap(fd,size,mmap.MAP_SHARED,mmap.PROT_READ|mmap.PROT_WRITE,offset=base)
+zero=(0,)*16
+for o in range(0x10000,0x10000+(1<<20),64):struct.pack_into('<16I',m,o,*zero)
+m.close();os.close(fd);lock.close()
+print('rope area zeroed')
+EOF'''
     jobs=[('00-inventory',job(INVENTORY,30)),
           ('01-upload-candidate',dict(upload=str(ARCHIVE),remote=REMOTE_TAR)),
-          ('02-extract-candidate',job(extract,90)),
-          ('03-deploy-candidate',job(py+f'{PACKAGE}/scripts/v2/deploy_qwen_fpga_v9e.py --package {PACKAGE} --direction candidate --baseline v9d --out {EVIDENCE}/03-deploy.json',120)),
-          ('04-causal-smoke',job(py+f'{PACKAGE}/scripts/v2/smoke_qwen_fpga_v9e.py --package {PACKAGE} --out {EVIDENCE}/04-smoke',300)),
-          ('05-command-v9e-1',job(command(PACKAGE,'run_qwen_fpga_command_v9e.py','05-command-v9e-1.json'),300)),
-          ('06-command-v9e-2',job(command(PACKAGE,'run_qwen_fpga_command_v9e.py','06-command-v9e-2.json'),300)),
-          ('07-long-prompt-v9e',job(py+f'{PACKAGE}/scripts/v2/run_qwen_fpga_command_v9e.py --package {PACKAGE} --no-prefix-cache '
-                                    f'--query {shlex.quote(LONG_QUERY)} --out {EVIDENCE}/07-long-prompt-v9e.json',300)),
-          ('07-very-long-prompt-v9e',job(py+f'{PACKAGE}/scripts/v2/run_qwen_fpga_command_v9e.py --package {PACKAGE} --no-prefix-cache '
-                                    f'--query {shlex.quote(VERY_LONG_QUERY)} --out {EVIDENCE}/07-very-long-prompt-v9e.json',900)),
-          # Codex adopted v9d (BOARD_STATUS rev 23-33); swap from it and back to it.
-          ('08-restore-v9d',job(py+f'{PACKAGE}/scripts/v2/deploy_qwen_fpga_v9e.py --package {PACKAGE} --direction restore --baseline v9d --out {EVIDENCE}/08-restore.json',120)),
-          ('09-command-v9d-control',job(command(V9D_PACKAGE,'run_qwen_fpga_command_v9d.py','09-command-v9d-control.json'),300)),
-          ('10-long-prompt-v9d-control',job(py+f'{V9D_PACKAGE}/scripts/v2/run_qwen_fpga_command_v9d.py --package {V9D_PACKAGE} --no-prefix-cache '
-                                    f'--query {shlex.quote(LONG_QUERY)} --out {EVIDENCE}/10-long-prompt-v9d-control.json',300)),
+          ('02-extract-candidate',job(extract,120)),
+          ('03-copy-benchmark',job(py+f'{PACKAGE}/scripts/v2/bench_scratch_copy_v9e.py --package {PACKAGE} --out {EVIDENCE}/03-copy-benchmark.json',180)),
+          ('04-deploy-candidate',job(py+f'{PACKAGE}/scripts/v2/deploy_qwen_fpga_v9e.py --package {PACKAGE} --direction candidate --baseline v9d --out {EVIDENCE}/04-deploy.json',120)),
+          ('05-clear-rope',job(clear_rope,60)),
+          ('06-command-new-adapter-1',job(command(PACKAGE,'run_qwen_fpga_command_v9e.py','06-command-new-adapter-1.json'),300)),
+          ('07-command-new-adapter-2',job(command(PACKAGE,'run_qwen_fpga_command_v9e.py','07-command-new-adapter-2.json'),300)),
+          # ABI2 DMA (Codex v16) rejects writable-mapping runtimes: no old-adapter or
+          # v9d-adapter runs; the copy benchmark measures old vs new on device memory.
+          ('09-restore-v9d',job(py+f'{PACKAGE}/scripts/v2/deploy_qwen_fpga_v9e.py --package {PACKAGE} --direction restore --baseline v9d --out {EVIDENCE}/09-restore.json',120)),
           ('13-final-inventory',job(INVENTORY,30)),
           ('14-collect-evidence',job(f'cd {EVIDENCE} && for f in $(find . -name "*.json" | sort); do echo "=== $f"; cat "$f"; done',30)),
           ('99-close-session',dict(close=True))]
-    # Build-3 jobs are numbered 2x/3x so a still-open board window (which skips
-    # completed names) runs them without a restart.
+    # Candidate 3 continues in the board2 window after candidate 2's SIGBUS: jobs
+    # are numbered 2x/3x because the window skips names it has already run.
+    jobs=[(('6' if n[0]=='0' else '7' if n[0]=='1' else n[0])+n[1:],b) for n,b in jobs]
     for name,body in jobs:(queue/(name+'.json')).write_text(json.dumps(body)+'\n')
     print(json.dumps(dict(queue=str(queue),jobs=[n for n,_ in jobs],archive_sha256=digest)))
 

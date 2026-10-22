@@ -55,7 +55,7 @@ def main():
         if not ids or len(ids)+args.max_tokens>engine.context:raise ValueError('Prompt plus output exceeds FPGA context')
         result['startup_wall_seconds']=time.monotonic()-setup
         result['command_poll_interval_seconds']=0.00005
-        result.update(model_verify_ms=engine.model_verify_ms,model_verify_method=engine.model_verify_method,model_sha256=engine.manifest['sha256'],resident_weights_verified=True,prefill_batch_size=engine.prefill_batch_size)
+        result.update(dma_abi=engine.dma_abi,rope_copy_ms=engine.rope_copy_ms,rope_copy_mode=engine.rope_copy_mode,model_verify_ms=engine.model_verify_ms,model_verify_method=engine.model_verify_method,model_sha256=engine.manifest['sha256'],resident_weights_verified=True,prefill_batch_size=engine.prefill_batch_size)
         engine.begin_prefix(ids,enabled=False)
         prefill=time.monotonic()
         for pos in range(0,len(ids),engine.prefill_batch_size):

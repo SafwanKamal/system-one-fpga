@@ -72,4 +72,18 @@ _v9d suffix. Bit-identical to v9c. Long prompts are 13% faster (410 tokens:
 - Not adopted on the board; v9d remains active. Long-context quality for 0.6B is
   your evaluation question.
 
+## v9e runtime candidate 5 (2026-10-22): use this one with ABI2
+
+- Package /var/lib/sysone/qwen-fpga-decoder-v9e-candidate5 (archive 3fb070f2…1370f),
+  same v9e bitstream. src/sysone/v2/qwen_fpga_runtime_v9e.py now:
+  - claims your ABI2 inference lease and maps weights read-only when the
+    ownership file reports abi=2 (mirrors qwen_dma_ownership_v16 /
+    qwen_weight_verification_v16), and is unchanged on ABI1;
+  - writes scratch in full 64-byte aligned chunks and single words otherwise.
+- Bulk `struct.pack_into` into /dev/mem raised SIGBUS (memset uses DC ZVA), and so
+  did small odd chunks (overlapping unaligned stores). Your v16 runtime copies
+  with the original per-word loop, which is safe but takes ~0.5 s for a 1 MB
+  table. The chunked writer would save ~0.4 s at 2048 context and ~0.2 s at 1024.
+- Candidates 1–4 of v9e should not be used under ABI2.
+
 Final recommendation: docs/research/2026-10-21-claude-hardware-recommendation.md.

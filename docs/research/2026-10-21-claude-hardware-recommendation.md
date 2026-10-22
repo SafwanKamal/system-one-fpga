@@ -4,6 +4,37 @@ Owner: Claude. Scope: docs/handoffs/claude-hardware-ownership.md. The full
 benchmark sweep was not run; every board session was reserved through
 BOARD_STATUS.json and ended with sealed v8 restored and verified.
 
+## Update 2026-10-22: v9e runtime fix (RoPE copy) and ABI2 compatibility
+
+v9e's ~0.3 s startup regression was the host writing its 1 MB RoPE table to
+/dev/mem device memory one `struct.pack_into('<I')` call per word. Measured on the
+board (scripts/v2/bench_scratch_copy_v9e.py, unused scratch 0x200000-0x301000):
+
+| 1 MB write to device memory | time |
+|---|---|
+| original per-word loop | 470–512 ms |
+| 64-byte `pack_into` chunks at 64-byte-aligned addresses | **90–92 ms** |
+| read back and compare (to skip the write) | 134 ms, so skipping is not worth it |
+
+Two intermediate attempts raised SIGBUS. Both are retained, and both faulted
+before any FPGA command:
+- A single 1 MB `pack_into` (candidate 2): CPython memsets its destination
+  first, and glibc's large memset uses DC ZVA, which faults on device memory.
+- 64-byte chunks with a 28-byte tail (candidate 4, 156-byte page table): glibc's
+  small memset issues overlapping unaligned 16-byte stores.
+
+Candidate 5 writes full aligned 64-byte chunks in one call and every other word
+singly. It was verified on device memory at odd sizes and offsets (4–4096 bytes,
+including both page-table layouts). The adapter also follows Codex's ABI2 DMA
+protocol (inference lease, read-only weight mapping), which is now live on the
+board; older adapters that map the weights writable are refused.
+
+Same bitstream, same boot, ABI2: v9e cold milestone command **6.949 / 6.855 s**
+(startup 2.80 / 2.71 s; RoPE copy 183 ms) vs candidate 1's 7.356 / 7.310 s
+(startup 3.21 / 3.17 s) and v9d's 7.052 s (earlier session, ABI1). Generated IDs
+are identical. v9e is now faster than v9d on short commands as well.
+Package /var/lib/sysone/qwen-fpga-decoder-v9e-candidate5 (archive 3fb070f2…1370f).
+
 ## Update 2026-10-22: v9e (BF16 K/V cache, context 2048)
 
 v9e (`sysone-qwen-decoder-v9e`, package /var/lib/sysone/qwen-fpga-decoder-v9e-candidate1,
