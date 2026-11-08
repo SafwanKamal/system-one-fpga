@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "candidate": "consolidated-rc1",
+  "date": "2026-11-08",
+  "status": "default launcher and automatic boot startup verified after actual reboot",
+  "default_launcher": "/usr/local/bin/sysone-qwen-fpga",
+  "default_service": "sysone-rc1.service",
+  "initializer": "sysone-rc1-init.service",
+  "boot_bundle": "/var/lib/sysone/rc1-default-v1",
+  "active_package": "/var/lib/sysone/hardware-consolidated-rc1-20261108",
+  "active_fpga_app": "sysone-qwen-decoder-v9e",
+  "verified_at_utc": "2026-11-08T07:12:21.448908+00:00",
+  "boot_id": "e887c9d8-df37-494c-b1e5-7b45eac4be0d",
+  "launcher_sha256": "378b619e4b5d88bad3f8a71870ae92e5b113162272575ad3a9e6ffe6019594e5",
+  "model_sha256": "9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031",
+  "kernel": "6.8.0-1036-xilinx",
+  "units": {
+    "sysone-rc1-init.service": {
+      "MainPID": "0",
+      "NRestarts": "0",
+      "ExecMainStatus": "0",
+      "ActiveState": "active",
+      "SubState": "exited",
+      "UnitFileState": "static"
+    },
+    "sysone-rc1.service": {
+      "MainPID": "1845",
+      "NRestarts": "0",
+      "ExecMainStatus": "0",
+      "ActiveState": "active",
+      "SubState": "running",
+      "UnitFileState": "enabled"
+    },
+    "sysone-qwen06b-mvp.service": {
+      "MainPID": "0",
+      "NRestarts": "0",
+      "ExecMainStatus": "0",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "UnitFileState": "disabled"
+    }
+  },
+  "ownership": {
+    "abi": 2,
+    "instance": 7179613770266659573,
+    "generation": 2,
+    "sealed": 1,
+    "loading": 0,
+    "owner_tgid": 1845,
+    "vmas": 0
+  },
+  "clocks": {
+    "pl1_ref": {
+      "enable": 1,
+      "rate_hz": 249999998
+    },
+    "pl0_ref": {
+      "enable": 1,
+      "rate_hz": 124999999
+    }
+  },
+  "health_state": "READY",
+  "boot_startup_migrated": true,
+  "service_running": true,
+  "service_stopped": false,
+  "independent_validation": {
+    "passed": true,
+    "actual_reboots": 1,
+    "boot_before": "43277fd8-b0f4-479c-9b50-c73df5ab2027",
+    "boot_after": "e887c9d8-df37-494c-b1e5-7b45eac4be0d",
+    "driver_instance_before": 18021753667083543587,
+    "driver_instance_after": 7179613770266659573,
+    "default_launcher_generations": 12,
+    "exact_generated_output_parity_across_boot": true,
+    "automatic_model_load_verified_bytes": 639446688,
+    "automatic_initialization_seconds": 72.274386557,
+    "automatic_service_startup_seconds": 3.0075185000000033,
+    "postboot_causal_cases": 4112,
+    "postboot_causal_worst_absolute_error": 0,
+    "service_running": true,
+    "service_enabled": true,
+    "final_service_pid": 1845,
+    "package_files_verified": 2113,
+    "startup_bundle_files_verified": 8,
+    "unit_tests_passed": 4,
+    "full_sweep_started": false
+  },
+  "legacy_launcher_backup": "/var/lib/sysone/qualifications/rc1-default-20261108/rollback/sysone-qwen-fpga.original",
+  "source_directory": "firmware/rc1_default",
+  "evidence_directory": "build/v2/rc1-default-boot-20261108",
+  "target_evidence_files": 75,
+  "evidence_archive_sha256": "add0c14b33ed32ba0234e07215f4b37d2e77cb932009cbcd80f1be3415d9e23c",
+  "limitations": [
+    "One actual reboot and bounded inference/causal checks; not power-loss or repeated-reboot stress qualification",
+    "Initializer pins kernel 6.8.0-1036-xilinx and refuses an unreviewed kernel/module change",
+    "Running default service intentionally holds Linux inference lock and DMA lease; drain via systemctl before hardware changes"
+  ],
+  "full_sweep_started": false
+}

@@ -1,0 +1,15 @@
+{
+  "version": "rc1-default-v1",
+  "package": "/var/lib/sysone/hardware-consolidated-rc1-20261108",
+  "model": "/home/ubuntu/sysone-generation/Qwen3-0.6B-Q8_0.gguf",
+  "app": "sysone-qwen-decoder-v9e",
+  "kernel": "6.8.0-1036-xilinx",
+  "module": "sysone_qwen_dma_v2.ko",
+  "module_sha256": "a50f17d787df91a06fd582ec5e105bcfab4e480bb0bede81b6bb4977802636a0",
+  "package_manifest_sha256": "76837ae0aa24a81c65e1ff68a861e6a168345732d8dd7485677f94d81a5bd324",
+  "firmware_sha256": {
+    "sysone-qwen-decoder-v9e.bit.bin": "a8e3550cab8445136345abb31a734ea1db6505dfb22f0e5ba7d040997777e9d4",
+    "sysone-qwen-decoder-v9e.dtbo": "f09840db34a09c75b057a027622d05e2d4e94bac9db65b0930f087e807642e0c",
+    "shell.json": "802dbc8b3f118313a5a74df46f56dc550a61b687dfd484fc6a8fd5ac7895c344"
+  }
+}

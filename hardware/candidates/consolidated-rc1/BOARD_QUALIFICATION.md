@@ -1,5 +1,9 @@
 # Consolidated RC1 board qualification — 2026-11-08
 
+**Later follow-up:** RC1 is now the default launcher and automatic boot startup.
+See `BOOT_STARTUP.md` for the completed reboot verification and current running
+service. This report preserves the earlier qualification session.
+
 **Passed. RC1 is deployed and idle on the KR260.** The final live observation
 identifies `sysone-qwen-decoder-v9e`, the sealed ABI2 DMA driver, the pinned
 639,446,688-byte Qwen3-0.6B Q8_0 model and the qualified 125/250 MHz clocks.

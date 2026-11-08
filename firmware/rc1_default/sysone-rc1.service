@@ -1,0 +1,22 @@
+[Unit]
+Description=RC1 persistent FPGA inference with sealed weights and prefix reuse
+Requires=sysone-rc1-init.service
+After=sysone-rc1-init.service
+
+[Service]
+Type=exec
+User=root
+RuntimeDirectory=sysone-rc1
+RuntimeDirectoryMode=0700
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 -u /var/lib/sysone/hardware-consolidated-rc1-20261108/scripts/v2/qwen_arm_service_candidate.py serve --package /var/lib/sysone/hardware-consolidated-rc1-20261108 --socket /run/sysone-rc1/api.sock --ready /run/sysone-rc1/ready.json
+ExecStartPost=/usr/bin/python3 /var/lib/sysone/rc1-default-v1/control.py wait-ready
+Restart=no
+KillSignal=SIGTERM
+TimeoutStartSec=90
+TimeoutStopSec=infinity
+SendSIGKILL=no
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[Unit]
+Description=Initialize qualified RC1 FPGA and sealed model
+Requires=dfx-mgr.service
+After=local-fs.target dfx-mgr.service
+Before=sysone-rc1.service
+RequiresMountsFor=/var/lib/sysone/hardware-consolidated-rc1-20261108 /home/ubuntu/sysone-generation
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=root
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 -u /var/lib/sysone/rc1-default-v1/initialize.py
+TimeoutStartSec=300
+TimeoutStopSec=infinity
+SendSIGKILL=no
+UMask=0077

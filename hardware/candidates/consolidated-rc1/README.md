@@ -17,6 +17,10 @@ current deployment identity and limitations. The archived package retains its
 original pre-qualification README and candidate metadata; qualification is attested
 separately without changing the deployed bytes.
 
+RC1 is also the **default launcher and automatic boot startup**, verified after
+an actual reboot. See `BOOT_STARTUP.md` and `boot-startup.json` for the current
+running-service identity and operation instructions.
+
 ## Build and verify offline
 
 From the repository root, with Python 3.11–3.13:

@@ -29,3 +29,6 @@ src/sysone/v2/qwen_weight_verification_v16.py text eol=crlf
 hardware/candidates/consolidated-rc1/* text eol=lf
 scripts/v2/package_hardware_candidate.py text eol=lf
 tests/test_*candidate.py text eol=lf
+firmware/rc1_default/* text eol=lf
+tests/test_rc1_default.py text eol=lf
+scripts/v2/install_rc1_default.py text eol=lf
