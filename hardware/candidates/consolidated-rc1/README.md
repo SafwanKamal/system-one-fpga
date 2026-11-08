@@ -11,8 +11,11 @@ startup weight verification from v16 with v9e candidate5's aligned 64-byte
 scratch transfers. The persistent service retains v16's exact-prefix reuse,
 batch boundaries, generation/boot/package/clock checks and fault invalidation.
 `--verification per-request` and `--no-prefix-cache` provide diagnostic controls.
-The combined service is **offline validated, pending bounded board qualification**.
-Historical v9e board results do not measure this newly combined service.
+The combined service **passed bounded board qualification on 2026-11-08**.
+See `BOARD_QUALIFICATION.md` and `board-qualification.json` for measured results,
+current deployment identity and limitations. The archived package retains its
+original pre-qualification README and candidate metadata; qualification is attested
+separately without changing the deployed bytes.
 
 ## Build and verify offline
 

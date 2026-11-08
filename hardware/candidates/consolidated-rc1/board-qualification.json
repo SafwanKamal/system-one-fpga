@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "candidate": "consolidated-rc1",
+  "status": "bounded hardware qualification passed",
+  "date": "2026-11-08",
+  "deployed_package": "/var/lib/sysone/hardware-consolidated-rc1-20261108",
+  "active_fpga_app": "sysone-qwen-decoder-v9e",
+  "boot_id": "43277fd8-b0f4-479c-9b50-c73df5ab2027",
+  "verified_at_utc": "2026-11-08T06:48:12.256106+00:00",
+  "model_sha256": "9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031",
+  "model_bytes": 639446688,
+  "decoder_clock_hz": 124999999,
+  "memory_clock_hz": 249999998,
+  "hardware_idle": true,
+  "service_stopped": true,
+  "ownership": {
+    "abi": 2,
+    "instance": 18021753667083543587,
+    "generation": 6,
+    "sealed": 1,
+    "loading": 0,
+    "owner_tgid": 0,
+    "vmas": 0
+  },
+  "package_files_verified": 2113,
+  "package_manifest_sha256": "76837ae0aa24a81c65e1ff68a861e6a168345732d8dd7485677f94d81a5bd324",
+  "package_archive_sha256": "7ebe1a5ca5571cc71f8a05d60c41a39d3e9abf39d58173976119485e50700eac",
+  "independent_validation": {
+    "passed": true,
+    "short_cold_controls": 3,
+    "timed_service_calls": 18,
+    "cache_checks": 4,
+    "total_full_generation_records_checked": 28,
+    "final_live_checks_passed": true,
+    "causal": [
+      {
+        "phase": "fixture-before",
+        "cases": 4112,
+        "worst_absolute_error": 0.0
+      },
+      {
+        "phase": "fixture-after",
+        "cases": 4112,
+        "worst_absolute_error": 0.0
+      }
+    ],
+    "total_causal_cases": 8224,
+    "dma_negative_checks": 10,
+    "concurrent_owner_rejection": true,
+    "generation_before": 4,
+    "generation_after": 6,
+    "model_bytes_verified": 639446688,
+    "exact_output_parity": true,
+    "correct_short_tool_arguments": true,
+    "client_mean_seconds": {
+      "per-request": 5.563635060499412,
+      "startup": 3.8562987831671003,
+      "cached": 3.1050393273326335
+    },
+    "cached_vs_diagnostic_reduction_percent": 44.19045653483401,
+    "long_context": {
+      "passed": true,
+      "exact_output_parity": true,
+      "prompt_tokens": 1454,
+      "cold_elapsed_seconds": 76.49550259100215,
+      "service": [
+        {
+          "client_seconds": 73.82718823499454,
+          "elapsed_seconds": 73.82313670299482,
+          "prompt_tokens": 1454,
+          "reused": 0
+        },
+        {
+          "client_seconds": 5.396953744006169,
+          "elapsed_seconds": 5.3930778540016036,
+          "prompt_tokens": 1454,
+          "reused": 1448
+        }
+      ],
+      "boundaries": [
+        {
+          "check": "negative_position",
+          "passed": true
+        },
+        {
+          "check": "position_2048",
+          "passed": true
+        },
+        {
+          "check": "token_vocab",
+          "passed": true
+        },
+        {
+          "check": "batch_crosses_end",
+          "passed": true
+        },
+        {
+          "check": "empty_batch",
+          "passed": true
+        }
+      ],
+      "boundary_mmio_commands": 0,
+      "full_sweep_started": false
+    },
+    "boot_id": "43277fd8-b0f4-479c-9b50-c73df5ab2027",
+    "full_sweep_started": false
+  },
+  "evidence_directory": "build/v2/hardware-consolidated-rc1-board-20261108",
+  "target_evidence_files": 129,
+  "evidence_archive_sha256": "a9b82a36ae53fa37e98b70c0b1609ace561796db7ab0161c97d935fd6fba5b25",
+  "launcher_unchanged": true,
+  "boot_startup_migrated": false,
+  "full_sweep_started": false,
+  "retained_failure": "Initial external qualification harness import error before test commands; corrected path, original retained. Candidate source/package unchanged.",
+  "limitations": [
+    "Bounded development qualification on one board and one boot; not broad semantic reliability, sustained throughput or worst-case latency qualification",
+    "Package/bitstream remains original RC1; installed ABI2 module and resident weights are initialized for this boot",
+    "Service stopped after qualification; use explicit candidate runtime; legacy global launcher is unchanged"
+  ]
+}

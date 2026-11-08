@@ -1,5 +1,10 @@
 # Hardware consolidation review — 2026-11-08
 
+**Follow-up:** the consolidated service passed bounded board qualification and
+was left deployed on 2026-11-08. See `BOARD_QUALIFICATION.md` and the machine-readable
+`board-qualification.json`. The review below records the pre-deployment decision
+and evidence gaps as they stood at candidate assembly.
+
 ## Decision
 
 Use **consolidated-rc1**: the existing v9e bitstream and numerical profile with
