@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "candidate": "consolidated-rc1",
+  "base_commit": "e9079d0",
+  "hardware": "hls/qwen_decoder_v9e",
+  "app": "sysone-qwen-decoder-v9e",
+  "context": 2048,
+  "kv_storage": "BF16 RNE",
+  "dma_abi": 2,
+  "deployment_status": "offline assembled; combined persistent service requires board qualification",
+  "source_package": "build/v2/qwen-fpga-decoder-v9e/deployment",
+  "host_files": [
+    "src/sysone/v2/qwen_fpga_runtime_candidate.py",
+    "src/sysone/v2/qwen_arm_service_candidate.py",
+    "src/sysone/v2/qwen_dma_ownership_v16.py",
+    "src/sysone/v2/qwen_weight_verification_v16.py",
+    "src/sysone/v2/prefix_cache_v14.py",
+    "src/sysone/v2/qwen_tokenizer_v1.py",
+    "scripts/v2/qwen_arm_service_candidate.py",
+    "scripts/v2/run_qwen_fpga_command_candidate.py",
+    "scripts/v2/smoke_qwen_fpga_candidate.py"
+  ],
+  "hardware_sources_sha256": {
+    "hls/qwen_decoder_v9e/create_kr260.tcl": "a663fb333069de98fa160f5aee7d4bdb978f6972ec6222dd7123beced352b09d",
+    "hls/qwen_decoder_v9e/matrix_q8.hpp": "323d58172c2275d11e0c674777268497be9846135aef80451b48a602b88e1588",
+    "hls/qwen_decoder_v9e/model_profile.hpp": "2e45b620acb03c215ef2ad7747f89445fcc39683c264a88c0a3af5d2d476b03a",
+    "hls/qwen_decoder_v9e/qwen_decoder.cpp": "6b215b15844077232dbd01553d75063731e0249a75701944a73ae537b754023f",
+    "hls/qwen_decoder_v9e/release.tcl": "e5b8956d097e6852bdf4892c98e538d59a8343064a3f20b3c3dca2e366a6056e",
+    "hls/qwen_decoder_v9e/testbench.cpp": "3c4abaa332b2c3ac56312b84e7294ca0ebc52ee37994f0c4a47f616bc776ff15",
+    "hls/hls_expf_oracle/main.cpp": "685b7a8bff854182a33e51188892ac8e853e94a17fef44a88562da918560fb86",
+    "hls/hls_expf_oracle/oracle.cpp": "0e90d3bb41733ea161faf533d7eea62b848fcc1fec728bd1df7a55c76437f44b",
+    "hls/hls_expf_oracle/run.tcl": "f881383ed2f9f129a752bfb2dde3d5061131d120a54301c22a98c004b352f909",
+    "scripts/v2/prepare_qwen_fpga_v9e_long.py": "47ed049e723f39e9e98742a474edf10cc6f85fd9d87cb21daaeabecb06546a77",
+    "scripts/v2/prepare_qwen_fpga_v9e_block.py": "1455f067184666e7e887bb1121a028fcdde2dba0dd6b7dc0630b2abac8d532e5"
+  },
+  "artifacts_sha256": {
+    "build/v2/qwen-fpga-decoder-v9e/deployment/package-sha256.json": "976d7b3b6ab187aba8d832572dcee44f250700ea25f06bee8d80bf7b2ef249b2",
+    "build/v2/qwen-fpga-decoder-v9e/hardware-source-sha256.json": "7804eeab060d042b2f6e3b5a067523958181695b812eba3738dcf2bb5539d69a",
+    "build/v2/qwen-fpga-decoder-v9e/ip-rtl-consistency.json": "cf406fd6851d86a9c2920a6d9ea7217cb72eafb3d367c76bd2c16873127857b2",
+    "build/v2/qwen-fpga-decoder-v9e/qwen_decoder_ip.zip": "cfb374383d720ba5dfc34dac9cd1a59b7347b648775c33d93f0cd418eae3188a",
+    "build/v2/qwen-fpga-decoder-v9e/vivado/qwen_decoder_kr260.runs/impl_1/system_wrapper.bit": "824d99571dae7412ab684d8bab8a9900954e8adca1a624963b4a3b92d034c61f",
+    "build/v2/qwen-fpga-decoder-v9e/vivado/qwen_decoder.xsa": "82513b3c766fb0db13c3e756dac88e1bda7b2688f3350f4b6d179dfab31b1bdd",
+    "build/v2/qwen-fpga-decoder-v9e/vivado/routed-timing.rpt": "56f579f79bfc9b73ee08355c779be76bdff9fe76b3ea917d8b28caf3cca8ed40",
+    "build/v2/qwen-fpga-decoder-v9e/vivado/routed-utilization.rpt": "235011cdd9b6c78e2b03dcc5e486be7d428a04715e526179549d2fca0196f323",
+    "build/v2/qwen-fpga-decoder-v9e/vivado/qwen_decoder_kr260.runs/impl_1/system_wrapper_bus_skew_postroute_physopted.rpt": "bac15bbc4bf18e0814bb355172c01f5f6a4b6a41a7495ee276e2be9668be35cf",
+    "build/v2/qwen-fpga-decoder-v9e/board-evidence-1/validation-summary.json": "7c1d5de6572c55a80014b64b770b5e58921a550f5a4fe63c0977d69b867be7c9",
+    "build/v2/qwen-fpga-decoder-v9e/board-evidence-4/validation-summary.json": "11cf63de236670ad456db05f3100315908a5827630afb711ad25c08c7c9cc205",
+    "build/v2/qwen-fpga-decoder-v9b-explore/FEASIBILITY.md": "501fd514dc9ff15835ad7d9e054d4093ea27d49bf6d5c5f3bf4fdbefd76a3ee4",
+    "build/v2/qwen-fpga-decoder-v9e/hls-release-console.log": "8ae98bdb0c1919e9d9b7bcf7deaa63c54a61f95befe6d82097840168c00eb035"
+  },
+  "host_sources_sha256": {
+    "src/sysone/v2/qwen_fpga_runtime_candidate.py": "3b91af28da24f688719024a2b63b4020d06e78fc80d8c8166b7522731a031212",
+    "src/sysone/v2/qwen_arm_service_candidate.py": "46c784492623eea4fde2b33b6bbae210c6bf9549d716da35d0648dc538dce556",
+    "src/sysone/v2/qwen_dma_ownership_v16.py": "000c926971a2358e39621ba47173cec333206079bf14559a6e2db398e4352346",
+    "src/sysone/v2/qwen_weight_verification_v16.py": "6252e3d8d562d7110d70f7f66bf7bb35058a31d46af33a2d416078cd5f351900",
+    "src/sysone/v2/prefix_cache_v14.py": "a5c97ebc9616bdb3193b651431b0065d42e08b92bfce8b59e22c2056a6648dde",
+    "src/sysone/v2/qwen_tokenizer_v1.py": "bd709c624d330ff7ea2c806f01b0b530e2e993b92e68ab6de70b42a27e1e3f1c",
+    "scripts/v2/qwen_arm_service_candidate.py": "b222b1d675ed870bb695147e337cbc5e5dbde28cd3bfce7ddad708bcb5b79bfe",
+    "scripts/v2/run_qwen_fpga_command_candidate.py": "743075291327b190f5a601fd22d612bbc0dfdec12c174f9b58dd3d8bba155ad7",
+    "scripts/v2/smoke_qwen_fpga_candidate.py": "699949e2079df5edbb7266f97816d9a9577b11341957a60aec46eabcb5f2c685"
+  },
+  "inherited": [
+    "v8 streaming INT8 / batch8",
+    "v9a vector and attention improvements",
+    "v9c tiled context",
+    "v9d two-token prefill attention",
+    "v9e BF16 KV / 2048 context",
+    "v9e candidate5 aligned scratch copies",
+    "v16 sealed ABI2 / startup verification / persistent prefix cache"
+  ],
+  "excluded": [
+    "v9b second weight port: fit not established",
+    "encoder/typed200: separate architecture and ABI",
+    "new model ports: no hardware qualification"
+  ],
+  "hls_ii_exceptions": {
+    "VITIS_LOOP_580_14": 2,
+    "VITIS_LOOP_611_21_VITIS_LOOP_611_22": 2
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "candidate": "consolidated-rc1",
+  "date": "2026-11-08",
+  "linux_tests": {
+    "passed": 26,
+    "failed": 0,
+    "command": "wsl --exec env PYTHONPATH=.venv/Lib/site-packages:src python3 -m pytest tests/test_hardware_candidate.py tests/test_arm_service_candidate.py tests/test_arm_service_linux_candidate.py tests/test_prefix_cache_v14.py -q"
+  },
+  "windows_tests": {
+    "passed": 14,
+    "skipped": 12,
+    "failed": 0,
+    "reason_for_skips": "Linux fcntl, mappings and Unix socket tests; all pass under WSL"
+  },
+  "package": {
+    "path": "build/v2/hardware-consolidated-rc1/deployment-r2",
+    "archive": "build/v2/hardware-consolidated-rc1/deployment-r2.tar",
+    "archive_sha256": "7ebe1a5ca5571cc71f8a05d60c41a39d3e9abf39d58173976119485e50700eac",
+    "files_verified": 2113,
+    "archive_members_verified": 2113,
+    "source_package_files_verified": 2108
+  },
+  "csim": {
+    "executable": "build/v2/qwen-fpga-decoder-v9e/hls-csim/solution/csim/build/csim.exe",
+    "executable_sha256": "94223b1c4368727586c19aad87d83c27f42b519345c53540b808dc13598e7713",
+    "source": "historical compiled executable, rerun against unchanged source-hashed hardware fixtures; no new compilation",
+    "passed": [
+      "portable Q8 matrix widths 2048, 6144, 1056",
+      "8-token batch",
+      "partial batches 1 and 7",
+      "causal KV/GQA/RoPE/SwiGLU",
+      "final norm",
+      "argmax",
+      "scatter boundary"
+    ],
+    "worst_absolute_error": 0,
+    "log": "build/v2/hardware-consolidated-rc1-validation/csim-with-libraries.log",
+    "log_sha256": "e8941c8cc6557d51feee7b411e2502d88162f67a8734ef195fe7213d6b87aa78",
+    "full_2048_position_rerun_completed": false,
+    "stopped_reason": "Unchanged hardware; duplicate full suite previously required 5h14m. Stopped after short fixture passed; historical long-context simulation/board evidence remains pinned.",
+    "initial_attempts": "Three launches failed to load AMD DLLs (0xC0000135). Corrected PATH to installed shared win64 libraries; fourth launch ran successfully through the short fixture."
+  },
+  "historical_hardware": {
+    "source_hashes_verified": 11,
+    "routed_wns_ns": 0.542,
+    "routed_whs_ns": 0.01,
+    "clb_percent": 96.07,
+    "causal_board_cases": 4112,
+    "causal_worst_abs": 0
+  },
+  "newly_synthesized": false,
+  "new_board_session": false,
+  "combined_service_board_qualified": false,
+  "earlier_package_attempt": "build/v2/hardware-consolidated-rc1/deployment retained; superseded by deployment-r2 after review added mandatory dma_abi telemetry for cold CLI",
+  "limitations": [
+    "Historical board timings apply to standalone v9e candidate5, not the newly combined persistent service",
+    "BF16 semantic long-context quality not established",
+    "Legacy encoder/typed200 architectures excluded with dispositions in REVIEW.md"
+  ],
+  "tracked_only_checkout": {
+    "pinned_source_hashes_reproduced": 20,
+    "linux_tests_passed": 26,
+    "log": "build/v2/hardware-consolidated-rc1-validation/tracked-checkout-tests.txt",
+    "log_sha256": "436405957d7b3724a05b352717e3a4a0937283248bc2fcd7aab55beeb82b6dad",
+    "unrelated_untracked_dependencies_required": false
+  }
+}

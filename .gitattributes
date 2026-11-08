@@ -4,3 +4,28 @@
 *.svh text eol=lf
 *.xdc text eol=lf
 *.tcl text eol=lf
+
+# RC1 source hashes pin exact worktree bytes across Windows/Linux checkouts.
+hls/hls_expf_oracle/main.cpp text eol=lf
+hls/hls_expf_oracle/oracle.cpp text eol=lf
+hls/hls_expf_oracle/run.tcl text eol=lf
+hls/qwen_decoder_v9e/create_kr260.tcl text eol=crlf
+hls/qwen_decoder_v9e/matrix_q8.hpp text eol=crlf
+hls/qwen_decoder_v9e/model_profile.hpp text eol=crlf
+hls/qwen_decoder_v9e/qwen_decoder.cpp text eol=crlf
+hls/qwen_decoder_v9e/release.tcl text eol=lf
+hls/qwen_decoder_v9e/testbench.cpp text eol=crlf
+scripts/v2/prepare_qwen_fpga_v9e_block.py text eol=lf
+scripts/v2/prepare_qwen_fpga_v9e_long.py text eol=crlf
+scripts/v2/qwen_arm_service_candidate.py text eol=lf
+scripts/v2/run_qwen_fpga_command_candidate.py text eol=lf
+scripts/v2/smoke_qwen_fpga_candidate.py text eol=lf
+src/sysone/v2/prefix_cache_v14.py text eol=crlf
+src/sysone/v2/qwen_arm_service_candidate.py text eol=lf
+src/sysone/v2/qwen_dma_ownership_v16.py text eol=lf
+src/sysone/v2/qwen_fpga_runtime_candidate.py text eol=lf
+src/sysone/v2/qwen_tokenizer_v1.py text eol=lf
+src/sysone/v2/qwen_weight_verification_v16.py text eol=crlf
+hardware/candidates/consolidated-rc1/* text eol=lf
+scripts/v2/package_hardware_candidate.py text eol=lf
+tests/test_*candidate.py text eol=lf
