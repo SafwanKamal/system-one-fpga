@@ -1,0 +1,11 @@
+{
+  "boundary_components": {
+    "fresh": 0.25,
+    "conditional": 0.08333333333333333,
+    "bfcl": 0.76,
+    "two_turn": 1.0
+  },
+  "dominating_smaller_profiles": [],
+  "promote": true,
+  "rule": "Separate boundary experiment. Main eight-model finalist rule is unchanged. Promote for full confirmation only if no lower-file-size main model equals or exceeds all four screen components."
+}

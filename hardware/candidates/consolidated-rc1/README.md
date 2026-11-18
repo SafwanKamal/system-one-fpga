@@ -1,5 +1,9 @@
 # Consolidated hardware candidate RC1
 
+**Adopted KR260 hardware/runtime baseline, 2026-11-08.** The versioned candidate
+name and deployed bytes remain unchanged. See [the baseline guide](../../BASELINE.md)
+and [pinned baseline selection](../../baseline.json) for operation and rollback.
+
 Selected candidate: unchanged **v9e FPGA hardware**, Qwen3-0.6B Q8_0 weights,
 INT8 block32 matrix activations, BF16 RNE K/V storage, FP32 attention arithmetic,
 2,048 total context tokens, eight-token prefill. Decoder/memory clocks remain

@@ -6,6 +6,7 @@
 module add_skip_engine
     import encoder_pkg::*;
 #(
+    parameter integer READ_LATENCY = encoder_pkg::READ_LATENCY,
     parameter integer MAX_TOKENS = 128,
     parameter integer BUFFER_ADDRESS_WIDTH = 14
 ) (
@@ -44,6 +45,9 @@ module add_skip_engine
     logic [7:0] word_reg, word_next;           // INT16 word within the row
     logic [7:0] row_words_reg, row_words_next;
     logic [7:0] tokens_reg, tokens_next;
+    // Retain the carry before halving even if the exported A address wraps.
+    localparam integer CURSOR_WIDTH = BUFFER_ADDRESS_WIDTH < 16 ? 16 : BUFFER_ADDRESS_WIDTH + 1;
+    logic [CURSOR_WIDTH-1:0] word_cursor;
 
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -105,9 +109,16 @@ module add_skip_engine
     assign busy = (state_reg != IDLE);
     assign done = (state_reg == FINISH);
 
-    // row t of a: words t * W/8 .. ; row t of x: words t * W/16 ..
-    assign a_address = BUFFER_ADDRESS_WIDTH'(token_reg * row_words_reg + word_reg);
-    assign x_address = BUFFER_ADDRESS_WIDTH'(token_reg * (row_words_reg >> 1) + (word_reg >> 1));
+    // Legal rows have an even word count (width is a multiple of 16).
+    // Sequential issue makes token*row_words+word a simple cursor; the INT8
+    // address is half the INT16 address. Keep row/token counters for termination.
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) word_cursor <= '0;
+        else if (state_reg == IDLE && start) word_cursor <= '0;
+        else if (issue) word_cursor <= word_cursor + 1'b1;
+    end
+    assign a_address = BUFFER_ADDRESS_WIDTH'(word_cursor);
+    assign x_address = BUFFER_ADDRESS_WIDTH'(word_cursor >> 1);
 
     // c0 issue; cL (L = READ_LATENCY) data; L+1 skip product; L+2 rounded skip;
     // L+3 sum -> destination
@@ -140,17 +151,22 @@ module add_skip_engine
         a_held[L+1] <= a_data;
         a_held[L+2] <= a_held[L+1];
         for (int e = 0; e < 8; e++) begin
-            logic signed [63:0] skip;
-            logic signed [63:0] sum;
+            logic signed [15:0] skip;
+            logic signed [16:0] sum;
             product[e] <= 26'($signed(x_data[8 * (8 * s_high[L] + e) +: 8])) * 26'($signed({1'b0, multiplier}));
             if (shift != '0) begin
                 rounded[e] <= (product[e] + (26'sd1 <<< (shift - 6'd1))) >>> shift;
             end else begin
                 rounded[e] <= product[e];
             end
-            skip = clamp(64'(rounded[e]), -64'sd32767, 64'sd32767);
-            sum = clamp(64'($signed(a_held[L+2][16*e +: 16])) + skip, -64'sd32767, 64'sd32767);
-            out_data[16*e +: 16] <= sum[15:0];
+            // Exact widths: the first clamp is signed 26 -> 16; adding a
+            // signed INT16 residual gives [-65535,65534], which fits 17 bits.
+            // Preserve the existing pipeline and asymmetric saturation bounds.
+            skip = rounded[e] > 26'sd32767 ? 16'sd32767 :
+                   rounded[e] < -26'sd32767 ? -16'sd32767 : 16'(rounded[e]);
+            sum = 17'($signed(a_held[L+2][16*e +: 16])) + 17'(skip);
+            out_data[16*e +: 16] <= sum > 17'sd32767 ? 16'sd32767 :
+                                   sum < -17'sd32767 ? -16'sd32767 : 16'(sum);
         end
     end
 

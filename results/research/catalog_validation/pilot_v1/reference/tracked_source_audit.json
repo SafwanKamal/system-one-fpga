@@ -1,0 +1,6 @@
+{
+  "checked_utc": "2026-11-16T23:45:36.091676+00:00",
+  "tracked_source_unchanged": true,
+  "note": "source_unmodified=false in execution receipts came from untracked Python cache files, not tracked source changes.",
+  "reference_commit": "19ef5d0032b866330ac998f0096cebedee671315"
+}

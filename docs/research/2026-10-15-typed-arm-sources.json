@@ -1,0 +1,48 @@
+{
+  "repository": "Xilinx/embeddedsw",
+  "ref": "xlnx_rel_v2025.2",
+  "commit": "c3b3132f6e1e202e275b8dd77b3804f3b449528c",
+  "files": [
+    {
+      "path": "lib/sw_apps/openamp_echo_test/src/system/generic/rpmsg-echo.c",
+      "url": "https://github.com/Xilinx/embeddedsw/blob/c3b3132f6e1e202e275b8dd77b3804f3b449528c/lib/sw_apps/openamp_echo_test/src/system/generic/rpmsg-echo.c",
+      "sha256": "18f7e8d45d5c5903c5c9820eca32cddf819693fcdf72f029061065a4a6d724d3"
+    },
+    {
+      "path": "lib/sw_apps/openamp_echo_test/src/system/generic/machine/zynqmp_r5/helper.c",
+      "url": "https://github.com/Xilinx/embeddedsw/blob/c3b3132f6e1e202e275b8dd77b3804f3b449528c/lib/sw_apps/openamp_echo_test/src/system/generic/machine/zynqmp_r5/helper.c",
+      "sha256": "52453b83ed5bd6b32e507feb4ea00d6788b5666670448fab020e07f52e2d7212"
+    },
+    {
+      "path": "lib/sw_apps/openamp_echo_test/src/system/generic/machine/zynqmp_r5/lscript.ld",
+      "url": "https://github.com/Xilinx/embeddedsw/blob/c3b3132f6e1e202e275b8dd77b3804f3b449528c/lib/sw_apps/openamp_echo_test/src/system/generic/machine/zynqmp_r5/lscript.ld",
+      "sha256": "88e5f23f8ed940ce94cd4faaaa8b99214d348c8a6851814a544714ba06fc97b2"
+    },
+    {
+      "path": "lib/sw_apps/openamp_echo_test/src/machine/zynqmp_r5/platform_info.c",
+      "url": "https://github.com/Xilinx/embeddedsw/blob/c3b3132f6e1e202e275b8dd77b3804f3b449528c/lib/sw_apps/openamp_echo_test/src/machine/zynqmp_r5/platform_info.c",
+      "sha256": "21786b24a188385af68b62aea6d8311ef7ec7a6466394af031112ebec7ca0c1f"
+    }
+  ],
+  "reviewed_utc": "2026-10-15T07:01:35.417725+00:00",
+  "official_docs": [
+    {
+      "url": "https://docs.amd.com/r/2024.2-English/ug1137-zynq-ultrascale-mpsoc-swdev/Asymmetric-Multiprocessing-AMP",
+      "use": "APU/RPU AMP architecture; no inferred WCET guarantee"
+    },
+    {
+      "url": "https://xilinx.github.io/kria-apps-docs/openamp/build/html/openamp_landing.html",
+      "use": "Kria Linux-master/RPU-client RPMsg and remoteproc implementation; management reference"
+    },
+    {
+      "url": "https://docs.amd.com/r/2021.1-English/ug1137-zynq-ultrascale-mpsoc-swdev/Lock-Step-Operation",
+      "use": "Zynq UltraScale+ R5 lock-step/TCM topology, not Versal"
+    }
+  ],
+  "observations": [
+    "Reference echo linker maps .text to DDR, not all-TCM execution",
+    "Reference platform allocates RPMsg device and polls for events",
+    "Current head path includes per-class floating scaling and softmax; raw-logit argmax is not generally equivalent",
+    "No R5 firmware built, deployed, timed or qualified in this task"
+  ]
+}

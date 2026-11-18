@@ -1,0 +1,13 @@
+{
+  "checked_utc": "2026-11-16T18:57:10.681072+00:00",
+  "archive_files": 160,
+  "views": 20,
+  "frames_checked": 111780,
+  "exact_lossless_roundtrips": true,
+  "caps_and_missingness_checked": true,
+  "signal_files_have_no_labels": true,
+  "frozen_code_and_protocol_unchanged": true,
+  "collection_model_hashes_unchanged": true,
+  "training_people_disjoint_from_test": true,
+  "archive_commit_sha256": "be8b04649ec386394dedb936566b4d9749eb43478a6966a29f4d73833c21f292"
+}

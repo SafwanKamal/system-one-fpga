@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-11-09T04:27:31.411865+00:00",
+  "source_url": "https://extrasensory.ucsd.edu/data/primary_data_files/ExtraSensory.per_uuid_features_labels.zip",
+  "source_sha256": "412d307bdf54a60dff81a705c2f25833889a46dca64a184e3b588ad99c69cb56",
+  "code_sha256": "f7692edeae3fd60f494af8a07729f311d017186b8f5781bafe1b74d716d1c795",
+  "protocol_sha256": "82c2513f3b01aff1630ebd2a547efde63f9a9c0981e97f9c8a6b2de2b8145989",
+  "python": "3.12.13 (main, May 10 2026, 19:35:37) [MSC v.1944 64 bit (AMD64)]",
+  "numpy": "2.4.4",
+  "sklearn": "1.9.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "seed": 20261108,
+  "chunk": 128,
+  "budgets": [
+    8192,
+    16384,
+    32768,
+    65536
+  ],
+  "source_feature_bytes": "upstream feature extraction excluded; memory input 12 bytes/observation",
+  "archive_scope": "Serialized retained state; runtime, model weights and decode workspace excluded"
+}

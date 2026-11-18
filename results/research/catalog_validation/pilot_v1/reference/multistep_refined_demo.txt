@@ -1,0 +1,13 @@
+Devices: [CpuDevice(id=0)]
+
+Optimizing UNREFINED (uninformed) separating input sequence...
+  unrefined best loss: 0.004269
+
+refined multistart: compile 14711.80 ms   run 356.787 ms
+  refined best loss:   0.004269
+
+Same control sequence (unrefined-optimal u_seq):
+  unrefined loss: 0.004269
+  refined loss:   0.004269  (<= unrefined, as expected)
+
+Memory snapshot: {'ru_maxrss_kb': 817440.0}

@@ -1,0 +1,7 @@
+{
+  "expected_rows": 2430,
+  "recovered_rows": 2171,
+  "regenerated_rows": 259,
+  "regenerated_archive_hashes_all_match": true,
+  "explanation": "Serial run stopped for participant-parallel execution. Interrupted gzip buffers were regenerated from the same frozen inputs and checked against previously recorded archive hashes."
+}

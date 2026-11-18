@@ -1,0 +1,31 @@
+/dts-v1/;
+/plugin/;
+/* LOCAL CANDIDATE ONLY. Not admitted on the uncorrected stock-kernel path.
+ * No DDR carveout, PL, OCM, clock, reset-register or A53/GEM node edit.
+ */
+/ {
+ fragment@0 {
+  target-path = "/";
+  __overlay__ {
+   #address-cells = <2>;
+   #size-cells = <2>;
+   sysone_smoke_tcm: sysone-smoke-tcm@ffe00000 {
+    reg = <0 0xffe00000 0 0x10000>;
+    power-domains = <&zynqmp_firmware 15>;
+   };
+   sysone_smoke_rpu: r5fss@ff9a0000 {
+    compatible = "xlnx,zynqmp-r5-remoteproc";
+    #address-cells = <2>;
+    #size-cells = <2>;
+    ranges;
+    reg = <0 0xff9a0000 0 0x10000>;
+    xlnx,cluster-mode = <0>;
+    r5f_0 {
+     compatible = "xilinx,r5f";
+     power-domains = <&zynqmp_firmware 7>;
+     sram = <&sysone_smoke_tcm>;
+    };
+   };
+  };
+ };
+};

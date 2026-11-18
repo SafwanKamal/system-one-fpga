@@ -1,0 +1,23 @@
+{
+  "revealed_utc": "2026-11-16T18:57:19.305200+00:00",
+  "archive_commit_sha256": "be8b04649ec386394dedb936566b4d9749eb43478a6966a29f4d73833c21f292",
+  "archive_committed_utc": "2026-11-16T18:55:30.106014+00:00",
+  "future_categories": {
+    "5": "running",
+    "6": "cycling",
+    "12": "ascending_stairs"
+  },
+  "verified_archives": 160,
+  "training_subjects": [
+    101,
+    102,
+    103,
+    104
+  ],
+  "test_subjects": [
+    105,
+    106,
+    107,
+    108
+  ]
+}

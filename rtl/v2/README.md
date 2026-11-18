@@ -1,5 +1,23 @@
 # v2: a chained, multi-task encoder on FPGA
 
+**RTL optimization (2026-10-10):** optional registered MAC operands have passed
+bit-exact KR260 BERT-mini and MiniLM-L12 regressions at eight request lengths,
+plus the Nexys instruction-by-instruction layer test. Candidate timing builds
+are separate from the working bitstreams. See [OPTIMIZATION.md](OPTIMIZATION.md)
+for the measured bottleneck, pipeline/control changes, validation and build commands.
+
+**Dual-board bring-up (2026-10-08):** the KR260 revB boots Ubuntu 24.04.2 with
+kernel 6.8.0-1036-xilinx. A 64 MiB boot reservation at 0x60000000 survives FIT
+regeneration and reboot. The 32-lane design is fully routed but fails 100 MHz
+setup timing. It passes an 80 MHz timing ceiling, with an app bundle requesting
+75 MHz from Linux. Board deployment passed on 2026-10-09 at 71,428,571 Hz with
+correct SYS2/BUILD registers. DDR image readback is exact and encoder hidden
+states are bit-exact at 1/12/64/128 tokens. At 128 tokens: 1,386,238 encoder clocks,
+19.41 ms at the measured clock; full request 19.56 ms, host round trip 20 ms.
+See `scripts/v2/kr260/README.md` for first boot, Vivado prerequisites,
+memory allocation, separate board images and matching verification runs. Nexys
+remains available for regression; both boards now have a verified bert-mini baseline.
+
 v1 answers one sentence with one of 151 intents in about 34 µs. v2 spends
 milliseconds to tens of milliseconds per request and uses them for a more general
 model: one encoder pass over a *chain* of up to 128–256 WordPiece tokens holding
@@ -860,10 +878,282 @@ Each one: what was seen, the cause, the fix, and where it lives.
     sentence as in scope whenever CLINC's top probability cleared tau, but CLINC's top
     class can itself be "oos" (it is the 151st class), which the real router
     (`host_heads.route`) rejects. The same error went into choosing tau_hwu (0.515).
-    Fix: the statistic now mirrors the router exactly; rerun (probabilities are cached in
-    `logs/oos_cache/`, so it takes seconds).
+    Fix: the statistic now mirrors the router exactly. Rerun completed on 2026-10-09,
+    including uncached tail queries: corrected HWU tau is 0.480, CLINC-only OOS
+    rejection 0.703 and CLINC+HWU OOS rejection 0.292. Both image variants use
+    the corrected decision file; results are in minilm-l6-v3b_oos.json.
+
+22. **KR260 preparation gaps (2026-10-08).** The client used 75 MHz even with
+    `--kr260`, and it accepted an incompatible image before attempting PS-memory
+    writes. Fix: KR260 defaults to 100 MHz (override for other builds); the driver
+    checks image tile/dimensions against BUILD and checks image plus request space
+    against the mapped region. Failed probes now close mappings/file descriptors.
+    Board variants record their source model and copy its decision rule. The local
+    Vivado 2025.2 project-creation attempt found missing KR260 SOM board files;
+    the script reports the install prerequisite before creating a project.
+    Driver guards are tested without hardware; block-design validation and physical
+    reserved-memory setup remain pending.
+
+23. **KR260 Linux and Vivado preflight (2026-10-08).** First boot succeeds on
+    Ubuntu 24.04.2, KR260 revB; Python 3.12 and NumPy 2.4.4 work. Doctor shows
+    only the PMU boot reservation: 0x60000000 lies in System RAM, so the current
+    image allocation must be reserved before loading. Local Vivado also has no
+    installed xck26 parts. The build script now checks device support first and
+    can use a local official Board Store checkout. Device installation, boot-time
+    memory setup and the custom PL build remain pending; no encoder hardware run
+    has been attempted on this board.
+
+    The owner subsequently installed Kria device support. Project creation now
+    succeeds in Vivado 2025.2: PS preset, address assignment, block-design validation
+    and wrapper generation pass (`build/v2/kr260-create.log`). This is not yet an
+    implemented bitstream. Local board shadowing, initial clock metadata and HP0
+    AXI USER-width warnings remain to be reviewed before implementation.
+
+    Follow-up: the board now runs kernel 6.8.0-1036-xilinx. A 64 MiB no-map
+    reservation at 0x60000000 is verified in the live DT and iomem after normal
+    FIT regeneration and reboot. Early kernel/initramfs hooks patch the source
+    revB DTB before flash-kernel generates the FIT. The optional local board
+    repo is only used when installed Kria boards are absent; generated AXI-Lite
+    and AXI4 connections and tied-off HP0 USER inputs were inspected.
+    Encoder IP synthesis in Vivado 2025.2 passes with no errors/critical warnings:
+    110,190 LUTs (94.08% of K26), 47,377 registers, 606 DSPs, 59 BRAM tiles
+    and 18 UltraRAMs. This is encoder-only synthesis, not full-design fit or
+    timing. Placement/routing remains pending. The Ubuntu overlay is derived
+    from SDTGen and compiles; Linux reports the required fclk and AFI drivers.
+    Packaging and deployment helpers are prepared but not yet exercised on
+    a completed implementation or hardware app.
+
+24. **Runtime overlay bus layout (2026-10-08).** The first prepared overlay
+    wrapped clock, AFI and encoder nodes in a new simple-bus below amba. Linux's
+    dynamic OF notifier creates devices only when their parent is already a
+    populated bus, so this extra layer can leave the required drivers unbound.
+    Caught before deployment. Fix: add the uniquely named clock/AFI nodes and
+    encoder directly to the existing amba bus, matching
+    [AMD's KR260 overlay layout](https://github.com/Xilinx/kria-apps-firmware/blob/main/boards/kr260/bist/kr260-bist.dtsi).
+    The updated overlay compiles without dtc warnings. The deployment helper
+    checks driver binding and enabled PL0 before probing registers; actual
+    overlay loading passed on 2026-10-09, with clock/AFI drivers bound and SYS2/BUILD
+    registers correct. Subsequent runs verified PL DDR and encoder hidden states
+    against the integer reference at 1/12/64/128 tokens.
+
+25. **KR260 routing congestion and 100 MHz timing (2026-10-08).** The 32-lane
+    encoder fits and routes, but high LUT use causes level-6 congestion. The
+    router resolved 188,091 overlaps to zero and completed routing in 66 minutes.
+    Final 100 MHz setup WNS is -0.497 ns, TNS -2642.742 ns; hold WNS +0.002 ns,
+    with no unconstrained internal endpoints. The build correctly refused the
+    final hardware export. `validate_runtime_clock.tcl` rechecks the same routed
+    design at an 80 MHz ceiling for a Linux runtime request of 75 MHz. It changes
+    clock constraints, not RTL, placement, routing, false paths or hold checks.
+    The XSA PS preset remains 100 MHz; Linux must apply the lower runtime clock.
+    Package metadata records the requested and validated ceiling, and deployment
+    refuses a live clock above the ceiling before MMIO. Lower-clock validation
+    passed: setup WNS +2.003 ns, hold +0.002 ns, no setup/hold/pulse-width failures
+    and no unconstrained endpoints; all 176,601 routable nets are routed with zero
+    errors. Final XSA/bitstream export and bootgen/dtc packaging passed, producing
+    `build/v2/kr260-app.tar.gz`. Final SDT IDs/AFI/register settings match the
+    overlay, with the explicit lower runtime clock. App loading and register/clock
+    checks passed on 2026-10-09: SYS2 0x53595332, BUILD 0x20801804, live clock
+    71,428,571 Hz. Image readback and 1/12/64/128-token encoder checks subsequently
+    passed bit-exact; 128 tokens takes 1,386,238 encoder clocks / 19.41 ms;
+    do not treat the 100 MHz operating point as passing.
+
+26. **Silent KR260 evaluation and kernel CPU stalls (2026-10-09).** The owner
+    observed no evaluation output for four minutes, then serial-console RCU CPU2
+    stall and timer/starvation warnings. Exact cause is unconfirmed; the complete
+    stack and active app/process state are not available yet. The kernel log's
+    timestamp is about 472 seconds after boot, making a recently restarted board
+    a plausible context. Do not infer OOM or a bad model from the warning text.
+    Inspection found the client probed MMIO ID before confirming the app, drivers
+    and clock. A polling timeout only protects code reached after those reads;
+    it cannot recover a CPU blocked on a register bus transaction. Fix:
+    `kr260_runtime.py` checks live overlay/firmware name, manager state, bound
+    fclk/AFI drivers, enabled clock within the app timing ceiling and exact no-map
+    reservation before /dev/mem opens. The client then checks the full DDR image
+    before RUN, uses the live clock, and prints flushed startup stages. Tests
+    cover absent app, disabled/overspeed clocks, missing AFI/reservation, no-MMIO
+    on rejection and a missing model; 46 relevant tests pass. The evaluation
+    bundle was rebuilt with the same frozen suite hash. Recovery and guarded hardware execution subsequently passed: app reload,
+    exact DDR readback, 1/12/64/128-token checks, then 300/300 frozen evaluation
+    cases. The imported report matches Nexys hidden states, predictions/logit
+    hashes and score counts on every case. No stalls recurred during this run;
+    the original stall cause remains unconfirmed. Do not unload PL while a
+    stalled MMIO process is active. Reboot recovery requires reloading app and DDR image.
+
+27. **MiniLM HWU evaluation scoring raised KeyError (2026-10-09).** After
+    exact image readback and 1/12/64/128-token hardware checks, the frozen
+    run completed ATIS and CLINC then failed on the first HWU slot prediction.
+    The client hardcoded slot labels for ATIS/SGD, omitting HWU. Fix: use
+    `heads.labels[p.head]` for the active slot head. Regression tests exercise
+    intent/slot counts for ATIS, SGD and HWU: 10 suite tests pass. Replaying
+    all 350 frozen hidden states through CPU task heads/scoring completes;
+    this validates scoring, not new FPGA execution. A client-only patch and
+    refreshed full MiniLM archive were transferred. Hardware rerun completed
+    350/350 bit-exact; imported report matches frozen hidden states, task-head
+    logits/predictions and CPU scoring counts. Mean encoder 15.139 ms at
+    71,428,571 Hz. This client scoring issue is resolved.
+
+28. **L12 checkpoint replacement failed on Windows (2026-10-09).** Near the
+    end of epoch1, checkpoint.tmp was serialized successfully but replacement
+    of checkpoint.pt raised WinError5 in the OneDrive checkout. Exact lock
+    source unconfirmed. Recovery validated both files and selected the newer
+    epoch0/batch3000 candidate, preserving the older batch2800 checkpoint.
+    Copied it with SHA256 readback to local AppData/SysoneCheckpoints and resumed
+    with the same training arguments. Added --checkpoint-dir and bounded retry
+    of atomic replacement; permanent failure retains previous and new candidate.
+    Tests cover ordinary replacement, transient lock and permanent lock with
+    both recovery files preserved: 3 pass. New progress log is
+    build/v2/eval/minilm-l12-v1-resume.log; training and final validation pending.
+
+29. **KR260 CPU answer generation misses latency and quality targets (2026-10-10).**
+    Pinned llama.cpp/Qwen3-0.6B Q4 and Q8 both run on four Cortex-A53 cores,
+    but 0/16 requests produce first words within one second. Median first word
+    5.138s(Q4)/5.046s(Q8); uncached prompt processing accounts for almost all
+    delay. Q8 is slightly faster in this build despite higher RAM use.
+    Both models contradict yes/no negation and fail the supplied technical
+    context probe. Open acceptance failure, not a deployment crash. See
+    build/v2/eval/kr260-generation-review.md and summary.json. Larger capacity
+    alone cannot be assumed to meet latency; decoder acceleration or a separately
+    chosen backend needs new measurements. Current FPGA encoder cannot execute
+    Qwen's causal decoder. No backend switch or FPGA generation claim made.
+
+## Matched bert-mini hardware results (2026-10-09)
+
+Matched hardware evaluation completed and compared (2026-10-09): both boards
+passed 300/300 integer-reference checks. Case-by-case token IDs, hidden-state
+hashes, task predictions/logit hashes and accuracy counts match. KR260 runtime
+preflight and DDR verification passed after recovery, app reload and model reload.
+Mean encoder time: Nexys 10.072 ms at 75 MHz, KR260 5.755 ms at 71,428,571 Hz,
+about 1.75x faster overall. KR260 maximum was 18.36 ms (121 tokens); mean input
+length was 33 tokens. These are board counter timings, with CPU heads and host
+round trips recorded separately. The 16x12 Nexys and 16x32 KR260 variants use the
+same trained model and frozen seed-0 subset, not the same hardware configuration.
+Reports: build/v2/eval/nexys.json, kr260.json, comparison.json and comparison.md.
+Suite SHA256: 4f557315887fdc140bc7028ee329038c8ecbf6c207f97a3d5ca57a42fca7c75b.
+Accuracy covers supervised task heads on 50 requests per dataset; automatic
+routing and full-corpus accuracy are not scored here.
+
+Matched 300 requests; hidden states, predictions and accuracy counts identical.
+
+| Dataset | Accuracy | Slot F1 | Nexys encoder mean ms | KR260 encoder mean ms | Speedup |
+|---|---:|---:|---:|---:|---:|
+| atis | 0.980 | 0.963 | 4.295 | 3.646 | 1.18x |
+| clinc | 0.920 | — | 3.960 | 3.551 | 1.12x |
+| msrp | 0.620 | — | 15.839 | 7.945 | 1.99x |
+| multi_clinc | 0.875 | — | 9.744 | 5.223 | 1.87x |
+| sgd | 0.909 | 0.622 | 19.293 | 9.720 | 1.98x |
+| sick | 0.880 | — | 7.304 | 4.445 | 1.64x |
+
+MiniLM KR260 automatic-routing smoke tests passed (owner output, 2026-10-09):
+
+| Request | Route / result | Encoder ms | Request ms | Host round trip ms | CPU heads ms |
+|---|---|---:|---:|---:|---:|
+| show me flights from boston to denver tomorrow morning | ATIS: book_flight 0.894, atis_flight 0.999; both cities/date/time slots correct | 10.80 | 10.82 | 12 | 34.3 |
+| how should I build a h-bridge circuit? | out of scope; CLINC oos 0.355, no specialist head | 10.90 | 10.92 | 12 | 26.2 |
+| turn off the lights in the kitchen | HWU: smart_home 0.835, iot_hue_lightoff 0.988; kitchen B-house_place | 10.59 | 10.60 | 11 | 32.1 |
+| book me a table for two at an italian restaurant tomorrow evening | SGD: restaurant_reservation 0.983, ReserveRestaurant 0.957; cuisine/date tagged, party size absent, orphan I-time | 11.11 | 11.13 | 12 | 35.9 |
+
+Live clock 71,428,571 Hz; encoder/request times use FPGA counters. CPU heads
+and host round trips are separate measurements. These four requests validate
+specific routing branches, not corpus-level routing accuracy. SGD routing passed on the restaurant smoke test, but its slots are imperfect:
+"two" is untagged and "evening" is I-time without a preceding B-time. Model
+quality must be assessed separately from the bit-exact hardware checks.
+Custom-intent/document paths have not yet been checked with MiniLM on the KR260.
+
+## Matched MiniLM hardware results (2026-10-09)
+
+Matched MiniLM hardware comparison completed (2026-10-09): programmed the
+existing 75 MHz Nexys encoder through JTAG; 23,035,904-byte MiniLM image
+read back exactly in 34 s (host path). Both boards passed 350/350 frozen
+integer-reference checks. Per-case token IDs, hidden-state hashes, task-head
+predictions/logit hashes and score counts match exactly. Suite SHA256:
+f89ce2428293503f0458e98e5f5aebe29e5be08f7f9b3c36012c7d2e5428109e.
+Nexys encoder mean 26.441 ms at 75 MHz, maximum 112.36 ms;
+KR260 mean 15.139 ms at 71,428,571 Hz, maximum 50.94 ms.
+Overall encoder speedup 1.747x. Mean input 28.39 tokens, maximum 123.
+Nexys tile 16x12, KR260 16x32; same trained checkpoint and calibration.
+Host transport/CPU heads remain separate; this is a seeded 50-request-per-dataset
+supervised subset, not full-corpus or automatic-router accuracy.
+Reports: build/v2/eval/nexys-minilm.json, kr260-minilm.json and minilm-comparison.*.
+Both boards currently have their respective MiniLM image loaded in volatile DDR.
+To return to bert-mini, use that board variant's load command; files/reports remain.
+
+Matched 350 requests; hidden states, predictions and accuracy counts identical.
+
+| Dataset | Accuracy | Slot F1 | Nexys encoder mean ms | KR260 encoder mean ms | Speedup |
+|---|---:|---:|---:|---:|---:|
+| atis | 0.960 | 0.920 | 12.927 | 10.953 | 1.18x |
+| clinc | 0.900 | — | 11.954 | 10.783 | 1.11x |
+| hwu | 0.920 | 0.659 | 11.674 | 10.718 | 1.09x |
+| msrp | 0.640 | — | 45.772 | 21.048 | 2.17x |
+| multi_clinc | 0.892 | — | 25.786 | 13.650 | 1.89x |
+| sgd | 0.933 | 0.449 | 55.728 | 26.236 | 2.12x |
+| sick | 0.820 | — | 21.244 | 12.583 | 1.69x |
+
+## MiniLM-L6-v3b on KR260: hardware evaluation verified (2026-10-09)
+
+MiniLM-L6-v3b KR260 hardware evaluation verified (2026-10-09).
+
+All 350 frozen requests match cached integer hidden states and CPU task-head predictions/logit hashes. Live clock: 71,428,571 Hz.
+
+Encoder mean 15.139 ms; maximum 50.942 ms. Mean input 28.39 tokens; maximum input 123. Timings use FPGA counters.
+
+| Dataset | Accuracy | Scored intents/pairs | Slot F1 | Encoder mean ms |
+|---|---:|---:|---:|---:|
+| atis | 0.960 | 50 | 0.920 | 10.953 |
+| clinc | 0.900 | 50 | — | 10.783 |
+| hwu | 0.920 | 50 | 0.659 | 10.718 |
+| msrp | 0.640 | 50 | — | 21.048 |
+| multi_clinc | 0.892 | 139 | — | 13.650 |
+| sgd | 0.933 | 45 | 0.449 | 26.236 |
+| sick | 0.820 | 50 | — | 12.583 |
+
+50 requests per dataset, seed 0; supervised task heads. Automatic routing and full-corpus accuracy are not scored.
+The 350-case MiniLM suite includes HWU and differs from the 300-case bert-mini suite; their mean times are not a matched model comparison.
+Nexys MiniLM hardware evaluation subsequently passed on the same suite; see matched comparison above.
+
+Suite SHA256: `f89ce2428293503f0458e98e5f5aebe29e5be08f7f9b3c36012c7d2e5428109e`.
+
+Preparation completed: both image variants match on all 350 frozen test requests
+(50 each: ATIS, CLINC, HWU, MSRP, multi-CLINC, SGD, SICK; seed 0), including
+integer hidden states and task-head integer/float logits and labels. The embedding
+head also passed a separate exact smoke comparison. Suite SHA256:
+`f89ce2428293503f0458e98e5f5aebe29e5be08f7f9b3c36012c7d2e5428109e`.
+Ready archive: `build/v2/kr260-minilm.tar.gz` (23,967,804 bytes). Every archived
+file was read back and matched to its workspace source by SHA256; no training
+checkpoint is included. Hardware MiniLM load/check/evaluation subsequently passed; see results above.
+
+Compiled the existing checkpoint with reused calibration into
+`export/v2/image/minilm-l6-v3b-kr260/`: 23,087,104 bytes at `0x60000000`,
+tile 16x32, hidden 384, six layers, 12 heads of dimension 32, FFN 1536,
+128-token window. The existing deployed BUILD 0x20801804 accommodates it;
+no bitstream change is needed. Image and request/result buffers fit the
+64 MiB reservation (maximum result end `0x6170d000`). CRC verification passed.
+Image SHA256: `0cf8d009e9fc55367a3fa53e853a9b498227daf91aa669206e4389ec5931eea1`.
+The original 16x12 image had zero hidden/head mismatches over 1,400 chains
+against IntEncoder. The prepared suite checks both image variants on the
+same seed-0 test requests, including HWU; FPGA verification must follow loading.
+
+Reran corrected router statistics (problem 21): CLINC threshold remains 0.480;
+HWU threshold changes from 0.515 to 0.480. Both variants carry the same decision
+rule. The CLINC+HWU router rejects 29.2% of CLINC OOS test queries and accepts
+96.97% of HWU test queries, compared with 70.3% OOS rejection using CLINC alone.
+These CPU integer-reference routing results differ from supervised head accuracy.
+The relocated image's CPU flight-request smoke test selected ATIS and correctly
+tagged both cities, departure date and time. Measured MiniLM FPGA latencies are recorded above.
+Transfer/load/check/evaluation commands are in `scripts/v2/kr260/README.md`.
 
 ## Scaling across boards
+
+KR260 MiniLM-L12-v1 hardware evaluation (2026-10-10): report
+`build/v2/eval/kr260-minilm-l12.json` completed350/350 bit-exact cases at
+71,428,571Hz. Report suite/image/token/hidden hashes verified against the frozen
+suite. Identical requests and token IDs to the L6 evaluation. Encoder mean29.9905ms,
+p95 62.6209ms,max100.6720ms (123tokens), compared with L6 mean15.1387ms.
+L12 accuracy: ATIS.980,CLINC.920,HWU.920,MSRP.800,multiCLINC.94245,
+SGD.93333,SICK.740. Slot F1: ATIS.94444,HWU.77108,SGD.48889. SICK
+regressed from L6.820; subset scores do not establish universal improvement.
+Summary `build/v2/eval/kr260-minilm-l12-summary.json`. L12 Nexys, automatic
+routing regression and generated answers are not validated by this report.
 
 | | Nexys 4 DDR | KR260 (K26) | larger (ZU9EG class) |
 |---|---|---|---|
@@ -877,6 +1167,14 @@ Each one: what was seen, the cause, the fix, and where it lives.
 whichever is slower.) On the Nexys 4 DDR every pass is compute-bound, so chaining
 buys accuracy from context rather than time; on the bigger parts short passes are
 memory-bound and extra chained segments are nearly free up to ~32–64 tokens.
+
+KR260 RTL optimization now includes optional registered MAC operands
+(`MAC_INPUT_REGISTERS=1`) and synchronous BRAM softmax tables
+(`EXP_TABLE_IN_BRAM=1`). Both preserve bit-exact BERT-mini and MiniLM-L12
+results across eight request lengths; the BRAM option preserves LUT-variant
+cycle counts. Established profiles retain zero defaults. Full routed timing,
+area measurements and board comparisons determine which candidate to adopt;
+see `OPTIMIZATION.md` for evidence and reproduction commands.
 
 ## Bring-up plan
 
@@ -898,3 +1196,36 @@ memory-bound and extra chained segments are nearly free up to ~32–64 tokens.
 6. KR260 port: AXI memory adapter (done), the encoder as a PL block with AXI4-Lite
    control and the ARM-side link (done in simulation, TILE_OUT 32); next: requantiser
    lanes, the block design, the board.
+
+
+### Offline KR260 address and H1024 candidate (2026-10-12)
+
+The experimental PIPELINED_DOT profile now uses registered attention head,
+query-group/query-row and key-row cursors in place of per-read runtime products.
+Indices and cursors advance together on FSM transitions, so buffer latency and
+issue tags retain their schedule. The default profile retains legacy addresses.
+53 frozen KR260 cases, two Nexys cases, stalled output and ten focused address
+profiles pass. Existing-image cycle counts match the previous candidate in the
+frozen simulations. These are numerical checks, not hardware timing evidence.
+
+`preflight_dot4_large_candidate.ps1` synthesizes an isolated H1024 configuration
+after base and larger-profile numerical/source-hash gates. It preserves T128 and
+head dimension64. Resource fit, timing and eventual board validation are required
+before raising deployed limits; no bitstream is exported by this preflight.
+The deployed H768/125MHz app and its model-memory reservation remain preserved.
+
+
+### Registered KR260 request arbitration (2026-10-12)
+
+The experimental PIPELINED_DOT profile enables one elastic read descriptor
+and one elastic write descriptor in axi_memory_port. Valid, address and beat
+count are captured together; reset clears validity. Core arbitration sees stored
+requests, isolating upstream write readiness from current encoder read validity.
+Default REGISTERED_REQUESTS=0 retains the direct interface. Burst splitting and
+write-data handshakes are unchanged; a newly arriving descriptor adds a stage
+when it cannot be hidden behind a preceding operation.
+
+53 frozen KR260 cases, Nexys, stall/reset/concurrent AXI traffic and low/high
+burst tests pass. Small OOC synthesis confirms one valid-to-write-ready path
+in direct mode and zero in registered mode. Full candidate timing and eventual
+hardware validation are separate gates; no 300MHz closure is established.

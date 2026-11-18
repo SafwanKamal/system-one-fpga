@@ -27,7 +27,14 @@
 module linear_engine
     import encoder_pkg::*;
 #(
+    parameter integer READ_LATENCY = encoder_pkg::READ_LATENCY,
     parameter integer TILE_OUT = 12,             // TO; TI is fixed at 16 (one beat)
+    parameter integer MAC_LATENCY = 1,
+    parameter integer PIPELINED_DOT = 0,
+    parameter integer CACHED_REQUEST_WINDOW = 0,
+    parameter integer INCREMENTAL_SOURCE_ROW = 0,
+    parameter integer LINEAR_ACCUMULATORS_IN_BRAM = 0,
+    parameter integer PIPELINED_DRAIN_SELECT = 0,
     // output channels requantised per clock (1, 2 or 4; divides TILE_OUT): the drain
     // takes n * TO / DRAIN_LANES clocks per output tile against n * in_tiles for the
     // MACs, so wide tiles (KR260, TO = 32) need more than one. 2 DSP48E1 per lane.
@@ -76,8 +83,10 @@ module linear_engine
     output logic signed [8:0] mac_a [0:TILE_OUT-1][0:15],
     output logic signed [7:0] mac_b [0:15],
     input logic signed [16:0] mac_product [0:TILE_OUT-1][0:15],
+    input logic signed [23:0] mac_dot [0:TILE_OUT-1],
 
     // destination buffer
+    output logic [2:0] perf_events, // compute issue, weight wait, accumulator/drain wait
     output logic destination_write,
     output logic [BUFFER_ADDRESS_WIDTH-1:0] destination_address,
     output logic [127:0] destination_data,
@@ -88,6 +97,8 @@ module linear_engine
     localparam integer PARAMETER_BEATS = (8 * TO + 15) / 16;
     localparam integer TOKEN_WIDTH = $clog2(MAX_TOKENS + 1);
     localparam integer COLUMN_WIDTH = $clog2(TO + 1);
+    localparam integer MAC_EXTRA = MAC_LATENCY - 1 + (PIPELINED_DOT != 0 ? 3 : 0);
+    localparam integer PASS_GAP = 4 + MAC_EXTRA;
 
 `ifndef SYNTHESIS
     initial begin
@@ -102,7 +113,7 @@ module linear_engine
     logic running_reg;
     logic [ADDRESS_WIDTH-1:0] stream_reg;
     logic [15:0] in_tiles_reg, out_tiles_reg, out_dim_reg;
-    logic [7:0] source_row_reg, destination_row_reg;
+    logic [15:0] source_row_reg, destination_row_reg;
     logic wide_reg, use_lut_reg, raw_reg;
     logic [5:0] shift_reg;
     logic signed [31:0] low_reg, high_reg;
@@ -135,12 +146,12 @@ module linear_engine
             // raw rows are whole words: the columns padding the last one (M = 0 in the
             // stream) are written too, as 0
             out_dim_reg <= raw ? ((out_dim + 16'd3) & ~16'd3) : out_dim;
-            source_row_reg <= 8'((in_dim + 16'd15) >> 4);
+            source_row_reg <= 16'((in_dim + 16'd15) >> 4);
             wide_reg <= !raw && (clamp_high > 32'sd127);
             raw_reg <= raw;
-            destination_row_reg <= raw ? 8'((out_dim + 16'd3) >> 2)
-                                 : (clamp_high > 32'sd127) ? 8'((out_dim + 16'd7) >> 3)
-                                                           : 8'((out_dim + 16'd15) >> 4);
+            destination_row_reg <= raw ? 16'((out_dim + 16'd3) >> 2)
+                                 : (clamp_high > 32'sd127) ? 16'((out_dim + 16'd7) >> 3)
+                                                           : 16'((out_dim + 16'd15) >> 4);
             use_lut_reg <= !raw && (lut_address != '0);
             shift_reg <= shift;
             low_reg <= clamp_low;
@@ -172,8 +183,10 @@ module linear_engine
 
     logic [16:0] request_tile_reg;               // output tiles requested (LUT first)
     logic lut_requested_reg;
+    (* keep=(CACHED_REQUEST_WINDOW!=0 ? "true":"false"), dont_touch=(CACHED_REQUEST_WINDOW!=0 ? "true":"false") *) logic [16:0] request_window_limit_reg;
     logic [16:0] load_tile_reg;                  // output tiles whose stream the loader started
     logic [15:0] tile_beats;
+    logic [ADDRESS_WIDTH-1:0] stream_cursor_reg;
     assign tile_beats = 16'(PARAMETER_BEATS) + 16'(in_tiles_reg * TO);
 
     always_comb begin
@@ -185,9 +198,10 @@ module linear_engine
                 read_request_valid = 1'b1;
                 read_request_address = lut_reg;
                 read_request_beats = BEATS_WIDTH'(16);
-            end else if (request_tile_reg < 17'(out_tiles_reg) && request_tile_reg < load_tile_reg + 17'd2) begin
+            end else if (request_tile_reg < 17'(out_tiles_reg) && request_tile_reg < (CACHED_REQUEST_WINDOW!=0 ? request_window_limit_reg : load_tile_reg + 17'd2)) begin
                 read_request_valid = 1'b1;
-                read_request_address = stream_reg + ADDRESS_WIDTH'(request_tile_reg * tile_beats * 16);
+                read_request_address = PIPELINED_DOT != 0 ? stream_cursor_reg
+                    : stream_reg + ADDRESS_WIDTH'(request_tile_reg * tile_beats * 16);
                 read_request_beats = BEATS_WIDTH'(tile_beats);
             end
         end
@@ -197,12 +211,17 @@ module linear_engine
         if (reset) begin
             request_tile_reg <= '0;
             lut_requested_reg <= 1'b0;
+            stream_cursor_reg <= '0;
         end else if (launch) begin
             request_tile_reg <= '0;
             lut_requested_reg <= 1'b0;
+            stream_cursor_reg <= stream_reg;
         end else if (read_request_valid && read_request_ready) begin
             if (use_lut_reg && !lut_requested_reg) lut_requested_reg <= 1'b1;
-            else request_tile_reg <= request_tile_reg + 1'b1;
+            else begin
+                request_tile_reg <= request_tile_reg + 1'b1;
+                stream_cursor_reg <= stream_cursor_reg + (ADDRESS_WIDTH'(tile_beats) << 4);
+            end
         end
     end
 
@@ -255,6 +274,7 @@ module linear_engine
             load_weight_bank <= 1'b0;
             load_parameter_bank <= 1'b0;
             load_tile_reg <= '0;
+            request_window_limit_reg <= 17'd2;
             weight_full <= '0;
             parameter_full <= '0;
         end else begin
@@ -268,6 +288,7 @@ module linear_engine
                     if (launch) begin
                         load_beat <= '0;
                         load_tile_reg <= '0;
+            request_window_limit_reg <= 17'd2;
                         load_weight_bank <= 1'b0;
                         load_parameter_bank <= 1'b0;
                         wf = '0;
@@ -291,6 +312,7 @@ module linear_engine
                             pf[load_parameter_bank] = 1'b1;
                             load_parameter_bank <= ~load_parameter_bank;
                             load_tile_reg <= load_tile_reg + 1'b1;
+                            request_window_limit_reg <= request_window_limit_reg + 1'b1;
                             load_beat <= '0;
                             load_in_tile <= '0;
                             load_state <= L_TILE;
@@ -352,7 +374,15 @@ module linear_engine
     logic [32*TO-1:0] accumulator_write_data;
 
     for (genvar k = 0; k < 2; k++) begin : gen_bank
-        if (ACCUMULATORS_IN_LUTS != 0) begin : gen_lut
+        if (LINEAR_ACCUMULATORS_IN_BRAM != 0) begin : gen_forced_block
+            (* ram_style = "block" *) logic [32*TO-1:0] accumulator [0:MAX_TOKENS-1];
+            always_ff @(posedge clk) begin
+                bank_read_data[k] <= accumulator[bank_read_address[k]];
+                if (accumulator_write && accumulator_write_bank == 1'(k)) begin
+                    accumulator[accumulator_write_address] <= accumulator_write_data;
+                end
+            end
+        end else if (ACCUMULATORS_IN_LUTS != 0) begin : gen_lut
             (* ram_style = "distributed" *) logic [32*TO-1:0] accumulator [0:MAX_TOKENS-1];
             always_ff @(posedge clk) begin
                 bank_read_data[k] <= accumulator[bank_read_address[k]];
@@ -402,6 +432,7 @@ module linear_engine
     logic [15:0] compute_out_tile;
     logic [15:0] compute_in_tile;
     logic [TOKEN_WIDTH-1:0] compute_token;
+    logic [BUFFER_ADDRESS_WIDTH-1:0] compute_source_row;
     logic compute_bank;                          // accumulator / parameter bank = out_tile parity
     logic compute_issue;
     logic [3:0] since_pass_start;                // clocks since the previous pass began
@@ -413,7 +444,7 @@ module linear_engine
         // a new pass may read an accumulator row only after the previous pass wrote it
         // (3 clocks of pipeline): automatic when n >= 4, otherwise wait it out
         can_start_pass = weight_full[compute_weight_bank]
-                         && (tokens_reg >= TOKEN_WIDTH'(4) || since_pass_start >= 4'd4);
+                         && (tokens_reg >= TOKEN_WIDTH'(PASS_GAP) || since_pass_start >= 4'(PASS_GAP));
         if (compute_in_tile == '0) begin
             can_start_pass = can_start_pass && parameter_full[compute_bank]
                              && !accumulator_full[compute_bank];
@@ -426,6 +457,7 @@ module linear_engine
             compute_out_tile <= '0;
             compute_in_tile <= '0;
             compute_token <= '0;
+            compute_source_row <= '0;
             compute_bank <= 1'b0;
             compute_weight_bank <= 1'b0;
             since_pass_start <= '0;
@@ -437,6 +469,7 @@ module linear_engine
                         compute_out_tile <= '0;
                         compute_in_tile <= '0;
                         compute_token <= '0;
+            compute_source_row <= '0;
                         compute_bank <= 1'b0;
                         compute_weight_bank <= 1'b0;
                         since_pass_start <= 4'hF;
@@ -446,12 +479,14 @@ module linear_engine
                 C_WAIT: begin
                     if (can_start_pass) begin
                         compute_token <= '0;
+            compute_source_row <= '0;
                         since_pass_start <= '0;
                         compute_state <= C_RUN;
                     end
                 end
                 C_RUN: begin
                     compute_token <= compute_token + 1'b1;
+                    compute_source_row <= &compute_token ? '0 : compute_source_row + BUFFER_ADDRESS_WIDTH'(source_row_reg);
                     if (compute_token == tokens_reg - 1'b1) begin
                         compute_weight_bank <= ~compute_weight_bank;
                         if (compute_in_tile == in_tiles_reg - 1'b1) begin
@@ -474,7 +509,11 @@ module linear_engine
     end
 
     assign compute_issue = (compute_state == C_RUN);
-    assign source_address = BUFFER_ADDRESS_WIDTH'(compute_token * source_row_reg + compute_in_tile);
+    assign perf_events = {compute_issue,
+        (compute_state == C_WAIT && !weight_full[compute_weight_bank]),
+        (compute_state == C_WAIT && compute_in_tile == 0 && accumulator_full[compute_bank])};
+    assign source_address = INCREMENTAL_SOURCE_ROW!=0 ? BUFFER_ADDRESS_WIDTH'(compute_source_row + compute_in_tile)
+                                                   : BUFFER_ADDRESS_WIDTH'(compute_token * source_row_reg + compute_in_tile);
 
     // the source word arrives READ_LATENCY clocks after the issue; the accumulator row
     // is read one clock before that (stage r), and the pass's weight tile is released
@@ -522,6 +561,39 @@ module linear_engine
     logic signed [31:0] stage3_old [0:TO-1];
     logic signed [23:0] stage3_sum [0:TO-1];
 
+    // The accumulator/bias read occurs at its original time. Carry its value
+    // and token/bank/last tags alongside any extra multiplier operand stages.
+    wire aligned_valid [0:MAC_EXTRA];
+    wire aligned_bank [0:MAC_EXTRA];
+    wire aligned_last [0:MAC_EXTRA];
+    wire [TOKEN_WIDTH-1:0] aligned_token [0:MAC_EXTRA];
+    wire signed [31:0] aligned_old [0:MAC_EXTRA][0:TO-1];
+    assign aligned_valid[0] = stage2_valid;
+    assign aligned_bank[0] = stage2_bank;
+    assign aligned_last[0] = stage2_last;
+    assign aligned_token[0] = stage2_token;
+    for (genvar c = 0; c < TO; c++) assign aligned_old[0][c] = stage2_old[c];
+    for (genvar p = 1; p <= MAC_EXTRA; p++) begin : gen_mac_tags
+        logic valid_reg, bank_reg, last_reg;
+        logic [TOKEN_WIDTH-1:0] token_reg;
+        logic signed [31:0] old_reg [0:TO-1];
+        always_ff @(posedge clk or posedge reset) begin
+            if (reset) valid_reg <= 1'b0;
+            else valid_reg <= aligned_valid[p-1];
+        end
+        always_ff @(posedge clk) begin
+            bank_reg <= aligned_bank[p-1];
+            last_reg <= aligned_last[p-1];
+            token_reg <= aligned_token[p-1];
+            for (int c = 0; c < TO; c++) old_reg[c] <= aligned_old[p-1][c];
+        end
+        assign aligned_valid[p] = valid_reg;
+        assign aligned_bank[p] = bank_reg;
+        assign aligned_last[p] = last_reg;
+        assign aligned_token[p] = token_reg;
+        for (genvar c = 0; c < TO; c++) assign aligned_old[p][c] = old_reg[c];
+    end
+
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             stage1_valid <= 1'b0;
@@ -530,7 +602,7 @@ module linear_engine
         end else begin
             stage1_valid <= r_valid[RD];
             stage2_valid <= stage1_valid;
-            stage3_valid <= stage2_valid;
+            stage3_valid <= aligned_valid[MAC_EXTRA];
         end
     end
 
@@ -550,17 +622,24 @@ module linear_engine
                                           : $signed(bank_read_data[stage1_bank][32*c +: 32]);
         end
 
-        stage3_token <= stage2_token;
-        stage3_bank <= stage2_bank;
-        stage3_last <= stage2_valid && stage2_last;
+        stage3_token <= aligned_token[MAC_EXTRA];
+        stage3_bank <= aligned_bank[MAC_EXTRA];
+        stage3_last <= aligned_valid[MAC_EXTRA] && aligned_last[MAC_EXTRA];
         for (int c = 0; c < TO; c++) begin
-            logic signed [23:0] sum;
-            sum = '0;
-            for (int r = 0; r < 16; r++) begin
-                sum = sum + 24'(mac_product[c][r]);
+            stage3_old[c] <= aligned_old[MAC_EXTRA][c];
+        end
+    end
+
+    if (PIPELINED_DOT != 0) begin : gen_dot_pipeline
+        assign stage3_sum = mac_dot;
+    end else begin : gen_dot_legacy
+        always_ff @(posedge clk) begin
+            for (int c = 0; c < TO; c++) begin
+                logic signed [23:0] sum;
+                sum = '0;
+                for (int r = 0; r < 16; r++) sum = sum + 24'(mac_product[c][r]);
+                stage3_sum[c] <= sum;
             end
-            stage3_sum[c] <= sum;
-            stage3_old[c] <= stage2_old[c];
         end
     end
 
@@ -668,7 +747,7 @@ module linear_engine
     // d4 rounded shift; d5 clamp; d6 table -> destination. DRAIN_LANES adjacent
     // channels per clock (a group starts at a multiple of DRAIN_LANES, so its elements
     // share one destination word).
-    localparam int DD = 6;
+    localparam int DD = 6 + (PIPELINED_DRAIN_SELECT != 0);
     localparam int LN = DRAIN_LANES;
     logic [DD:1] d_valid;
     logic [DD:1] d_final;
@@ -684,6 +763,27 @@ module linear_engine
     logic signed [31:0] d5_value [0:LN-1];
     logic signed [31:0] d6_value [0:LN-1];
     logic final_issue;
+    if(PIPELINED_DRAIN_SELECT!=0)begin : gen_pipelined_drain
+    logic [32*LN-1:0] selected_packet;
+    logic [17*LN-1:0] multiplier_packet,input_multiplier_packet;
+    for(genvar l=0;l<LN;l++)begin : gen_drain_packet
+        assign input_multiplier_packet[17*l+:17]=d1_multiplier[l];
+        assign d2_selected[l]=$signed(selected_packet[32*l+:32]);
+        assign d2_multiplier[l]=multiplier_packet[17*l+:17];
+    end
+    linear_drain_select #(.ROW_CHANNELS(TO),.LANES(LN),.COLUMN_WIDTH(COLUMN_WIDTH)) selector(
+        .clk,.reset,.advance(1'b1),.in_valid(d_valid[1]),
+        .row0(bank_read_data[0]),.row1(bank_read_data[1]),.bank(d1_bank),
+        .column(d1_column_index),.lane_mask(d_lane_valid[1]),
+        .multipliers(input_multiplier_packet),.tag(32'd0),.out_valid(),
+        .selected(selected_packet),.out_lane_mask(),.out_multipliers(multiplier_packet),.out_tag());
+
+    end else begin : gen_default_drain
+        always_ff @(posedge clk)for(int l=0;l<LN;l++)begin
+            d2_selected[l]<=$signed(bank_read_data[d1_bank][32*(32'(d1_column_index)+l)+:32]);
+            d2_multiplier[l]<=d1_multiplier[l];
+        end
+    end
 
     assign final_issue = drain_issue && (drain_column + COLUMN_WIDTH'(DRAIN_LANES) >= drain_columns)
                          && (drain_token == tokens_reg - 1'b1)
@@ -718,8 +818,6 @@ module linear_engine
             c = drain_column + COLUMN_WIDTH'(l);
             d1_multiplier[l] <= (c < COLUMN_WIDTH'(TO)) ? multiplier[drain_bank][c] : 17'd0;
 
-            d2_selected[l] <= $signed(bank_read_data[d1_bank][32 * (32'(d1_column_index) + l) +: 32]);
-            d2_multiplier[l] <= d1_multiplier[l];
 
             d3_product[l] <= 50'(d2_selected[l]) * 50'($signed({1'b0, d2_multiplier[l]}));
 

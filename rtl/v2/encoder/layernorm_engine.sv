@@ -12,6 +12,8 @@
 module layernorm_engine
     import encoder_pkg::*;
 #(
+    parameter integer READ_LATENCY = encoder_pkg::READ_LATENCY,
+    parameter integer PIPELINED_AFFINE = 0,
     parameter integer MAX_WIDTH = 768,
     // elements normalised per clock (1, 2 or 4; two DSP48E1 products each)
     parameter integer NORM_LANES = 2,
@@ -157,7 +159,9 @@ module layernorm_engine
     //   normalise  L: c -> L+1 c*inv -> L+2 z -> L+3 z*g -> L+4 + b, rounding
     //              -> L+5 shift, clamp -> L+6 destination
     localparam int L = READ_LATENCY;
-    localparam int D = L + 6;
+    localparam int SCALED_EXTRA = PIPELINED_AFFINE != 0 ? 2 : 0;
+    localparam int AFFINE_EXTRA = PIPELINED_AFFINE != 0 ? 4 : 0;
+    localparam int D = L + 6 + AFFINE_EXTRA;
     logic [D:1] s_sum, s_squares, s_normalise;
     logic [15:0] s_index [1:D];
     logic [7:0] s_token [1:D];
@@ -440,8 +444,8 @@ module layernorm_engine
 
     // gamma at L+3 and beta at L+4, for the group then in that stage
     always_ff @(posedge clk) begin
-        gamma_word <= gamma_ram[s_index[L+2] >> (2 - NORM_LOG)];
-        beta_word <= beta_ram[s_index[L+3] >> (2 - NORM_LOG)];
+        gamma_word <= gamma_ram[s_index[L+2+SCALED_EXTRA] >> (2 - NORM_LOG)];
+        beta_word <= beta_ram[s_index[L+3+AFFINE_EXTRA] >> (2 - NORM_LOG)];
     end
 
     // normalise NORM_LANES elements of the arriving word (group s_index)
@@ -459,6 +463,26 @@ module layernorm_engine
     logic [BUFFER_ADDRESS_WIDTH-1:0] d_address;
     logic [127:0] d_data;
     logic [15:0] d_enable;
+    wire [15:0] gamma_first = 16'(s_index[L+3+SCALED_EXTRA] << NORM_LOG);
+    logic signed [31:0] selected_gamma [0:NORM_LANES-1];
+    logic signed [29:0] selected_inverse [0:NORM_LANES-1];
+    for(genvar c=0;c<NORM_LANES;c++) begin
+        assign selected_gamma[c]=$signed(gamma_word[32*(int'(gamma_first[1:0])+c)+:32]);
+        assign selected_inverse[c]=$signed({1'b0,inverse_reg[28:0]});
+    end
+    if(PIPELINED_AFFINE != 0) begin : gen_affine_pipeline
+        split_product_pipeline #(.LANES(NORM_LANES),.A_WIDTH(18),.B_WIDTH(30),.OUT_WIDTH(48)) scale_inst (
+            .clk(clk),.a(n_c),.b(selected_inverse),.product(n_scaled)
+        );
+        split_product_pipeline #(.LANES(NORM_LANES),.A_WIDTH(21),.B_WIDTH(32),.OUT_WIDTH(54)) gamma_inst (
+            .clk(clk),.a(n_z),.b(selected_gamma),.product(n_product)
+        );
+    end else begin : gen_affine_legacy
+        always_ff @(posedge clk) for(int c=0;c<NORM_LANES;c++) begin
+            n_scaled[c]<=48'(n_c[c])*48'(selected_inverse[c]);
+            n_product[c]<=54'(n_z[c])*54'(selected_gamma[c]);
+        end
+    end
 
     always_ff @(posedge clk) begin
         round_shift <= 6'(fraction_reg) + 6'd8;
@@ -468,9 +492,9 @@ module layernorm_engine
     always_ff @(posedge clk) begin
         logic [15:0] first_in, first_g, first_b, first_out;
         first_in = 16'(s_index[L] << NORM_LOG);
-        first_g = 16'(s_index[L+3] << NORM_LOG);
-        first_b = 16'(s_index[L+4] << NORM_LOG);
-        first_out = 16'(s_index[L+5] << NORM_LOG);
+        first_g = gamma_first;
+        first_b = 16'(s_index[L+4+AFFINE_EXTRA] << NORM_LOG);
+        first_out = 16'(s_index[L+5+AFFINE_EXTRA] << NORM_LOG);
         for (int e = 0; e < NORM_LANES; e++) begin
             logic signed [47:0] rounded;
             logic signed [53:0] y;
@@ -480,13 +504,11 @@ module layernorm_engine
             element_in_gamma = int'(first_g[1:0]) + e;          // gamma/beta word: 4 elements
 
             n_c[e] <= 18'($signed(source_data[16 * element_in_word +: 16])) - 18'(mean_reg);
-            n_scaled[e] <= 48'(n_c[e]) * 48'($signed({1'b0, inverse_reg[28:0]}));
             rounded = (n_scaled[e] + 48'sd32768) >>> 16;
             n_z[e] <= 21'(rounded);
 `ifndef SYNTHESIS
-            if (s_normalise[L+2] && 48'(21'(rounded)) != rounded) $error("layernorm: z out of 21 bits");
+            if (s_normalise[L+2+SCALED_EXTRA] && 48'(21'(rounded)) != rounded) $error("layernorm: z out of 21 bits");
 `endif
-            n_product[e] <= 54'(n_z[e]) * 54'($signed(gamma_word[32*element_in_gamma +: 32]));
             n_sum[e] <= n_product[e] + 54'($signed(beta_word[32*(int'(first_b[1:0]) + e) +: 32]))
                         + round_constant;
             y = n_sum[e] >>> round_shift;
@@ -496,7 +518,7 @@ module layernorm_engine
                 d_data[8 * (NORM_LANES * r + e) +: 8] <= out[7:0];
             end
         end
-        d_address <= BUFFER_ADDRESS_WIDTH'(s_token[L+5] * (width_reg >> 4) + (first_out >> 4));
+        d_address <= BUFFER_ADDRESS_WIDTH'(s_token[L+5+AFFINE_EXTRA] * (width_reg >> 4) + (first_out >> 4));
         d_enable <= 16'((1 << NORM_LANES) - 1) << first_out[3:0];
     end
 

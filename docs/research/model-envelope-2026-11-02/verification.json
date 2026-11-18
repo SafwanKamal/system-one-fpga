@@ -1,0 +1,17 @@
+{
+  "research_date": "2026-11-02",
+  "scope": "Public model metadata and local implementation audit; no weights, inference, hardware build or board access",
+  "snapshots": 15,
+  "source_hashes_verified": 29,
+  "recorded_fetch_errors": {
+    "google/functiongemma-270m-it": {
+      "config.json": "HTTP Error 401: Unauthorized"
+    }
+  },
+  "files": {
+    "scripts/v2/research_model_envelope_20261102.py": "770b712be2f6d46590f0418b6e4e2ea0b073d172673c75ee21c0268c2ebe420e",
+    "docs/research/2026-11-02-model-capability-feasibility.md": "a994f1421ab3331b3f83e4e206836c4aaed58563a968ebf072e1811cb61141cb",
+    "docs/research/model-envelope-2026-11-02/metadata.json": "c4bb656c2bc9871cc96bc7590c6caa3777323475d63b5c4ee440cf8fb61998e7",
+    "docs/research/model-envelope-2026-11-02/estimates.json": "6594ccb901b0b2d59f0912c41f2597e07cbe5e6522501518146211d92aaaad9d"
+  }
+}

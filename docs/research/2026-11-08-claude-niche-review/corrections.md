@@ -1,0 +1,11 @@
+# Coordinator corrections and verifications (read before the lit files)
+
+1. Decode rate: per generated token the layer weight stream takes ~125 ms (~0.45 GB at ~3.5 GB/s) plus LM head ~44 ms (151936x1024 Q8 ≈ 165 MB). End-to-end decode ≈ 6 tok/s, not 8. The LM head is ALREADY at its bandwidth floor (0.7 s was for 16 tokens). Gains on the LM head come only from evaluating a subset of vocabulary rows (grammar-allowed tokens) or skipping it for grammar-forced tokens.
+2. The K26 SOM DDR4 peak is ~19 GB/s; our design uses one 128-bit HP port at 250 MHz (~4 GB/s). Using more HP ports is a plausible 2–4x decode lever but LUT/CLB is 92–96% packed.
+3. Verified by coordinator search:
+   - "Eliminating Nondeterminism in LLM Inference via Integer-Only Arithmetic" (NeurIPS 2026, DetLLM): full Qwen3-0.6B forward pass in exact integer arithmetic, bit-identical; WikiText2 ppl 20.72 vs 20.95 fp16; 106 tok/s decode on A100, prefill 0.13x fp16. https://neurips.cc/virtual/2026/170003 — SAME MODEL as ours. Integer-only is natural on FPGA fabric.
+   - SILK (arXiv 2608.26402): closes TOCTOU gap in root-of-trust protected AI accelerators; Ascon-PRF streaming checker on Xilinx FPGA, Caliptra on Zynq prototype.
+   - arXiv 2609.07370 "Beyond Fluent Generation: CPU Reliability Benchmark for MCP-Style Tool Calling in Sub-2B SLMs for Edge Deployment" exists.
+4. Energy: nothing measured on our board yet. TeLLMe v2 (KV260, same K26 module): 25 tok/s ~5 W BitNet 0.73B (author figure).
+
+5. Source check (hls/qwen_decoder_v9e/qwen_decoder.cpp): the vocabulary (LM head) command runs batch=1, accepts a row range token_base..token_base+rows (<=8192 rows/call) and returns only running argmax (best_logit, best_token). => grammar-restricted LM head over contiguous allowed ranges is a host-only change today; batched LM head for speculative verification needs an HLS change (matvec already supports batch B for decoder ops). Prefill (cmd 8) runs batch=rows<=8 through the same per-token quantization; per-token arithmetic is documented as unchanged vs batch-1 (v9d bit-identical to v9c), and prefix reuse at 8-token boundaries reproduced 328/328 exact IDs — strong but not a direct proof that B8 verify == sequential decode; a gate test is still needed.

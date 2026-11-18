@@ -1,0 +1,211 @@
+{
+  "source": "build/v2/context-capture-board-validation/eval.json",
+  "source_sha256": "10117693e8192d20daca6701e8d5f66a6abd4e3bbc6c3240437f70f9de4b9a82",
+  "clock_hz": 199999998,
+  "whole_suite": {
+    "cases": 350,
+    "tokens_mean": 28.385714285714286,
+    "mean_request_ms": 11.016515810165156,
+    "read_bytes_mean": 21686567.817142855,
+    "read_GBps_over_request": 1.9685505100562042,
+    "mean_beats_per_burst": 200.7904200867592,
+    "counter_totals": {
+      "axi_read_beats": 474393671,
+      "axi_read_service_wait": 6372739,
+      "read_backpressure": 120370210,
+      "linear_mac_issues": 412024320,
+      "attention_mac_issues": 19460160,
+      "linear_weight_wait": 168869091,
+      "linear_drain_wait": 0,
+      "axi_write_beats": 238440,
+      "axi_read_bursts": 2362631,
+      "result_source_wait": 0
+    },
+    "ratios": {
+      "axi_read_service_wait": 0.008263876805570074,
+      "read_backpressure": 0.15609058938403078,
+      "linear_mac_issues": 0.5342943154236792,
+      "attention_mac_issues": 0.02523504647792457,
+      "linear_weight_wait": 0.2189817226615749,
+      "linear_drain_wait": 0.0,
+      "result_source_wait": 0.0
+    }
+  },
+  "by_tokens": [
+    {
+      "tokens": [
+        1,
+        8
+      ],
+      "cases": 44,
+      "tokens_mean": 6.863636363636363,
+      "mean_request_ms": 7.4295584833864945,
+      "read_bytes_mean": 21669991.272727273,
+      "read_GBps_over_request": 2.9167266562588248,
+      "mean_beats_per_burst": 201.9994915478301,
+      "counter_totals": {
+        "axi_read_beats": 59592476,
+        "axi_read_service_wait": 752664,
+        "read_backpressure": 130944,
+        "linear_mac_issues": 12524544,
+        "attention_mac_issues": 173952,
+        "linear_weight_wait": 45406809,
+        "linear_drain_wait": 0,
+        "axi_write_beats": 7248,
+        "axi_read_bursts": 295013,
+        "result_source_wait": 0
+      },
+      "ratios": {
+        "axi_read_service_wait": 0.011512124313518328,
+        "read_backpressure": 0.0020028108240985935,
+        "linear_mac_issues": 0.19156503765043909,
+        "attention_mac_issues": 0.002660625522922765,
+        "linear_weight_wait": 0.6945048918085398,
+        "linear_drain_wait": 0.0,
+        "result_source_wait": 0.0
+      }
+    },
+    {
+      "tokens": [
+        9,
+        16
+      ],
+      "cases": 116,
+      "tokens_mean": 12.28448275862069,
+      "mean_request_ms": 7.828748526563347,
+      "read_bytes_mean": 21674170.48275862,
+      "read_GBps_over_request": 2.7685357894965006,
+      "mean_beats_per_burst": 201.69834662477072,
+      "counter_totals": {
+        "axi_read_beats": 157137736,
+        "axi_read_service_wait": 2045367,
+        "read_backpressure": 345216,
+        "linear_mac_issues": 59097600,
+        "attention_mac_issues": 820800,
+        "linear_weight_wait": 93677936,
+        "linear_drain_wait": 0,
+        "axi_write_beats": 34200,
+        "axi_read_bursts": 779073,
+        "result_source_wait": 0
+      },
+      "ratios": {
+        "axi_read_service_wait": 0.011261362051947308,
+        "read_backpressure": 0.0019006869486625346,
+        "linear_mac_issues": 0.32537900044400897,
+        "attention_mac_issues": 0.004519152783944569,
+        "linear_weight_wait": 0.5157710834168874,
+        "linear_drain_wait": 0.0,
+        "result_source_wait": 0.0
+      }
+    },
+    {
+      "tokens": [
+        17,
+        32
+      ],
+      "cases": 77,
+      "tokens_mean": 23.155844155844157,
+      "mean_request_ms": 8.803255477642944,
+      "read_bytes_mean": 21682541.92207792,
+      "read_GBps_over_request": 2.4630140494211106,
+      "mean_beats_per_burst": 201.0884947736803,
+      "counter_totals": {
+        "axi_read_beats": 104347233,
+        "axi_read_service_wait": 1410968,
+        "read_backpressure": 982990,
+        "linear_mac_issues": 73944576,
+        "attention_mac_issues": 2054016,
+        "linear_weight_wait": 28286505,
+        "linear_drain_wait": 0,
+        "axi_write_beats": 42792,
+        "axi_read_bursts": 518912,
+        "result_source_wait": 0
+      },
+      "ratios": {
+        "axi_read_service_wait": 0.010407661103349364,
+        "read_backpressure": 0.007250785834959681,
+        "linear_mac_issues": 0.5454341185901175,
+        "attention_mac_issues": 0.015150947738614374,
+        "linear_weight_wait": 0.20864850077265912,
+        "linear_drain_wait": 0.0,
+        "result_source_wait": 0.0
+      }
+    },
+    {
+      "tokens": [
+        33,
+        64
+      ],
+      "cases": 81,
+      "tokens_mean": 46.72839506172839,
+      "mean_request_ms": 14.053819276340661,
+      "read_bytes_mean": 21700691.950617284,
+      "read_GBps_over_request": 1.5441134914229322,
+      "mean_beats_per_burst": 199.76970425434416,
+      "counter_totals": {
+        "axi_read_beats": 109859753,
+        "axi_read_service_wait": 1486730,
+        "read_backpressure": 51529355,
+        "linear_mac_issues": 156971520,
+        "attention_mac_issues": 7613568,
+        "linear_weight_wait": 1277068,
+        "linear_drain_wait": 0,
+        "axi_write_beats": 90840,
+        "axi_read_bursts": 549932,
+        "result_source_wait": 0
+      },
+      "ratios": {
+        "axi_read_service_wait": 0.0065301435790025356,
+        "read_backpressure": 0.22633167198038123,
+        "linear_mac_issues": 0.6894638323127051,
+        "attention_mac_issues": 0.03344096923348502,
+        "linear_weight_wait": 0.005609248081460393,
+        "linear_drain_wait": 0.0,
+        "result_source_wait": 0.0
+      }
+    },
+    {
+      "tokens": [
+        65,
+        128
+      ],
+      "cases": 32,
+      "tokens_mean": 82.5,
+      "mean_request_ms": 25.14172181391722,
+      "read_bytes_mean": 21728236.5,
+      "read_GBps_over_request": 0.8642302488595797,
+      "mean_beats_per_burst": 197.79824852868217,
+      "counter_totals": {
+        "axi_read_beats": 43456473,
+        "axi_read_service_wait": 677010,
+        "read_backpressure": 67381705,
+        "linear_mac_issues": 109486080,
+        "attention_mac_issues": 8797824,
+        "linear_weight_wait": 220773,
+        "linear_drain_wait": 0,
+        "axi_write_beats": 63360,
+        "axi_read_bursts": 219701,
+        "result_source_wait": 0
+      },
+      "ratios": {
+        "axi_read_service_wait": 0.004207460982217693,
+        "read_backpressure": 0.4187617534494362,
+        "linear_mac_issues": 0.680430731740986,
+        "attention_mac_issues": 0.05467644674143424,
+        "linear_weight_wait": 0.0013720532686771934,
+        "linear_drain_wait": 0.0,
+        "result_source_wait": 0.0
+      }
+    }
+  ],
+  "analysis_method": {
+    "new_hardware_run": false,
+    "denominator": "sum(request_clocks) within each group; actual saved clock_hz",
+    "mean_request_ms": "1000 * sum(request_clocks) / clock_hz / case_count",
+    "read_GBps_over_request": "16 * sum(axi_read_beats) * clock_hz / sum(request_clocks) / 1e9",
+    "mean_beats_per_burst": "sum(axi_read_beats) / sum(axi_read_bursts)",
+    "ratios": "sum(event_count) / sum(request_clocks), overlapping diagnostics, not a time partition",
+    "units": "GB decimal; no physical DDR peak or standalone bandwidth claim",
+    "counter_wrap": "each request duration is far below 2^32 clocks at recorded frequency; counters reset per RUN"
+  }
+}

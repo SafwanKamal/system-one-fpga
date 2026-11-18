@@ -40,12 +40,14 @@ def main() -> int:
     ap.add_argument("--name", default="bert-mini-slots4-kr260")
     ap.add_argument("--tokens", type=int, nargs="*", default=[12, 1, 128])
     ap.add_argument("--seed", type=int, default=5)
+    ap.add_argument("--output", type=Path, default=OUT, help="keep each model's vectors in its own directory")
     a = ap.parse_args()
     img = (ROOT / "export" / "v2" / "image" / a.name / f"{a.name}.img").read_bytes()
     m = di.ImageMachine(img)
     lay = RequestLayout.for_image(m.h, len(img))
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "image.hex").write_text("\n".join(hexwords(img)) + "\n")
+    output = a.output.resolve()
+    output.mkdir(parents=True, exist_ok=True)
+    (output / "image.hex").write_text("\n".join(hexwords(img)) + "\n")
     rng = np.random.default_rng(a.seed)
     for k, n in enumerate(a.tokens):
         ids = rng.integers(1000, m.h["vocab"], n)
@@ -54,10 +56,10 @@ def main() -> int:
         lines = [f"{n} {lay.hidden} {lay.program} {lay.ids} {lay.result}"]
         lines += hexwords(ids_bytes(ids))
         lines += hexwords(x.astype(np.int8).tobytes())
-        (OUT / f"case_{k}.txt").write_text("\n".join(lines) + "\n")
-    (OUT / "cases.txt").write_text(f"{len(a.tokens)} {m.h['base']}\n")
+        (output / f"case_{k}.txt").write_text("\n".join(lines) + "\n")
+    (output / "cases.txt").write_text(f"{len(a.tokens)} {m.h['base']}\n")
     print(f"{len(a.tokens)} cases, image {len(img):,} bytes at {m.h['base']:#x}, ids {lay.ids:#x}, "
-          f"X {lay.result:#x} -> {OUT}")
+          f"X {lay.result:#x} -> {output}")
     return 0
 
 

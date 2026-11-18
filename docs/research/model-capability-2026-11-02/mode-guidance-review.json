@@ -1,0 +1,14 @@
+{
+  "review_date": "2026-11-02",
+  "sources": [
+    "https://huggingface.co/Qwen/Qwen3.5-2B#best-practices",
+    "https://huggingface.co/Qwen/Qwen3.5-4B#best-practices"
+  ],
+  "facts": {
+    "both_modes_supported": true,
+    "mode_switch": "API enable_thinking parameter; not Qwen3 soft /think commands",
+    "publisher_generation": "Nonzero-temperature sampling settings by mode/task. Recommended maximum output allowance 32768 for most queries and 81920 for complex competition benchmarks. These are allowances, not measured typical output consumption.",
+    "our_profiles": "Greedy; 256 output primary; paired 1024-output ablation. Not publisher-optimal sampling or long-output benchmark reproduction."
+  },
+  "interpretation": "At-cap maintenance failures are censored by the selected output allowance. Do not infer intrinsic inability or the globally strongest memory-feasible checkpoint. Larger-budget sampled profiles remain untested."
+}

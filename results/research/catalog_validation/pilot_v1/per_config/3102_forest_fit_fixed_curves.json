@@ -1,0 +1,569 @@
+[
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.43333333333333335,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.15,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.2,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.2,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.2,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.2,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.7,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.2,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.7,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.2,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.5666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8333333333333334,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.225,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.2,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.4666666666666667,
+    "known_macro_recall": 0.8333333333333334,
+    "healthy_false_alarm": 0.4,
+    "known_abstention": 0.225,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6666666666666666,
+    "known_macro_recall": 0.8666666666666666,
+    "healthy_false_alarm": 0.3,
+    "known_abstention": 0.175,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  },
+  {
+    "unknown_rejection": 0.6333333333333333,
+    "known_macro_recall": 0.9,
+    "healthy_false_alarm": 0.2,
+    "known_abstention": 0.125,
+    "feasible": false
+  }
+]

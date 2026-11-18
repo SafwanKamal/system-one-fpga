@@ -21,7 +21,19 @@
 module attention_engine
     import encoder_pkg::*;
 #(
+    parameter integer READ_LATENCY = encoder_pkg::READ_LATENCY,
     parameter integer LANES = 12,
+    parameter integer MAC_LATENCY = 1,
+    parameter integer PIPELINED_DOT = 0,
+    parameter integer FABRIC_CONTEXT_CAPTURE = 0,
+    parameter integer FABRIC_SCORE_DISTANCE = 0,
+    parameter integer PROBABILITY_INPUT_CAPTURE = 0,
+    parameter integer PROBABILITY_PIPELINE = 0,
+    parameter integer LOCAL_QUERY_REGISTERS = 0,
+    // 0 legacy, 1 local FF banks, 2 dual-read LUTRAM, 3 shared-read LUTRAM.
+    parameter integer LOCAL_ACCUMULATOR_CONTROLS = 0,
+    // KR260 has spare BRAM; preserve LUT memory for the BRAM-constrained Nexys.
+    parameter integer EXP_TABLE_IN_BRAM = 0,
     parameter integer MAX_TOKENS = 128,
     parameter integer MAX_HEAD_DIM = 64,
     parameter integer ADDRESS_WIDTH = 27,
@@ -33,6 +45,7 @@ module attention_engine
 
     input logic start,
     output logic busy,
+    output logic mac_issue,
     output logic done,
 
     input logic [15:0] heads,
@@ -64,6 +77,7 @@ module attention_engine
     output logic signed [8:0] mac_a [0:LANES-1][0:15],
     output logic signed [7:0] mac_b [0:15],
     input logic signed [16:0] mac_product [0:LANES-1][0:15],
+    input logic signed [23:0] mac_dot [0:LANES-1],
 
     output logic destination_write,
     output logic [BUFFER_ADDRESS_WIDTH-1:0] destination_address,
@@ -83,12 +97,13 @@ module attention_engine
     localparam integer DIVIDER_WIDTH = 25;          // 2^24 / (<= MAX_TOKENS * 65535)
     localparam integer CONTEXT_LANES = 4;           // requantisers in the write-out
 
-    typedef enum logic [3:0] {
+    typedef enum logic [4:0] {
         IDLE,
         TABLE_REQUEST,
         TABLE_RECEIVE,
         TABLE_WRITE,
         LOAD_Q,
+        LOAD_Q_DRAIN,
         SCORE,
         SCORE_FLUSH,
         EXPONENT,
@@ -235,10 +250,12 @@ module attention_engine
                     lane_next = lane_reg + 1'b1;
                     if (lane_reg == lanes_reg - 1'b1) begin
                         key_next = '0;
-                        state_next = SCORE;
+                        state_next = LOCAL_QUERY_REGISTERS != 0 ? LOAD_Q_DRAIN : SCORE;
                     end
                 end
             end
+
+            LOAD_Q_DRAIN: state_next = SCORE; // one extra query distribution stage
 
             SCORE: begin
                 issue_k = 1'b1;
@@ -352,15 +369,71 @@ module attention_engine
     // ---------------------------------------------------------------- buffers
 
     logic [BUFFER_ADDRESS_WIDTH-1:0] head_word;
-    assign head_word = BUFFER_ADDRESS_WIDTH'(head_reg * head_words_reg + word_reg);
-    assign q_address = BUFFER_ADDRESS_WIDTH'((base_reg + 8'(lane_reg)) * row_words_reg) + head_word;
-    assign k_address = BUFFER_ADDRESS_WIDTH'(key_reg * row_words_reg) + head_word;
-    assign v_address = BUFFER_ADDRESS_WIDTH'(key_reg * row_words_reg) + head_word;
+    if (PIPELINED_DOT != 0) begin : gen_address_cursors
+        // Loop-carried offsets replace runtime products on each buffer request.
+        // Advance at the same FSM edges as their indices; no extra read latency.
+        logic [BUFFER_ADDRESS_WIDTH-1:0] head_offset_reg;
+        logic [BUFFER_ADDRESS_WIDTH-1:0] group_row_reg, query_row_reg, key_row_reg;
+        logic [BUFFER_ADDRESS_WIDTH-1:0] next_group_row;
+        assign next_group_row = group_row_reg + BUFFER_ADDRESS_WIDTH'(LANES * row_words_reg);
+        always_ff @(posedge clk or posedge reset) begin
+            if (reset) begin
+                head_offset_reg <= '0;
+                group_row_reg <= '0;
+                query_row_reg <= '0;
+                key_row_reg <= '0;
+            end else if (state_reg == IDLE && start) begin
+                head_offset_reg <= '0;
+                group_row_reg <= '0;
+                query_row_reg <= '0;
+                key_row_reg <= '0;
+            end else begin
+                if (head_next != head_reg)
+                    head_offset_reg <= head_next == '0 ? '0 : head_offset_reg + BUFFER_ADDRESS_WIDTH'(head_words_reg);
+                if (base_next != base_reg)
+                    group_row_reg <= base_next == '0 ? '0 : next_group_row;
+                if (key_next != key_reg)
+                    key_row_reg <= key_next == '0 ? '0 : key_row_reg + BUFFER_ADDRESS_WIDTH'(row_words_reg);
+                if (state_reg == LOAD_Q && word_reg == head_words_reg - 1'b1)
+                    query_row_reg <= query_row_reg + BUFFER_ADDRESS_WIDTH'(row_words_reg);
+                // Q loading advances one row beyond the group. Context output
+                // restarts at its first row after the weighted-sum pipeline drains.
+                if (state_reg == WEIGHTED_FLUSH && !pipeline_busy)
+                    query_row_reg <= group_row_reg;
+                if (state_reg == WRITE && part_reg == 2'd3 && word_reg == head_words_reg - 1'b1) begin
+                    if (lane_reg == lanes_reg - 1'b1)
+                        query_row_reg <= next_base >= tokens_reg ? '0 : next_group_row;
+                    else
+                        query_row_reg <= query_row_reg + BUFFER_ADDRESS_WIDTH'(row_words_reg);
+                end
+            end
+        end
+        assign head_word = head_offset_reg + BUFFER_ADDRESS_WIDTH'(word_reg);
+        assign q_address = query_row_reg + head_word;
+        assign k_address = key_row_reg + head_word;
+        assign v_address = key_row_reg + head_word;
+`ifndef SYNTHESIS
+        always_ff @(posedge clk) if (!reset) begin
+            if (issue_q || state_reg == WRITE)
+                assert(q_address == BUFFER_ADDRESS_WIDTH'((base_reg + 8'(lane_reg)) * row_words_reg)
+                                    + BUFFER_ADDRESS_WIDTH'(head_reg * head_words_reg + word_reg))
+                    else $fatal(1,"attention query cursor/index mismatch");
+            if (issue_k || issue_v)
+                assert(k_address == BUFFER_ADDRESS_WIDTH'(key_reg * row_words_reg)
+                                    + BUFFER_ADDRESS_WIDTH'(head_reg * head_words_reg + word_reg))
+                    else $fatal(1,"attention key cursor/index mismatch");
+        end
+`endif
+    end else begin : gen_address_legacy
+        assign head_word = BUFFER_ADDRESS_WIDTH'(head_reg * head_words_reg + word_reg);
+        assign q_address = BUFFER_ADDRESS_WIDTH'((base_reg + 8'(lane_reg)) * row_words_reg) + head_word;
+        assign k_address = BUFFER_ADDRESS_WIDTH'(key_reg * row_words_reg) + head_word;
+        assign v_address = BUFFER_ADDRESS_WIDTH'(key_reg * row_words_reg) + head_word;
+    end
 
     // ---------------------------------------------------------- storage
 
-    // one copy per lane (12 lookups/clock), kept in LUT RAM: block RAM is nearly full
-    (* ram_style = "distributed" *) logic [15:0] exp_table [0:LANES-1][0:EXP_STEPS-1];
+    // The exponential lookup storage below supplies one independent read per lane.
     logic signed [7:0] query [0:LANES-1][0:MAX_WORDS-1][0:15];
     // score and exponential rows: one word per key, all lanes (block RAM)
     logic [SCORE_WIDTH*LANES-1:0] score_ram [0:MAX_TOKENS-1];
@@ -376,8 +449,7 @@ module attention_engine
     // read-modify-write one word per clock, the first key overwrites
     localparam integer WORD_BITS = (MAX_WORDS > 1) ? $clog2(MAX_WORDS) : 1;
     localparam integer ROW_BITS = ACCUMULATOR_WIDTH * 16 * LANES;
-    logic [ROW_BITS-1:0] accumulator_ram [0:MAX_WORDS-1];
-    logic [ROW_BITS-1:0] accumulator_old, accumulator_new, accumulator_out;
+    logic [ROW_BITS-1:0] accumulator_out;
 
     // pipelines (L = READ_LATENCY):
     //   buffer reads   c0 issue; cL Q/K/V word (mac_array operands); L+1 products;
@@ -388,7 +460,14 @@ module attention_engine
     //                  e5 table value -> exponent row, row total
     //   context out    w1 sums selected; w2 products; w3 rounded; w4 clamped -> word
     localparam int L = READ_LATENCY;
-    localparam int D = L + 2;
+`ifndef SYNTHESIS
+    initial if(PROBABILITY_INPUT_CAPTURE!=0 && (PROBABILITY_PIPELINE==0 || READ_LATENCY<5))
+        $fatal(1,"Probability input capture requires pipeline and read latency>=5");
+    initial if(PROBABILITY_PIPELINE!=0 && READ_LATENCY<4)
+        $fatal(1,"Probability pipeline requires read latency>=4");
+`endif
+    localparam int P = L + MAC_LATENCY;
+    localparam int D = P + (PIPELINED_DOT != 0 ? 4 : 1);
     localparam int EXP_DEPTH = 5;
     localparam int WRITE_DEPTH = 4;
     logic [D:1] s_q, s_k, s_v;
@@ -402,8 +481,8 @@ module attention_engine
 
     always_ff @(posedge clk) begin
         score_word <= score_ram[key_reg];
-        exponent_word <= exponent_ram[s_key[L-2]];
-        if (score_write) score_ram[s_key[L+2]] <= score_write_word;
+        exponent_word <= exponent_ram[s_key[(PROBABILITY_INPUT_CAPTURE!=0) ? L-4 : (PROBABILITY_PIPELINE!=0) ? L-3 : L-2]];
+        if (score_write) score_ram[s_key[D]] <= score_write_word;
         if (exponent_write) exponent_ram[e_key[EXP_DEPTH]] <= exponent_write_word;
     end
 
@@ -438,17 +517,29 @@ module attention_engine
         for (int i = 2; i <= EXP_DEPTH; i++) e_key[i] <= e_key[i-1];
     end
 
+    assign mac_issue = s_k[L] || s_v[L];
     assign pipeline_busy = |{s_q, s_k, s_v, e_valid, w_stage};
 
     // probabilities of key s_key[L] for every lane (P.V operands), from the exponent
     // row read a clock earlier
     logic [8:0] probability [0:LANES-1];
-    (* use_dsp = "no" *) logic [24:0] scaled [0:LANES-1];   // 16 x 9 bits, in LUTs
-    always_ff @(posedge clk) begin
-        for (int c = 0; c < LANES; c++) begin
+    if (PROBABILITY_INPUT_CAPTURE!=0) begin : gen_probability_input
+        for(genvar c=0;c<LANES;c++) begin : gen_lane
+            attention_probability_input probability_inst(.clk,.reset,.in_valid(1'b1),
+                .exponent(exponent_word[16*c +: 16]),.reciprocal(reciprocal[c]),
+                .out_valid(),.probability(probability[c]));
+        end
+    end else if (PROBABILITY_PIPELINE!=0) begin : gen_probability_pipeline
+        for(genvar c=0;c<LANES;c++) begin : gen_lane
+            attention_probability probability_inst(.clk,.reset,.in_valid(1'b1),
+                .exponent(exponent_word[16*c +: 16]),.reciprocal(reciprocal[c]),
+                .out_valid(),.probability(probability[c]));
+        end
+    end else begin : gen_probability_default
+        always_ff @(posedge clk) for(int c=0;c<LANES;c++)begin
             logic [24:0] value;
-            value = (25'(exponent_word[16*c +: 16]) * 25'(reciprocal[c]) + 25'd32768) >> 16;
-            probability[c] <= (value > 25'd255) ? 9'd255 : {1'b0, value[7:0]};
+            value=(25'(exponent_word[16*c +: 16])*25'(reciprocal[c])+25'd32768)>>16;
+            probability[c]<=value>255 ? 9'd255 : {1'b0,value[7:0]};
         end
     end
 
@@ -465,27 +556,56 @@ module attention_engine
     // head's words at L+2
     logic signed [SCORE_WIDTH-1:0] dot [0:LANES-1];
     logic signed [SCORE_WIDTH-1:0] partial_next [0:LANES-1];
-    always_ff @(posedge clk) begin
-        for (int c = 0; c < LANES; c++) begin
-            logic signed [SCORE_WIDTH-1:0] sum;
-            sum = '0;
-            for (int r = 0; r < 16; r++) begin
-                sum = sum + SCORE_WIDTH'(mac_product[c][r]);
+    if (PIPELINED_DOT != 0) begin : gen_dot_pipeline
+        // Truncation commutes with modular addition; use the shared 24-bit sum.
+        for (genvar c=0;c<LANES;c++) assign dot[c] = SCORE_WIDTH'(mac_dot[c]);
+    end else begin : gen_dot_legacy
+        always_ff @(posedge clk) begin
+            for (int c = 0; c < LANES; c++) begin
+                logic signed [SCORE_WIDTH-1:0] sum;
+                sum = '0;
+                for (int r = 0; r < 16; r++) sum = sum + SCORE_WIDTH'(mac_product[c][r]);
+                dot[c] <= sum;
             end
-            dot[c] <= sum;
         end
     end
     always_comb begin
         for (int c = 0; c < LANES; c++) begin
-            partial_next[c] = (s_word[L+2] == '0) ? dot[c] : partial[c] + dot[c];
+            partial_next[c] = (s_word[D] == '0) ? dot[c] : partial[c] + dot[c];
         end
     end
 
     // exponentials of key e_key (score row arrived at e1), every lane
+    (* keep = (FABRIC_SCORE_DISTANCE!=0 ? "true" : "false"), dont_touch = (FABRIC_SCORE_DISTANCE!=0 ? "true" : "false") *)
     logic [SCORE_WIDTH-1:0] e_distance [0:LANES-1];
     logic [SCORE_WIDTH+17-1:0] e_product [0:LANES-1];      // one DSP48E1 per lane
     logic [SCORE_WIDTH+17-1:0] e_index [0:LANES-1];
     logic [15:0] exponent_value [0:LANES-1];
+    if (EXP_TABLE_IN_BRAM != 0) begin : gen_exp_bram
+        for (genvar c = 0; c < LANES; c++) begin : gen_lane
+            (* ram_style = "block" *) logic [15:0] exp_table [0:EXP_STEPS-1];
+            logic [15:0] table_value;
+            logic zero;
+            // Keep the saturation flag parallel to the synchronous RAM read.
+            // Both reach e5; no change to EXP_DEPTH, row tags or total updates.
+            always_ff @(posedge clk) begin
+                if (state_reg == TABLE_WRITE)
+                    exp_table[{beat_reg[4:0], word_reg[2:0]}] <= table_beat[16 * word_reg[2:0] +: 16];
+                table_value <= exp_table[e_index[c][7:0]];
+                zero <= e_index[c] >= EXP_STEPS - 1;
+            end
+            assign exponent_value[c] = zero ? 16'd0 : table_value;
+        end
+    end else begin : gen_exp_lut
+        (* ram_style = "distributed" *) logic [15:0] exp_table [0:LANES-1][0:EXP_STEPS-1];
+        always_ff @(posedge clk) begin
+            for (int c = 0; c < LANES; c++) begin
+                if (state_reg == TABLE_WRITE)
+                    exp_table[c][{beat_reg[4:0], word_reg[2:0]}] <= table_beat[16 * word_reg[2:0] +: 16];
+                exponent_value[c] <= (e_index[c] >= EXP_STEPS - 1) ? 16'd0 : exp_table[c][e_index[c][7:0]];
+            end
+        end
+    end
     always_ff @(posedge clk) begin
         for (int c = 0; c < LANES; c++) begin
             logic [SCORE_WIDTH+17-1:0] index;
@@ -496,8 +616,38 @@ module attention_engine
                 index = ((index >> (softmax_shift - 6'd1)) + 1) >> 1;
             end
             e_index[c] <= index;
-            exponent_value[c] <= (e_index[c] >= EXP_STEPS - 1) ? 16'd0 : exp_table[c][e_index[c][7:0]];
         end
+    end
+
+    if (LOCAL_QUERY_REGISTERS != 0) begin : gen_query_distribution
+        // Register decoded write enables beside the data. A global delayed word
+        // index feeding thousands of query FF clock enables was the routed
+        // bottleneck; each static lane/word now has a local registered enable.
+        for (genvar g = 0; g < (LANES + 3) / 4; g++) begin : gen_group
+            (* keep = "true", max_fanout = 8 *) logic [127:0] data_reg;
+            always_ff @(posedge clk)
+                if (s_q[L] && int'(s_lane[L]) / 4 == g) data_reg <= q_data;
+            for (genvar c = g*4; c < (g+1)*4 && c < LANES; c++) begin : gen_lane
+                for (genvar w = 0; w < MAX_WORDS; w++) begin : gen_word
+                    (* keep = "true", max_fanout = 16 *) logic [7:0] write_enable_reg;
+                    for (genvar part = 0; part < 8; part++) begin : gen_control
+                        always_ff @(posedge clk) begin
+                            if (reset) write_enable_reg[part] <= 1'b0;
+                            else write_enable_reg[part] <= s_q[L] &&
+                                s_lane[L] == LANE_WIDTH'(c) && s_word[L] == 8'(w);
+                        end
+                        always_ff @(posedge clk)
+                            if (write_enable_reg[part])
+                                for (int r = part*2; r < part*2+2; r++)
+                                    query[c][w][r] <= $signed(data_reg[8*r +: 8]);
+                    end
+                end
+            end
+        end
+    end else begin : gen_query_default
+        always_ff @(posedge clk)
+            if (s_q[L]) for (int r = 0; r < 16; r++)
+                query[s_lane[L]][s_word[L]][r] <= $signed(q_data[8*r +: 8]);
     end
 
     always_ff @(posedge clk) begin
@@ -505,21 +655,12 @@ module attention_engine
             table_beat <= read_data;
             table_last <= read_last;
         end
-        if (state_reg == TABLE_WRITE) begin
-            for (int c = 0; c < LANES; c++) begin
-                exp_table[c][{beat_reg[4:0], word_reg[2:0]}] <= table_beat[16 * word_reg[2:0] +: 16];
-            end
-        end
-        if (s_q[L]) begin
-            for (int r = 0; r < 16; r++) begin
-                query[s_lane[L]][s_word[L]][r] <= $signed(q_data[8*r +: 8]);
-            end
-        end
-        if (s_k[L+2]) begin
+
+        if (s_k[D]) begin
             for (int c = 0; c < LANES; c++) begin
                 partial[c] <= partial_next[c];
-                if (s_last[L+2]) begin
-                    if (s_key[L+2] == '0 || partial_next[c] > maximum[c]) begin
+                if (s_last[D]) begin
+                    if (s_key[D] == '0 || partial_next[c] > maximum[c]) begin
                         maximum[c] <= partial_next[c];
                     end
                 end
@@ -535,22 +676,90 @@ module attention_engine
         end
     end
 
-    assign accumulator_old = accumulator_ram[s_word[L+1][WORD_BITS-1:0]];
-    assign accumulator_out = accumulator_ram[word_reg[WORD_BITS-1:0]];
-
-    always_comb begin
-        for (int c = 0; c < LANES; c++) begin
-            for (int r = 0; r < 16; r++) begin
-                accumulator_new[ACCUMULATOR_WIDTH * (16 * c + r) +: ACCUMULATOR_WIDTH] =
-                    ((s_key[L+1] == '0) ? ACCUMULATOR_WIDTH'(0)
-                                    : accumulator_old[ACCUMULATOR_WIDTH * (16 * c + r) +: ACCUMULATOR_WIDTH])
-                    + ACCUMULATOR_WIDTH'(mac_product[c][r]);
+    if (LOCAL_ACCUMULATOR_CONTROLS != 0) begin : gen_local_accumulators
+        // Two dimensions per bank: local address/first-key/write controls replace
+        // the shared word-index and valid nets that had tens of thousands of loads.
+        // Capture from P-1 in parallel with the existing P tags; no added MAC or
+        // read-modify-write latency, including consecutive updates to one-word heads.
+        for (genvar c = 0; c < LANES; c++) begin : gen_lane
+            for (genvar b = 0; b < 8; b++) begin : gen_bank
+                localparam integer BANK_BITS = 2 * ACCUMULATOR_WIDTH;
+                (* keep = "true", max_fanout = 256 *) logic [WORD_BITS-1:0] read_word_reg, output_word_reg;
+                (* keep = "true", max_fanout = 64 *) logic first_key_reg;
+                logic [BANK_BITS-1:0] old_value, new_value;
+                always_ff @(posedge clk) begin
+                    // Shared-read RAM changes its registered address only after
+                    // all weighted updates drain. Capture word_next on entry
+                    // to WRITE, so its first context read keeps existing timing.
+                    if (LOCAL_ACCUMULATOR_CONTROLS == 3 &&
+                        (state_next == WRITE || state_reg == WRITE_FLUSH))
+                        read_word_reg <= word_next[WORD_BITS-1:0];
+                    else read_word_reg <= s_word[P-1][WORD_BITS-1:0];
+                    first_key_reg <= s_key[P-1] == '0;
+                    // Same next value and edge as word_reg; output reads keep
+                    // their existing latency without a global wide-mux selector.
+                    output_word_reg <= reset ? '0 : word_next[WORD_BITS-1:0];
+                end
+                for (genvar r = 0; r < 2; r++) begin : gen_dimension
+                    assign new_value[r*ACCUMULATOR_WIDTH +: ACCUMULATOR_WIDTH] =
+                        (first_key_reg ? ACCUMULATOR_WIDTH'(0) : old_value[r*ACCUMULATOR_WIDTH +: ACCUMULATOR_WIDTH])
+                        + ACCUMULATOR_WIDTH'(mac_product[c][2*b+r]);
+                end
+                if (LOCAL_ACCUMULATOR_CONTROLS == 2 || LOCAL_ACCUMULATOR_CONTROLS == 3) begin : gen_lutram
+                    // Two asynchronous reads, one synchronous dynamic write.
+                    // No data reset: first-key clears each consumed accumulator.
+                    // Tags are captured at P-1 as in mode 1; consecutive writes
+                    // to a one-word head still see the prior edge's updated sum.
+                    (* ram_style = "distributed" *) logic [BANK_BITS-1:0] memory [0:MAX_WORDS-1];
+                    (* keep = "true", max_fanout = 64 *) logic write_valid_reg;
+                    always_ff @(posedge clk) begin
+                        write_valid_reg <= !reset && s_v[P-1];
+                        if (write_valid_reg) memory[read_word_reg] <= new_value;
+                    end
+                    assign old_value = memory[read_word_reg];
+                    if (LOCAL_ACCUMULATOR_CONTROLS == 3) begin : gen_shared_read
+                        assign accumulator_out[BANK_BITS * (8*c+b) +: BANK_BITS] = old_value;
+`ifndef SYNTHESIS
+                        always @(posedge clk)
+                            if (!reset && write_valid_reg &&
+                                (state_reg == WRITE || state_reg == WRITE_FLUSH))
+                                $fatal(1,"Shared accumulator read switched before writes drained");
+`endif
+                    end else begin : gen_dual_read
+                        assign accumulator_out[BANK_BITS * (8*c+b) +: BANK_BITS] = memory[output_word_reg];
+                    end
+                end else begin : gen_registers
+                    logic [BANK_BITS-1:0] memory [0:MAX_WORDS-1];
+                    (* keep = "true", max_fanout = 64 *) logic [MAX_WORDS-1:0] write_enable_reg;
+                    always_ff @(posedge clk)
+                        for (int w = 0; w < MAX_WORDS; w++)
+                            write_enable_reg[w] <= !reset && s_v[P-1] && s_word[P-1] == 8'(w);
+                    assign old_value = memory[read_word_reg];
+                    for (genvar w = 0; w < MAX_WORDS; w++) begin : gen_word
+                        always_ff @(posedge clk)
+                            if (write_enable_reg[w]) memory[w] <= new_value;
+                    end
+                    assign accumulator_out[BANK_BITS * (8*c+b) +: BANK_BITS] = memory[output_word_reg];
+                end
             end
         end
-    end
-
-    always_ff @(posedge clk) begin
-        if (s_v[L+1]) accumulator_ram[s_word[L+1][WORD_BITS-1:0]] <= accumulator_new;
+    end else begin : gen_default_accumulators
+        logic [ROW_BITS-1:0] memory [0:MAX_WORDS-1];
+        logic [ROW_BITS-1:0] old_value, new_value;
+        assign old_value = memory[s_word[P][WORD_BITS-1:0]];
+        assign accumulator_out = memory[word_reg[WORD_BITS-1:0]];
+        always_comb begin
+            for (int c = 0; c < LANES; c++) begin
+                for (int r = 0; r < 16; r++) begin
+                    new_value[ACCUMULATOR_WIDTH * (16 * c + r) +: ACCUMULATOR_WIDTH] =
+                        ((s_key[P] == '0) ? ACCUMULATOR_WIDTH'(0)
+                                        : old_value[ACCUMULATOR_WIDTH * (16 * c + r) +: ACCUMULATOR_WIDTH])
+                        + ACCUMULATOR_WIDTH'(mac_product[c][r]);
+                end
+            end
+        end
+        always_ff @(posedge clk)
+            if (s_v[P]) memory[s_word[P][WORD_BITS-1:0]] <= new_value;
     end
 
     // one divider per lane: r = 2^24 / total
@@ -575,7 +784,7 @@ module attention_engine
     assign dividers_done = divider_done[0];      // all lanes finish together
 
     always_comb begin
-        score_write = s_k[L+2] && s_last[L+2];
+        score_write = s_k[D] && s_last[D];
         exponent_write = e_valid[EXP_DEPTH];
         for (int c = 0; c < LANES; c++) begin
             score_write_word[SCORE_WIDTH*c +: SCORE_WIDTH] = partial_next[c];
@@ -590,6 +799,7 @@ module attention_engine
     logic [127:0] w_data;
     logic [1:0] w_part [1:WRITE_DEPTH];
     logic [BUFFER_ADDRESS_WIDTH-1:0] w_word_address [1:WRITE_DEPTH];
+    (* keep = (FABRIC_CONTEXT_CAPTURE!=0 ? "true" : "false"), dont_touch = (FABRIC_CONTEXT_CAPTURE!=0 ? "true" : "false") *)
     logic signed [ACCUMULATOR_WIDTH-1:0] w_sum [0:CONTEXT_LANES-1];
     logic signed [ACCUMULATOR_WIDTH+18-1:0] w_product [0:CONTEXT_LANES-1];
     logic signed [ACCUMULATOR_WIDTH+18-1:0] w_rounded [0:CONTEXT_LANES-1];
@@ -606,7 +816,7 @@ module attention_engine
 
     always_ff @(posedge clk) begin
         w_part[1] <= part_reg;
-        w_word_address[1] <= BUFFER_ADDRESS_WIDTH'((base_reg + 8'(lane_reg)) * row_words_reg) + head_word;
+        w_word_address[1] <= q_address;
         for (int i = 2; i <= WRITE_DEPTH; i++) begin
             w_part[i] <= w_part[i-1];
             w_word_address[i] <= w_word_address[i-1];

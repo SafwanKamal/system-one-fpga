@@ -1,0 +1,20 @@
+[Unit]
+Description=Persistent Qwen v9d ARM service with per-request weight verification
+After=local-fs.target
+
+[Service]
+Type=simple
+User=root
+RuntimeDirectory=sysone-arm-v15
+RuntimeDirectoryMode=0700
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 -u /var/lib/sysone/benchmarks/persistent-arm-service-v15/bundle/scripts/v2/qwen_arm_service_v15.py serve --package /var/lib/sysone/qwen-fpga-decoder-v9d-candidate1 --socket /run/sysone-arm-v15/api.sock --ready /run/sysone-arm-v15/ready.json
+Restart=no
+KillSignal=SIGTERM
+# Drain in-flight hardware; never escalate a stop into an automatic SIGKILL.
+TimeoutStopSec=infinity
+SendSIGKILL=no
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -34,12 +34,13 @@ set fpga_heads [expr {[llength $argv] > 2 ? [lindex $argv 2] : 0}]
 
 set configs [dict create \
     both      [list MAX_HIDDEN=384 MAX_HEAD_DIM=64 TILE_OUT=12] \
+    both-pipe [list MAX_HIDDEN=384 MAX_HEAD_DIM=64 TILE_OUT=12 MAC_INPUT_REGISTERS=1] \
     minilm    [list MAX_HIDDEN=384 MAX_HEAD_DIM=32 TILE_OUT=12] \
     bert-mini [list MAX_HIDDEN=256 MAX_HEAD_DIM=64 TILE_OUT=12] \
     both-t24  [list MAX_HIDDEN=384 MAX_HEAD_DIM=64 TILE_OUT=24 MAC_PACK=1 ATTENTION_LANES=12 \
                     ACCUMULATORS_IN_LUTS=1 DRAIN_LANES=2]]
 if {![dict exists $configs $config]} {
-    error "unknown configuration '$config' (both, minilm, bert-mini, both-t24)"
+    error "unknown configuration '$config' ([join [dict keys $configs] {, }])"
 }
 set generics [concat [dict get $configs $config] [list MAX_TOKENS=128 FPGA_HEADS=$fpga_heads]]
 

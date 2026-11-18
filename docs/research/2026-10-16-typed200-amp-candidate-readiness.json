@@ -1,0 +1,32 @@
+{
+  "schema": "sysone.typed200.amp-candidate-readiness.v1",
+  "candidate": "build/v2/typed200-amp-candidate-v1",
+  "deployable": false,
+  "target_modified": false,
+  "component_only": true,
+  "gates": {
+    "jtag_enumerated": true,
+    "independent_recovery_exercised": false,
+    "authenticated_live_platform_inventory": false,
+    "linux_compatible_ps_configuration_reviewed": false,
+    "requester_filter_simulation": true,
+    "requester_filter_induction_enabled_and_default_deny": true,
+    "actual_r5_user_prot_and_source_provenance": false,
+    "requester_filter_integrated_without_bypass": false,
+    "memory_tcm_and_linux_dma_enforcement": false,
+    "selective_platform_management_and_mmio_policy": false,
+    "amp_mailbox_reservation_and_service": false,
+    "composed_numerical_and_control_cycle_regression": false,
+    "new_physical_sta_drc_cdc_exceptions": false,
+    "supervised_amp_target_qualification": false
+  },
+  "source_sha256": "d5ed2005fd24c78d1adb438db7339c01b856faa200125d858b2e2fa7a6d6d905",
+  "evidence": [
+    "build/v2/typed200-amp-candidate-v1/jtag-inventory.log",
+    "build/v2/typed200-amp-candidate-v1/ssh-discovery.json",
+    "build/v2/typed200-amp-candidate-v1/openssh-readonly-probe.log",
+    "build/v2/typed200-amp-candidate-v1/filter-sim-v1/receipt.json",
+    "build/v2/typed200-amp-candidate-v1/filter-formal-v2/receipt.json"
+  ],
+  "claim": "Locally verified requester-filter component; AMP ownership and physical timing are not qualified"
+}

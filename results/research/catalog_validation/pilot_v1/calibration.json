@@ -1,0 +1,233 @@
+[
+  {
+    "decoder": "physics",
+    "selector": "action_oracle",
+    "known_only_brier": 0.14876000637256787,
+    "known_only_ece": 0.1409515630826354,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "eig",
+    "known_only_brier": 0.13568086079982045,
+    "known_only_ece": 0.13517753839492797,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "fixed",
+    "known_only_brier": 0.1464658505330127,
+    "known_only_ece": 0.13908330656588078,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "fixed1",
+    "known_only_brier": 0.15208446606420847,
+    "known_only_ece": 0.15233087930828335,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "overlap",
+    "known_only_brier": 0.12776572027785413,
+    "known_only_ece": 0.13192891582846644,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "passive10",
+    "known_only_brier": 0.15174877350487617,
+    "known_only_ece": 0.14585111394524577,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "passive8",
+    "known_only_brier": 0.18156700526243696,
+    "known_only_ece": 0.17230019554495812,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "persistent",
+    "known_only_brier": 0.13734038080428707,
+    "known_only_ece": 0.1371059324964881,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "random0",
+    "known_only_brier": 0.13988757988357353,
+    "known_only_ece": 0.13395863365381955,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "random1",
+    "known_only_brier": 0.14289407670929463,
+    "known_only_ece": 0.13699407279491427,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "physics",
+    "selector": "random2",
+    "known_only_brier": 0.1415832031848402,
+    "known_only_ece": 0.13306078851222994,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "action_oracle",
+    "known_only_brier": 0.005942773818969726,
+    "known_only_ece": 0.018143717447916534,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "eig",
+    "known_only_brier": 0.006704137590196398,
+    "known_only_ece": 0.01751627604166679,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "fixed",
+    "known_only_brier": 0.006350513034396701,
+    "known_only_ece": 0.014402669270833234,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "fixed1",
+    "known_only_brier": 0.007011147605048287,
+    "known_only_ece": 0.01626383463541672,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "overlap",
+    "known_only_brier": 0.005105539957682291,
+    "known_only_ece": 0.016054687499999967,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "passive10",
+    "known_only_brier": 0.008613341649373371,
+    "known_only_ece": 0.017136230468749892,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "passive8",
+    "known_only_brier": 0.01963582780626085,
+    "known_only_ece": 0.02961263020833337,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "persistent",
+    "known_only_brier": 0.007031909094916449,
+    "known_only_ece": 0.014926757812500021,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "random0",
+    "known_only_brier": 0.006703709496392143,
+    "known_only_ece": 0.01199055989583333,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "random1",
+    "known_only_brier": 0.005940206315782335,
+    "known_only_ece": 0.014308268229166716,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "random2",
+    "known_only_brier": 0.004312758975558811,
+    "known_only_ece": 0.012078450520833206,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "action_oracle",
+    "known_only_brier": 0.005438318252563476,
+    "known_only_ece": 0.017077636718750146,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "eig",
+    "known_only_brier": 0.006704137590196398,
+    "known_only_ece": 0.01751627604166679,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "fixed",
+    "known_only_brier": 0.009341118070814345,
+    "known_only_ece": 0.016423339843749968,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "fixed1",
+    "known_only_brier": 0.006765228907267253,
+    "known_only_ece": 0.015930175781249944,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "overlap",
+    "known_only_brier": 0.005105539957682291,
+    "known_only_ece": 0.016054687499999967,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "passive10",
+    "known_only_brier": 0.008613341649373371,
+    "known_only_ece": 0.017136230468749892,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "passive8",
+    "known_only_brier": 0.01963582780626085,
+    "known_only_ece": 0.02961263020833337,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "persistent",
+    "known_only_brier": 0.007031909094916449,
+    "known_only_ece": 0.014926757812500021,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "random0",
+    "known_only_brier": 0.006703709496392143,
+    "known_only_ece": 0.01199055989583333,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "random1",
+    "known_only_brier": 0.005940206315782335,
+    "known_only_ece": 0.014308268229166716,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "random2",
+    "known_only_brier": 0.004312758975558811,
+    "known_only_ece": 0.012078450520833206,
+    "note": "Not calibrated probabilities of an unknown mechanism."
+  }
+]

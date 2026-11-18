@@ -1,0 +1,21 @@
+# System One FPGA project — state as of 2026-11-08 (summary for literature agents)
+
+Academic project (Texas Tech). Two agents (Claude, Codex) work on it with a human PI.
+
+## Lineage
+1. **v1 (Sep–Oct 2026)**: tiny "System One" intent classifier (hashed embedding bag + MLP, INT4/INT8, CLINC150, 151 classes incl. out-of-scope) in SystemVerilog on a Nexys 4 DDR (Artix-7). Bit-exact against an integer golden model on all 5,500 test utterances; raw Ethernet; 0.58 ms host round trip; calibrated logits (temperature folded into integer multiplier); OOS threshold rule; RoBERTa-distilled student (0.931 in-scope). Cascade argument: at 50% coverage board answers with 97.4% accuracy.
+2. **v2 encoder**: chained multi-task transformer encoder RTL (MiniLM-L6, intent/slots/multi-turn/pairs) with weights in DDR, on Nexys 4 DDR and KR260 (Zynq UltraScale+ K26). 200 MHz H1024 candidate hardware-qualified. Large "typed output" assurance work: R5 real-time core ownership (AMP), typed decisions, ownership/isolation of the output path, timing-contract qualification.
+3. **Decoder (current main line)**: Qwen3-0.6B Q8_0 (GGUF) generative LLM running with ALL model arithmetic on the KR260 PL fabric (HLS decoder), ARM A53 does tokenization, DMA, hashing, JSON validation only. 125 MHz core / 250 MHz memory, 256-bit weight stream at ~95% of a 4 GB/s HP port (decode is weight-bandwidth bound). Q8_0 weights, symmetric INT8 per-32 activations, INT32 dots, FP32 norm/RoPE/attention/residuals. Prefill batches 8 (then 2-token attention scoring), tiled attention with online softmax, BF16 K/V cache with 2048-token context (v9e). Bit-exact C-sim and board causal fixtures against independent references (exp from hls::expf oracle).
+   - Cold tool-call milestone (62 prompt / 16 output tokens, includes full SHA-256 verification of 639 MB resident weights + tokenizer): 92 s → 44.6 s → 18.9 s → 9.23 s (v8) → ~6.9 s (v9e). Decode ~125 ms/token; LM head 0.7 s; startup ~2.7 s dominated by weight-integrity SHA on ARM.
+   - Routed: LUT ~60%, CLB 92–96%, BRAM 78%, URAM 62.5%, DSP 41%.
+   - Persistent ARM service (v15, −19%), sealed read-only weight mapping + startup-only verification + exact prefix-cache reuse (v16, −44%); prefix caching reduces evaluated prompt tokens 70.7%, prefill 65%, with 328/328 exact generated-ID sequences matching cold controls (FPGA is bit-exact deterministic; a CPU llama-server baseline was NOT bit-exact under caching — 16 formatting differences due to batch-shape-dependent logits).
+   - Benchmarks: structured JSON tool calls; "JSON state vs full conversation history" retention study (JSON state 129 tokens vs history overflowing 1024 context; 89.5% fewer input tokens); closed-loop chain pilots; BFCL subsets.
+4. **Application focus (Nov 2026)**: capability-first research for (a) industrial *maintenance planning* (structured plans from operator/sensor text; template-derived benchmark: fresh/120, crossed-conditional/64) and (b) general tool use (BFCL /200). Software comparisons: Qwen3-1.7B Q4 (15/120 fresh, 0/64 conditional, 172/200 BFCL), Qwen3-4B Q4, Qwen3-8B Q2_K. All complete-plan configs poor; rules engine 120/120. Decision heads over frozen hidden states (NanoJev-like), Laya, FunctionGemma, MiniLM, TF-IDF compared. Interactive proposal path with supervised action head: 41/120. Theme: "bounded reliability" — calibrated abstention, typed outputs, verified execution, no unverified tool execution.
+5. **Energy**: methods/feasibility study written (KR260 SOM_5V0 rail telemetry, MLPerf-Power-style boundaries), but NO energy measured yet.
+
+## Distinctive properties so far
+- Full-fabric generative LLM on a small, cheap (~$350) Zynq UltraScale+ board (no NPU, no GPU), with complete arithmetic determinism and bit-exact references.
+- Integrity: weight SHA verification, sealed read-only mappings, exclusive inference lease, evidence seals for every experiment.
+- Exact prefix reuse with bit-identical outputs; JSON state compaction for agent memory.
+- Strong evidence culture (every claim bounded) but no peer-reviewed publication yet; looking for a concrete niche.
+- Weaknesses: small model capability (0.6B) for planning; no energy numbers; no throughput/batching; decode bandwidth bound at ~8 tok/s; single board.

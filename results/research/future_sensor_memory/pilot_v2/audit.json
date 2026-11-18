@@ -1,0 +1,10 @@
+{
+  "audited_archives": 924,
+  "serialized_budget_checks_passed": 924,
+  "saved_answer_replays_passed": 924,
+  "independent_reference_answers": 6912,
+  "query_log_has_no_duplicate_configurations": true,
+  "code_matches_pretest_freeze_and_selection": true,
+  "all_test_query_seeds_match_serial": true,
+  "audit_code_sha256": "1afec631fb093f10271b928a38db714b60d0412398fa4bc41f9b5559637a5775"
+}

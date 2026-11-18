@@ -1,0 +1,270 @@
+{
+  "verified_utc": "2026-10-15T20:13:35.156424+00:00",
+  "scope": "Immutable functional source/test evidence for two independent typed200_flush successors",
+  "candidates": {
+    "observe": {
+      "golden_words": 5400,
+      "paired_completions": 14,
+      "paired_launches": 14,
+      "every_cycle_raw_counts_match": true,
+      "external_axi_output_cycles_match": true,
+      "negative_deadline_error_drain_cases_pass": true,
+      "formal_receipt": "build/v2/typed200-observe-formal-v1/receipt.json",
+      "normal_cases": [
+        {
+          "case": 0,
+          "tokens": 1,
+          "encoder_cycles": 1845556,
+          "request_cycles": 1845641,
+          "emulated_publication_age": 1845708
+        },
+        {
+          "case": 1,
+          "tokens": 2,
+          "encoder_cycles": 1859135,
+          "request_cycles": 1859249,
+          "emulated_publication_age": 1859316
+        },
+        {
+          "case": 2,
+          "tokens": 3,
+          "encoder_cycles": 1873759,
+          "request_cycles": 1873917,
+          "emulated_publication_age": 1873984
+        },
+        {
+          "case": 3,
+          "tokens": 4,
+          "encoder_cycles": 1888574,
+          "request_cycles": 1888767,
+          "emulated_publication_age": 1888834
+        },
+        {
+          "case": 4,
+          "tokens": 5,
+          "encoder_cycles": 1902387,
+          "request_cycles": 1902611,
+          "emulated_publication_age": 1902678
+        },
+        {
+          "case": 5,
+          "tokens": 12,
+          "encoder_cycles": 2004169,
+          "request_cycles": 2004649,
+          "emulated_publication_age": 2004716
+        },
+        {
+          "case": 6,
+          "tokens": 64,
+          "encoder_cycles": 3831441,
+          "request_cycles": 3833757,
+          "emulated_publication_age": 3833824
+        },
+        {
+          "case": 7,
+          "tokens": 128,
+          "encoder_cycles": 7961537,
+          "request_cycles": 7966029,
+          "emulated_publication_age": 7966096
+        }
+      ],
+      "tested_stage": {
+        "staged_files_rehashed": 51,
+        "all_match": true
+      },
+      "non_compiled_documentation_updates": {
+        "README.md": {
+          "tested_sha256": "5ea9750f9ec7493c9658ead815b7cc82119fcd309eff9faf8106cfd23c104c4d",
+          "current_sha256": "6c316926b36ad45c351c88a743bfa20fee73a059fbe15e8696d58083f4c00000",
+          "compiled": false
+        }
+      }
+    },
+    "lut_capture": {
+      "golden_words": 5400,
+      "paired_completions": 14,
+      "paired_launches": 14,
+      "every_cycle_raw_counts_match": true,
+      "external_axi_output_cycles_match": true,
+      "negative_deadline_error_drain_cases_pass": true,
+      "formal_receipt": "build/v2/typed200-lut-capture-formal-v2/receipt.json",
+      "normal_cases": [
+        {
+          "case": 0,
+          "tokens": 1,
+          "encoder_cycles": 1845556,
+          "request_cycles": 1845641,
+          "emulated_publication_age": 1845708
+        },
+        {
+          "case": 1,
+          "tokens": 2,
+          "encoder_cycles": 1859135,
+          "request_cycles": 1859249,
+          "emulated_publication_age": 1859316
+        },
+        {
+          "case": 2,
+          "tokens": 3,
+          "encoder_cycles": 1873759,
+          "request_cycles": 1873917,
+          "emulated_publication_age": 1873984
+        },
+        {
+          "case": 3,
+          "tokens": 4,
+          "encoder_cycles": 1888574,
+          "request_cycles": 1888767,
+          "emulated_publication_age": 1888834
+        },
+        {
+          "case": 4,
+          "tokens": 5,
+          "encoder_cycles": 1902387,
+          "request_cycles": 1902611,
+          "emulated_publication_age": 1902678
+        },
+        {
+          "case": 5,
+          "tokens": 12,
+          "encoder_cycles": 2004169,
+          "request_cycles": 2004649,
+          "emulated_publication_age": 2004716
+        },
+        {
+          "case": 6,
+          "tokens": 64,
+          "encoder_cycles": 3831441,
+          "request_cycles": 3833757,
+          "emulated_publication_age": 3833824
+        },
+        {
+          "case": 7,
+          "tokens": 128,
+          "encoder_cycles": 7961537,
+          "request_cycles": 7966029,
+          "emulated_publication_age": 7966096
+        }
+      ],
+      "tested_stage": {
+        "staged_files_rehashed": 52,
+        "all_match": true
+      },
+      "non_compiled_documentation_updates": {
+        "README.md": {
+          "tested_sha256": "5ea9750f9ec7493c9658ead815b7cc82119fcd309eff9faf8106cfd23c104c4d",
+          "current_sha256": "e3f6c8a45cec0e056061ac9a8d5e56147ab6f96bf2ac8d97225103bc37199f0b",
+          "compiled": false
+        }
+      }
+    }
+  },
+  "lut_all_256_bytes_match_during_valid_drain": true,
+  "numerical_contract_changed": false,
+  "deadline_epoch_logic_changed": false,
+  "r5_proposals_emulated": true,
+  "r5_target_executed": false,
+  "physical_benefit_established": false,
+  "hardware_qualified": false,
+  "wcet_established": false,
+  "source_sha256": {
+    "rtl/v2/candidates/typed200_observe/candidate.json": "98acc66ab536334ee772175f27f3d628389e1ef57cceb0ce764ad2e471a00cfc",
+    "rtl/v2/candidates/typed200_observe/README.md": "6c316926b36ad45c351c88a743bfa20fee73a059fbe15e8696d58083f4c00000",
+    "rtl/v2/candidates/typed200_observe/common/activation_read_capture.sv": "6717c42457ac60ec7bb5d333af6df655b32a06269287b40beae391678393ee06",
+    "rtl/v2/candidates/typed200_observe/common/attention_probability.sv": "8f230ccd2412aa6ff5fd95ae07eb51fc1dbd62bbcdfcf1d1058daed06d9bb45f",
+    "rtl/v2/candidates/typed200_observe/common/attention_probability_input.sv": "1f6379faaa651217d1afd25c1fc40e3c6e65a9ed16532ef7dd7030f9a9719381",
+    "rtl/v2/candidates/typed200_observe/common/embed_row_address_dsp.sv": "62b76bb73f2a2e1fbb46b5620f9dcf61eee7c3bd36b1e7027c06f2d288d11061",
+    "rtl/v2/candidates/typed200_observe/common/linear_drain_select.sv": "71d8942e980d2749ad0b1d239ffa27ce2dd9f798c24d934c280f4660e4226456",
+    "rtl/v2/candidates/typed200_observe/common/observed_cycle_counter.sv": "d284d4b120f3e3a0621875d8b0c1a1e72cf584b4b16155e67cc75cfd5709d8e2",
+    "rtl/v2/candidates/typed200_observe/common/sequential_divider.sv": "9148c4e0926af362cd1e909acde18927922ab0176da4390655b6a59eedf5a48f",
+    "rtl/v2/candidates/typed200_observe/common/stream_fifo_sync_clear.sv": "1d022126c3b578e8dbed3eabc7080db2b16a644564e3b0fb3eb641d6d952cd73",
+    "rtl/v2/candidates/typed200_observe/common/sync_fifo.sv": "8feb3bf74556fd0681c4236020c36180dd336f87991e6d7ada6acaf0deda7dca",
+    "rtl/v2/candidates/typed200_observe/common/sync_fifo_registered_flags.sv": "1f83d7e66f8af044dd96aa1a9f3a7945368662f7b26626676dc06bd07534d42f",
+    "rtl/v2/candidates/typed200_observe/contracts/typed_epoch_tracker.sv": "8e47490f600d43668bf6d0d90008579a380de2f6b495685e2c1d1a04af001319",
+    "rtl/v2/candidates/typed200_observe/contracts/typed_intent_axil.sv": "aaef5fbe26cf6098961ad2d91a4197a8778b234ae2db681f14c7866cce2f58d3",
+    "rtl/v2/candidates/typed200_observe/contracts/typed_intent_guard.sv": "8224486eb64fcb538428a9d6eaf2775deed168514a24241a452717864f660b1c",
+    "rtl/v2/candidates/typed200_observe/contracts/typed_publication_gate.sv": "16844fd634ce2856ceec060f99345a8411395af02e0edd5d95f8b7f233369913",
+    "rtl/v2/candidates/typed200_observe/encoder/activation_buffer.sv": "a4654235d356a2e2d7af6b409cc67ff9131443cef52f7f1eb581273f01cbc1c2",
+    "rtl/v2/candidates/typed200_observe/encoder/add_skip_engine.sv": "37e2633873b205f95db853ec67248b2cc2a372224ca91fd3aec40e3c61e71318",
+    "rtl/v2/candidates/typed200_observe/encoder/attention_engine.sv": "7d17a7e85bfd38227dfe7348853d0d366263111ec49b042ae53fa17f36ef3c6f",
+    "rtl/v2/candidates/typed200_observe/encoder/embed_engine.sv": "05b537074521ec3815f415cf7b4d9737473474338828dedb7c8f3330a3aa5b46",
+    "rtl/v2/candidates/typed200_observe/encoder/encoder_layer.sv": "d5ec02043cd1ca7050e162ace6f6f4daa60e66609308ffbde4cf3b3c91e612e8",
+    "rtl/v2/candidates/typed200_observe/encoder/encoder_pkg.sv": "bdaf5f3bab667ab342c34d396ad12917af11cad754fcbb2c26dea71b8e408238",
+    "rtl/v2/candidates/typed200_observe/encoder/encoder_system.sv": "4dccdb62ed54fdbf758d5be62cc0fb1bb2cdd59fc8ec6372f97f83f7c20ef58e",
+    "rtl/v2/candidates/typed200_observe/encoder/layernorm_engine.sv": "b6b759c1d6a015dcf508fb91b4fd500364afa9ca4ff477ceb0247032f2213fd7",
+    "rtl/v2/candidates/typed200_observe/encoder/linear_engine.sv": "9208beb501bd891a68e9af07c9c83991d3fb255aded665315c6d8ff78e1c64d9",
+    "rtl/v2/candidates/typed200_observe/encoder/mac_array.sv": "b08418a3d2172548dfe701b0a33195e5390136349c4b1568fcf15e8a845c3efd",
+    "rtl/v2/candidates/typed200_observe/encoder/pool_engine.sv": "ac0155cb3e3569b26bc5a5768aca58285683c950a8832911bfb41d70b4b24410",
+    "rtl/v2/candidates/typed200_observe/encoder/result_streamer.sv": "0e3bf5db32a401c04d2d605710cccf8bb8cd6c1e8c33f4907fbf98ba01ebb8e8",
+    "rtl/v2/candidates/typed200_observe/platform/kr260/axi_memory_port.sv": "eb934dab892003c5fd081a7c682ae00ce02a502a9c5f4d06fc9351333fc62d99",
+    "rtl/v2/candidates/typed200_observe/platform/kr260/kr260_encoder.sv": "fb6f6d6de2545d33c4418f2bcc4f138f54e02eaee546f404015076e0ec1f2061",
+    "rtl/v2/candidates/typed200_observe/platform/kr260/kr260_encoder_wrapper.v": "c42ac1ebb564603f694994aaa727f9a778dec734f3464df1db8707ea94ef8cb6",
+    "rtl/v2/candidates/typed200_observe/platform/kr260/typed200_encoder.sv": "b2c14045b84856de08030733b455dec42e48d0d07f29d598e3f3cb887a34f547",
+    "rtl/v2/candidates/typed200_lut_capture/candidate.json": "a99751aa2b24f1112380dfa0746d189469faa6b21112cc0b9722d9820dde4091",
+    "rtl/v2/candidates/typed200_lut_capture/README.md": "e3f6c8a45cec0e056061ac9a8d5e56147ab6f96bf2ac8d97225103bc37199f0b",
+    "rtl/v2/candidates/typed200_lut_capture/common/activation_read_capture.sv": "6717c42457ac60ec7bb5d333af6df655b32a06269287b40beae391678393ee06",
+    "rtl/v2/candidates/typed200_lut_capture/common/attention_probability.sv": "8f230ccd2412aa6ff5fd95ae07eb51fc1dbd62bbcdfcf1d1058daed06d9bb45f",
+    "rtl/v2/candidates/typed200_lut_capture/common/attention_probability_input.sv": "1f6379faaa651217d1afd25c1fc40e3c6e65a9ed16532ef7dd7030f9a9719381",
+    "rtl/v2/candidates/typed200_lut_capture/common/embed_row_address_dsp.sv": "62b76bb73f2a2e1fbb46b5620f9dcf61eee7c3bd36b1e7027c06f2d288d11061",
+    "rtl/v2/candidates/typed200_lut_capture/common/linear_drain_select.sv": "71d8942e980d2749ad0b1d239ffa27ce2dd9f798c24d934c280f4660e4226456",
+    "rtl/v2/candidates/typed200_lut_capture/common/sequential_divider.sv": "9148c4e0926af362cd1e909acde18927922ab0176da4390655b6a59eedf5a48f",
+    "rtl/v2/candidates/typed200_lut_capture/common/stream_fifo_sync_clear.sv": "1d022126c3b578e8dbed3eabc7080db2b16a644564e3b0fb3eb641d6d952cd73",
+    "rtl/v2/candidates/typed200_lut_capture/common/sync_fifo.sv": "8feb3bf74556fd0681c4236020c36180dd336f87991e6d7ada6acaf0deda7dca",
+    "rtl/v2/candidates/typed200_lut_capture/common/sync_fifo_registered_flags.sv": "1f83d7e66f8af044dd96aa1a9f3a7945368662f7b26626676dc06bd07534d42f",
+    "rtl/v2/candidates/typed200_lut_capture/contracts/typed_epoch_tracker.sv": "8e47490f600d43668bf6d0d90008579a380de2f6b495685e2c1d1a04af001319",
+    "rtl/v2/candidates/typed200_lut_capture/contracts/typed_intent_axil.sv": "aaef5fbe26cf6098961ad2d91a4197a8778b234ae2db681f14c7866cce2f58d3",
+    "rtl/v2/candidates/typed200_lut_capture/contracts/typed_intent_guard.sv": "8224486eb64fcb538428a9d6eaf2775deed168514a24241a452717864f660b1c",
+    "rtl/v2/candidates/typed200_lut_capture/contracts/typed_publication_gate.sv": "16844fd634ce2856ceec060f99345a8411395af02e0edd5d95f8b7f233369913",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/activation_buffer.sv": "a4654235d356a2e2d7af6b409cc67ff9131443cef52f7f1eb581273f01cbc1c2",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/add_skip_engine.sv": "37e2633873b205f95db853ec67248b2cc2a372224ca91fd3aec40e3c61e71318",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/attention_engine.sv": "7d17a7e85bfd38227dfe7348853d0d366263111ec49b042ae53fa17f36ef3c6f",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/embed_engine.sv": "05b537074521ec3815f415cf7b4d9737473474338828dedb7c8f3330a3aa5b46",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/encoder_layer.sv": "d5ec02043cd1ca7050e162ace6f6f4daa60e66609308ffbde4cf3b3c91e612e8",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/encoder_pkg.sv": "bdaf5f3bab667ab342c34d396ad12917af11cad754fcbb2c26dea71b8e408238",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/encoder_system.sv": "546e8059349d553a1811275d2bc4227a0fe4dd1568153631b1c4d7f3c2c30f61",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/layernorm_engine.sv": "b6b759c1d6a015dcf508fb91b4fd500364afa9ca4ff477ceb0247032f2213fd7",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/linear_engine.sv": "aafbb8eb69b5149325122762edd87d2d8f108034a976923c47e25f3aeb0ae40d",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/mac_array.sv": "b08418a3d2172548dfe701b0a33195e5390136349c4b1568fcf15e8a845c3efd",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/pool_engine.sv": "ac0155cb3e3569b26bc5a5768aca58285683c950a8832911bfb41d70b4b24410",
+    "rtl/v2/candidates/typed200_lut_capture/encoder/result_streamer.sv": "0e3bf5db32a401c04d2d605710cccf8bb8cd6c1e8c33f4907fbf98ba01ebb8e8",
+    "rtl/v2/candidates/typed200_lut_capture/platform/kr260/axi_memory_port.sv": "eb934dab892003c5fd081a7c682ae00ce02a502a9c5f4d06fc9351333fc62d99",
+    "rtl/v2/candidates/typed200_lut_capture/platform/kr260/kr260_encoder.sv": "fb6f6d6de2545d33c4418f2bcc4f138f54e02eaee546f404015076e0ec1f2061",
+    "rtl/v2/candidates/typed200_lut_capture/platform/kr260/kr260_encoder_wrapper.v": "c42ac1ebb564603f694994aaa727f9a778dec734f3464df1db8707ea94ef8cb6",
+    "rtl/v2/candidates/typed200_lut_capture/platform/kr260/typed200_encoder.sv": "b2c14045b84856de08030733b455dec42e48d0d07f29d598e3f3cb887a34f547",
+    "scripts/v2/kr260/create_typed200_observe_candidate.py": "84e62e6f73ec180b34aadc002f0370da7dc88de8e142979f2259a43b79ca5dab",
+    "scripts/v2/kr260/create_typed200_lut_capture_candidate.py": "4529a7e9aed5ba00667c6695063b3d63ef7aa83f3554a5b4a6646a3ac2fa5c39",
+    "scripts/v2/prove_typed200_observe.py": "7dadf4afe1ce733ac781f407393c0a32729334097a84f1a8f52a051c84166d1f",
+    "scripts/v2/prove_typed200_lut_capture.py": "a3982d45381652fa6fb893b0b76a98d40f8bc455b8a43fb588c86ff07a824a76",
+    "simulation/v2/run_typed200_observe.sh": "b909c4d910b8eb49a24223698600bf6f9a1661dec0c90339799c48c452d9ebda",
+    "simulation/v2/run_typed200_lut_capture.sh": "1ccade6edadcaa3972f318e01719c88485973d7730e3e7ff5950d1482c846c98"
+  },
+  "evidence_sha256": {
+    "build/v2/typed200-observe-integration-v1/build.log": "e34e9c8215d2161894e76c2f04793eec8b9683eb055422e07840c28035440032",
+    "build/v2/typed200-observe-integration-v1/run.log": "7fea59819a57ddc8e1febcdd56a276f610c73c8ae1d1de2c4da314360258da5d",
+    "build/v2/typed200-observe-integration-v1/source-sha256.txt": "f45f9169598011cbd9f6398eb61569d79df93b3351bfe110b4214ea268e0bd3b",
+    "build/v2/typed200-observe-integration-v1/stage.txt": "b75ab61e8180247c97338206f97e56d843685f666bcf21305a6d59bda938cccc",
+    "build/v2/typed200-observe-integration-v1/completion-status.json": "dd5d926c19114c638960e0c3e81f0a783dd7af33e795c7584c8cf7a39ec63f48",
+    "build/v2/typed200-observe-formal-v1/console.log": "249302de9f2385bc3834438ae079fef52f8380a782d32029b34d77de498e7a62",
+    "build/v2/typed200-observe-formal-v1/miter.sv": "b496282ba84f9422b674e3d33a2bc4873f0e62a598d50e62c8a2e044dae0b2de",
+    "build/v2/typed200-observe-formal-v1/observed_cycle_counter.sv": "d284d4b120f3e3a0621875d8b0c1a1e72cf584b4b16155e67cc75cfd5709d8e2",
+    "build/v2/typed200-observe-formal-v1/prove.log": "249302de9f2385bc3834438ae079fef52f8380a782d32029b34d77de498e7a62",
+    "build/v2/typed200-observe-formal-v1/prove.ys": "e74ad428cbf2769b35bc4fbb34c28570554620fb73254547420938e1940e5b09",
+    "build/v2/typed200-observe-formal-v1/receipt.json": "71f2e8c5decf38d956f7e4e10be9d59fe667e07e4cc585d4410ca8262ade48ec",
+    "build/v2/typed200-lut-capture-integration-v1/build.log": "ca6a224e62cd5daed2b9c5aeb02ef1c2393a937b9cced148e1937424d44fb88e",
+    "build/v2/typed200-lut-capture-integration-v1/run.log": "880b42b98ff75f61cd037b8244dfcc8fe9b6acf91519ebed5298397267bfcd33",
+    "build/v2/typed200-lut-capture-integration-v1/source-sha256.txt": "5cddcdb652256dc2b3342d93b93f96995fc2167388ed0e75adeea9cc49246c3f",
+    "build/v2/typed200-lut-capture-integration-v1/stage.txt": "16167d0affc1e8fb656b06602c06ea66c76d453c59e022c71951e26a496a205c",
+    "build/v2/typed200-lut-capture-integration-v1/completion-status.json": "dd5d926c19114c638960e0c3e81f0a783dd7af33e795c7584c8cf7a39ec63f48",
+    "build/v2/typed200-lut-capture-formal-v2/console.log": "2925e981271d3c6cac6466f4bff285c8c45f87996bfd3a2285933277d03d24e9",
+    "build/v2/typed200-lut-capture-formal-v2/miter.sv": "ddbf6a7639105b692ff96e3b8869fe51617582609b1a5e702707bfd960ffd6a4",
+    "build/v2/typed200-lut-capture-formal-v2/prove.log": "2925e981271d3c6cac6466f4bff285c8c45f87996bfd3a2285933277d03d24e9",
+    "build/v2/typed200-lut-capture-formal-v2/prove.ys": "144410ede1c76ab7c87f2bb372167bd600c257e772dce0bed4e81bb4427e0f4c",
+    "build/v2/typed200-lut-capture-formal-v2/receipt.json": "539a1d074d1840ce44e0f7772a253b459ab8ee224bc3fd96779e28c9256c678f"
+  },
+  "limits": [
+    "Scoped component induction plus specified full-model fixtures and negative cases",
+    "No whole-encoder formal equivalence or hardware execution",
+    "No physical timing, successful-inference WCET or external-delivery certificate",
+    "Candidate JSON initial sealed:false metadata preserved; exact sources above are fixed by this external record"
+  ]
+}

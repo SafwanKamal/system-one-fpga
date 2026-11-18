@@ -1,0 +1,209 @@
+{
+  "review_date": "2026-10-17",
+  "scope": "Primary papers, official model cards/configurations, author sources. No model downloads, board changes or external benchmarks executed.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "ModernBERT, ACL2025",
+      "url": "https://aclanthology.org/2025.acl-long.127/",
+      "evidence_type": "peer-reviewed paper",
+      "scope_note": "Encoder quality/efficiency motivation; not a KR260 benchmark"
+    },
+    {
+      "id": "S02",
+      "title": "ModernBERT-base author configuration",
+      "url": "https://huggingface.co/answerdotai/ModernBERT-base/raw/main/config.json",
+      "evidence_type": "author model config",
+      "scope_note": "H768,22layers,head64,local/global RoPE; not compatible by model swap"
+    },
+    {
+      "id": "S03",
+      "title": "BERT-base architecture config",
+      "url": "https://huggingface.co/google-bert/bert-base-uncased/raw/main/config.json",
+      "evidence_type": "model config",
+      "scope_note": "12layers,H768,FF3072,12heads,head64,learned positions"
+    },
+    {
+      "id": "S04",
+      "title": "FunctionGemma overview",
+      "url": "https://ai.google.dev/gemma/docs/functiongemma",
+      "evidence_type": "official documentation",
+      "scope_note": "270M specialized function caller; fine-tuning intended"
+    },
+    {
+      "id": "S05",
+      "title": "FunctionGemma model card",
+      "url": "https://ai.google.dev/gemma/docs/functiongemma/model_card",
+      "evidence_type": "official model card",
+      "scope_note": "MobileActions58to85%; S25CPU speed not a KR260 forecast"
+    },
+    {
+      "id": "S06",
+      "title": "Gemma3 270M release",
+      "url": "https://developers.googleblog.com/introducing-gemma-3-270m/",
+      "evidence_type": "author release",
+      "scope_note": "270M total;170M embedding;100M transformer; QAT support pertains releasedGemma models"
+    },
+    {
+      "id": "S07",
+      "title": "Gemma3 270M author implementation",
+      "url": "https://github.com/google-deepmind/gemma/blob/main/gemma/gm/nn/_gemma.py",
+      "evidence_type": "author source",
+      "scope_note": "H640,FF2048,head256,KVheads1,vocab262144; FunctionGemma documented as based on this architecture"
+    },
+    {
+      "id": "S08",
+      "title": "Qwen3-0.6B",
+      "url": "https://huggingface.co/Qwen/Qwen3-0.6B",
+      "evidence_type": "author model card",
+      "scope_note": "0.6B dense, nonthinking option; Apache2"
+    },
+    {
+      "id": "S09",
+      "title": "Qwen3-0.6B config",
+      "url": "https://huggingface.co/Qwen/Qwen3-0.6B/raw/main/config.json",
+      "evidence_type": "author model config",
+      "scope_note": "28layers,H1024,Qheads16,KVheads8,head128; config40960 differs advertised32768"
+    },
+    {
+      "id": "S10",
+      "title": "TeLLMe v2",
+      "url": "https://arxiv.org/html/2510.15926v2",
+      "evidence_type": "research paper; author release labelsFPGA2026",
+      "scope_note": "KV260 BitNet0.73B; up to25decode tok/s; TTFT.45-.96s at64-128prompts; no port reproduced"
+    },
+    {
+      "id": "S11",
+      "title": "TeLLMe author release",
+      "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026",
+      "evidence_type": "author code BSD3",
+      "scope_note": "PYNQ; NEONLMhead; externalweights; ternaryspecific, not a dropinFunctionGemma accelerator"
+    },
+    {
+      "id": "S12",
+      "title": "Pushing up to the Limit...",
+      "url": "https://arxiv.org/html/2502.10659v1",
+      "evidence_type": "research paper",
+      "scope_note": "KV2604bitLLaMA2-7Bdecode4.9tok/s at300MHz;baremetal;powerestimate"
+    },
+    {
+      "id": "S13",
+      "title": "STAR super-tiny function calling",
+      "url": "https://arxiv.org/html/2602.03022v1",
+      "evidence_type": "2026preprint",
+      "scope_note": "Teacher-assisted specialization of smallfunctioncallmodels; no KR260performance transfer"
+    },
+    {
+      "id": "S14",
+      "title": "Extending FunctionGemma...",
+      "url": "https://arxiv.org/abs/2609.25373",
+      "evidence_type": "Sep2026preprint; authors stateEMNLP2026acceptance",
+      "scope_note": "~9500domainconversations; coverage tradeoff after specialization; not independent reproduction"
+    },
+    {
+      "id": "S15",
+      "title": "XGrammar2",
+      "url": "https://arxiv.org/abs/2601.04426",
+      "evidence_type": "2026paper updatedAug2026",
+      "scope_note": "Dynamic grammar compilation/caching already priorart; no noveltyclaim forgrammaralone"
+    },
+    {
+      "id": "S16",
+      "title": "RouteLLM",
+      "url": "https://arxiv.org/abs/2406.18665",
+      "evidence_type": "research paper",
+      "scope_note": "Routing strong/weak models already priorart"
+    },
+    {
+      "id": "S17",
+      "title": "KnowNo",
+      "url": "https://arxiv.org/abs/2307.01928",
+      "evidence_type": "research paper",
+      "scope_note": "Uncertainty/askingforhelp with assumptions; threshold alone does not inherit riskguarantees"
+    },
+    {
+      "id": "S18",
+      "title": "ART",
+      "url": "https://peipeizhou-eecs.github.io/publication/2025_glsvlsi_art/",
+      "evidence_type": "author GLSVLSI2025publication page",
+      "scope_note": "Real-time FPGAaccelerators/preemption already priorart"
+    },
+    {
+      "id": "S19",
+      "title": "DERCA",
+      "url": "https://peipeizhou-eecs.github.io/publication/2025_rtss_clare/2025_rtss_clare.pdf",
+      "evidence_type": "author paper",
+      "scope_note": "Cycle-deterministic accelerator scheduling/preemption, not semanticcommandquality"
+    },
+    {
+      "id": "S20",
+      "title": "Deadline-Typed Inference",
+      "url": "https://github.com/Ewo8om3/deadline-typed-inference",
+      "evidence_type": "public conceptproposal, first editionJuly192026; not measuredsilicon",
+      "scope_note": "Direct conceptualoverlap; cannot claim firstdeadline-typed neural system"
+    },
+    {
+      "id": "S21",
+      "title": "Grammar-Conditioned SparseProjection",
+      "url": "https://github.com/StealthEyeLLC/grammar-sparse-projection",
+      "evidence_type": "author researchprototype; submissiontargetnotpeerreviewacceptance",
+      "scope_note": "Exact grammarlegal-only LMheadprojection already described; not firstidea"
+    },
+    {
+      "id": "S22",
+      "title": "Murali CUDA constrained decoding",
+      "url": "https://gitlostmurali.com/blog/structured-generation-optimizations/",
+      "evidence_type": "author implementationstudy blog March2025",
+      "scope_note": "Earlier selectivevocabularyrowcompute; not peer-reviewed FPGAresult"
+    },
+    {
+      "id": "S23",
+      "title": "AMD KR260 DS988",
+      "url": "https://docs.amd.com/r/en-US/ds988-kr260-starter-kit/Product-Details",
+      "evidence_type": "official hardwaredocs",
+      "scope_note": "K26,4GB DDR; KV260 carrier/software notidentical"
+    },
+    {
+      "id": "S24",
+      "title": "BFCLv4",
+      "url": "https://gorilla.cs.berkeley.edu/leaderboard.html",
+      "evidence_type": "author benchmark",
+      "scope_note": "External functioncalling protocolsource; usefrozen data, not leaderboardaslocalproof"
+    },
+    {
+      "id": "S25",
+      "title": "FPGA streammonitoring",
+      "url": "https://finkbeiner.groups.cispa.de/publications/emsoft19.pdf",
+      "evidence_type": "author EMSOFT2019paper",
+      "scope_note": "Independent FPGAreal-time monitors alreadypriorart"
+    },
+    {
+      "id": "S26",
+      "title": "Optimizing SLMs for InVehicle FunctionCalling",
+      "url": "https://arxiv.org/abs/2501.02342",
+      "evidence_type": "2025preprint",
+      "scope_note": "On-devicefunctioncallingapplication itself priorart"
+    },
+    {
+      "id": "S27",
+      "title": "Outputprojection via vectorindex",
+      "url": "https://arxiv.org/abs/2608.27460",
+      "evidence_type": "2026workshoppreprint",
+      "scope_note": "Approximate vocabretrieval acceleration priorart; distinguish exact grammarfiltering"
+    },
+    {
+      "id": "S28",
+      "title": "PORTS",
+      "url": "https://arxiv.org/abs/2607.05441",
+      "evidence_type": "July2026preprint",
+      "scope_note": "Encoderbasedtoolretrieval alreadypriorart; arguments/composition stillneedseparateevaluation"
+    }
+  ],
+  "unverified_leads": [
+    {
+      "title": "Deadline-Guarded Edge Inference with FPGA Preemption",
+      "claimed_doi": "10.1109/TMC.2026.3709081",
+      "reason": "Found secondary index only; publisher DOI could not be resolved and no primary text verified. Not used to support technical claims; resolve before submission."
+    }
+  ]
+}

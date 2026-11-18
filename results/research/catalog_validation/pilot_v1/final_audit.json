@@ -1,0 +1,17 @@
+{
+  "checked_utc": "2026-11-16T23:45:36.163302+00:00",
+  "frozen_core_unchanged": true,
+  "frozen_models_and_selection_unchanged": true,
+  "held_out_mechanisms_absent_from_baseline_fitting": true,
+  "disjoint_configuration_partitions": true,
+  "test_cases": 1400,
+  "independent_metric_rows": 660,
+  "serial_case_replays": 20,
+  "causal_selector_replays": 40,
+  "commissioning_prefixes_label_independent": true,
+  "intervention_bounds_and_counterfactual_prefixes_checked": true,
+  "identifiability_reference_metrics_checked": true,
+  "data_manifest_sha256": "51c785e4940a1bf49ffc9d352cb8729a1e1a093bfa3f3b533e2b8dc7ccf52880",
+  "source_sha256": "1240bfd52adb163c2a1d41861434aabd8021ebfec2d8aabba179f025bed469e7",
+  "freeze_sha256": "1ca7fbdd21430a38bd5db950a57857b775f3b96a2402560211a1eec2680bad8c"
+}

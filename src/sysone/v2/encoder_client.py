@@ -101,6 +101,8 @@ class EncoderBoard:
         self.link = link
         self.machine = di.ImageMachine(image)
         self.layout = RequestLayout.for_image(self.machine.h, len(image))
+        if hasattr(link, "validate_image"):
+            link.validate_image(self.machine.h, len(image), self.layout)
 
     def encode(self, ids, timeout: float = 5.0) -> Encoded:
         ids = check_ids(self.layout, ids, self.machine.h["vocab"])

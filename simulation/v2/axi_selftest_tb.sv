@@ -7,7 +7,10 @@
 //        must report exactly one error.
 // Also checks read_last framing on the memory port: exactly one read_last per
 // REQUEST_BEATS beats.
-module axi_selftest_tb;
+module axi_selftest_tb #(
+    parameter logic [39:0] BASE_ADDRESS = 0,
+    parameter integer REGISTERED_REQUESTS = 0
+);
 
     localparam integer ADDRESS_WIDTH = 40;
     localparam integer DATA_WIDTH = 128;
@@ -53,21 +56,22 @@ module axi_selftest_tb;
         .awaddr(awaddr), .awlen(awlen), .awsize(awsize), .awburst(awburst), .awvalid(awvalid),
         .awready(awready), .wdata(wdata), .wstrb(wstrb), .wlast(wlast), .wvalid(wvalid),
         .wready(wready), .bresp(bresp), .bvalid(bvalid), .bready(bready),
-        .corrupt(corrupt), .corrupt_address(40'h0000_0D50)
+        .corrupt(corrupt), .corrupt_address(BASE_ADDRESS + 40'h0000_0D50)
     );
 
     axi_memory_port #(
         .ADDRESS_WIDTH (ADDRESS_WIDTH),
         .DATA_WIDTH    (DATA_WIDTH),
-        .BEATS_WIDTH   (BEATS_WIDTH)
+        .BEATS_WIDTH   (BEATS_WIDTH),
+        .REGISTERED_REQUESTS (REGISTERED_REQUESTS)
     ) DUT_port (
         .clk(clk), .reset(reset),
         .read_request_valid(read_request_valid), .read_request_ready(read_request_ready),
-        .read_request_address(read_request_address), .read_request_beats(read_request_beats),
+        .read_request_address(read_request_address + BASE_ADDRESS), .read_request_beats(read_request_beats),
         .read_valid(read_valid), .read_ready(read_ready), .read_data(read_data),
         .read_last(read_last),
         .write_request_valid(write_request_valid), .write_request_ready(write_request_ready),
-        .write_request_address(write_request_address), .write_request_beats(write_request_beats),
+        .write_request_address(write_request_address + BASE_ADDRESS), .write_request_beats(write_request_beats),
         .write_valid(write_valid), .write_ready(write_ready), .write_data(write_data),
         .m_axi_araddr(araddr), .m_axi_arlen(arlen), .m_axi_arsize(arsize), .m_axi_arburst(arburst),
         .m_axi_arvalid(arvalid), .m_axi_arready(arready), .m_axi_rdata(rdata), .m_axi_rresp(rresp),
@@ -99,6 +103,14 @@ module axi_selftest_tb;
 
     // read_last framing
     integer beats_seen, lasts_seen;
+    // A clean write/read round-trip alone cannot detect symmetric truncation
+    // of high address bits. Check every physical burst against the full window.
+    always @(posedge clk) if (!reset) begin
+        if (arvalid && arready && (araddr < BASE_ADDRESS || araddr >= BASE_ADDRESS + REGION_BYTES))
+            $fatal(1,"Read burst escaped high-DDR physical window");
+        if (awvalid && awready && (awaddr < BASE_ADDRESS || awaddr >= BASE_ADDRESS + REGION_BYTES))
+            $fatal(1,"Write burst escaped high-DDR physical window");
+    end
     always_ff @(posedge clk) begin
         if (reset || start) begin
             beats_seen <= 0;

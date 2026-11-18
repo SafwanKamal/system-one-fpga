@@ -11,6 +11,7 @@
 module pool_engine
     import encoder_pkg::*;
 #(
+    parameter integer READ_LATENCY = encoder_pkg::READ_LATENCY,
     parameter integer ADDRESS_WIDTH = 27,
     parameter integer BEATS_WIDTH = 16,
     parameter integer BUFFER_ADDRESS_WIDTH = 14

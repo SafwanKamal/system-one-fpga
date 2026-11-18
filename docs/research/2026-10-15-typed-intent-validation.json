@@ -1,0 +1,103 @@
+{
+  "verified_utc": "2026-10-15T08:46:56.393362+00:00",
+  "standalone_prototype": true,
+  "contract_sha256": "8133633315487f8f322ecac49e95e7aca3801d00fccb4b4fba36026c5b2752d2",
+  "baseline_files_checked": 602,
+  "all_baseline_files_unchanged": true,
+  "sealed_candidates": {
+    "locality300": {
+      "sources_checked": 24,
+      "manifest_sha256": "0a74213c1d87503861a17fb8d5efdd8dadbd2dadcfb6446742c36ab88a766009"
+    },
+    "counter300": {
+      "sources_checked": 25,
+      "manifest_sha256": "14c07e87fcd2c1cf10bff3285ade6b7146467bb98677bb7e8de2d37f1aa6e582"
+    }
+  },
+  "prior_prototype_and_placement_evidence_unchanged": true,
+  "host_cases": 647,
+  "exact_integer_logits": 11520,
+  "exact_scaled_label_decisions": 640,
+  "raw_argmax_differs_from_scaled_in_fixture_cases": 40,
+  "host_regression_tests": 67,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "rtl_bus_transactions": {
+    "writes": 464,
+    "reads": 58,
+    "validated_launches": 13
+  },
+  "formal": {
+    "gate_invariants": true,
+    "guard_invariants": true,
+    "axil_protocol_properties": true,
+    "assumptions": [
+      "first sampled edge reset",
+      "single synchronous PL clock"
+    ],
+    "full_endpoint_functional_proof": false
+  },
+  "r5_relocatable_object": true,
+  "r5_undefined_symbols": 0,
+  "r5_nested_head_bridge_stack_bytes": 1688,
+  "target_execution": false,
+  "tcm_linker_map": false,
+  "wcet_certified": false,
+  "encoder_integrated": false,
+  "cdc_signed_off": false,
+  "new_physical_build": false,
+  "hardware_qualified": false,
+  "successful_inference_deadline_guarantee": false,
+  "host_or_network_delivery_guarantee": false,
+  "final_receipts": {
+    "host": "build/v2/typed-intent-host-sealed-v4/receipt.json",
+    "r5": "build/v2/typed-intent-r5-sealed-v4/receipt.json",
+    "gate": "build/v2/typed-formal-gate-final-v5/receipt.json",
+    "guard": "build/v2/typed-formal-guard-observed-v2/receipt.json",
+    "axil": "build/v2/typed-formal-axil-guarded-v3/receipt.json"
+  },
+  "evidence_sha256": {
+    "build\\v2\\locality300-encoder384\\placement-review.json": "4af8f33519fb1a6e2dc14b2abc9d310c67f26aabc52cd04406038e2d5a8b2e44",
+    "build\\v2\\counter300-encoder384\\placement-review.json": "6ac384b383ba033dd8b0c36be5f7677e3d1623ffefb1ef3895330ec99bcff1d9",
+    "build/v2/typed-intent-host-sealed-v4/receipt.json": "6f60bb42c8f838ccb5d32148e13ddc096c497c0fee728beb550538b4898529e3",
+    "build/v2/typed-intent-r5-sealed-v4/receipt.json": "8a71aa2e44398c39b75e8ddea63fe56d85ffbc1f482958e19798fb9d5ec49f22",
+    "build/v2/typed-formal-gate-final-v5/receipt.json": "50c41cc8fdee2b2f173b92ad8998c62fc665dc586935913c85f089bc9a6aeb6f",
+    "build/v2/typed-formal-guard-observed-v2/receipt.json": "f6388153ed6c6305024fae276a1f02f44d867cb6fabebf074f12df33ec965dba",
+    "build/v2/typed-formal-axil-guarded-v3/receipt.json": "bb334b1b6ed53bbccfc63a31656e47dfa4c297d13f401998242ce12f0d4e22e1",
+    "build/v2/typed-intent-axil-launch-v4/build.log": "885e40d30687383b1d2d7df20feb7da1cf4f733ef9befcdc7bef31eddb00708a",
+    "build/v2/typed-intent-axil-launch-v4/completion-status.json": "dd5d926c19114c638960e0c3e81f0a783dd7af33e795c7584c8cf7a39ec63f48",
+    "build/v2/typed-intent-axil-launch-v4/run.log": "ab453601b178772ae38b33edabf01c5758e38a645eeae4f5b3aa386a76d827a3",
+    "build/v2/typed-intent-axil-launch-v4/source-sha256.txt": "0a0353897825452eeeb476e03bb3be05aad5a9d8eef7c8076e054d915432b5c7",
+    "build/v2/typed-intent-host-service-v3/host-regression.xml": "5aed49edbb712e4c281645e10e2b53bca127fadea80eb5fce0c67e15074ee92d"
+  },
+  "source_sha256": {
+    "firmware/typed_intent/README.md": "aeed5439d724d53a0bfecef591da80ea3bd17ba3acd6cc221f08547989fb696e",
+    "firmware/typed_intent/test_runner.c": "8cb3e6274aab35582c92531240366a580ec6dcd5873dedceaf87830592da8d24",
+    "firmware/typed_intent/typed_intent.c": "8f30d8b3ffc868f146e7c7e176083c93560ea296e89c15f6dae6471b6dc5eb1d",
+    "firmware/typed_intent/typed_intent.h": "9d2aac79faedfa057eebe63e6527df34ff61b967a218aa765255c3c01c342a39",
+    "firmware/typed_intent/typed_mailbox.c": "5142761b140e4326e155f613518395d7c990f0b2982017dbf244c0833c95a519",
+    "firmware/typed_intent/typed_mailbox.h": "0fcf6dd2b4b0b7167104bf7ec080180e12eb7207d1acd043e0377b3f1b71e24a",
+    "firmware/typed_intent/generated/contract.json": "db25c66b0e9fa15f351bc73e64618048ce36a5b4a6c8f25cef05fd60d3c5ba1e",
+    "firmware/typed_intent/generated/manifest.json": "80af61236df6dcb1669048d3ace0f9a0d15584653ac54e8fdc4eea4d3a8c2de7",
+    "firmware/typed_intent/generated/profile.inc": "1c63eb2fbdee9c8fbea42f8132425552d11e78e1c6f390624ae7c2431d931476",
+    "rtl/contracts/typed_intent_v1/typed_intent_axil.sv": "3050d008467a4e351aa1af903a69572163a54e276c9c262c647345d424e7131b",
+    "rtl/contracts/typed_intent_v1/typed_intent_guard.sv": "8224486eb64fcb538428a9d6eaf2775deed168514a24241a452717864f660b1c",
+    "formal/typed_publication/axil_properties.vh": "02ede0d517f125a2272f4f0f8722e822cf5e445beb377d5f47f845d85edec75a",
+    "formal/typed_publication/gate_properties.sv": "bf6f36b2ee38d29b31f1688f85ae889d31a60b0c548545cde3e8dc928546bb2b",
+    "formal/typed_publication/guard_properties.vh": "634b0780ff6abba1d6aafaaaa2f92a36695949862d553b369d1b40a936c1acde",
+    "formal/typed_publication/invariants.vh": "3ae4b34699a5f73d40fe2984afe7dd0f02ce2e472dc6f600231c5fcc2d5f2552",
+    "scripts/v2/freeze_typed_intent.py": "0fb7acca90b0bbf2653cef5787fbcb609544bf96805b902cf522e62e160b772d",
+    "scripts/v2/check_typed_intent.py": "40b604f978769163206681bb6855a355982ba3909ae5eff0c1cfc2ec77ba4e3e",
+    "scripts/v2/build_typed_intent_r5.py": "11b7c4fbc09fd9811b735fff0d12d01fda3f2d97f442bc62e9cc9f6d320bd59b",
+    "scripts/v2/prove_typed_publication.py": "2d2f009898100da8c06d8a769f20cf971a600c6d528defc86e902d53b59ddafa",
+    "scripts/v2/seal_typed_intent.py": "e2fe901d108824369c2e52fa440a8023020368f298e3aad098520e4c1577013d",
+    "simulation/v2/typed_intent_axil_tb.sv": "f540e9f04d22d260cfafee65f3e8c605cbb5a6c0bf0ae8023d55affaa07d279c",
+    "simulation/v2/run_typed_intent_axil.sh": "e112deaf3f79c77a89a8b01dc347638515a0bec5614a4a489bf7832136edc16f"
+  },
+  "documentation_sha256": {
+    "firmware/typed_intent/README.md": "aeed5439d724d53a0bfecef591da80ea3bd17ba3acd6cc221f08547989fb696e",
+    "docs/research/2026-10-15-typed-intent-implementation.md": "6395bac0bf52bc4853a8a5c09fc9cbdcc2fd93ba8c0e60fb2db4983c48315ac7"
+  }
+}

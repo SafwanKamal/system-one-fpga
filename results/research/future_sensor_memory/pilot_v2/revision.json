@@ -1,0 +1,5 @@
+{
+  "reason": "A final audit found worker SEED += original_index accumulated offsets when a process handled several participants. Fixed assignment uses immutable BASE_SEED. All validation and test evaluations rerun; no policy tuning in response to held-out results.",
+  "v1_results_preserved": "results\\research\\future_sensor_memory\\pilot_v1",
+  "shared_training_artifacts_reused": true
+}

@@ -1,0 +1,200 @@
+{
+  "verified_utc": "2026-10-15T11:10:17.794364+00:00",
+  "candidate": "typed200",
+  "target_mhz": 200,
+  "abi": "0x54590201",
+  "contract_sha256": "8133633315487f8f322ecac49e95e7aca3801d00fccb4b4fba36026c5b2752d2",
+  "candidate_manifest_sha256": "79bcc6480e4ff5aad77f2816e3437a91577e46c3c6af784debaea0748f81c2a5",
+  "baseline_files_checked": 602,
+  "all_baseline_files_unchanged": true,
+  "prior_typed_milestone_and_sealed_candidates_unchanged": true,
+  "prior_placement_reviews_sha256": {
+    "locality300": "4af8f33519fb1a6e2dc14b2abc9d310c67f26aabc52cd04406038e2d5a8b2e44",
+    "counter300": "6ac384b383ba033dd8b0c36be5f7677e3d1623ffefb1ef3895330ec99bcff1d9"
+  },
+  "qualified_copied_sources_unchanged": [
+    "encoder/activation_buffer.sv",
+    "encoder/add_skip_engine.sv",
+    "encoder/attention_engine.sv",
+    "encoder/embed_engine.sv",
+    "encoder/encoder_layer.sv",
+    "encoder/encoder_pkg.sv",
+    "encoder/encoder_system.sv",
+    "encoder/layernorm_engine.sv",
+    "encoder/linear_engine.sv",
+    "encoder/mac_array.sv",
+    "encoder/pool_engine.sv",
+    "platform/kr260/kr260_encoder.sv",
+    "platform/kr260/kr260_encoder_wrapper.v",
+    "common/sequential_divider.sv",
+    "common/sync_fifo.sv",
+    "encoder/result_streamer.sv",
+    "common/activation_read_capture.sv",
+    "common/sync_fifo_registered_flags.sv",
+    "common/attention_probability.sv",
+    "common/linear_drain_select.sv",
+    "common/attention_probability_input.sv",
+    "common/embed_row_address_dsp.sv"
+  ],
+  "candidate_rtl_count": 28,
+  "arithmetic_changed": false,
+  "live_drain_observer_has_control_feedback": false,
+  "co_simulation": {
+    "normal_cases": [
+      {
+        "case": 0,
+        "tokens": 1,
+        "encoder_clocks": 1845556,
+        "request_clocks": 1845641,
+        "publication_age": 1845708
+      },
+      {
+        "case": 1,
+        "tokens": 2,
+        "encoder_clocks": 1859135,
+        "request_clocks": 1859249,
+        "publication_age": 1859316
+      },
+      {
+        "case": 2,
+        "tokens": 3,
+        "encoder_clocks": 1873759,
+        "request_clocks": 1873917,
+        "publication_age": 1873984
+      },
+      {
+        "case": 3,
+        "tokens": 4,
+        "encoder_clocks": 1888574,
+        "request_clocks": 1888767,
+        "publication_age": 1888834
+      },
+      {
+        "case": 4,
+        "tokens": 5,
+        "encoder_clocks": 1902387,
+        "request_clocks": 1902611,
+        "publication_age": 1902678
+      },
+      {
+        "case": 5,
+        "tokens": 12,
+        "encoder_clocks": 2004169,
+        "request_clocks": 2004649,
+        "publication_age": 2004716
+      },
+      {
+        "case": 6,
+        "tokens": 64,
+        "encoder_clocks": 3831441,
+        "request_clocks": 3833757,
+        "publication_age": 3833824
+      },
+      {
+        "case": 7,
+        "tokens": 128,
+        "encoder_clocks": 7961537,
+        "request_clocks": 7966029,
+        "publication_age": 7966096
+      }
+    ],
+    "golden_words_compared": 5400,
+    "paired_completions": 14,
+    "all_driven_axi_cycles_equal": true,
+    "raw_encoder_request_counters_equal": true,
+    "comparison": "paired identical memory-response stream, not differently phased saved random-stall counts",
+    "fault_tests": [
+      "delayed final B prevents native completion",
+      "early Accepted fails closed",
+      "late BRESP error",
+      "RRESP error with unchanged data",
+      "held-B timeout exactly 3000000 cycles",
+      "late response/proposal cannot reverse quarantine",
+      "stale session",
+      "malformed shape no launch"
+    ],
+    "synthetic_arm_proposals": true,
+    "real_r5_execution": false
+  },
+  "endpoint_directed": {
+    "writes": 636,
+    "reads": 80,
+    "validated_admissions": 14
+  },
+  "formal_receipts": {
+    "epoch": "build\\v2\\typed200-epoch-formal-v1\\receipt.json",
+    "endpoint": "build\\v2\\typed200-endpoint-formal-v1\\receipt.json"
+  },
+  "unchanged_gate_guard_proofs_reused_by_hash": true,
+  "host_guardrail_tests": 67,
+  "firmware_receipt": "build\\v2\\typed200-firmware-v2\\receipt.json",
+  "r5_relocatable_link": true,
+  "r5_undefined_symbols": 0,
+  "new_fpga_physical_build": false,
+  "hardware_qualified": false,
+  "cdc_signed_off": false,
+  "r5_bsp_tcm_map": false,
+  "target_wcet_certified": false,
+  "successful_inference_deadline_certified": false,
+  "failed_attempt": {
+    "path": "build/v2/typed200-integration-v1",
+    "reason": "testbench sampled reference counters after raw completion; corrected sampling edge without RTL change"
+  },
+  "source_sha256": {
+    "scripts/v2/kr260/create_typed200_candidate.py": "225c3de074a1d1524c98d175943ca4218f24529ceb9ba3d7b4470ce6cb43f59f",
+    "scripts/v2/kr260/typed200_control.txt": "5e88ed5955715d6480357f01bbc575d057069a5333549344a4033bc51fd29c3b",
+    "scripts/v2/check_typed200_firmware.py": "93bd3d8c6344ddb05aeae404b0062ce0c92fe71fab8e275c3e35b314921bf413",
+    "scripts/v2/prove_typed200_epoch.py": "f7df913338f2270428a4645da42f6598dc7fdf21310a444129241f4c63abe41f",
+    "scripts/v2/prove_typed200_endpoint.py": "17d16aba87caf280331dcead449df4ebc2ae1b86bfc52e2080acc3de6b9d1946",
+    "scripts/v2/seal_typed200.py": "a80644f099efbd95be73652c7c6508c2bd172aea3ceafae8640b05749a82e882",
+    "simulation/v2/run_typed200.sh": "d8599d037d492a3e0ff6185501b756ac79a5f44e390b2e2bee23e887daf23d7d",
+    "simulation/v2/run_typed200_endpoint.sh": "c4919f4afc0ba57bf4ab9d371878df8bb1ce03ec3fe8f9b3c71d7e04804c34b3",
+    "simulation/v2/typed200_scenarios.svh": "b5b004d5c7f796116717e584a555486e3af07858e869ab552f42117f80d75a8d",
+    "rtl/contracts/typed_epoch_tracker.sv": "8e47490f600d43668bf6d0d90008579a380de2f6b495685e2c1d1a04af001319",
+    "formal/typed_publication/epoch_properties.vh": "6e309d307c3cc70414d2642a5c906d1d962d2f7bf987424a4cda8e7cd932e7ac",
+    "formal/typed_publication/typed200_endpoint_properties.vh": "656d92bb02c139d04e5faa5dd41505d7c5ce247155e091434cfbd6ee35cdd12b",
+    "firmware/typed200/README.md": "366ac0a15e43ba5f8c7eec52b18b9076c2c686dfcfe3f45a9d5a1aabe11ebe70",
+    "firmware/typed200/test_driver.c": "df4706bdd0700b50edf172715095d491655b5687a468a923fdbbbb324bcfacd9",
+    "firmware/typed200/typed200.c": "9dd448714187ef02d83803bb2378473f303313144938224e87a687e609e0fedd",
+    "firmware/typed200/typed200.h": "727e9aa5310e30d586c9f5ad65920bd17cefccc4035b0dd52a3f9707b03b089d"
+  },
+  "evidence_sha256": {
+    "build/v2/typed200-epoch-formal-v1/console.log": "f26a333b0ccce33bdd0b4ad2df85a9bbe1554dcfed7d1ffdcadc5b194e448919",
+    "build/v2/typed200-epoch-formal-v1/instrumented.sv": "d6edd6fb1d3c024cf5ccdad98a27d2c15790e7db2a2528cede2f74d00f94ccb5",
+    "build/v2/typed200-epoch-formal-v1/prove.log": "f26a333b0ccce33bdd0b4ad2df85a9bbe1554dcfed7d1ffdcadc5b194e448919",
+    "build/v2/typed200-epoch-formal-v1/prove.ys": "b5c1bfb9365c8bf10b1a3a26b574fd59a131cbdc5c01e5a13a6b3682c8ba09a2",
+    "build/v2/typed200-epoch-formal-v1/receipt.json": "1372f6ae580d3ee8867d73d82ff22dd3fadbcf0b155b380a4bdb78145eaed063",
+    "build/v2/typed200-endpoint-formal-v1/console.log": "5a2ef96415eb1a69fd74142c832b3ff71e8e2bf384e5bafb5d5db2daacf030a0",
+    "build/v2/typed200-endpoint-formal-v1/instrumented.sv": "ffb64cb325bd49896205b254ad69844f53f72b3ba40991bda69e3b3045948158",
+    "build/v2/typed200-endpoint-formal-v1/prove.log": "5a2ef96415eb1a69fd74142c832b3ff71e8e2bf384e5bafb5d5db2daacf030a0",
+    "build/v2/typed200-endpoint-formal-v1/prove.ys": "01bebbaad8fc0f00efe927101eee96fd696ee7eb426c20e6d28ac4a91bb05b50",
+    "build/v2/typed200-endpoint-formal-v1/receipt.json": "0e44e3c2b1c9286c73ffcf7d2ac4d66a7df810b803a4a9d41cd16e740c95c08a",
+    "build/v2/typed200-integration-v2/build.log": "f6c89345fadc4f9bb5aba2a93f5863f8e08417d949fa0bc107a1359e484e6fd3",
+    "build/v2/typed200-integration-v2/completion-status.json": "dd5d926c19114c638960e0c3e81f0a783dd7af33e795c7584c8cf7a39ec63f48",
+    "build/v2/typed200-integration-v2/run.log": "4c29562549dcf06a3e7a6333be535ffa7280b9de25cf1d330207c843c8c43cd9",
+    "build/v2/typed200-integration-v2/source-sha256.txt": "d8be205172f03f4daa5ca15415485d3671e4016365edf14cf45950af4fac92e5",
+    "build/v2/typed200-integration-v2/stage.txt": "68e0b4fefdd823dcd4e7b67c04f1880e7d7931ee7a76762180cfd32eb76387d1",
+    "build/v2/typed200-endpoint-directed-v1/build.log": "22606180adfe3908dbc64303f0596bbe04851cd1012743c56a0888ec1766a7b9",
+    "build/v2/typed200-endpoint-directed-v1/completion-status.json": "dd5d926c19114c638960e0c3e81f0a783dd7af33e795c7584c8cf7a39ec63f48",
+    "build/v2/typed200-endpoint-directed-v1/run.log": "fadf596316b79af353ae890a4df094064c1f7771f5d04c6e4dbb27f02ca4dd2c",
+    "build/v2/typed200-endpoint-directed-v1/source-sha256.txt": "15235de9df2045ebf2a174a103baa43d8f56d1ee5323801c045f1699b2efceea",
+    "build/v2/typed200-endpoint-directed-v1/stage.txt": "b34954efc4ebbc81e3bc365f02d0eac4bf488d8695bfdd8ae91ba2e65423454f",
+    "build/v2/typed200-firmware-v2/command-0.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-firmware-v2/command-1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-firmware-v2/command-2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-firmware-v2/command-3.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-firmware-v2/command-4.log": "b2fce4791f208907de5ee83e05e5a209e5e80be5db30efd05f66d764dbf52c19",
+    "build/v2/typed200-firmware-v2/command-5.log": "246bf9eda5e1522d160a07ff55449a53ea7264f2272cde7e9bbb66a0370a04b0",
+    "build/v2/typed200-firmware-v2/driver-test": "333a7ed019ddcf75d14333971bb0f09ce89daa53fae68da449971b58622d9d04",
+    "build/v2/typed200-firmware-v2/receipt.json": "2b23911e1e7ac0954f4517346211d285dfc0f52c9f0268b98cad356c62e61a22",
+    "build/v2/typed200-firmware-v2/typed200.o": "18d7ee95773d3e4d3786a738d941fe236c2e2ce377fcf8f6d11d6574b223fd30",
+    "build/v2/typed200-firmware-v2/typed200.su": "2789cea5acc68fb5924f6d6425cf67b75dbd83f9002ffab19171dc31c8f2be90",
+    "build/v2/typed200-firmware-v2/typed200_service.o": "a2a1750bc95e1b612f5bdbd91ae10b369801a7cf9ed714539bdf94bfc17097b1",
+    "build/v2/typed200-firmware-v1/host-regression.xml": "dea0b547836fe3e9a13349c80699e3c250694c8f2066dbd768ed192302156de7"
+  },
+  "documentation_sha256": {
+    "docs/research/2026-10-15-typed200-integration.md": "762e0fa071a15ed109cd3b6315514e6cea9523935d2533e6815c831bada9f5f0",
+    "firmware/typed200/README.md": "366ac0a15e43ba5f8c7eec52b18b9076c2c686dfcfe3f45a9d5a1aabe11ebe70",
+    "rtl/v2/candidates/typed200/README.md": "5ea9750f9ec7493c9658ead815b7cc82119fcd309eff9faf8106cfd23c104c4d"
+  }
+}

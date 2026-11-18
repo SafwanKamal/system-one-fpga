@@ -1,0 +1,354 @@
+{
+  "schema": "sysone.typed200.qualification-preparation.v1",
+  "target_run_id": null,
+  "purpose": "Dedicated boot chain and static layout audited locally; physical cold-POR launch/recovery pending",
+  "artifacts": {
+    "recovery": {
+      "path": "build/v2/kr260-app-attention-context-capture-large.tar.gz",
+      "sha256": "ecd320163baa3c289c64e069186497974d4703039df4a455bc8620d357d7ec99"
+    },
+    "typed_dcp": {
+      "path": "build/v2/typed200-row-range-csa-route-v1/routed.dcp",
+      "sha256": "2d24f5f04d94c17299a32a04190c32118526221f1ab76888baf814fb733cfc88"
+    },
+    "a53": {
+      "path": "build/v2/typed200-mvp-host-v5/a53.elf",
+      "sha256": "63558ce920b53d32078c866fa223149f151f98cd41e3dbf54e37e9b92861ebb2"
+    },
+    "r5": {
+      "path": "build/v2/typed200-mvp-host-v5/r5.elf",
+      "sha256": "1385d94776229eebf2dc468db2d15882a4c376623cb5eed9037fbb9aade746f4"
+    },
+    "model": {
+      "path": "export/v2/image/minilm-l12-v1-kr260/minilm-l12-v1-kr260.img",
+      "sha256": "4129baded344729ccc7ef6a3f0a2b34799280a91d88173ae1c0b197cdef8c3bb"
+    },
+    "contract": {
+      "path": "firmware/typed_intent/generated/contract.json",
+      "sha256": "db25c66b0e9fa15f351bc73e64618048ce36a5b4a6c8f25cef05fd60d3c5ba1e"
+    },
+    "ps_init": {
+      "path": "firmware/typed200_mvp/reference/psu_init.c",
+      "sha256": "79e70111dd3aa4e47d6ebcf0ab20d87eb59cf7992ba938cc7fe1aa5d1fdc7bc5"
+    },
+    "fsbl": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/app-fsbl-v1/build/typed200_fsbl.elf",
+      "sha256": "577bba986424ce2876c90b0e898a488cf32f227aeda7cc1fb0e3137203b7ccd6"
+    },
+    "pmu": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/app-pmu-v1/build/typed200_pmufw.elf",
+      "sha256": "553e94386e42ff8aef06d54b63d6500debc6ca65d2d6a562c2c08b2ef8cccaf9"
+    },
+    "boot_relay": {
+      "path": "build/v2/typed200-boot-relay-v1/relay.elf",
+      "sha256": "8dd7e84b00637220bf7d3e488c6c57c73cb24d6cf5764eef536c3e44aa7f08b5"
+    },
+    "fsbl_macros": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/app-fsbl-v1-effective-macros.txt",
+      "sha256": "7c470d68a115aff6935667ff7ea80f1a70cca4a6a4599c9160a0212edb509b6b"
+    },
+    "pmu_macros": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/app-pmu-v1-effective-macros.txt",
+      "sha256": "7934ad7ea09bce529d53a1dac4c50cef0e8b40ef4e1642393fde9251499011f8"
+    },
+    "pm_config": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/pm-config-object.bin",
+      "sha256": "6e7c0ee58ee88f0c1b24c1209bcc384cc88d45e438640a1da53568f0b50ff56a"
+    },
+    "typed_bitstream": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/typed200.bit",
+      "sha256": "68765f980a04cbd116e4712ebd5b47002d8cd54f85b41d66dbfef33a65c1fb3d"
+    },
+    "boot_recipe": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/boot-recipe.json",
+      "sha256": "f6c476916126ef31a67c679aa9fe7b059ad0a6d1d64d2602cedd4eb063a63a16"
+    }
+  },
+  "reviews": {
+    "boot_memory_map": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/review-boot_memory_map.json",
+      "sha256": "bc1e13dff8391f7c94b74d0c3e9af9385ffe0e98b2f93d1fc74c05309493fe7b"
+    },
+    "fsbl_handoff": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/review-fsbl_handoff.json",
+      "sha256": "fc1dd49a2bed137d05318ae44bc1ae95d145fdc62fa175bdf574c410c39da2ea"
+    },
+    "pmu_ownership": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/review-pmu_ownership.json",
+      "sha256": "ecaf9b74b40313071dcbbba900c9afeda6753bfcfa4db8c9e61055dd680d8994"
+    },
+    "csu_idle": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/review-csu_idle.json",
+      "sha256": "23abc3d9c7549e7cf8a4894a0c68eac18b83cc4218789e2053cb1e7e355a56b7"
+    },
+    "debug_policy": {
+      "path": "build/v2/typed200-k26-boot-chain-v1/review-debug_policy.json",
+      "sha256": "c99be275646ddc22528a2d940bda94f62e3322e4d73c9c4f67698b331521b4a3"
+    },
+    "power_permissions": null,
+    "recovery_procedure": null,
+    "physical_checks": null,
+    "cold_start": null,
+    "reset_clock_faults": null,
+    "exclusive_access": null,
+    "target_numerics": null,
+    "typed_outcomes": null,
+    "fresh_session_recovery": null,
+    "clock_calibration": null,
+    "passive_observation": null,
+    "memory_service_bounds": null,
+    "arm_phase_bounds": null,
+    "deadline_composition": null
+  },
+  "runtime_register_checks": [
+    {
+      "rule": 1,
+      "address": 4246339844,
+      "mask": 15,
+      "expected": 15
+    },
+    {
+      "rule": 2,
+      "address": 4246339840,
+      "mask": 983290,
+      "expected": 983162
+    },
+    {
+      "rule": 3,
+      "address": 4284351024,
+      "mask": 15,
+      "expected": 15
+    },
+    {
+      "rule": 4,
+      "address": 4284351032,
+      "mask": 458849,
+      "expected": 196705
+    },
+    {
+      "rule": 5,
+      "address": 4284351036,
+      "mask": 4039,
+      "expected": 4034
+    },
+    {
+      "rule": 6,
+      "address": 4246339772,
+      "mask": 16777216,
+      "expected": 0
+    },
+    {
+      "rule": 7,
+      "address": 4288282624,
+      "mask": 507,
+      "expected": 8
+    },
+    {
+      "rule": 8,
+      "address": 4288282880,
+      "mask": 5,
+      "expected": 1
+    },
+    {
+      "rule": 9,
+      "address": 4288283136,
+      "mask": 1,
+      "expected": 0
+    },
+    {
+      "rule": 10,
+      "address": 4284350528,
+      "mask": 27,
+      "expected": 27
+    },
+    {
+      "rule": 11,
+      "address": 4284350496,
+      "mask": 125009673,
+      "expected": 80896
+    },
+    {
+      "rule": 12,
+      "address": 4284350512,
+      "mask": 125009673,
+      "expected": 81920
+    },
+    {
+      "rule": 13,
+      "address": 4284350504,
+      "mask": 2147483648,
+      "expected": 0
+    },
+    {
+      "rule": 14,
+      "address": 4284350520,
+      "mask": 2147483648,
+      "expected": 0
+    },
+    {
+      "rule": 15,
+      "address": 4284350608,
+      "mask": 50347783,
+      "expected": 50332160
+    },
+    {
+      "rule": 16,
+      "address": 4284350656,
+      "mask": 20922119,
+      "expected": 16844032
+    },
+    {
+      "rule": 17,
+      "address": 4284350660,
+      "mask": 20922119,
+      "expected": 16845312
+    },
+    {
+      "rule": 18,
+      "address": 4278846276,
+      "mask": 2147483648,
+      "expected": 2147483648
+    },
+    {
+      "rule": 19,
+      "address": 4278846280,
+      "mask": 2147483648,
+      "expected": 2147483648
+    },
+    {
+      "rule": 20,
+      "address": 4278845524,
+      "mask": 2147483648,
+      "expected": 2147483648
+    }
+  ],
+  "additional_pre_admission_observations": [
+    {
+      "name": "CSUDMA_SRC_STS",
+      "address": 4291297288,
+      "mask": 8191,
+      "expected": 0
+    },
+    {
+      "name": "CSUDMA_DST_STS",
+      "address": 4291299336,
+      "mask": 8191,
+      "expected": 0
+    },
+    {
+      "name": "CSU_PCAP_RESET",
+      "address": 4291440652,
+      "mask": 1,
+      "expected": 1
+    },
+    {
+      "name": "CSU_PCAP_STATUS_PL_DONE",
+      "address": 4291440656,
+      "mask": 8,
+      "expected": 8
+    },
+    {
+      "name": "CSU_STATUS",
+      "address": 4291428352,
+      "policy": "record authentication/encryption; lab trust is not secure-boot proof"
+    },
+    {
+      "name": "CSU_JTAG_CHAIN_STATUS",
+      "address": 4291428404,
+      "policy": "record only; no security/lock writes"
+    },
+    {
+      "name": "CSU_JTAG_SEC",
+      "address": 4291428408,
+      "policy": "record only; decode against exact debug policy"
+    },
+    {
+      "name": "CSU_JTAG_DAP_CFG",
+      "address": 4291428412,
+      "policy": "record only; enabled DAP is not disconnected or noninterfering"
+    },
+    {
+      "name": "PMU_IPI_0_ISR",
+      "address": 4281532432,
+      "mask": 4294967295,
+      "expected": 0
+    },
+    {
+      "name": "PMU_IPI_1_ISR",
+      "address": 4281536528,
+      "mask": 4294967295,
+      "expected": 0
+    },
+    {
+      "name": "PMU_IPI_2_ISR",
+      "address": 4281540624,
+      "mask": 4294967295,
+      "expected": 0
+    },
+    {
+      "name": "PMU_IPI_3_ISR",
+      "address": 4281544720,
+      "mask": 4294967295,
+      "expected": 0
+    }
+  ],
+  "capture_symbols": {
+    "ty_shared": {
+      "address": 192512,
+      "size": 384
+    },
+    "ty_trace": {
+      "address": 131088,
+      "size": 1488
+    },
+    "ty_pmu_config": {
+      "address": 192896,
+      "size": 32
+    },
+    "ty_pmu_evidence": {
+      "address": 132576,
+      "size": 72
+    },
+    "mvp_boot": {
+      "address": 192960,
+      "size": 64
+    },
+    "mvp_owner": {
+      "address": 193280,
+      "size": 12
+    }
+  },
+  "r5_global_alias_note": "local TCM address + 0xffe00000 for R5_0 split-mode debug captures; prove mapping on target",
+  "lab_security_policy": "Trusted physical lab boot/debug; no eFuse or debug/security lock writes; no secure-boot claim",
+  "previous_profile": {
+    "path": "docs/research/2026-10-16-typed200-target-qualification-profile-v2.json",
+    "sha256": "9dd669f4d84175d4488bd6f3a125a45dd7030faf15969f0d4078018d71925335"
+  },
+  "relay_preparation": {
+    "target_executed": false,
+    "entry": 268435456,
+    "input_source": 269418496,
+    "input_bytes": 448,
+    "status_word": 269422592,
+    "a53_input_destination": 4294893568,
+    "ddr_reservation_half_open": [
+      268435456,
+      269484032
+    ],
+    "ddr_reservation_target_approved": false,
+    "entry_requires_final_fsbl_exit": true,
+    "note": "Provision input in DDR after loader writes; do not overwrite live FSBL OCM. All real FSBL/PMU/scratch/policy gates remain open.",
+    "ddr_reservation_static_validated": true
+  },
+  "local_boot_image": {
+    "path": "build/v2/typed200-k26-boot-chain-v1/image-layout-v2/BOOT.bin",
+    "sha256": "c93796b59f58f41e0f34d8492e6e4821037a3fe9e243dfb9d36bd9540c4c559b"
+  },
+  "deployment_ready": false,
+  "recovery_inventory": {
+    "user_report": "SSH only; user plans JTAG later at home",
+    "independent_recovery_verified": false,
+    "board_contact_this_task": false
+  },
+  "cold_por_launch_route_verified": false
+}

@@ -14,6 +14,9 @@
 module embed_engine
     import encoder_pkg::*;
 #(
+    parameter integer DSP_EMBED_ROW_ADDRESS = 0,
+    parameter integer LOCAL_EMBED_CONTROLS = 0,
+    parameter integer READ_LATENCY = encoder_pkg::READ_LATENCY,
     parameter integer MAX_WIDTH = 384,
     parameter integer ADDRESS_WIDTH = 27,
     parameter integer BEATS_WIDTH = 16,
@@ -86,6 +89,19 @@ module embed_engine
     logic [15:0] id_reg;
     logic [ADDRESS_WIDTH-1:0] word_row_address, position_row_address;
     logic pipeline_busy;
+    if(DSP_EMBED_ROW_ADDRESS!=0) begin:gen_dsp_row_address
+    embed_row_address_dsp #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) word_address_kernel(
+        .clk,.reset,.input_capture(state_reg==ID_WAIT && wait_reg==0),
+        .output_capture(state_reg==ROW_ADDRESS),
+        .id(source_data[16*token_reg[2:0]+:16]),.stride(word_stride),.base(word_address),.address(word_row_address));
+    embed_row_address_dsp #(.ADDRESS_WIDTH(ADDRESS_WIDTH)) position_address_kernel(
+        .clk,.reset,.input_capture(state_reg==ID_WAIT && wait_reg==0),
+        .output_capture(state_reg==ROW_ADDRESS),
+        .id({8'b0,token_reg}),.stride(position_stride),.base(position_address),.address(position_row_address));
+
+
+    end
+
 
     // fetched once per instruction, and per token
     (* ram_style = "distributed" *) logic [127:0] type_ram [0:VECTOR_WORDS-1];
@@ -133,8 +149,10 @@ module embed_engine
             group_reg <= '0;
             wait_reg <= '0;
             id_reg <= '0;
+            if(DSP_EMBED_ROW_ADDRESS==0) begin
             word_row_address <= '0;
             position_row_address <= '0;
+            end
         end else begin
             case (state_reg)
                 IDLE: begin
@@ -174,8 +192,10 @@ module embed_engine
                     end
                 end
                 ROW_ADDRESS: begin
+                    if(DSP_EMBED_ROW_ADDRESS==0) begin
                     word_row_address <= word_address + ADDRESS_WIDTH'(id_reg * word_stride);
                     position_row_address <= position_address + ADDRESS_WIDTH'(token_reg * position_stride);
+                    end
                     state_reg <= WORD_REQUEST;
                 end
                 WORD_REQUEST: begin
@@ -274,17 +294,31 @@ module embed_engine
     logic signed [31:0] type_value [0:LANES-1], type_held [0:LANES-1];
     (* use_dsp = "no" *) logic signed [25:0] w_product [0:LANES-1];
     (* use_dsp = "no" *) logic signed [25:0] p_product [0:LANES-1];
-    logic signed [16:0] w_term [0:LANES-1], p_term [0:LANES-1];
+    localparam int TERM_WIDTH = LOCAL_EMBED_CONTROLS!=0 ? 16 : 17;
+    localparam int SUM_WIDTH = LOCAL_EMBED_CONTROLS!=0 ? 33 : 34;
+    logic signed [TERM_WIDTH-1:0] w_term [0:LANES-1], p_term [0:LANES-1];
     logic signed [31:0] type_term [0:LANES-1];
     logic [LANES*16-1:0] out_pair;
     logic [BUFFER_ADDRESS_WIDTH-1:0] out_address;
     logic [15:0] out_enable;
 
+    logic [5:0] word_shift_local,position_shift_local;
+    logic signed [25:0] word_bias,position_bias;
+    if (LOCAL_EMBED_CONTROLS!=0) begin : gen_local_embed_controls
+    always_ff @(posedge clk)begin
+        if(reset)begin word_shift_local<=0;position_shift_local<=0;word_bias<=0;position_bias<=0;end
+        else if(start && state_reg==IDLE)begin
+            word_shift_local<=word_shift;position_shift_local<=position_shift;
+            word_bias<=word_shift==0 ? 26'sd0 : 26'sd1 <<< (word_shift-6'd1);
+            position_bias<=position_shift==0 ? 26'sd0 : 26'sd1 <<< (position_shift-6'd1);
+        end
+    end
+    end
     always_ff @(posedge clk) begin
         for (int e = 0; e < LANES; e++) begin
             logic [15:0] d;
             logic signed [25:0] w_rounded, p_rounded;
-            logic signed [33:0] sum;
+            logic signed [SUM_WIDTH-1:0] sum;
             d = 16'(group_reg * LANES + e);
             // stage 1: operands of element d
             w_value[e] <= $signed(word_row[d >> 4][8 * d[3:0] +: 8]);
@@ -296,6 +330,19 @@ module embed_engine
             w_product[e] <= 26'(w_value[e]) * 26'($signed({1'b0, w_multiplier[e]}));
             p_product[e] <= 26'(p_value[e]) * 26'($signed({1'b0, p_multiplier[e]}));
             type_held[e] <= type_value[e];
+            if (LOCAL_EMBED_CONTROLS!=0) begin
+            // stage 3: requantised, clamped terms
+            w_rounded = (word_shift_local == '0) ? w_product[e]
+                        : (w_product[e] + word_bias) >>> word_shift_local;
+            p_rounded = (position_shift_local == '0) ? p_product[e]
+                        : (p_product[e] + position_bias) >>> position_shift_local;
+            w_term[e] <= w_rounded>26'sd32767 ? 16'sd32767 : w_rounded< -26'sd32767 ? -16'sd32767 : 16'(w_rounded);
+            p_term[e] <= p_rounded>26'sd32767 ? 16'sd32767 : p_rounded< -26'sd32767 ? -16'sd32767 : 16'(p_rounded);
+            type_term[e] <= type_held[e];
+            // stage 4: sum, clamp
+            sum = SUM_WIDTH'(w_term[e]) + SUM_WIDTH'(p_term[e]) + SUM_WIDTH'(type_term[e]);
+            out_pair[16*e +: 16] <= sum>33'sd32767 ? 16'sd32767 : sum< -33'sd32767 ? -16'sd32767 : 16'(sum);
+            end else begin
             // stage 3: requantised, clamped terms
             w_rounded = (word_shift == '0) ? w_product[e]
                         : (w_product[e] + (26'sd1 <<< (word_shift - 6'd1))) >>> word_shift;
@@ -305,8 +352,9 @@ module embed_engine
             p_term[e] <= 17'(clamp(64'(p_rounded), -64'sd32767, 64'sd32767));
             type_term[e] <= type_held[e];
             // stage 4: sum, clamp
-            sum = 34'(w_term[e]) + 34'(p_term[e]) + 34'(type_term[e]);
+            sum = SUM_WIDTH'(w_term[e]) + SUM_WIDTH'(p_term[e]) + SUM_WIDTH'(type_term[e]);
             out_pair[16*e +: 16] <= 16'(clamp(64'(sum), -64'sd32767, 64'sd32767));
+            end
         end
         // R row t: width / 8 INT16 words; the pair's 4 bytes at lane (first mod 8) * 2
         begin

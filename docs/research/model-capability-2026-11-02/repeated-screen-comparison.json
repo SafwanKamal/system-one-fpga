@@ -1,0 +1,37 @@
+[
+  {
+    "model": "qwen17-q4",
+    "n": 104,
+    "identical_first_prompts": 104,
+    "identical_first_outputs": 94,
+    "identical_correctness": 104,
+    "correctness_flips": []
+  },
+  {
+    "model": "qwen4-q4",
+    "n": 104,
+    "identical_first_prompts": 104,
+    "identical_first_outputs": 98,
+    "identical_correctness": 102,
+    "correctness_flips": [
+      {
+        "id": "v3-conditional-013",
+        "screen": false,
+        "confirm": true
+      },
+      {
+        "id": "episode-00",
+        "screen": true,
+        "confirm": false
+      }
+    ]
+  },
+  {
+    "model": "qwen8-q2",
+    "n": 104,
+    "identical_first_prompts": 104,
+    "identical_first_outputs": 99,
+    "identical_correctness": 104,
+    "correctness_flips": []
+  }
+]

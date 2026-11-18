@@ -18,7 +18,11 @@ module axi_memory_port #(
     parameter integer ADDRESS_WIDTH = 40,
     parameter integer DATA_WIDTH = 128,
     parameter integer BEATS_WIDTH = 16,
-    parameter integer MAX_OUTSTANDING_READS = 8
+    parameter integer MAX_OUTSTANDING_READS = 8,
+    // One elastic descriptor register per direction breaks engine-valid ->
+    // arbitration -> engine-ready paths. Defaults to the established interface.
+    parameter integer REGISTERED_REQUESTS = 0,
+    parameter integer REGISTERED_FIFO_FLAGS = 0
 ) (
     input logic clk,
     input logic reset,
@@ -79,6 +83,52 @@ module axi_memory_port #(
     localparam integer PAGE_BEATS = 4096 / BEAT_BYTES;              // beats per 4 KiB
     localparam integer OUTSTANDING_WIDTH = $clog2(MAX_OUTSTANDING_READS + 1);
 
+    logic core_read_request_valid, core_read_request_ready;
+    logic core_write_request_valid, core_write_request_ready;
+    logic [ADDRESS_WIDTH-1:0] core_read_request_address, core_write_request_address;
+    logic [BEATS_WIDTH-1:0] core_read_request_beats, core_write_request_beats;
+    if (REGISTERED_REQUESTS != 0) begin : gen_request_registers
+        logic read_pending, write_pending;
+        logic [ADDRESS_WIDTH-1:0] read_address, write_address;
+        logic [BEATS_WIDTH-1:0] read_beats, write_beats;
+        assign read_request_ready = !reset && (!read_pending || core_read_request_ready);
+        assign write_request_ready = !reset && (!write_pending || core_write_request_ready);
+        assign core_read_request_valid = read_pending;
+        assign core_write_request_valid = write_pending;
+        assign core_read_request_address = read_address;
+        assign core_write_request_address = write_address;
+        assign core_read_request_beats = read_beats;
+        assign core_write_request_beats = write_beats;
+        always_ff @(posedge clk or posedge reset) begin
+            if (reset) begin
+                read_pending <= 1'b0;
+                write_pending <= 1'b0;
+            end else begin
+                if (read_request_ready) read_pending <= read_request_valid;
+                if (write_request_ready) write_pending <= write_request_valid;
+            end
+        end
+        always_ff @(posedge clk) begin
+            if (read_request_valid && read_request_ready) begin
+                read_address <= read_request_address;
+                read_beats <= read_request_beats;
+            end
+            if (write_request_valid && write_request_ready) begin
+                write_address <= write_request_address;
+                write_beats <= write_request_beats;
+            end
+        end
+    end else begin : gen_direct_requests
+        assign core_read_request_valid = read_request_valid;
+        assign core_write_request_valid = write_request_valid;
+        assign core_read_request_address = read_request_address;
+        assign core_write_request_address = write_request_address;
+        assign core_read_request_beats = read_request_beats;
+        assign core_write_request_beats = write_request_beats;
+        assign read_request_ready = core_read_request_ready;
+        assign write_request_ready = core_write_request_ready;
+    end
+
     // ------------------------------------------------------------- burst sizing
     // beats in the next burst: min(left, 256, beats to the 4 KiB boundary)
     function automatic logic [8:0] burst_beats(input logic [ADDRESS_WIDTH-1:0] address,
@@ -112,6 +162,22 @@ module axi_memory_port #(
     wire [8:0] read_burst = burst_beats(read_address_reg, read_issue_left_reg);
     wire read_burst_done = m_axi_rvalid && m_axi_rready && m_axi_rlast;
 
+    if (REGISTERED_FIFO_FLAGS != 0) begin : gen_registered_length_flags
+    sync_fifo_registered_flags #(
+        .WIDTH (BEATS_WIDTH),
+        .DEPTH (4)
+    ) length_queue_inst (
+        .clk          (clk),
+        .reset        (reset),
+        .write_enable (length_push),
+        .write_data   (core_read_request_beats),
+        .full         (length_full),
+        .read_enable  (length_pop),
+        .read_data    (length_head),
+        .empty        (length_empty),
+        .count        (length_count)
+    );
+    end else begin : gen_original_length_flags
     sync_fifo #(
         .WIDTH (BEATS_WIDTH),
         .DEPTH (4)
@@ -119,13 +185,15 @@ module axi_memory_port #(
         .clk          (clk),
         .reset        (reset),
         .write_enable (length_push),
-        .write_data   (read_request_beats),
+        .write_data   (core_read_request_beats),
         .full         (length_full),
         .read_enable  (length_pop),
         .read_data    (length_head),
         .empty        (length_empty),
         .count        (length_count)
     );
+    end
+
 
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -155,17 +223,17 @@ module axi_memory_port #(
                                 + ((m_axi_arvalid && m_axi_arready) ? 1'b1 : 1'b0)
                                 - (read_burst_done ? 1'b1 : 1'b0);
         deliver_left_next = read_beat ? deliver_now - 1'b1 : deliver_left_reg;
-        read_request_ready = 1'b0;
+        core_read_request_ready = 1'b0;
         length_push = 1'b0;
         m_axi_arvalid = 1'b0;
 
         case (read_state_reg)
             READ_IDLE: begin
-                if (read_request_valid && !length_full) begin
-                    read_request_ready = 1'b1;
+                if (core_read_request_valid && !length_full) begin
+                    core_read_request_ready = 1'b1;
                     length_push = 1'b1;
-                    read_address_next = read_request_address;
-                    read_issue_left_next = read_request_beats;
+                    read_address_next = core_read_request_address;
+                    read_issue_left_next = core_read_request_beats;
                     read_state_next = READ_ISSUE;
                 end
             end
@@ -240,7 +308,7 @@ module axi_memory_port #(
         response_error_next = response_error_reg
                               || (m_axi_bvalid && m_axi_bready && m_axi_bresp != 2'b00)
                               || (m_axi_rvalid && m_axi_rready && m_axi_rresp != 2'b00);
-        write_request_ready = 1'b0;
+        core_write_request_ready = 1'b0;
         m_axi_awvalid = 1'b0;
         m_axi_wvalid = 1'b0;
         write_ready = 1'b0;
@@ -248,11 +316,11 @@ module axi_memory_port #(
         case (write_state_reg)
             WRITE_IDLE: begin
                 // a write starts only when no read is in progress
-                if (write_request_valid && !read_request_valid && read_state_reg == READ_IDLE
+                if (core_write_request_valid && !core_read_request_valid && read_state_reg == READ_IDLE
                     && length_empty && deliver_left_reg == '0) begin
-                    write_request_ready = 1'b1;
-                    write_address_next = write_request_address;
-                    write_left_next = write_request_beats;
+                    core_write_request_ready = 1'b1;
+                    write_address_next = core_write_request_address;
+                    write_left_next = core_write_request_beats;
                     write_state_next = WRITE_ADDRESS;
                 end
             end

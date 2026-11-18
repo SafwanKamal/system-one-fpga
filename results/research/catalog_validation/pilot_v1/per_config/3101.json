@@ -1,0 +1,596 @@
+[
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "passive8",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 8.0,
+    "mean_effort": 0.0,
+    "mean_disruption": 0.0,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.13333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.07182204905802818,
+    "mean_disruption": 0.0,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "fixed1",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 9.0,
+    "mean_effort": 0.24268317136967368,
+    "mean_disruption": 0.10896554761804161,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5293087594662069,
+    "mean_disruption": 0.6347772380750455,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5385205847011953,
+    "mean_disruption": 0.42027195408277945,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.556694454712497,
+    "mean_disruption": 0.6511008006425939,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.009815372857597789
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5433183105806423,
+    "mean_disruption": 0.5133553722650716,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.005982851435796225
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "random0",
+    "metrics": {
+      "unknown_rejection": 0.26666666666666666,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.33152077824224185,
+    "mean_disruption": 0.2862639706409562,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "random1",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.4120938368300262,
+    "mean_disruption": 0.372611661298685,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "random2",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.3934617618619622,
+    "mean_disruption": 0.41963828890172683,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "physics",
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.0686100356418649,
+    "mean_disruption": 0.10179532152730948,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "passive8",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.7999999999999999,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.175,
+      "feasible": false
+    },
+    "end_seconds": 8.0,
+    "mean_effort": 0.0,
+    "mean_disruption": 0.0,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.07182204905802818,
+    "mean_disruption": 0.0,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "fixed1",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.125,
+      "feasible": false
+    },
+    "end_seconds": 9.0,
+    "mean_effort": 0.2944573727977291,
+    "mean_disruption": 0.44296165359789824,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.2,
+      "known_abstention": 0.15,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5909573727977293,
+    "mean_disruption": 0.6388128832001085,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.1,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5385205847011953,
+    "mean_disruption": 0.42027195408277945,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.2,
+      "known_abstention": 0.15,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.556694454712497,
+    "mean_disruption": 0.6511008006425939,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.009815372857597789
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.7,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.125,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5433183105806423,
+    "mean_disruption": 0.5133553722650716,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.005982851435796225
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "random0",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.125,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.33152077824224185,
+    "mean_disruption": 0.2862639706409562,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "random1",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.4120938368300262,
+    "mean_disruption": 0.372611661298685,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "random2",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.3934617618619622,
+    "mean_disruption": 0.41963828890172683,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_fit",
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.04797672474684416,
+    "mean_disruption": 0.08409334228015657,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "passive8",
+    "metrics": {
+      "unknown_rejection": 0.06666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 8.0,
+    "mean_effort": 0.0,
+    "mean_disruption": 0.0,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.1,
+      "known_macro_recall": 0.7666666666666666,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.175,
+      "feasible": false
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.07182204905802818,
+    "mean_disruption": 0.0,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "fixed1",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    },
+    "end_seconds": 9.0,
+    "mean_effort": 0.25621289025890903,
+    "mean_disruption": 0.4311456532067343,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.06666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.06515417874946221,
+    "mean_disruption": 0.05392494431580167,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.1,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5385205847011953,
+    "mean_disruption": 0.42027195408277945,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.556694454712497,
+    "mean_disruption": 0.6511008006425939,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.009815372857597789
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.5433183105806423,
+    "mean_disruption": 0.5133553722650716,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.005982851435796225
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "random0",
+    "metrics": {
+      "unknown_rejection": 0.16666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.33152077824224185,
+    "mean_disruption": 0.2862639706409562,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "random1",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.4120938368300262,
+    "mean_disruption": 0.372611661298685,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "random2",
+    "metrics": {
+      "unknown_rejection": 0.06666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.3934617618619622,
+    "mean_disruption": 0.41963828890172683,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  },
+  {
+    "config": 3101,
+    "decoder": "forest_knn",
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    },
+    "end_seconds": 10.0,
+    "mean_effort": 0.10462477123216647,
+    "mean_disruption": 0.09215892866733166,
+    "violations": 0,
+    "clipped_steps": 0,
+    "selection_seconds": 0.0
+  }
+]

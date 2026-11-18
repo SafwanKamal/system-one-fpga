@@ -1,0 +1,7 @@
+{
+  "python": "3.12.13 (main, May 10 2026, 19:35:37) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "workers": 4,
+  "threadpool_limit": 1,
+  "requirements_lock": "experiments/retroactive_task/requirements-lock.txt"
+}

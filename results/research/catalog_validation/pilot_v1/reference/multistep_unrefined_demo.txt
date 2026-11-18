@@ -1,0 +1,18 @@
+Devices: [CpuDevice(id=0)]
+Horizon: 10 segments x 2 steps x 0.1 s = 2.0 s total
+full multistart:   compile 12678.71 ms   run 1136.856 ms
+
+Best loss: 0.000000
+Optimal control sequence (first 5 segments, [v, omega]): [[0.56, 0.13], [0.424, 0.66], [0.729, 0.526], [0.566, 0.329], [0.203, 0.535]]
+
+Pairwise output-space overlaps (at final segment):
+  Nominal vs Actuator Fault: 0.000000
+  Nominal vs Sensor Fault: 0.000000
+  Actuator Fault vs Sensor Fault: 0.000000
+
+Output-interval volumes (at final segment):
+  Nominal: 0.029411
+  Actuator Fault: 0.066512
+  Sensor Fault: 0.026543
+
+Memory snapshot: {'ru_maxrss_kb': 571260.0}

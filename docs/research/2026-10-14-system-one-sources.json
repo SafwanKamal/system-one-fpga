@@ -1,0 +1,493 @@
+{
+  "review_date_local": "2026-10-14",
+  "timezone": "America/Chicago",
+  "accessed_utc": "2026-10-15T03:55:19.057579+00:00",
+  "scope": "Read-only primary-paper and implementation inspection, local saved-evidence analysis; no external builds, no board access",
+  "papers": [
+    {
+      "id": "P1",
+      "title": "Pushing up to the Limit of Memory Bandwidth and Capacity Utilization for Efficient LLM Decoding on Embedded FPGA",
+      "url": "https://arxiv.org/html/2502.10659v1",
+      "version": "v1",
+      "inspection": "full architecture and evaluation sections, Tables I-III; author artifact inspected",
+      "limitations": "Decode; estimated power; no matched encoder workload"
+    },
+    {
+      "id": "P2",
+      "title": "TeLLMe v2: An Efficient End-to-End Ternary LLM Prefill and Decode Accelerator with Table-Lookup Matmul on Edge FPGAs",
+      "url": "https://arxiv.org/html/2510.15926v2",
+      "version": "v2",
+      "inspection": "architecture, TLMM, buffering, prefill/decode, setup, results and Tables 1-4; author HLS/host/HWH inspected",
+      "limitations": "Resource table inconsistencies; reported power method unresolved; external model/goldens not downloaded"
+    },
+    {
+      "id": "P3",
+      "title": "Hardware Acceleration of Fully Quantized BERT for Efficient Natural Language Processing",
+      "url": "https://past.date-conference.com/proceedings-archive/2021/pdf/1507.pdf",
+      "version": "DATE 2021 proceedings",
+      "inspection": "all four pages incl numerical approach, architecture, scheduling, Tables I-IV",
+      "limitations": "Published resource/power totals; no verified author code found by targeted search"
+    },
+    {
+      "id": "P4",
+      "title": "I-BERT: Integer-only BERT Quantization",
+      "url": "https://proceedings.mlr.press/v139/kim21d.html",
+      "version": "ICML 2021",
+      "inspection": "primary publication record and author numerical source inspection",
+      "limitations": "Algorithm/GPU precedent; no FPGA measurement"
+    },
+    {
+      "id": "P5",
+      "title": "NPE: An FPGA-based Overlay Processor for Natural Language Processing",
+      "url": "https://arxiv.org/pdf/2104.06535",
+      "version": "arXiv 2104.06535",
+      "inspection": "nonlinear requirements, scheduling and evaluation Tables 3-7, software-simulated timing boundary",
+      "limitations": "Not a hardware-latency reproduction; author artifact not verified"
+    },
+    {
+      "id": "P6",
+      "title": "Designing Efficient LLM Accelerators for Edge Devices",
+      "url": "https://arxiv.org/html/2408.00462",
+      "version": "arXiv 2408.00462",
+      "inspection": "methodology, profiling, Q3_K/Q8_K kernel and full case study",
+      "limitations": "Author-linked SECDA-LLM repository inaccessible; do not substitute SECDA-TFLite"
+    },
+    {
+      "id": "P7",
+      "title": "LlamaF: An Efficient Llama2 Architecture Accelerator on Embedded FPGAs",
+      "url": "https://arxiv.org/html/2409.11424",
+      "version": "arXiv 2409.11424",
+      "inspection": "host pseudocode, GQMV stages, quantization and hardware/results Tables III-VI",
+      "limitations": "Attention remains CPU; no author source verified; primary PPL differs from later table"
+    },
+    {
+      "id": "P8",
+      "title": "MEADOW: Memory-efficient Dataflow and Data Packing for Low Power Edge LLMs",
+      "url": "https://arxiv.org/html/2503.11663",
+      "version": "arXiv 2503.11663",
+      "inspection": "hybrid dataflow, dictionary/packet/reindex packing, setup Table1, TTFT/TBT and bandwidth experiments",
+      "limitations": "845 BRAM/2034 DSP; later table swaps columns; BRAM units, power boundary and source release unresolved"
+    },
+    {
+      "id": "P9",
+      "title": "FlightLLM: Efficient Large Language Model Inference with a Complete Mapping Flow on FPGAs",
+      "url": "https://arxiv.org/html/2401.03868",
+      "version": "arXiv 2401.03868",
+      "inspection": "mapping architecture, evaluation setup, Tables2-3, measured versus simulated platform distinction",
+      "limitations": "U280 hardware vs VHK158 simulation; HBM scale differs"
+    },
+    {
+      "id": "P10",
+      "title": "Understanding the Potential of FPGA-Based Spatial Acceleration for Large Language Model Inference",
+      "url": "https://arxiv.org/html/2312.15159",
+      "version": "arXiv 2312.15159",
+      "inspection": "analytical design points, spatial kernels, DSP packing and physical implementation limitations",
+      "limitations": "Separate estimates from implementation; no complete verified artifact located"
+    }
+  ],
+  "vendor_sources": [
+    {
+      "id": "V1",
+      "url": "https://docs.amd.com/r/en-US/ds987-k26-som/Programmable-Logic",
+      "inspection": "K26 LUT/FF/BRAM36/URAM/DSP totals"
+    },
+    {
+      "id": "V2",
+      "url": "https://docs.amd.com/r/en-US/ds988-kr260-starter-kit/Product-Details",
+      "inspection": "KR260 K26 platform and memory"
+    },
+    {
+      "id": "V3",
+      "url": "https://docs.amd.com/r/en-US/ds986-kv260-starter-kit/Product-Details",
+      "inspection": "KV260 K26 platform and memory"
+    },
+    {
+      "id": "V4",
+      "url": "https://docs.amd.com/r/en-US/ds987-k26-som/Processing-System",
+      "inspection": "Quad Cortex-A53 and DDR controller"
+    }
+  ],
+  "repositories": [
+    {
+      "repository": "adamgallas/llama-fpga",
+      "commit": "bdd90206675594ab6b710a32d5319c68a58d9c36",
+      "url": "https://github.com/adamgallas/llama-fpga/tree/bdd90206675594ab6b710a32d5319c68a58d9c36",
+      "license": "No top-level license detected",
+      "build_executed": false,
+      "inspection": "Targeted source/metadata inspection, not a full independent code audit",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/README.md",
+          "sha256": "65066e9cec85e90e7bea0d7580b9219ca64125650b8cde11a27bbf83f529329d",
+          "bytes": 9580
+        },
+        {
+          "path": "kv260/kv260_sdk.c",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/kv260/kv260_sdk.c",
+          "sha256": "d6347a39264c5b3f6aa98d60e9bb2ca89881502852ebaa41654618ad97c545b9",
+          "bytes": 17714
+        },
+        {
+          "path": "python/model2bin.py",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/python/model2bin.py",
+          "sha256": "9d93d606ccec96d623cdb4865a0454d57d4473b95651e1c487b109a05dbb125f",
+          "bytes": 27030
+        },
+        {
+          "path": "scala/src/main/scala/top/BusInSubMod.scala",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/scala/src/main/scala/top/BusInSubMod.scala",
+          "sha256": "da460b7dd1360d0bb7cff50adbff1eae9f85957493a45c782fd9fdbf319d220f",
+          "bytes": 8551
+        },
+        {
+          "path": "scala/src/main/scala/top/DataPath.scala",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/scala/src/main/scala/top/DataPath.scala",
+          "sha256": "41cf1b5fdac3b1ac67cc1dceb2841ef99b2a69a26d740076649ec04d2561e714",
+          "bytes": 24306
+        },
+        {
+          "path": "scala/src/main/scala/attn/SerialSafeSoftmax.scala",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/scala/src/main/scala/attn/SerialSafeSoftmax.scala",
+          "sha256": "8337a6e68f406b276f6f528c1d785664f9f5efe5308e4e928042eaa4d30d658f",
+          "bytes": 4917
+        },
+        {
+          "path": "scala/src/main/scala/attn/KvScaleZeroPacker.scala",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/scala/src/main/scala/attn/KvScaleZeroPacker.scala",
+          "sha256": "1cc064d8ff576a58e704d7284cb482a2c3049339ffe6d44268cf5b17c12062fe",
+          "bytes": 10906
+        },
+        {
+          "path": "kv260/kv260_vivado/kv260_vivado.srcs/sources_1/bd/kv260bd/kv260bd.bd",
+          "url": "https://github.com/adamgallas/llama-fpga/blob/bdd90206675594ab6b710a32d5319c68a58d9c36/kv260/kv260_vivado/kv260_vivado.srcs/sources_1/bd/kv260bd/kv260bd.bd",
+          "sha256": "2fa2d2245e2217ac345049dc40f733660338c9c6a0b48794e7860e3acbba0b2e",
+          "bytes": 110882
+        }
+      ]
+    },
+    {
+      "repository": "UCI-CORSA/TeLLMe_FPGA_2026",
+      "commit": "139ad882aba8485048e08993022872128bc00f51",
+      "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/tree/139ad882aba8485048e08993022872128bc00f51",
+      "license": "BSD-3-Clause",
+      "build_executed": false,
+      "inspection": "Targeted source/metadata inspection, not a full independent code audit",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/README.md",
+          "sha256": "92fd78d8b3a75e8511f76fa4f4082e75227e16e8aa6a20181fbdb1970a715ea7",
+          "bytes": 8004
+        },
+        {
+          "path": "src/config/config.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/src/config/config.hpp",
+          "sha256": "b59e3695de76891917f17a79118dab0d5c69f1204fa3c7bce6879b2cf94d9cce",
+          "bytes": 5810
+        },
+        {
+          "path": "src/top_bitnet.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/src/top_bitnet.hpp",
+          "sha256": "33ced22be64bdb1043d5118c900e5ccf1b8519402dcfaa729c6459adbd7b7054",
+          "bytes": 9917
+        },
+        {
+          "path": "src/load_weight.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/src/load_weight.hpp",
+          "sha256": "f6cbc3c9e9064d5096453ae6135549cf7760471864db3eaf8130cc395078d662",
+          "bytes": 5877
+        },
+        {
+          "path": "src/linear.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/src/linear.hpp",
+          "sha256": "018445373be6f4dec03d9b0d8e3ec94cd74c02e52f457ae289e411a6b5ee52bd",
+          "bytes": 11471
+        },
+        {
+          "path": "src/reverse_attention.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/src/reverse_attention.hpp",
+          "sha256": "cdcc0603b25866854ed7b2758e689e1703d1bbbf6a4b5a6566caf46034d78e5d",
+          "bytes": 10224
+        },
+        {
+          "path": "src/decode_attention.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/src/decode_attention.hpp",
+          "sha256": "3d859d414158485d0c76a7499fd976ef63d56a9c3bc5aafadba82ee518e893d4",
+          "bytes": 9139
+        },
+        {
+          "path": "src/rms_norm.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/src/rms_norm.hpp",
+          "sha256": "5a16b8f473458cd03ccc2bc424740f0835177ef880dc74d9aeea74ca1ce00d47",
+          "bytes": 7829
+        },
+        {
+          "path": "on_board_test/src/chatbot.py",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/on_board_test/src/chatbot.py",
+          "sha256": "f6f2a78892935e92497a34faadd8eff6521ec6695653f21d055646ba39e0ac27",
+          "bytes": 96491
+        },
+        {
+          "path": "on_board_test/src/neon_lm_head/lm_head_neon.hpp",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/on_board_test/src/neon_lm_head/lm_head_neon.hpp",
+          "sha256": "9efaccec1c58769f64179e9fb4b5079364a8726fdf9edd337b0571a708311b22",
+          "bytes": 18294
+        },
+        {
+          "path": "on_board_test/src/bitnet1024tl_250_dram_divide5.hwh",
+          "url": "https://github.com/UCI-CORSA/TeLLMe_FPGA_2026/blob/139ad882aba8485048e08993022872128bc00f51/on_board_test/src/bitnet1024tl_250_dram_divide5.hwh",
+          "sha256": "e1eada3146699364d37f91cb1180b6436d26c938813f39f5186b2055c23f7d64",
+          "bytes": 449389
+        }
+      ]
+    },
+    {
+      "repository": "kssteven418/I-BERT",
+      "commit": "1b09c759d6aeb71312df9c6ef74fa268a87c934e",
+      "url": "https://github.com/kssteven418/I-BERT/tree/1b09c759d6aeb71312df9c6ef74fa268a87c934e",
+      "license": "MIT",
+      "build_executed": false,
+      "inspection": "Targeted source/metadata inspection, not a full independent code audit",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/kssteven418/I-BERT/blob/1b09c759d6aeb71312df9c6ef74fa268a87c934e/README.md",
+          "sha256": "ec770d0ca0ba0536916b0553a221eaa923f1aac427744af2813463a692193944",
+          "bytes": 5428
+        },
+        {
+          "path": "fairseq/quantization/utils/quant_modules.py",
+          "url": "https://github.com/kssteven418/I-BERT/blob/1b09c759d6aeb71312df9c6ef74fa268a87c934e/fairseq/quantization/utils/quant_modules.py",
+          "sha256": "68911894e974f8a64b0ce320b65e438637c44037f18c6aff8db676ea75f24391",
+          "bytes": 24468
+        },
+        {
+          "path": "fairseq/quantization/utils/quant_utils.py",
+          "url": "https://github.com/kssteven418/I-BERT/blob/1b09c759d6aeb71312df9c6ef74fa268a87c934e/fairseq/quantization/utils/quant_utils.py",
+          "sha256": "5f0cd571b1e39cbea133e8d598ea4e1f25c2fb275fa70137b19f31fd9239387d",
+          "bytes": 9080
+        }
+      ]
+    },
+    {
+      "repository": "cjg91/trans-fat",
+      "commit": "548db9e42160103db1fe6818164c0105652c962f",
+      "url": "https://github.com/cjg91/trans-fat/tree/548db9e42160103db1fe6818164c0105652c962f",
+      "license": "No top-level license detected",
+      "build_executed": false,
+      "inspection": "Targeted source/metadata inspection, not a full independent code audit",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/cjg91/trans-fat/blob/548db9e42160103db1fe6818164c0105652c962f/README.md",
+          "sha256": "f9d3174892ec63d01a914e79f37730e858d20b895a5e7f0bc74734c8c4170e56",
+          "bytes": 2326
+        },
+        {
+          "path": "src/v3/config.hpp",
+          "url": "https://github.com/cjg91/trans-fat/blob/548db9e42160103db1fe6818164c0105652c962f/src/v3/config.hpp",
+          "sha256": "38112ea6f31df64c526915958fb05062eda7526fb049f8d791034be404774578",
+          "bytes": 231
+        },
+        {
+          "path": "src/v3/stages/stage1/stage1.cpp",
+          "url": "https://github.com/cjg91/trans-fat/blob/548db9e42160103db1fe6818164c0105652c962f/src/v3/stages/stage1/stage1.cpp",
+          "sha256": "516499478ea8cfa94754b72a130c4b180119bc984ed60c6371cb8ea5b83f0c39",
+          "bytes": 8712
+        },
+        {
+          "path": "src/v3/stages/stage2/stage2.cpp",
+          "url": "https://github.com/cjg91/trans-fat/blob/548db9e42160103db1fe6818164c0105652c962f/src/v3/stages/stage2/stage2.cpp",
+          "sha256": "15f7aab8d140fbbaec894460c8c3a00c3e6e47c6ed736d54cbaf22af475396c3",
+          "bytes": 20633
+        }
+      ]
+    },
+    {
+      "repository": "wzh0715/QFlash",
+      "commit": "d5376b423bf2c2688823bf7a070e40a12faff5db",
+      "url": "https://github.com/wzh0715/QFlash/tree/d5376b423bf2c2688823bf7a070e40a12faff5db",
+      "license": "Apache-2.0",
+      "build_executed": false,
+      "inspection": "Targeted source/metadata inspection, not a full independent code audit",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/wzh0715/QFlash/blob/d5376b423bf2c2688823bf7a070e40a12faff5db/README.md",
+          "sha256": "ac0b3589ce09b444a587c78298bf202d1327c4de5e6309c2338123d71d77c3e8",
+          "bytes": 11932
+        },
+        {
+          "path": "hardware/Attention/quant/build.tcl",
+          "url": "https://github.com/wzh0715/QFlash/blob/d5376b423bf2c2688823bf7a070e40a12faff5db/hardware/Attention/quant/build.tcl",
+          "sha256": "9d0bfe7a658b605e8d831315f7fabec378b2d6aa698e3142df58bda8a948a540",
+          "bytes": 808
+        },
+        {
+          "path": "hardware/Attention/quant/src/attention_fused.cpp",
+          "url": "https://github.com/wzh0715/QFlash/blob/d5376b423bf2c2688823bf7a070e40a12faff5db/hardware/Attention/quant/src/attention_fused.cpp",
+          "sha256": "d473424b3fca8ed4ad9cd8287e5630149167997112b3647914ed54d29ec85f82",
+          "bytes": 17143
+        },
+        {
+          "path": "hardware/Attention/quant/src/quant_op.hpp",
+          "url": "https://github.com/wzh0715/QFlash/blob/d5376b423bf2c2688823bf7a070e40a12faff5db/hardware/Attention/quant/src/quant_op.hpp",
+          "sha256": "6dc2e2abfa3d1dc1c49177617f433a010aa7790f35e20ec9dbad221b5ec6f9c6",
+          "bytes": 1736
+        },
+        {
+          "path": "hardware/AddNorm/v1/build.tcl",
+          "url": "https://github.com/wzh0715/QFlash/blob/d5376b423bf2c2688823bf7a070e40a12faff5db/hardware/AddNorm/v1/build.tcl",
+          "sha256": "775d7b3440be6897599d327f6910bafd757c781d7aaf0075497f0a7377ed5258",
+          "bytes": 674
+        },
+        {
+          "path": "hardware/AddNorm/v1/src/add_norm.cpp",
+          "url": "https://github.com/wzh0715/QFlash/blob/d5376b423bf2c2688823bf7a070e40a12faff5db/hardware/AddNorm/v1/src/add_norm.cpp",
+          "sha256": "f0b391d0b57475f789883a104c3f3caa3d94adaf6f01936cfc70547f62effa05",
+          "bytes": 4659
+        },
+        {
+          "path": "hardware/flash.py",
+          "url": "https://github.com/wzh0715/QFlash/blob/d5376b423bf2c2688823bf7a070e40a12faff5db/hardware/flash.py",
+          "sha256": "41240f10cc3800f35d865b9ef6643444f2c07fbcf9b3834f678359ce2969d14f",
+          "bytes": 4789
+        }
+      ]
+    },
+    {
+      "repository": "FlightLLM/flightllm_test_demo",
+      "commit": "4a9625149e19c3baccad0786ae0d90bab2410890",
+      "url": "https://github.com/FlightLLM/flightllm_test_demo/tree/4a9625149e19c3baccad0786ae0d90bab2410890",
+      "license": "Not audited",
+      "build_executed": false,
+      "inspection": "Targeted source/metadata inspection, not a full independent code audit",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/FlightLLM/flightllm_test_demo/blob/4a9625149e19c3baccad0786ae0d90bab2410890/README.md",
+          "sha256": "9fcfa171a0857ef5ce185f89f3f14717d70b23d405a0fd88f96065def84c6721",
+          "bytes": 780
+        }
+      ]
+    }
+  ],
+  "search_limitations": [
+    "Targeted primary paper and author-repository searches are not an exhaustive absence proof.",
+    "gicLAB/SECDA-LLM: HTTP404 from public GitHub API. Author thesis links this path: https://theses.gla.ac.uk/85185/2/2025harisphd.pdf .",
+    "No verified author implementation located for FQ-BERT, NPE, LlamaF, MEADOW or the spatial paper during targeted searches.",
+    "QFlash discovered as adjacent primary code artifact; publication identity and README end-to-end benchmark claims not independently established.",
+    "Large external model binaries/goldens and bitstreams were not executed; artifact availability does not establish reproduction."
+  ],
+  "local_evidence": [
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/hardware-qualification.json",
+      "sha256": "4562e7dffc3d4e3aa32e0ca7e99077de26816459a73be01509c814a7ecd7aebd"
+    },
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/regression.json",
+      "sha256": "fc395fe985a2d76caa1a64dce770ad1db0e0c63f519215ac20c5b1b18d68e6e6"
+    },
+    {
+      "path": "build/v2/context-capture-board-validation/receipt.json",
+      "sha256": "276fdb75698455106027f82e0a5f592cb19da1d0085d1964fcc3f637ef88b3d8"
+    },
+    {
+      "path": "build/v2/context-capture-board-validation/final-state.json",
+      "sha256": "f5e88a0b10605b7ca6e88babaf29a69abe000a9c7ddc366bb1efbdbb627887d3"
+    },
+    {
+      "path": "build/v2/context-capture-board-validation/performance-comparison.json",
+      "sha256": "6c9f5d504a38f6864c4bdbff409aac1346ea6e09ea78178f8b7f8e768ca90873"
+    },
+    {
+      "path": "build/v2/context-capture-board-validation/eval.json",
+      "sha256": "10117693e8192d20daca6701e8d5f66a6abd4e3bbc6c3240437f70f9de4b9a82"
+    },
+    {
+      "path": "build/v2/context-capture-board-validation/app.json",
+      "sha256": "cb1bc5833e1ec227f0c431fe18e525e8fca68c7db18a2c4145cc6616122ca1d0"
+    },
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/timing.rpt",
+      "sha256": "933a23a4b88cac326b14a110445342a117db3179c4d4b9bba95f77ce46ba3741"
+    },
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/utilization.rpt",
+      "sha256": "d8d54737d4a25e650d983dfcda9111500e1f933fbce79d59362ae67beea8c010"
+    },
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/placement/critical-200mhz.rpt",
+      "sha256": "07278be8f3dcac96fe9be855acad1516334b1b867ae2e79ce8a96662b7fc149e"
+    },
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/placement/frequency-diagnostics.json",
+      "sha256": "7ad3bef318f70a511dfb945c69aa68c496b2fa35ca5bd38e020e2f9c8ce858f6"
+    },
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/preflight-summary.json",
+      "sha256": "f37763239c3f9ec1629c4fcfa91f30ea5c31bd88a21b3f296e4a3f2c74f07aaf"
+    },
+    {
+      "path": "build/v2/kr260-opt-attention-context-capture-large/context-breg-review.json",
+      "sha256": "11285053b52283430171d00284473d3bfcb3a2dd715d3d9889389a10a9edbe4b"
+    },
+    {
+      "path": "build/v2/eval/kr260-dot7-hardware/performance-profile.json",
+      "sha256": "e4504c8da2447b6137638458852b742a3b1aa7c492947da9e05fbfaf5c20cfd1"
+    },
+    {
+      "path": "build/v2/eval/kr260-dot7-hardware/token-memory-profile.json",
+      "sha256": "c2070d1e860a5b555dcab56cada048e7c0857da652ecefa7d50c08eae65df6f8"
+    },
+    {
+      "path": "src/sysone/v2/ddr_image.py",
+      "sha256": "5a7ef51a58784d4e307e926c87c0e8a8e0d8a49572ce4a756f3487de27ee6ec2"
+    },
+    {
+      "path": "src/sysone/v2/int_encoder.py",
+      "sha256": "37edbbf8140aab14c71f4e1d1a25d3e5c726fabdb0bad9704731687a9d9fb005"
+    },
+    {
+      "path": "src/sysone/v2/kr260_link.py",
+      "sha256": "400b2e1173d541c52ca03d274096737d7f7d2a5466e5f867ec0baa6fa8a76ff2"
+    },
+    {
+      "path": "src/sysone/v2/encoder_client.py",
+      "sha256": "cb07c1b3663b09a2e967d408ab6aa847ddaede7c3d72583171e32a0af7b35f95"
+    },
+    {
+      "path": "src/sysone/v2/decoder_reference.py",
+      "sha256": "dc91c4c95bf48e25815fcc61b1342140a0d5005c4b5209e29033cd774ad6650d"
+    },
+    {
+      "path": "src/sysone/v2/relative_model.py",
+      "sha256": "2f9c14659ae519c143a90ededfab59d3cae08ae47549113d5cd1ddd1cb57ec64"
+    },
+    {
+      "path": "src/sysone/v2/kv_cache_layout.py",
+      "sha256": "e1714f4a4a7406905b1c425f39f96a31f1565c8b56a95272bb7d395f69c5e88d"
+    },
+    {
+      "path": "src/sysone/v2/int4_reference.py",
+      "sha256": "47ac2710043fd6ab81f027979c1f65c78d3ef54e42162d523ddf633cc0af922b"
+    },
+    {
+      "path": "scripts/v2/kr260/create_project_kr260.tcl",
+      "sha256": "c902b92f27788aaf721a31483a6e4de22dd0b4ea0b3ea58f8e8043f574b240eb"
+    },
+    {
+      "path": "scripts/v2/kr260/generation.md",
+      "sha256": "f16ebd2bc97c65f4f1fbb8d1f6849d6b2fb030a93725ec03a10459b79684b68a"
+    },
+    {
+      "path": "results/v2/chain/minilm-l12-v1.json",
+      "sha256": "fd49f566c79c9153a1d28cff2246ef1429e2f24c2aba3b0dd096bbd0363f0e58"
+    },
+    {
+      "path": "export/v2/image/minilm-l12-v1-kr260/manifest.json",
+      "sha256": "a303005741f1f1d7128276f5a696a02e23579607208e2f778108905f7a213d82"
+    }
+  ]
+}

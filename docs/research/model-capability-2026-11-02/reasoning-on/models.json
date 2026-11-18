@@ -1,0 +1,42 @@
+[
+  {
+    "key": "qwen06-q4",
+    "repo": "unsloth/Qwen3-0.6B-GGUF",
+    "revision": "50968a4468ef4233ed78cd7c3de230dd1d61a56b",
+    "filename": "Qwen3-0.6B-Q4_0.gguf",
+    "bytes": 382156480,
+    "sha256": "33bcc57074ec7b6eada5a90651ee546ec0c2b271002c22baf9f1b2dd1e8f75cb",
+    "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-0.6B-Q4_0.gguf",
+    "quantization": "Q4_0 release; tensor mix audited separately"
+  },
+  {
+    "key": "qwen17-q4",
+    "repo": "unsloth/Qwen3-1.7B-GGUF",
+    "revision": "d7f544eead698dbd1f15126ef60b45a1e1933222",
+    "filename": "Qwen3-1.7B-Q4_0.gguf",
+    "bytes": 1056782912,
+    "sha256": "c876f159707a4e4f70e045106c69db15bfc935a4981706fd4f65c6e7ea1e81c5",
+    "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-1.7B-Q4_0.gguf",
+    "quantization": "Q4_0 release; tensor mix audited separately"
+  },
+  {
+    "key": "qwen35-2-q4",
+    "repo": "unsloth/Qwen3.5-2B-GGUF",
+    "revision": "f6d5376be1edb4d416d56da11e5397a961aca8ae",
+    "filename": "Qwen3.5-2B-Q4_0.gguf",
+    "bytes": 1214873856,
+    "sha256": "cd70221bebaee0503e0f6717e174250cd7825aa88438b3aabec9ad55731d9bb1",
+    "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3.5-2B-Q4_0.gguf",
+    "quantization": "Q4_0 release; tensor mix audited separately"
+  },
+  {
+    "key": "qwen35-4-q4",
+    "repo": "unsloth/Qwen3.5-4B-GGUF",
+    "revision": "e87f176479d0855a907a41277aca2f8ee7a09523",
+    "filename": "Qwen3.5-4B-Q4_0.gguf",
+    "bytes": 2583221408,
+    "sha256": "298fcb5fe7a77ccc79745ae24751560c5ac56874caff4bb39b1f2055bd72b8bb",
+    "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3.5-4B-Q4_0.gguf",
+    "quantization": "Q4_0 release; tensor mix audited separately"
+  }
+]

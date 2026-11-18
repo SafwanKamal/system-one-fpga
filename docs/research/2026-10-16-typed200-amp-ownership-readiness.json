@@ -1,0 +1,52 @@
+{
+  "schema": "sysone.amp.readiness.v2",
+  "deployment_ready": false,
+  "target_modified": false,
+  "baseline_preservation_anchor": "build/v2/typed200-amp-ownership-v1/preservation-before.json",
+  "report": "docs/research/2026-10-16-typed200-amp-ownership.md",
+  "passed_components": {
+    "authenticated_board_inventory": "build/v2/typed200-amp-ownership-v1/board-inventory.json",
+    "boot_slot_readonly_backup": "build/v2/typed200-amp-ownership-v1/stock-boot-readonly-v1/receipt.json",
+    "installer_and_ddr_oracle": "build/v2/typed200-amp-ownership-v1/host-v5/receipt.json",
+    "encoded_fpd_ocm_xppu_oracle": "build/v2/typed200-amp-ownership-v1/firewall-v2/receipt.json",
+    "atf_native_build": "build/v2/typed200-amp-ownership-v1/atf-staged-v3/receipt.json",
+    "pmu_deferred_session_transport": "build/v2/typed200-amp-ownership-v1/pmu-staged-v6/receipt.json",
+    "pmu_native_build": "build/v2/typed200-amp-ownership-v1/pmu-image-v3/receipt.json",
+    "private_one_shot_mailbox": "build/v2/typed200-amp-ownership-v1/mailbox-v1/receipt.json",
+    "carrier_som_ps_output_generation": "build/v2/typed200-amp-ownership-v1/ps-profile-v4/receipt.json",
+    "native_audit": "build/v2/typed200-amp-ownership-v1/native-audit-v2/receipt.json"
+  },
+  "open_predeployment_gates": [
+    "ATF/PMU/R5 trusted activation and session ACK composition",
+    "Trusted initial state and exact firmware/policy/model/contract identities",
+    "Pre-Linux and final-lease protection transitions with affected-master quiescence",
+    "Linux boot/peripheral readiness and MIO electrical compatibility",
+    "Actual AXI USER/PROT and HP0 source/security binding",
+    "Requester filter integration for both CSR and permit with no bypass",
+    "Hidden-output relocation and actual protected R5 startup/service image",
+    "Full matched numerical, counter, cycle, fault and drain regression",
+    "Clock/reset/PLL/debug ownership and compatible device/cache mappings",
+    "New physical setup/hold, DRC, CDC and timing-exception evidence",
+    "Exact volatile permit-low qualification and tested recovery procedure"
+  ],
+  "post_load_qualification_not_yet_performed": [
+    "Negative memory/control accesses from APU and DMA",
+    "Runtime PM/ATF/direct-MMIO mutation denials",
+    "Actual clock/reset/source-tag readbacks",
+    "Canonical terminal-by-D under ARM/DDR/AXI stress",
+    "One-shot failure retention and recovery",
+    "SSH coexistence and PMU polling power measurements"
+  ],
+  "timing_claim": {
+    "local_terminal_by_D_after_admission": "conditional architectural objective; new AMP composition unqualified",
+    "accepted_by_D": false,
+    "ssh_delivery_by_D": false,
+    "wcet_certified": false,
+    "fpga_cycle_equivalence_proved_for_new_composition": false
+  },
+  "rejected_promotion": {
+    "pmu-image-v2": "Inherited idle sleep admits a lost-wakeup window for deferred closure; preserved, replaced by v3",
+    "old_sole_r5_ps_init": "Disables Ethernet and assumes all A53/GEM reset",
+    "old_blanket_pmu_seal": "Incompatible with Linux coexistence"
+  }
+}

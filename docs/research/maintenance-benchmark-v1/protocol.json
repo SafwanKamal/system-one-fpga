@@ -1,0 +1,86 @@
+{
+  "name": "MaintenanceBench-Edge",
+  "version": "1-design",
+  "date": "2026-10-21",
+  "status": "proposed_not_executed",
+  "platform": "KR260_K26",
+  "task": {
+    "max_plan_tool_nodes": 3,
+    "max_predicates": 1,
+    "max_assets_per_plan": 1,
+    "loop_support": false,
+    "tools": ["read_metric", "read_history", "list_alarms", "read_status", "read_metadata", "draft_report", "request_inspection", "lookup_procedure"],
+    "outcomes": ["plan", "clarify", "reject"],
+    "execution": "deterministic_simulator_no_live_actuation"
+  },
+  "datasets": {
+    "strata": ["direct", "composition", "conditional", "context_correction", "clarification", "unsupported"],
+    "train_per_stratum": 1000,
+    "tuning_per_stratum": 75,
+    "calibration_per_stratum": 75,
+    "sealed_test_per_stratum": 300,
+    "minimum_independently_human_authored_test_per_stratum": 150,
+    "test_slice_counts_per_stratum": {"familiar_structure_new_values": 100, "heldout_surface_family": 100, "heldout_combination": 100},
+    "workflow_test_count": 120,
+    "workflow_development_count": 24,
+    "workflow_turns": 4,
+    "test_semantic_group_overlap_allowed": false,
+    "prior_local_public_benchmarks_are_blind": false
+  },
+  "baselines": {
+    "required": ["grammar_rules", "tfidf_linear_structured", "minilm_l12_h384_structured", "bert_base_structured", "qwen3_06b_frozen", "qwen3_06b_task_adapted"],
+    "optional": ["modernbert_base_structured", "functiongemma_270m_task_adapted"],
+    "training_seeds_target": 3,
+    "max_tuned_configurations_per_family": 6,
+    "task_record_count_shared": 6000,
+    "same_pretraining_or_compute_claim": false,
+    "new_fpga_ports_required": false
+  },
+  "inference": {
+    "attempts_primary": 1,
+    "greedy": true,
+    "thinking": false,
+    "hidden_retries": false,
+    "prefix_reuse_primary": false,
+    "capability_input_ceiling_tokens": 1024,
+    "capability_generator_output_ceiling_tokens": 256,
+    "qwen_deployed_total_context": 256,
+    "qwen_deployed_output_reservation_candidate": 96,
+    "output_reservation_status": "must_pass_development_token_preflight_before_freeze",
+    "capacity_failures_in_full_test_denominator": true,
+    "gold_based_tool_filtering": false
+  },
+  "energy": {
+    "preferred_boundary": "KR260_DC_input",
+    "fallback_boundary": "SOM_5V0_with_explicit_label",
+    "instrument_status": "not_yet_characterized",
+    "primary_metric": "total_J_per_attempt_and_correct_actionable_completions_per_J",
+    "secondary_metric": "idle_subtracted_J_per_attempt",
+    "isolated_panel_per_stratum": 20,
+    "isolated_blocks": 5,
+    "cold_panel_per_stratum": 4,
+    "cold_blocks": 3,
+    "workflow_panel_count": 24,
+    "workflow_blocks": 3,
+    "primary_batch_size": 1,
+    "include_failures_and_host_work": true,
+    "select_panel_before_predictions": true,
+    "same_model_cpu_fpga_numeric_parity_required_for_acceleration_claim": true
+  },
+  "proposed_engineering_goals_not_results": {
+    "actionable_exact_accuracy_min": 0.95,
+    "macro_terminal_correctness_min": 0.90,
+    "actionable_coverage_min": 0.80,
+    "observed_incorrect_accepted_max": 0.01,
+    "energy_reduction_vs_declared_cpu_target": 0.15,
+    "quantization_accuracy_loss_margin": 0.01
+  },
+  "rare_error_extension": {
+    "required_for_primary_study": false,
+    "target_independent_accepted_cases": 3000,
+    "issued_case_cap": 10000,
+    "threshold_fixed_before_audit": true,
+    "zero_error_one_sided_95_bound": "1 - 0.05^(1/n); independence_and_distribution_assumptions_required"
+  },
+  "execution_authorized_by_this_artifact": false
+}

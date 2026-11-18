@@ -1,0 +1,82 @@
+[
+  {
+    "subject": 101,
+    "eligible": 479,
+    "excluded": 256,
+    "future_positives": {
+      "5": 41,
+      "6": 46,
+      "12": 29
+    }
+  },
+  {
+    "subject": 102,
+    "eligible": 500,
+    "excluded": 373,
+    "future_positives": {
+      "5": 17,
+      "6": 48,
+      "12": 32
+    }
+  },
+  {
+    "subject": 103,
+    "eligible": 330,
+    "excluded": 163,
+    "future_positives": {
+      "5": 0,
+      "6": 0,
+      "12": 19
+    }
+  },
+  {
+    "subject": 104,
+    "eligible": 442,
+    "excluded": 201,
+    "future_positives": {
+      "5": 0,
+      "6": 44,
+      "12": 31
+    }
+  },
+  {
+    "subject": 105,
+    "eligible": 517,
+    "excluded": 214,
+    "future_positives": {
+      "5": 47,
+      "6": 47,
+      "12": 26
+    }
+  },
+  {
+    "subject": 106,
+    "eligible": 477,
+    "excluded": 229,
+    "future_positives": {
+      "5": 43,
+      "6": 39,
+      "12": 25
+    }
+  },
+  {
+    "subject": 107,
+    "eligible": 442,
+    "excluded": 170,
+    "future_positives": {
+      "5": 6,
+      "6": 43,
+      "12": 33
+    }
+  },
+  {
+    "subject": 108,
+    "eligible": 497,
+    "excluded": 299,
+    "future_positives": {
+      "5": 31,
+      "6": 49,
+      "12": 22
+    }
+  }
+]

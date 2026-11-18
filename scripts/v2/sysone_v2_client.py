@@ -33,6 +33,7 @@ path and are labelled as such; they are not the encoder's speed.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -61,7 +62,7 @@ def load_files(name: str):
     d = ROOT / "export" / "v2" / "image" / name
     image = (d / f"{name}.img").read_bytes()
     manifest = json.loads((d / "manifest.json").read_text())
-    model = name[:-len("-kr260")] if name.endswith("-kr260") else name
+    model = manifest.get("model_name") or (name[:-len("-kr260")] if name.endswith("-kr260") else name)
     tok = ROOT / "export" / "v2" / "chain" / model / "tokenizer.json"
     decision = None
     for dd in (d, ROOT / "export" / "v2" / "image" / model):      # the model's rule fits every build
@@ -93,13 +94,15 @@ def cmd_check(enc, args) -> int:
             t0 = time.perf_counter()
             out = enc.encode(ids, args.timeout)
             t1 = time.perf_counter()
+            if args.kr260:
+                print(f"KR260: encoder completed; computing integer reference for {n} tokens...", flush=True)
             want = m.hidden(ids)
             bad = int((out.x != want).sum())
             ok &= bad == 0
             where = ("local ImageMachine run, no board" if enc.local else
                      f"board: encoder {out.run.encoder_clocks:,} clocks ({ms(out.run.encoder_clocks)}), "
                      f"request {ms(out.run.total_clocks)}; host round trip {1e3 * (t1 - t0):.0f} ms "
-                     f"(host path, includes Ethernet)")
+                     f"(host path)")
             print(f"{n:3d} tokens: X {'bit-exact' if bad == 0 else f'{bad} of {want.size} values differ'}"
                   f"; {where}")
     return 0 if ok else 1
@@ -206,7 +209,7 @@ def cmd_doc(enc, heads, wp, args) -> int:
         print(f"local run (ImageMachine, no board): {1e3 * (t1 - t0):.0f} ms in NumPy")
     else:
         print(f"board: encoder {ms(clocks)} for {len(chains)} request(s); host round trips "
-              f"{1e3 * (t1 - t0):.0f} ms (host path, includes Ethernet)")
+              f"{1e3 * (t1 - t0):.0f} ms (host path)")
     return 0
 
 
@@ -247,7 +250,7 @@ def cmd_run(enc, heads, wp, args) -> int:
               f"heads {1e3 * (t2 - t1):.1f} ms")
     else:
         print(f"board: encoder {ms(out.run.encoder_clocks)}, request {ms(out.run.total_clocks)}; "
-              f"host: round trip {1e3 * (t1 - t0):.0f} ms (host path, includes Ethernet), "
+              f"host: round trip {1e3 * (t1 - t0):.0f} ms (host path), "
               f"heads {1e3 * (t2 - t1):.1f} ms")
     return 0
 
@@ -255,24 +258,78 @@ def cmd_run(enc, heads, wp, args) -> int:
 def cmd_eval(enc, heads, wp, args) -> int:
     import random
     from sysone.v2.chain_data import IGNORE, load_all
-    corpus = load_all(hwu="intent.hwu" in heads.labels)
-    tag_labels = {h: heads.labels[f"slots.{h}"] for h in ("atis", "sgd")}
+    from sysone.v2 import eval_suite
+    print("Evaluation: validating frozen suite..." if args.suite else
+          "Evaluation: loading test corpora...", flush=True)
+    frozen = (eval_suite.load(args.suite, args.image_sha256, args.tokenizer_sha256, heads.labels)
+              if args.suite else None)
+    corpus = None if frozen else load_all(hwu="intent.hwu" in heads.labels)
     by: dict[str, list] = {}
-    for c in corpus.test:
-        by.setdefault(c.dataset, []).append(c)
+    if frozen:
+        for row in frozen["cases"]:
+            c = eval_suite.chain(row)
+            by.setdefault(c.dataset, []).append((row["id"], c, row))
+    else:
+        for index, c in enumerate(corpus.test):
+            by.setdefault(c.dataset, []).append((f"{c.dataset}:{index}", c, None))
     rng = random.Random(args.seed)
+    print(f"Evaluation ready: {sum(len(rows) for rows in by.values())} available chains", flush=True)
     stats, clocks, exact, total = {}, [], 0, 0
+    report = {"format": 1, "complete": False,
+        "backend": "local" if enc.local else "kr260" if args.kr260 else "nexys4ddr",
+        "image": IMAGE_NAME, "image_sha256": args.image_sha256,
+        "suite_sha256": frozen["suite_sha256"] if frozen else None,
+        "seed": frozen["seed"] if frozen else args.seed,
+        "clock_hz": None if enc.local else CLOCK_HZ, "numpy_version": np.__version__,
+        "stats": stats, "cases": [], "verification": {"exact": 0, "total": 0}}
+    def save_report():
+        if args.report:
+            args.report.parent.mkdir(parents=True, exist_ok=True)
+            args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    budget = None
+    if getattr(args, "budget", None):
+        from sysone.v2.timing_policy import TimingPolicy
+        if enc.local:
+            raise ValueError("Timing policy requires hardware measurements")
+        budget = TimingPolicy(**json.loads(args.budget.read_text()))
+        report["timing_policy"] = budget.metadata()
+    save_report()
     for ds, chains in sorted(by.items()):
         key = "multi" if ds == "multi_clinc" else ds
         st = stats.setdefault(ds, {"ok": 0, "n": 0, "tp": 0, "fp": 0, "fn": 0})
-        for c in rng.sample(chains, min(args.per_dataset, len(chains))):
+        selected = chains if frozen else rng.sample(chains, min(args.per_dataset, len(chains)))
+        for identifier, c, row in selected:
             chain = build_chain(wp, [s.words for s in c.segments], c.task, enc.layout.max_tokens)
+            if row and chain.ids != row["ids"]:
+                raise ValueError(f"Tokenization differs from frozen suite: {identifier}")
+            start = time.perf_counter()
+            if budget:
+                budget.admit(args.image_sha256, CLOCK_HZ, len(chain.ids))
             out = enc.encode(chain.ids, args.timeout)
+            host_ms = (time.perf_counter() - start) * 1000
+            counters = enc.link.performance_counters() if args.kr260 and not enc.local else None
             clocks.append((len(chain.ids), out.run.encoder_clocks))
+            matched = None
             if args.verify:
                 total += 1
-                exact += int(np.array_equal(out.x, enc.machine.hidden(np.asarray(chain.ids))))
+                want = eval_suite.reference(row) if row else enc.machine.hidden(np.asarray(chain.ids))
+                matched = bool(np.array_equal(out.x, want))
+                exact += int(matched)
+            start = time.perf_counter()
             preds = predict(heads, out.x, chain, key)
+            heads_ms = (time.perf_counter() - start) * 1000
+            report["cases"].append({"id": identifier, "dataset": ds, "tokens": len(chain.ids),
+                "ids_sha256": hashlib.sha256(np.asarray(chain.ids, dtype="<u2").tobytes()).hexdigest(),
+                "hidden_sha256": hashlib.sha256(np.asarray(out.x, dtype=np.int8).tobytes()).hexdigest(),
+                "bit_exact": matched, "encoder_clocks": out.run.encoder_clocks,
+                "request_clocks": out.run.total_clocks, "host_round_trip_ms": host_ms,
+                "heads_ms": heads_ms,
+                "performance_counters": counters,
+                "timing_policy_result": budget.assess(int(out.run.total_clocks), host_ms) if budget else None,
+                "predictions": [{"head": p.head, "segment": p.segment, "labels": p.labels,
+                    "integer_logits_sha256": hashlib.sha256(
+                        np.asarray(p.integer_logits, dtype="<i8").tobytes()).hexdigest()} for p in preds]})
+            report["verification"] = {"exact": exact, "total": total}
             inv = {v: k for k, v in chain.kept.items()}
             for p in preds:
                 if p.head.startswith("intent"):
@@ -284,7 +341,7 @@ def cmd_eval(enc, heads, wp, args) -> int:
                     seg = c.segments[inv[p.segment]]
                     if seg.tags is None:
                         continue
-                    names = tag_labels[p.head.split(".")[1]]
+                    names = heads.labels[p.head]
                     ps = spans(p.labels)
                     gs = spans([names[t] for t in seg.tags[:len(p.labels)]])
                     st["tp"] += len(ps & gs)
@@ -293,6 +350,9 @@ def cmd_eval(enc, heads, wp, args) -> int:
                 else:
                     st["n"] += 1
                     st["ok"] += int(int(np.argmax(p.logits[0])) == c.pair_label)
+            if len(report["cases"]) % 10 == 0:
+                print(f"eval progress: {len(report['cases'])} chains", flush=True)
+                save_report()
         r = []
         if st["n"]:
             r.append(f"accuracy {st['ok'] / st['n']:.3f} ({st['n']})")
@@ -301,25 +361,32 @@ def cmd_eval(enc, heads, wp, args) -> int:
             rc = st["tp"] / max(st["tp"] + st["fn"], 1)
             r.append(f"slot F1 {2 * pr * rc / max(pr + rc, 1e-9):.3f}")
         print(f"{ds:12s} {', '.join(r)}", flush=True)
+        save_report()
     if args.verify:
         print(f"X bit-exact against ImageMachine: {exact} / {total}")
     if clocks and clocks[0][1]:
         c = np.array(clocks)
         print(f"board encoder time: mean {ms(c[:, 1].mean())} over {len(c)} chains of "
               f"{c[:, 0].mean():.0f} tokens on average, max {ms(c[:, 1].max())} ({c[:, 0].max()} tokens)")
+    report["complete"] = True
+    save_report()
+    if args.report:
+        print(f"Saved evaluation report: {args.report}")
     return 0 if exact == total else 1
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("-i", "--interface")
-    ap.add_argument("--local", action="store_true", help="no board: ImageMachine runs the image")
-    ap.add_argument("--kr260", action="store_true", help="run on a KR260's ARM (/dev/mem)")
+    transport = ap.add_mutually_exclusive_group()
+    transport.add_argument("--local", action="store_true", help="no board: ImageMachine runs the image")
+    transport.add_argument("--kr260", action="store_true", help="run on a KR260's ARM (/dev/mem)")
     ap.add_argument("--registers", type=lambda s: int(s, 0), default=0xA000_0000,
                     help="KR260: kr260_encoder's AXI4-Lite base")
-    ap.add_argument("--region", type=lambda s: int(s, 0), nargs=2, default=[0x6000_0000, 64 << 20],
-                    metavar=("BASE", "BYTES"), help="KR260: reserved PS DDR region")
-    ap.add_argument("--clock-mhz", type=float, default=75.0, help="the encoder's clock, for ms")
+    ap.add_argument("--region", type=lambda s: int(s, 0), nargs=2, default=None,
+                    metavar=("BASE", "BYTES"), help="KR260: PS DDR region (default: discover the boot reservation)")
+    ap.add_argument("--clock-mhz", type=float, default=None,
+                    help="encoder clock for ms (default: Nexys 75, KR260 100; override for new builds)")
     ap.add_argument("--image", default="bert-mini-slots4", help="export/v2/image/<name>")
     ap.add_argument("--timeout", type=float, default=5.0, help="seconds to wait for a run")
     sub = ap.add_subparsers(dest="command", required=True)
@@ -353,19 +420,51 @@ def main() -> int:
     e.add_argument("--per-dataset", type=int, default=50)
     e.add_argument("--seed", type=int, default=0)
     e.add_argument("--verify", action="store_true", help="also compare X with ImageMachine")
+    e.add_argument("--suite", type=Path, help="frozen matched suite with cached integer goldens")
+    e.add_argument("--budget", type=Path, help="matched timing policy JSON; reports measured overruns, not hard guarantees")
+    e.add_argument("--report", type=Path, help="save per-case accuracy, hashes and board/host timings")
     args = ap.parse_args()
 
+    if args.command == "eval" and (args.per_dataset <= 0 or (args.suite and not args.verify)):
+        ap.error("eval needs positive --per-dataset; --suite requires --verify")
+
+    if args.kr260:
+        print("KR260: loading model files from storage...", flush=True)
     image, manifest, wp, decision = load_files(args.image)
+    args.image_sha256 = hashlib.sha256(image).hexdigest()
+    if args.command == "eval" and args.suite:
+        model = manifest.get("model_name") or args.image.removesuffix("-kr260")
+        args.tokenizer_sha256 = hashlib.sha256(
+            (ROOT / "export/v2/chain" / model / "tokenizer.json").read_bytes()).hexdigest()
     global CLOCK_HZ, IMAGE_NAME
     IMAGE_NAME = args.image
-    CLOCK_HZ = args.clock_mhz * 1e6
+    clock_mhz = args.clock_mhz if args.clock_mhz is not None else (100.0 if args.kr260 else 75.0)
+    if clock_mhz <= 0:
+        ap.error("--clock-mhz must be positive")
+    CLOCK_HZ = clock_mhz * 1e6
     link = None
     if args.local:
         enc = LocalEncoder(image)
     elif args.kr260:
         from sysone.v2.kr260_link import Kr260Link
-        link = Kr260Link(args.registers, tuple(args.region))
-        enc = EncoderBoard(link, image)
+        from sysone.v2.kr260_runtime import discover_memory
+        print("KR260: checking loaded FPGA app, drivers, clock and reserved memory before MMIO...", flush=True)
+        region = tuple(args.region) if args.region is not None else discover_memory()
+        print(f"KR260: reserved model/request memory {region[1] / (1 << 20):g} MiB at {region[0]:#x}", flush=True)
+        link = Kr260Link(args.registers, region)
+        try:
+            if args.clock_mhz is not None and abs(CLOCK_HZ - link.clock_hz) > 1:
+                raise ValueError(f"--clock-mhz differs from live PL0; use {link.clock_hz / 1e6:.6f}")
+            CLOCK_HZ = link.clock_hz
+            print(f"KR260: encoder registers ready; live clock {link.clock_hz} Hz", flush=True)
+            enc = EncoderBoard(link, image)
+            if args.command != "load":
+                print("KR260: verifying loaded DDR image before RUN...", flush=True)
+                link.verify_loaded_image(enc.machine.h["base"], image)
+                print("KR260: DDR image matches", flush=True)
+        except Exception:
+            link.close()
+            raise
     else:
         if not args.interface:
             ap.error("need -i INTERFACE (or --local)")

@@ -1,0 +1,2882 @@
+[
+  {
+    "rule": "recent",
+    "config": 3100,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3100,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3100,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3100,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3100,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.16666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3100,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3101,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3101,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3101,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3101,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.4,
+      "known_macro_recall": 0.8000000000000002,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3101,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3101,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3102,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.2,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3102,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 0.8333333333333334,
+      "healthy_false_alarm": 0.4,
+      "known_abstention": 0.2,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3102,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.7666666666666667,
+      "known_macro_recall": 0.8666666666666666,
+      "healthy_false_alarm": 0.4,
+      "known_abstention": 0.2,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3102,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.7333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.3,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3102,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.2,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3102,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 1.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3103,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3103,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.13333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.075,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3103,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.8333333333333334,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.15,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3103,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.2,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3103,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.8000000000000002,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3103,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 1.0,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3104,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3104,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3104,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3104,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3104,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3104,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3105,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3105,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.06666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.075,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3105,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.075,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3105,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3105,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3105,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3106,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.7,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3106,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3106,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3106,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.8000000000000002,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3106,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.7,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3106,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 1.0,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3107,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3107,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.23333333333333334,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3107,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3107,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3107,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3107,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3108,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3108,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3108,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3108,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3108,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.7333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3108,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8333333333333334,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3109,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.4,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3109,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.2,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3109,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3109,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3109,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3109,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3110,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3110,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.16666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3110,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3110,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3110,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3110,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3111,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3111,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 0.7666666666666666,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3111,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.7999999999999999,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.15,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3111,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 0.7333333333333334,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.2,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3111,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 0.7666666666666666,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3111,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3112,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3112,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3112,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3112,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3112,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3112,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3113,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3113,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3113,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.4,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3113,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3113,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3113,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.7666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3114,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.4,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3114,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3114,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3114,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3114,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3114,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3115,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3115,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.2,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3115,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3115,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3115,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3115,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3116,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3116,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3116,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3116,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3116,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.2,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3116,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3117,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3117,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3117,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3117,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3117,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3117,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3118,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3118,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.2,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3118,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3118,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3118,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3118,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3119,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3119,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.2,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3119,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3119,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3119,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "recent",
+    "config": 3119,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3100,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3100,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3100,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3100,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3100,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.16666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3100,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3101,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3101,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.1,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3101,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3101,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.8000000000000002,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3101,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3101,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3102,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.2,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3102,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 0.8333333333333334,
+      "healthy_false_alarm": 0.4,
+      "known_abstention": 0.2,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3102,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.7666666666666667,
+      "known_macro_recall": 0.8666666666666666,
+      "healthy_false_alarm": 0.4,
+      "known_abstention": 0.2,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3102,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.7333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.3,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3102,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.8666666666666666,
+      "healthy_false_alarm": 0.3,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3102,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 1.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3103,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3103,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.13333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.05,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3103,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.7,
+      "known_macro_recall": 0.8333333333333334,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.15,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3103,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.2,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3103,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.7666666666666666,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.2,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3103,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3104,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3104,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3104,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3104,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.4,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3104,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3104,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3105,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3105,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.06666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.075,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3105,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.075,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3105,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3105,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3105,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3106,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.7,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3106,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3106,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3106,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.8000000000000002,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3106,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.7666666666666667,
+      "known_macro_recall": 0.9,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.075,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3106,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3107,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3107,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.23333333333333334,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3107,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3107,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3107,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3107,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3108,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3108,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3108,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3108,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3108,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.7333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3108,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8333333333333334,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3109,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3109,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3109,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3109,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3109,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3109,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3110,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3110,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.26666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3110,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3110,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.125,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3110,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3110,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3111,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.7999999999999999,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.15,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3111,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 0.7666666666666666,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3111,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.7999999999999999,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.15,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3111,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 0.7333333333333334,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.2,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3111,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.26666666666666666,
+      "known_macro_recall": 0.7666666666666666,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.175,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3111,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 0.8666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.1,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3112,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3112,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3112,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3112,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3112,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3112,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3113,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3113,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3113,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3113,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3113,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.43333333333333335,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3113,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.7666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3114,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3114,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3114,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3114,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3114,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3114,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8333333333333334,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3115,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3115,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.23333333333333334,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3115,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.1,
+      "known_abstention": 0.025,
+      "feasible": false
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3115,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3115,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3115,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9333333333333333,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3116,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3116,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.03333333333333333,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3116,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3116,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.3,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3116,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.23333333333333334,
+      "known_macro_recall": 0.9333333333333332,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.05,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3116,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3117,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3117,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.0,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3117,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3117,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6333333333333333,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3117,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.5666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3117,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.8666666666666667,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3118,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3118,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.2,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3118,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3118,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3118,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.36666666666666664,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3118,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3119,
+    "selector": "fixed",
+    "metrics": {
+      "unknown_rejection": 0.5,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3119,
+    "selector": "passive10",
+    "metrics": {
+      "unknown_rejection": 0.26666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3119,
+    "selector": "persistent",
+    "metrics": {
+      "unknown_rejection": 0.6666666666666666,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3119,
+    "selector": "eig",
+    "metrics": {
+      "unknown_rejection": 0.6,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3119,
+    "selector": "overlap",
+    "metrics": {
+      "unknown_rejection": 0.4666666666666667,
+      "known_macro_recall": 0.9666666666666667,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.025,
+      "feasible": true
+    }
+  },
+  {
+    "rule": "worst_window",
+    "config": 3119,
+    "selector": "action_oracle",
+    "metrics": {
+      "unknown_rejection": 0.9,
+      "known_macro_recall": 1.0,
+      "healthy_false_alarm": 0.0,
+      "known_abstention": 0.0,
+      "feasible": true
+    }
+  }
+]

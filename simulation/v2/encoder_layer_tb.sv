@@ -14,6 +14,7 @@ module encoder_layer_tb #(
     parameter integer DRAIN_LANES = 1,
     parameter integer NORM_LANES = 2,
     parameter integer MAC_PACK = 0,
+    parameter integer MAC_INPUT_REGISTERS = 0,
     parameter integer ATTENTION_LANES = TILE_OUT,
     parameter integer ACCUMULATORS_IN_LUTS = 0,
     parameter integer ADDRESS_WIDTH = 27,
@@ -51,6 +52,7 @@ module encoder_layer_tb #(
         .DRAIN_LANES(DRAIN_LANES),
         .NORM_LANES(NORM_LANES),
         .MAC_PACK(MAC_PACK),
+        .MAC_INPUT_REGISTERS(MAC_INPUT_REGISTERS),
         .ATTENTION_LANES(ATTENTION_LANES),
         .ACCUMULATORS_IN_LUTS(ACCUMULATORS_IN_LUTS),
         .MAX_TOKENS(128),
@@ -255,7 +257,7 @@ module encoder_layer_tb #(
         if (errors == 0) begin
             $display("PASS: encoder layer bit-exact, %0d cases, %0d words compared", cases, total_words);
         end else begin
-            $display("FAIL: %0d mismatching words of %0d", errors, total_words);
+            $fatal(1, "FAIL: %0d mismatching words of %0d", errors, total_words);
         end
         $finish;
     end

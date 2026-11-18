@@ -42,6 +42,23 @@ module encoder_layer
     parameter integer NORM_LANES = 2,
     // two products per DSP48E1 in the MAC array (mac_array PACK): TILE_OUT 24 in 192 DSPs
     parameter integer MAC_PACK = 0,
+    parameter integer MAC_INPUT_REGISTERS = 0,
+    parameter integer PIPELINED_DOT = 0,
+    parameter integer EXP_TABLE_IN_BRAM = 0,
+    parameter integer PIPELINED_URAM = 0,
+    parameter integer LOCAL_READ_CAPTURE = 0,
+    parameter integer INCREMENTAL_SOURCE_ROW = 0,
+    parameter integer LINEAR_ACCUMULATORS_IN_BRAM = 0,
+    parameter integer FABRIC_CONTEXT_CAPTURE = 0,
+    parameter integer FABRIC_SCORE_DISTANCE = 0,
+    parameter integer CACHED_REQUEST_WINDOW = 0,
+    parameter integer DSP_EMBED_ROW_ADDRESS = 0,
+    parameter integer PROBABILITY_INPUT_CAPTURE = 0,
+    parameter integer LOCAL_EMBED_CONTROLS = 0,
+    parameter integer PROBABILITY_PIPELINE = 0,
+    parameter integer PIPELINED_DRAIN_SELECT = 0,
+    parameter integer LOCAL_QUERY_REGISTERS = 0,
+    parameter integer LOCAL_ACCUMULATOR_CONTROLS = 0,
     // queries handled together by ATTENTION (<= TILE_OUT; it uses that many array lanes)
     parameter integer ATTENTION_LANES = TILE_OUT,
     // LINEAR's accumulator banks in LUT RAM (frees block RAM for wide tiles)
@@ -63,6 +80,7 @@ module encoder_layer
     output logic busy,
     output logic done,
     output logic error,
+    output logic [3:0] perf_events,
     output logic instruction_done,
     output logic [15:0] instruction_index,
 
@@ -123,6 +141,9 @@ module encoder_layer
     assign destination_buffer = instruction_reg[8*3 +: 3];
 
     // engines
+    logic [2:0] linear_perf;
+    logic attention_mac_issue;
+    assign perf_events = {attention_mac_issue, linear_perf};
     logic linear_start, linear_busy, linear_done;
     logic attention_start, attention_busy, attention_done;
     logic add_start, add_busy, add_done;
@@ -323,8 +344,12 @@ module encoder_layer
     // in Q, K, V and CTX, which are dead between the attention output projection and
     // the end of the layer. G word a is word a / 4 of buffer Q + (a mod 4).
 
+    localparam integer READ_LATENCY = encoder_pkg::READ_LATENCY + PIPELINED_URAM + (LOCAL_READ_CAPTURE != 0);
+
     localparam integer SMALL_DEPTH = MAX_TOKENS * MAX_HIDDEN / 16;
+
     localparam integer WIDE_DEPTH = 2 * SMALL_DEPTH;
+
     localparam integer PHYSICAL_NUMBER = 7;
 
     logic [BUFFER_ADDRESS_WIDTH-1:0] port_address [0:2];   // src, src2, V
@@ -358,7 +383,8 @@ module encoder_layer
     logic [BUFFER_ADDRESS_WIDTH-1:0] read_offset [0:3];
     logic [2:0] read_physical_d1 [0:3];
     logic [2:0] read_physical_d2 [0:3];
-    logic [127:0] port_data_reg [0:3];
+    logic [2:0] read_physical_d3 [0:3];
+    (* max_fanout = 8 *) logic [127:0] port_data_reg [0:3];
 
     always_comb begin
         for (int p = 0; p < 3; p++) begin
@@ -373,8 +399,24 @@ module encoder_layer
         for (int p = 0; p < 4; p++) begin
             read_physical_d1[p] <= read_physical[p];
             read_physical_d2[p] <= read_physical_d1[p];
-            port_data_reg[p] <= physical_read_data[read_physical_d2[p]];
+            read_physical_d3[p] <= read_physical_d2[p];
         end
+    end
+
+    if (LOCAL_READ_CAPTURE != 0) begin : gen_local_read_capture
+        logic [2:0] aligned_select [0:3];
+        for (genvar p = 0; p < 4; p++) begin : gen_select
+            assign aligned_select[p] = PIPELINED_URAM != 0
+                ? read_physical_d3[p] : read_physical_d2[p];
+        end
+        activation_read_capture capture_inst (.clk(clk),
+            .physical_data(physical_read_data), .physical_select(aligned_select),
+            .port_data(port_data_reg));
+    end else begin : gen_original_read_mux
+        always_ff @(posedge clk)
+            for (int p = 0; p < 4; p++)
+                port_data_reg[p] <= physical_read_data[PIPELINED_URAM != 0
+                    ? read_physical_d3[p] : read_physical_d2[p]];
     end
 
     for (genvar p = 0; p < 3; p++) begin : gen_port
@@ -425,8 +467,10 @@ module encoder_layer
     end
 
     for (genvar b = 0; b < PHYSICAL_NUMBER; b++) begin : gen_buffer
-        localparam integer DEPTH = (b == BUF_R || b == BUF_A) ? WIDE_DEPTH : SMALL_DEPTH;
-        localparam integer AW = $clog2(DEPTH);
+
+    localparam integer DEPTH = (b == BUF_R || b == BUF_A) ? WIDE_DEPTH : SMALL_DEPTH;
+
+    localparam integer AW = $clog2(DEPTH);
         logic [BUFFER_ADDRESS_WIDTH-1:0] read_address;
         // replicated near the RAMs: each bit drives up to 24 block RAMs
         (* max_fanout = 8 *) logic [BUFFER_ADDRESS_WIDTH-1:0] read_address_reg;
@@ -450,7 +494,7 @@ module encoder_layer
             read_address_reg <= read_address;
         end
 
-        activation_buffer #(.DEPTH(DEPTH), .ADDRESS_WIDTH(AW)) buffer_inst (
+        activation_buffer #(.DEPTH(DEPTH), .ADDRESS_WIDTH(AW), .PIPELINED_URAM(PIPELINED_URAM)) buffer_inst (
             .clk(clk),
             .read_address(AW'(read_address_reg)),
             .read_data(physical_read_data[b]),
@@ -473,6 +517,16 @@ module encoder_layer
     logic signed [7:0] attention_mac_b [0:15];
     logic signed [8:0] attention_lane_a [0:ATTENTION_LANES-1][0:15];
     logic signed [16:0] attention_product [0:ATTENTION_LANES-1][0:15];
+    logic signed [23:0] mac_dot [0:TILE_OUT-1];
+    logic signed [23:0] attention_dot [0:ATTENTION_LANES-1];
+    if (PIPELINED_DOT != 0) begin : gen_shared_dot
+        // LINEAR and ATTENTION are mutually exclusive users of the MAC array.
+        dot16_pipeline #(.LANES(TILE_OUT), .WIDTH(24)) dot_inst (
+            .clk(clk), .product(mac_product), .sum(mac_dot)
+        );
+    end else begin : gen_no_shared_dot
+        for (genvar c=0;c<TILE_OUT;c++) assign mac_dot[c] = '0;
+    end
 
     // ATTENTION drives the first ATTENTION_LANES lanes of the array
     always_comb begin
@@ -481,6 +535,7 @@ module encoder_layer
             for (int r = 0; r < 16; r++) attention_mac_a[c][r] = 9'sd0;
         end
         for (int c = 0; c < ATTENTION_LANES; c++) attention_product[c] = mac_product[c];
+        for (int c = 0; c < ATTENTION_LANES; c++) attention_dot[c] = mac_dot[c];
     end
 
     always_comb begin
@@ -493,7 +548,7 @@ module encoder_layer
         end
     end
 
-    mac_array #(.LANES(TILE_OUT), .PACK(MAC_PACK)) mac_array_inst (
+    mac_array #(.LANES(TILE_OUT), .PACK(MAC_PACK), .INPUT_REGISTERS(MAC_INPUT_REGISTERS)) mac_array_inst (
         .clk(clk),
         .a(mac_a),
         .b(mac_b),
@@ -542,6 +597,13 @@ module encoder_layer
     end
 
     linear_engine #(
+        .CACHED_REQUEST_WINDOW(CACHED_REQUEST_WINDOW),
+        .INCREMENTAL_SOURCE_ROW(INCREMENTAL_SOURCE_ROW),
+        .LINEAR_ACCUMULATORS_IN_BRAM(LINEAR_ACCUMULATORS_IN_BRAM),
+        .READ_LATENCY(READ_LATENCY),
+        .MAC_LATENCY(1 + MAC_INPUT_REGISTERS),
+        .PIPELINED_DOT(PIPELINED_DOT),
+        .PIPELINED_DRAIN_SELECT(PIPELINED_DRAIN_SELECT),
         .TILE_OUT(TILE_OUT),
         .DRAIN_LANES(DRAIN_LANES),
         .ACCUMULATORS_IN_LUTS(ACCUMULATORS_IN_LUTS),
@@ -550,6 +612,7 @@ module encoder_layer
         .BEATS_WIDTH(BEATS_WIDTH),
         .BUFFER_ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH)
     ) linear_inst (
+        .perf_events(linear_perf),
         .clk(clk),
         .reset(reset),
         .start(linear_start),
@@ -577,6 +640,7 @@ module encoder_layer
         .mac_a(linear_mac_a),
         .mac_b(linear_mac_b),
         .mac_product(mac_product),
+        .mac_dot(mac_dot),
         .destination_write(linear_write),
         .destination_address(linear_waddr),
         .destination_data(linear_wdata),
@@ -584,6 +648,16 @@ module encoder_layer
     );
 
     attention_engine #(
+        .FABRIC_CONTEXT_CAPTURE(FABRIC_CONTEXT_CAPTURE),
+        .FABRIC_SCORE_DISTANCE(FABRIC_SCORE_DISTANCE),
+        .READ_LATENCY(READ_LATENCY),
+        .MAC_LATENCY(1 + MAC_INPUT_REGISTERS),
+        .PIPELINED_DOT(PIPELINED_DOT),
+        .PROBABILITY_INPUT_CAPTURE(PROBABILITY_INPUT_CAPTURE),
+        .PROBABILITY_PIPELINE(PROBABILITY_PIPELINE),
+        .EXP_TABLE_IN_BRAM(EXP_TABLE_IN_BRAM),
+        .LOCAL_QUERY_REGISTERS(LOCAL_QUERY_REGISTERS),
+        .LOCAL_ACCUMULATOR_CONTROLS(LOCAL_ACCUMULATOR_CONTROLS),
         .LANES(ATTENTION_LANES),
         .MAX_TOKENS(MAX_TOKENS),
         .MAX_HEAD_DIM(MAX_HEAD_DIM),
@@ -591,6 +665,7 @@ module encoder_layer
         .BEATS_WIDTH(BEATS_WIDTH),
         .BUFFER_ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH)
     ) attention_inst (
+        .mac_issue(attention_mac_issue),
         .clk(clk),
         .reset(reset),
         .start(attention_start),
@@ -621,6 +696,7 @@ module encoder_layer
         .mac_a(attention_lane_a),
         .mac_b(attention_mac_b),
         .mac_product(attention_product),
+        .mac_dot(attention_dot),
         .destination_write(attention_write),
         .destination_address(attention_waddr),
         .destination_data(attention_wdata),
@@ -628,6 +704,7 @@ module encoder_layer
     );
 
     add_skip_engine #(
+        .READ_LATENCY(READ_LATENCY),
         .MAX_TOKENS(MAX_TOKENS),
         .BUFFER_ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH)
     ) add_skip_inst (
@@ -651,6 +728,8 @@ module encoder_layer
     );
 
     layernorm_engine #(
+        .READ_LATENCY(READ_LATENCY),
+        .PIPELINED_AFFINE(PIPELINED_DOT),
         .MAX_WIDTH(MAX_HIDDEN),
         .NORM_LANES(NORM_LANES),
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
@@ -683,6 +762,9 @@ module encoder_layer
     );
 
     embed_engine #(
+        .DSP_EMBED_ROW_ADDRESS(DSP_EMBED_ROW_ADDRESS),
+        .LOCAL_EMBED_CONTROLS(LOCAL_EMBED_CONTROLS),
+        .READ_LATENCY(READ_LATENCY),
         .MAX_WIDTH(MAX_HIDDEN),
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
         .BEATS_WIDTH(BEATS_WIDTH),
@@ -722,6 +804,7 @@ module encoder_layer
 
     if (FPGA_HEADS != 0) begin : gen_pool
         pool_engine #(
+        .READ_LATENCY(READ_LATENCY),
             .ADDRESS_WIDTH(ADDRESS_WIDTH),
             .BEATS_WIDTH(BEATS_WIDTH),
             .BUFFER_ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH)

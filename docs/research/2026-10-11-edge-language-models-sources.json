@@ -1,0 +1,582 @@
+{
+  "review_date": "2026-10-11",
+  "method": "Focused narrative review. Primary records screened for all entries; selected full-text sections inspected where marked. Years use first preprint year when the URL is a preprint. No claim that every paper was read in full.",
+  "sources": [
+    {
+      "id": "H01",
+      "year": 2020,
+      "title": "FTRANS: Energy-Efficient Acceleration of Transformers using FPGA",
+      "authors": "Li, Bingbing and others",
+      "url": "https://arxiv.org/abs/2007.08563",
+      "area": "FPGA encoder",
+      "inspection": "abstract"
+    },
+    {
+      "id": "H02",
+      "year": 2021,
+      "title": "Hardware Acceleration of Fully Quantized BERT for Efficient Natural Language Processing",
+      "authors": "Liu, Zejian and Li, Gang and Cheng, Jian",
+      "url": "https://arxiv.org/abs/2103.02800",
+      "area": "FPGA encoder",
+      "inspection": "abstract"
+    },
+    {
+      "id": "H03",
+      "year": 2023,
+      "title": "Understanding the Potential of FPGA-Based Spatial Acceleration for Large Language Model Inference",
+      "authors": "Chen, Hongzheng and others",
+      "url": "https://arxiv.org/abs/2312.15159",
+      "area": "spatial acceleration",
+      "inspection": "abstract"
+    },
+    {
+      "id": "H04",
+      "year": 2024,
+      "title": "FlightLLM: Efficient Large Language Model Inference with a Complete Mapping Flow on FPGAs",
+      "authors": "Zeng, Shulin and others",
+      "url": "https://arxiv.org/html/2401.03868v2",
+      "area": "FPGA decoder",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "H05",
+      "year": 2024,
+      "title": "EdgeLLM: A Highly Efficient CPU-FPGA Heterogeneous Edge Accelerator for Large Language Models",
+      "authors": "Huang, Mingqiang and others",
+      "url": "https://arxiv.org/abs/2407.21325",
+      "area": "FPGA decoder",
+      "inspection": "abstract"
+    },
+    {
+      "id": "H06",
+      "year": 2025,
+      "title": "Pushing up to the Limit of Memory Bandwidth and Capacity Utilization for Efficient LLM Decoding on Embedded FPGA",
+      "authors": "Li, Jindong and others",
+      "url": "https://arxiv.org/html/2502.10659v1",
+      "area": "Kria decoder",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "H07",
+      "year": 2025,
+      "title": "TeLLMe: An Energy-Efficient Ternary LLM Accelerator for Prefilling and Decoding on Edge FPGAs",
+      "authors": "Qiao, Ye and others",
+      "url": "https://arxiv.org/abs/2504.16266",
+      "area": "Kria ternary",
+      "inspection": "abstract"
+    },
+    {
+      "id": "H08",
+      "year": 2025,
+      "title": "TeLLMe v2: An Efficient End-to-End Ternary LLM Prefill and Decode Accelerator with Table-Lookup Matmul on Edge FPGAs",
+      "authors": "Qiao, Ye and Chen, Zhiheng and Zhang, Yifan and Wang, Yian and Huang, Sitao",
+      "url": "https://arxiv.org/html/2510.15926v2",
+      "area": "Kria ternary",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "H09",
+      "year": 2025,
+      "title": "TerEffic: Highly Efficient Ternary LLM Inference on FPGA",
+      "authors": "Yin, Chenyang and others",
+      "url": "https://arxiv.org/html/2502.16473v2",
+      "area": "ternary FPGA",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "H10",
+      "year": 2025,
+      "title": "LUT-LLM: Efficient Language Model Inference with Memory-based Computations on FPGAs",
+      "authors": "He, Zifan and Ye, Shengyu and Ma, Rui and Wang, Yang and Cong, Jason",
+      "url": "https://arxiv.org/html/2511.06174v2",
+      "area": "vector quantization FPGA",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "H11",
+      "year": 2025,
+      "title": "ITERA-LLM: Boosting Sub-8-Bit Large Language Model Inference via Iterative Tensor Decomposition",
+      "authors": "Zheng, Keran and Huang, Yinting and Yu, Zhewen and Bouganis, Christos-Savvas",
+      "url": "https://arxiv.org/abs/2505.08981",
+      "area": "low rank FPGA",
+      "inspection": "abstract"
+    },
+    {
+      "id": "H12",
+      "year": 2024,
+      "title": "FAMOUS: Flexible Accelerator for the Attention Mechanism of Transformer on UltraScale+ FPGAs",
+      "authors": "Kabir, Ehsan and Kabir, Md. Arafat and Downey, Austin R. J. and Bakos, Jason D. and Andrews, David and Huang, Miaoqing",
+      "url": "https://arxiv.org/abs/2409.14023",
+      "area": "attention kernel",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Q01",
+      "year": 2021,
+      "title": "I-BERT: Integer-only BERT Quantization",
+      "authors": "Kim, Sehoon and Gholami, Amir and Yao, Zhewei and Mahoney, Michael W. and Keutzer, Kurt",
+      "url": "https://proceedings.mlr.press/v139/kim21d/kim21d.pdf",
+      "area": "integer arithmetic",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Q02",
+      "year": 2022,
+      "title": "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models",
+      "authors": "Xiao, Guangxuan and others",
+      "url": "https://arxiv.org/abs/2211.10438",
+      "area": "W8A8",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Q03",
+      "year": 2022,
+      "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+      "authors": "Frantar, Elias and Ashkboos, Saleh and Hoefler, Torsten and Alistarh, Dan",
+      "url": "https://arxiv.org/abs/2210.17323",
+      "area": "weight quantization",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Q04",
+      "year": 2023,
+      "title": "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration",
+      "authors": "Lin, Ji and others",
+      "url": "https://arxiv.org/abs/2306.00978",
+      "area": "weight quantization",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Q05",
+      "year": 2024,
+      "title": "The Era of 1-bit LLMs: All Large Language Models are in 1.58 Bits",
+      "authors": "Ma, Shuming and others",
+      "url": "https://arxiv.org/abs/2402.17764",
+      "area": "ternary training",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Q06",
+      "year": 2025,
+      "title": "BitNet b1.58 2B4T Technical Report",
+      "authors": "Ma, Shuming and others",
+      "url": "https://arxiv.org/abs/2504.12285",
+      "area": "native ternary model",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Q07",
+      "year": 2024,
+      "title": "T-MAC: CPU Renaissance via Table Lookup for Low-Bit LLM Deployment on Edge",
+      "authors": "Wei, Jianyu and others",
+      "url": "https://arxiv.org/abs/2407.00088",
+      "area": "CPU lookup baseline",
+      "inspection": "abstract"
+    },
+    {
+      "id": "M01",
+      "year": 2020,
+      "title": "MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers",
+      "authors": "Wang, Wenhui and others",
+      "url": "https://arxiv.org/abs/2002.10957",
+      "area": "distillation",
+      "inspection": "abstract"
+    },
+    {
+      "id": "M02",
+      "year": 2019,
+      "title": "TinyBERT: Distilling BERT for Natural Language Understanding",
+      "authors": "Jiao, Xiaoqi and others",
+      "url": "https://arxiv.org/abs/1909.10351",
+      "area": "distillation",
+      "inspection": "abstract"
+    },
+    {
+      "id": "M03",
+      "year": 2016,
+      "title": "FastText.zip: Compressing text classification models",
+      "authors": "Joulin, Armand and others",
+      "url": "https://arxiv.org/abs/1612.03651",
+      "area": "compact classifier",
+      "inspection": "abstract"
+    },
+    {
+      "id": "M04",
+      "year": 2025,
+      "title": "Qwen3 Technical Report",
+      "authors": "Yang, An and others",
+      "url": "https://arxiv.org/abs/2505.09388",
+      "area": "generation baseline",
+      "inspection": "abstract"
+    },
+    {
+      "id": "M05",
+      "year": 2023,
+      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "authors": "Gu, Albert and Dao, Tri",
+      "url": "https://arxiv.org/abs/2312.00752",
+      "area": "state space model",
+      "inspection": "abstract"
+    },
+    {
+      "id": "M06",
+      "year": 2024,
+      "title": "Scalable MatMul-free Language Modeling",
+      "authors": "Zhu, Rui-Jie and others",
+      "url": "https://arxiv.org/abs/2406.02528",
+      "area": "recurrent ternary",
+      "inspection": "abstract"
+    },
+    {
+      "id": "M07",
+      "year": 2025,
+      "title": "LightMamba: Efficient Mamba Acceleration on FPGA with Quantization and Hardware Co-design",
+      "authors": "Wei, Renjie and others",
+      "url": "https://arxiv.org/abs/2502.15260",
+      "area": "state space FPGA",
+      "inspection": "abstract"
+    },
+    {
+      "id": "T01",
+      "year": 2008,
+      "title": "The worst-case execution-time problem: overview of methods and survey of tools",
+      "authors": "Wilhelm, Reinhard and others",
+      "url": "https://www.es.mdh.se/pdf_publications/1258.pdf",
+      "area": "WCET foundations",
+      "inspection": "primary_text_excerpt"
+    },
+    {
+      "id": "T02",
+      "year": 2011,
+      "title": "A Predictable Execution Model for COTS-Based Embedded Systems",
+      "authors": "Pellizzoni, Rodolfo and others",
+      "url": "https://ieeexplore.ieee.org/document/5767117",
+      "area": "memory isolation",
+      "inspection": "abstract"
+    },
+    {
+      "id": "T03",
+      "year": 2011,
+      "title": "PRET DRAM controller: Bank privatization for predictability and temporal isolation",
+      "authors": "Reineke, Jan and others",
+      "url": "https://ieeexplore.ieee.org/document/6062323/",
+      "area": "predictable DRAM",
+      "inspection": "abstract"
+    },
+    {
+      "id": "T04",
+      "year": 2013,
+      "title": "MemGuard: Memory Bandwidth Reservation System for Efficient Performance Isolation in Multi-core Platforms",
+      "authors": "Yun, Heechul and Yao, Gang and Pellizzoni, Rodolfo and Caccamo, Marco and Sha, Lui",
+      "url": "https://www.ittc.ku.edu/~heechul/papers/memguard-rtas13.pdf",
+      "area": "bandwidth reservation",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "T05",
+      "year": 2020,
+      "title": "Serving DNNs like Clockwork: Performance Predictability from the Bottom Up",
+      "authors": "Gujarati, Arpan and others",
+      "url": "https://www.usenix.org/conference/osdi20/presentation/gujarati",
+      "area": "predictable serving",
+      "inspection": "abstract"
+    },
+    {
+      "id": "T06",
+      "year": 2024,
+      "title": "Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve",
+      "authors": "Agrawal, Amey and others",
+      "url": "https://www.usenix.org/conference/osdi24/presentation/agrawal",
+      "area": "prefill scheduling",
+      "inspection": "abstract"
+    },
+    {
+      "id": "T07",
+      "year": 2026,
+      "title": "TimeBill: Time-Budgeted Inference for Large Language Models",
+      "authors": "Fan, Qi and Zou, An and Ma, Yehan",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/40317",
+      "area": "time budget prediction",
+      "inspection": "primary_text_excerpt"
+    },
+    {
+      "id": "T08",
+      "year": 2026,
+      "title": "JITServe: SLO-aware LLM Serving with Imprecise Request Information",
+      "authors": "Zhang, Wei and others",
+      "url": "https://www.usenix.org/conference/nsdi26/presentation/zhang-wei",
+      "area": "SLO goodput",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "T09",
+      "year": 2000,
+      "title": "Real-Time Calculus for Scheduling Hard Real-Time Systems",
+      "authors": "Thiele, Lothar and Chakraborty, Samarjit and Naedele, Martin",
+      "url": "https://www.tik.ee.ethz.ch/file/994e3fb9a12a2471eb73d0d30a4317d3/scheduling.pdf",
+      "area": "compositional bounds",
+      "inspection": "primary_text_excerpt"
+    },
+    {
+      "id": "R01",
+      "year": 2017,
+      "title": "On Calibration of Modern Neural Networks",
+      "authors": "Guo, Chuan and Pleiss, Geoff and Sun, Yu and Weinberger, Kilian Q.",
+      "url": "https://proceedings.mlr.press/v70/guo17a.html",
+      "area": "calibration",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R02",
+      "year": 2019,
+      "title": "SelectiveNet: A Deep Neural Network with an Integrated Reject Option",
+      "authors": "Geifman, Yonatan and El-Yaniv, Ran",
+      "url": "https://proceedings.mlr.press/v97/geifman19a.html",
+      "area": "selective prediction",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R03",
+      "year": 2022,
+      "title": "Conformal Risk Control",
+      "authors": "Angelopoulos, Anastasios N. and Bates, Stephen and Fisch, Adam and Lei, Lihua and Schuster, Tal",
+      "url": "https://arxiv.org/abs/2208.02814",
+      "area": "statistical guarantees",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R04",
+      "year": 2024,
+      "title": "Language Models with Conformal Factuality Guarantees",
+      "authors": "Mohri, Christopher and Hashimoto, Tatsunori",
+      "url": "https://arxiv.org/abs/2402.10978",
+      "area": "factuality",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R05",
+      "year": 2020,
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Lewis, Patrick and others",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "area": "grounding",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R06",
+      "year": 2021,
+      "title": "Evidentiality-guided Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Asai, Akari and Gardner, Matt and Hajishirzi, Hannaneh",
+      "url": "https://arxiv.org/abs/2112.08688",
+      "area": "evidence quality",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R07",
+      "year": 2019,
+      "title": "Neural Simplex Architecture",
+      "authors": "Phan, Dung T. and Grosu, Radu and Jansen, Nils and Paoletti, Nicola and Smolka, Scott A. and Stoller, Scott D.",
+      "url": "https://arxiv.org/abs/1908.00528",
+      "area": "runtime assurance",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R08",
+      "year": 1984,
+      "title": "Algorithm-Based Fault Tolerance for Matrix Operations",
+      "authors": "Huang, Kuang-Hua and Abraham, Jacob A.",
+      "url": "https://graal.ens-lyon.fr/~abenoit/CR02/papers/abft2.pdf",
+      "area": "fault detection",
+      "inspection": "primary_text_excerpt"
+    },
+    {
+      "id": "R09",
+      "year": 2025,
+      "title": "GoldenTransformer: A Modular Fault Injection Framework for Transformer Robustness Research",
+      "authors": "Howard, Luke",
+      "url": "https://arxiv.org/abs/2509.10790",
+      "area": "fault injection",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R10",
+      "year": 2026,
+      "title": "Rotated Robustness: A Training-Free Defense against Bit-Flip Attacks on Large Language Models",
+      "authors": "Liu, Deng and Chen, Song",
+      "url": "https://arxiv.org/abs/2603.16382",
+      "area": "fault robustness",
+      "inspection": "abstract"
+    },
+    {
+      "id": "R11",
+      "year": 2019,
+      "title": "An Evaluation Dataset for Intent Classification and Out-of-Scope Prediction",
+      "authors": "Larson, Stefan and others",
+      "url": "https://aclanthology.org/D19-1131/",
+      "area": "CLINC150",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Y01",
+      "year": 2021,
+      "title": "PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models",
+      "authors": "Scholak, Torsten and Schucher, Nathan and Bahdanau, Dzmitry",
+      "url": "https://aclanthology.org/2021.emnlp-main.779/",
+      "area": "incremental parsing",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Y02",
+      "year": 2022,
+      "title": "Synchromesh: Reliable code generation from pre-trained language models",
+      "authors": "Poesia, Gabriel and others",
+      "url": "https://arxiv.org/abs/2201.11227",
+      "area": "semantic decoding",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Y03",
+      "year": 2022,
+      "title": "Prompting Is Programming: A Query Language for Large Language Models",
+      "authors": "Beurer-Kellner, Luca and Fischer, Marc and Vechev, Martin",
+      "url": "https://arxiv.org/abs/2212.06094",
+      "area": "LMQL",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Y04",
+      "year": 2024,
+      "title": "Guiding LLMs The Right Way: Fast, Non-Invasive Constrained Generation",
+      "authors": "Beurer-Kellner, Luca and others",
+      "url": "https://arxiv.org/abs/2403.06988",
+      "area": "DOMINO tokenization",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Y05",
+      "year": 2024,
+      "title": "XGrammar: Flexible and Efficient Structured Generation Engine for Large Language Models",
+      "authors": "Dong, Yixin and others",
+      "url": "https://arxiv.org/abs/2411.15100",
+      "area": "grammar engine",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Y06",
+      "year": 2026,
+      "title": "XGrammar 2: Dynamic and Efficient Structured Generation Engine for Agentic LLMs",
+      "authors": "Li, Linzhang and others",
+      "url": "https://arxiv.org/abs/2601.04426",
+      "area": "dynamic grammar engine",
+      "inspection": "abstract"
+    },
+    {
+      "id": "Y07",
+      "year": 2025,
+      "title": "Type-Constrained Code Generation with Language Models",
+      "authors": "Mündler, Niels and He, Jingxuan and Wang, Hao and Sen, Koushik and Song, Dawn and Vechev, Martin",
+      "url": "https://arxiv.org/pdf/2504.09246",
+      "area": "type constraints",
+      "inspection": "full_text_sections"
+    },
+    {
+      "id": "Y08",
+      "year": 2024,
+      "title": "Grammar-Aligned Decoding",
+      "authors": "Park, Kanghee and Wang, Jiayu and Berg-Kirkpatrick, Taylor and Polikarpova, Nadia and D'Antoni, Loris",
+      "url": "https://arxiv.org/abs/2405.21047",
+      "area": "sampling distortion",
+      "inspection": "primary_text_excerpt"
+    },
+    {
+      "id": "C01",
+      "year": 2016,
+      "title": "FINN: A Framework for Fast, Scalable Binarized Neural Network Inference",
+      "authors": "Umuroglu, Yaman and others",
+      "url": "https://arxiv.org/abs/1612.07119",
+      "area": "streaming toolflow",
+      "inspection": "abstract"
+    },
+    {
+      "id": "C02",
+      "year": 2018,
+      "title": "Fast inference of deep neural networks in FPGAs for particle physics",
+      "authors": "Duarte, Javier and others",
+      "url": "https://arxiv.org/abs/1804.06913",
+      "area": "hls4ml real-time inference",
+      "inspection": "abstract"
+    },
+    {
+      "id": "C03",
+      "year": 2020,
+      "title": "Predictable Accelerator Design with Time-Sensitive Affine Types",
+      "authors": "Nigam, Rachit and others",
+      "url": "https://arxiv.org/abs/2004.04852",
+      "area": "Dahlia resource types",
+      "inspection": "abstract"
+    },
+    {
+      "id": "C04",
+      "year": 2021,
+      "title": "A Compiler Infrastructure for Accelerator Generators",
+      "authors": "Nigam, Rachit and Thomas, Samuel and Li, Zhijing and Sampson, Adrian",
+      "url": "https://arxiv.org/abs/2102.09713",
+      "area": "Calyx control IR",
+      "inspection": "abstract"
+    },
+    {
+      "id": "C05",
+      "year": 2024,
+      "title": "Allo: A Programming Model for Composable Accelerator Design",
+      "authors": "Chen, Hongzheng and others",
+      "url": "https://arxiv.org/abs/2404.04815",
+      "area": "composable accelerator",
+      "inspection": "abstract"
+    },
+    {
+      "id": "C06",
+      "year": 2019,
+      "title": "Relay: A High-Level Compiler for Deep Learning",
+      "authors": "Roesch, Jared and others",
+      "url": "https://arxiv.org/abs/1904.08368",
+      "area": "typed tensor IR",
+      "inspection": "abstract"
+    },
+    {
+      "id": "A01",
+      "year": 2022,
+      "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+      "authors": "Dao, Tri and Fu, Daniel Y. and Ermon, Stefano and Rudra, Atri and Ré, Christopher",
+      "url": "https://arxiv.org/abs/2205.14135",
+      "area": "attention IO",
+      "inspection": "abstract"
+    },
+    {
+      "id": "A02",
+      "year": 2023,
+      "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+      "authors": "Kwon, Woosuk and others",
+      "url": "https://arxiv.org/abs/2309.06180",
+      "area": "KV memory management",
+      "inspection": "abstract"
+    },
+    {
+      "id": "A03",
+      "year": 2023,
+      "title": "Fast Inference from Transformers via Speculative Decoding",
+      "authors": "Leviathan, Yaniv and Kalman, Matan and Matias, Yossi",
+      "url": "https://proceedings.mlr.press/v202/leviathan23a.html",
+      "area": "speculative decoding",
+      "inspection": "abstract"
+    },
+    {
+      "id": "A04",
+      "year": 2023,
+      "title": "SGLang: Efficient Execution of Structured Language Model Programs",
+      "authors": "Zheng, Lianmin and others",
+      "url": "https://arxiv.org/abs/2312.07104",
+      "area": "structured runtime",
+      "inspection": "abstract"
+    }
+  ]
+}

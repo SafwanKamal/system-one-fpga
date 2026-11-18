@@ -1,4 +1,106 @@
-# Tiny System One classifier on FPGA
+# System One FPGA
+
+**Current KR260 hardware/runtime baseline: RC1, adopted 2026-11-08.** RC1 is
+installed as the default launcher and automatic boot startup, verified through
+an actual reboot. The last verified default service was enabled, running and
+READY. Consult the canonical `BOARD_STATUS.json` for current live state.
+
+The baseline is Qwen3-0.6B Q8_0 on v9e FPGA hardware: 2,048 total context tokens,
+eight-token prefill, INT8 block32 matrix activations, BF16 K/V storage and FP32
+norm/attention/residual arithmetic. All neural arithmetic runs on the FPGA.
+The decoder/memory clocks remain 125/250 MHz, with sealed ABI2 model ownership,
+full startup SHA verification and persistent exact-prefix reuse.
+
+[Baseline definition and rollback](hardware/BASELINE.md) ·
+[Pinned baseline manifest](hardware/baseline.json) · [Current handoff](HANDOFF.md)
+
+## Default launcher and boot setup
+
+After reserving and reconciling the board through the canonical ownership
+protocol, run on the KR260:
+
+```sh
+sudo sysone-qwen-fpga --health
+sudo sysone-qwen-fpga --query 'Read /proc/uptime'
+sudo sysone-qwen-fpga --query 'Read /proc/sys/kernel/random/boot_id' \
+  --out /var/lib/sysone/rc1-results/boot-id.json --max-tokens 64
+```
+
+`--query`, `--out` and `--max-tokens` retain the existing interface and flat JSON
+result format. Without `--out`, the result is saved to
+`/var/lib/sysone/rc1-results/last-command-result.json`. `--no-prefix-cache`
+forces cold prefill for one request; conversation switches and `--reset-cache`
+invalidate reuse.
+
+- **Package:** `/var/lib/sysone/hardware-consolidated-rc1-20261108`.
+- **Boot bundle/source:** `/var/lib/sysone/rc1-default-v1` /
+  [`firmware/rc1_default/`](firmware/rc1_default/README.md).
+- **Initialization:** `sysone-rc1-init.service`, after the DFX manager, verifies
+  pinned files/reserved memory, programs v9e, then loads/seals/verifies the model.
+- **Inference:** enabled `sysone-rc1.service` verifies the complete model again,
+  requires a READY response and serves the default launcher.
+- **Qualified kernel:** `6.8.0-1036-xilinx`; a kernel/module change requires review
+  and updated pins before startup.
+
+```sh
+systemctl status sysone-rc1-init.service sysone-rc1.service
+sudo journalctl -b -u sysone-rc1-init.service -u sysone-rc1.service
+```
+
+The running service holds `/run/lock/sysone-inference.lock` and its DMA lease.
+Drain it before raw hardware/model operations. Stop requests drain without
+forced SIGKILL; uncertain hardware is not automatically reset or restarted.
+The canonical original checkout's `BOARD_STATUS.json` remains the sole live
+coordination record. The full historical benchmark sweep remains **STOPPED**.
+
+## Verified RC1 results
+
+| Stage | Verified result |
+|---|---|
+| Consolidated hardware/runtime | 8,224 causal checks, zero error; 28 full generations checked, including 18 exact-output service controls and a 1,454-token prompt |
+| Ownership/cache/context | Driver negatives, competing owner, controlled reload, conversation/reset and boundary checks passed |
+| Actual reboot/default startup | Automatic model load/seal/full SHA; changed boot/driver identities; 12 launcher generations checked with exact output parity across reboot |
+| Post-reboot hardware | 4,112 causal checks, zero error; default service restored, enabled and READY |
+
+For six short requests per mode in the hardware qualification, mean client time
+was **5.564 s** with per-request verification/no cache, **3.856 s** with startup
+verification/no cache and **3.105 s** with startup verification/prefix reuse.
+The cached arm includes its first cold request. A 1,454-token prompt measured
+73.827 s for the first persistent request and 5.397 s for its exact-prefix repeat.
+
+These are bounded development results on one board and one actual reboot. Causal
+fixtures cover layer 0 through all 2,048 positions; full-model tool generations
+exercise all decoder layers. Detailed evidence and timing boundaries:
+[hardware qualification](hardware/candidates/consolidated-rc1/BOARD_QUALIFICATION.md)
+and [boot verification](hardware/candidates/consolidated-rc1/BOOT_STARTUP.md).
+
+## Rollback and preservation
+
+To disable RC1's automatic defaults, reserve the board, then:
+
+```sh
+sudo systemctl disable --now sysone-rc1.service
+sudo systemctl stop sysone-rc1-init.service
+sudo cat /sys/class/misc/sysone_qwen_dma/ownership
+```
+
+Require released ownership/VMAs before manual work. The current image and sealed
+model remain resident on this boot; use the explicit RC1 cold CLI while its
+service is stopped. To restore the defaults, enable/start `sysone-rc1.service`
+and verify health/inference. The [complete rollback procedure](hardware/BASELINE.md)
+includes manual RC1 operation and the preserved v9d/v16 recovery runtime.
+
+The original global launcher is backed up at
+`/var/lib/sysone/qualifications/rc1-default-20261108/rollback/sysone-qwen-fpga.original`.
+Restoring that v8 launcher alone is incompatible with the current image and
+sealed ABI2 driver. Preserve all historical v8/v9 packages, old seals, failed
+attempts and version-labelled measurements. Baseline adoption does not rewrite
+those artifacts or restart the stopped sweep.
+
+## Historical classifier and encoder work
+
+The sections below preserve the earlier Nexys classifier/encoder research.
+Their dated deployment and recommendation labels apply to those configurations.
 
 **Phase 2 (RTL) status, 2026-09-24:** the full inference path is in
 SystemVerilog under `rtl/`, with the MLP head built from Genome-Classifier's

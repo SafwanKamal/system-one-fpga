@@ -1,0 +1,9 @@
+{
+  "frozen_utc": "2026-11-09T04:53:52.511195+00:00",
+  "protocol_sha256": "242f04c917241deb0fb38fe431eb9414095b8551f748fe8de27e4df55639e3b2",
+  "code_sha256": "326db4b9fbca57d4beb7c5afa33254f3e33cd6f6381f5413df51ce8f38164602",
+  "revision": "v2 corrects accumulated worker query seeds; v1 retained",
+  "prior_results_inspected": true,
+  "policy_split_loss_budgets_selection_rule_changed": false,
+  "test_memory_results_exist": false
+}

@@ -11,7 +11,10 @@
 // up to 4K of block RAM.
 module activation_buffer #(
     parameter integer DEPTH = 4096,
-    parameter integer ADDRESS_WIDTH = $clog2(DEPTH)
+    parameter integer ADDRESS_WIDTH = $clog2(DEPTH),
+    // KR260-only deep storage: use whole 4K UltraRAM banks and an output stage.
+    // Default retains the one-cycle split-memory layout used by the Nexys.
+    parameter integer PIPELINED_URAM = 0
 ) (
     input logic clk,
 
@@ -27,6 +30,20 @@ module activation_buffer #(
     localparam integer BIG = 1 << ($clog2(DEPTH + 1) - 1);  // largest power of two <= DEPTH
     localparam integer SMALL = DEPTH - BIG;                  // 0 or a power of two
 
+    if (PIPELINED_URAM != 0) begin : gen_uram
+        (* ram_style = "ultra" *) logic [127:0] memory [0:DEPTH-1];
+        logic [127:0] memory_data;
+        always_ff @(posedge clk) begin
+            memory_data <= memory[read_address];
+            read_data <= memory_data;
+            if (write_enable) begin
+                for (int b = 0; b < 16; b++) begin
+                    if (write_byte_enable[b])
+                        memory[write_address][8*b +: 8] <= write_data[8*b +: 8];
+                end
+            end
+        end
+    end else begin : gen_default
     logic [127:0] big_memory [0:BIG-1];
     logic [127:0] big_data;
 
@@ -73,5 +90,6 @@ module activation_buffer #(
         end
 `endif
     end
+    end // gen_default
 
 endmodule

@@ -1,0 +1,158 @@
+[
+  {
+    "budget": 8192,
+    "panel": "numeric_only",
+    "metric": "exact",
+    "n": 8,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0015625000000000075,
+    "ci95": [
+      0.00026041666666667095,
+      0.0031250000000000028
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "numeric_only",
+    "metric": "positive_exact",
+    "n": 8,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0006899613331652064,
+    "ci95": [
+      -0.00027056277056277056,
+      0.0019363538295576821
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "numeric_only",
+    "metric": "nmae",
+    "n": 8,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.15421086121143135,
+    "ci95": [
+      -0.30959160906341743,
+      -0.020519507229880714
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "numeric_only",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0009548611111110985,
+    "ci95": [
+      -0.0029513888888888875,
+      0.005815972222222178
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "numeric_only",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.001016040689705106,
+    "ci95": [
+      -0.0029061107469475554,
+      0.006078156849170386
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "numeric_only",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0031940119196390677,
+    "ci95": [
+      -0.003130089952323856,
+      0.009158559617324761
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "numeric_only",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.002256944444444464,
+    "ci95": [
+      -0.004600694444444414,
+      0.011805555555555597
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "numeric_only",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0029553014521020624,
+    "ci95": [
+      -0.003798642895777526,
+      0.012902365440981294
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "numeric_only",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0023569168383379287,
+    "ci95": [
+      -0.004768812127620417,
+      0.011854750393145338
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "numeric_only",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.005902777777777766,
+    "ci95": [
+      0.0016493055555555913,
+      0.010156249999999959
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "numeric_only",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.006088691513734081,
+    "ci95": [
+      0.0007112353217702435,
+      0.011356238096173447
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "numeric_only",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_change",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.008884297355078737,
+    "ci95": [
+      -0.013658718602634217,
+      -0.003820888040215712
+    ]
+  }
+]

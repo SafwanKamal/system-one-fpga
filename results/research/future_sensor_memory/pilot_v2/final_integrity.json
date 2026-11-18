@@ -1,0 +1,10 @@
+{
+  "primary_policy_code_matches_freeze": true,
+  "protocol_matches_freeze": true,
+  "all_query_seeds_match_serial": true,
+  "validation_answer_rows": 2430,
+  "test_answer_rows": 924,
+  "report_links_verified": true,
+  "test_count": 21,
+  "completed_utc": "2026-11-09T05:03:41.157553+00:00"
+}

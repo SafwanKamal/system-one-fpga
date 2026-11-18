@@ -1,0 +1,9 @@
+{
+  "completed_utc": "2026-11-09T05:00:40.705594+00:00",
+  "code_sha256": "326db4b9fbca57d4beb7c5afa33254f3e33cd6f6381f5413df51ce8f38164602",
+  "records": 1032,
+  "test_answers_sha256": "916ad4f0061999d65f3c5fdf93d54e07e14c3ddc42aab3d961f32a8e5ea76aa9",
+  "questions_hidden_during_ingestion": true,
+  "fixed_chunk_input_bytes": 2048,
+  "query_source": "seeded structured queries, not original SensorQA questions"
+}

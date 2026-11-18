@@ -1,0 +1,101 @@
+{
+  "date_local": "2026-10-15",
+  "updated_utc": "2026-10-15T06:13:23.712827+00:00",
+  "candidate": "locality300",
+  "baseline_files_checked": 602,
+  "all_baseline_files_unchanged": true,
+  "mismatches": [],
+  "numerical_cases": 50,
+  "exact_outputs_and_cycles": true,
+  "source_manifest_sha256": "0a74213c1d87503861a17fb8d5efdd8dadbd2dadcfb6446742c36ab88a766009",
+  "host_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "259",
+    "time": "9.632",
+    "timestamp": "2026-10-15T00:36:03.165645-05:00",
+    "hostname": "SafwanLenovo"
+  },
+  "host_tests_xml_sha256": "f92d84ce29d2ec1c4710ec84d3a499b52295d4dce1d75bb8dcddc5af053230f8",
+  "supervisor_boundary_scenarios": 288,
+  "assertion_enabled_regression": {
+    "complete": true,
+    "cases": 8,
+    "exact_outputs_and_cycles": true,
+    "mac_select_assertions_enabled": true,
+    "log_sha256": "fe45a4bf7bfee193b1158a8a242e62ae9e3e3b99eea296187f157404276e9167"
+  },
+  "physical_status": "Synthesis and diagnostic placement complete; REJECTED for 300 MHz route admission; no route/bitstream/deployment",
+  "new_implementation_sha256": {
+    "scripts/v2/kr260/create_locality300_candidate.py": "008a001fa3c021b65b06b3584910a7b836d4be16364da5f5f5d1a5e914dff9b4",
+    "scripts/v2/kr260/build_locality300.py": "291c5553eac2d6ea65bbc13a2a0d3b3c398bc767ee4da9d68d1ecd2d70c624db",
+    "src/sysone/v2/contract_service.py": "7168cb9b859b0404b83cecb6050e9727d8ef11b341c2e8954f3369cebb334a89",
+    "rtl/contracts/deadline_supervisor.sv": "dd6301294d3e35e85ec6aa30536b79bb05efe42c57f57358809eb57c6866b24a",
+    "simulation/v2/deadline_supervisor_tb.sv": "6c6e269eb77810b927b0a06786c96f97a033f0e1ed5bfacb465e3a405668fd7a",
+    "simulation/v2/run_locality300.sh": "7a4ada986945bcb06fa5875beeb5cf39f68ebe7a300eab807cac62d01787d0cd",
+    "tests/test_contract_service.py": "b25e3507e6234ea4cfb4570ac135af5cb2e08a93724fbd4d5a5e5b985e971700",
+    "tests/test_locality300_candidate.py": "022988d4db629841db7da0fbdaa52304fcdc96c33dfe1c7b2340027caeadbfe4"
+  },
+  "hardware_qualified": false,
+  "successful_inference_timing_guarantee": false,
+  "host_delivery_guarantee": false,
+  "deadline_outcome_property": "RTL-level PL outcome availability by captured cycle budget under active clock/reset and physical timing assumptions; separate from successful typed inference",
+  "synthesis": {
+    "complete": true,
+    "target_mhz": 300,
+    "setup_ns": -0.591,
+    "hold_ns": -0.087,
+    "mapping": {
+      "query_data_registers": 512,
+      "local_select_registers": 128,
+      "supervisor_registers": 70
+    },
+    "resources": {
+      "lut": 67598,
+      "registers": 53227,
+      "bram_tiles": 46,
+      "uram": 18,
+      "dsp": 579
+    },
+    "timing_met": false
+  },
+  "placement": {
+    "complete": true,
+    "frequencies": [
+      {
+        "mhz": 200,
+        "setup_ns": 0.656,
+        "hold_ns": -0.074,
+        "routed": false
+      },
+      {
+        "mhz": 250,
+        "setup_ns": -0.344,
+        "hold_ns": -0.074,
+        "routed": false
+      },
+      {
+        "mhz": 300,
+        "setup_ns": -1.011,
+        "hold_ns": -0.074,
+        "routed": false
+      }
+    ],
+    "resources": {
+      "lut": 63478,
+      "registers": 52253,
+      "occupied_clb_percent": 76.93,
+      "bram_tiles": 46,
+      "uram": 18,
+      "dsp": 579
+    },
+    "worst_path": "linear load-state decode -> gen_performance.read_due_reg[31]",
+    "data_delay_ns": 4.216,
+    "logic_delay_ns": 1.45,
+    "estimated_route_delay_ns": 2.766,
+    "route_approved": false,
+    "review_sha256": "4af8f33519fb1a6e2dc14b2abc9d310c67f26aabc52cd04406038e2d5a8b2e44"
+  }
+}

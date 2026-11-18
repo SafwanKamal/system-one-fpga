@@ -1,0 +1,258 @@
+{
+  "subject": 107,
+  "profiles": {
+    "raw32": {
+      "windows": 612,
+      "max_frame_bytes": 37041,
+      "mse_sum": 0.0,
+      "configurations": {
+        "0:32:512": 612
+      },
+      "bytes": 22599477,
+      "sha256": "09774d7e22b439dee8f8bf96b3f2ebfa7620b0673e37769e960c7561ba6946c7",
+      "mean_normalized_mse": 0.0
+    },
+    "lossless_zlib": {
+      "windows": 612,
+      "max_frame_bytes": 31185,
+      "mse_sum": 0.0,
+      "configurations": {
+        "1:32:512": 612
+      },
+      "bytes": 18266651,
+      "sha256": "2c95ce9008c99378b92c0f3599aa31bacae2252a60fe2a12dc86080e4705dda8",
+      "mean_normalized_mse": 0.0
+    },
+    "lossless_lzma": {
+      "windows": 612,
+      "max_frame_bytes": 30903,
+      "mse_sum": 0.0,
+      "configurations": {
+        "2:32:512": 612
+      },
+      "bytes": 18081149,
+      "sha256": "ab228864ef49d9cff976a6edde417edd0ffabc7ef7529887da7b3ffaf5f42b47",
+      "mean_normalized_mse": 0.0
+    },
+    "statistics": {
+      "windows": 612,
+      "max_frame_bytes": 792,
+      "mse_sum": 0.0,
+      "configurations": {
+        "5:16:378": 612
+      },
+      "bytes": 484712,
+      "sha256": "50cb929af7358215cf8dff673cd59a0dacb4ff6a37d4a9de5ec37d741104fe81",
+      "mean_normalized_mse": 0.0
+    },
+    "pca16": {
+      "windows": 612,
+      "max_frame_bytes": 68,
+      "mse_sum": 0.0,
+      "configurations": {
+        "6:16:16": 612
+      },
+      "bytes": 41624,
+      "sha256": "b2f821dc8fef3ee1741b76d3ee0dfa4719b3ac04488623b69718ef2254d401c1",
+      "mean_normalized_mse": 0.0
+    },
+    "pca32": {
+      "windows": 612,
+      "max_frame_bytes": 100,
+      "mse_sum": 0.0,
+      "configurations": {
+        "6:16:32": 612
+      },
+      "bytes": 61208,
+      "sha256": "37d603869738bde9eeb771cde95fa194a665efe74f8022bab76f6aab44d268cb",
+      "mean_normalized_mse": 0.0
+    },
+    "pca64": {
+      "windows": 612,
+      "max_frame_bytes": 164,
+      "mse_sum": 0.0,
+      "configurations": {
+        "6:16:64": 612
+      },
+      "bytes": 100376,
+      "sha256": "12524a64e16e6d5a34179ee95f1bdd926ecc374d801d61d9e05af9bb01936b64",
+      "mean_normalized_mse": 0.0
+    },
+    "known_scores": {
+      "windows": 612,
+      "max_frame_bytes": 54,
+      "mse_sum": 0.0,
+      "configurations": {
+        "7:16:9": 612
+      },
+      "bytes": 33056,
+      "sha256": "658bcd7c2c1bb2b18f24869788bb15a73ed4ddcf4d224bd0541ebd6c21c57b7b",
+      "mean_normalized_mse": 0.0
+    },
+    "downsample_1024": {
+      "windows": 612,
+      "max_frame_bytes": 1014,
+      "mse_sum": 2924.598327241838,
+      "configurations": {
+        "3:4:64": 606,
+        "3:4:128": 6
+      },
+      "bytes": 484980,
+      "sha256": "6710f07547312209edad0cc1d88be5ba307cba61ddabbefae8c6b72dd1a26e05",
+      "mean_normalized_mse": 4.77875543666967
+    },
+    "downsample_2048": {
+      "windows": 612,
+      "max_frame_bytes": 2034,
+      "mse_sum": 1910.944235606119,
+      "configurations": {
+        "3:4:128": 575,
+        "3:4:256": 37
+      },
+      "bytes": 835760,
+      "sha256": "9878c28bcb3669ba08e2f948f61eecb30a11aac572da99b9df0c67b7dc141717",
+      "mean_normalized_mse": 3.122457901317188
+    },
+    "downsample_4096": {
+      "windows": 612,
+      "max_frame_bytes": 4096,
+      "mse_sum": 375.2928547170013,
+      "configurations": {
+        "3:4:256": 339,
+        "3:4:512": 273
+      },
+      "bytes": 1808507,
+      "sha256": "6a49d5e9b906867dfbcaaa8257a879efe99cb6d0c4e85a039967a33c995b7fc5",
+      "mean_normalized_mse": 0.6132236188186296
+    },
+    "downsample_8192": {
+      "windows": 612,
+      "max_frame_bytes": 8166,
+      "mse_sum": 224.7801698776093,
+      "configurations": {
+        "3:4:512": 575,
+        "3:8:256": 34,
+        "3:8:512": 3
+      },
+      "bytes": 2506231,
+      "sha256": "19407ba37c5dbf3937467eb5100cafad9052640c00ef4caa0e165913eb9df62d",
+      "mean_normalized_mse": 0.36728785927713936
+    },
+    "dct_1024": {
+      "windows": 612,
+      "max_frame_bytes": 1024,
+      "mse_sum": 3148.2680281340145,
+      "configurations": {
+        "4:16:16": 81,
+        "4:8:32": 302,
+        "4:4:64": 220,
+        "4:4:128": 9
+      },
+      "bytes": 470139,
+      "sha256": "b7b0d72b8d82c5b40bc748c21ba6d7bf9a2a8a4a7416c5ba6c0161e3bb3fe4c3",
+      "mean_normalized_mse": 5.144228804140546
+    },
+    "dct_2048": {
+      "windows": 612,
+      "max_frame_bytes": 1929,
+      "mse_sum": 2185.233289266471,
+      "configurations": {
+        "4:16:32": 110,
+        "4:8:64": 364,
+        "4:4:256": 106,
+        "4:4:128": 32
+      },
+      "bytes": 837089,
+      "sha256": "db4133864f7a9935c5f2a535b447e15a9550b0d77352a17aed4e24c63e07163c",
+      "mean_normalized_mse": 3.570642629520377
+    },
+    "dct_4096": {
+      "windows": 612,
+      "max_frame_bytes": 4092,
+      "mse_sum": 1659.2486778046004,
+      "configurations": {
+        "4:16:64": 161,
+        "4:8:128": 319,
+        "4:8:256": 106,
+        "4:4:256": 26
+      },
+      "bytes": 1610669,
+      "sha256": "735bb42bff048c08305ec79290eec318dac8e988d9ed531555d39cfdfc0b6496",
+      "mean_normalized_mse": 2.711190650007517
+    },
+    "dct_8192": {
+      "windows": 612,
+      "max_frame_bytes": 4701,
+      "mse_sum": 851.4429864124395,
+      "configurations": {
+        "4:16:128": 225,
+        "4:8:256": 387
+      },
+      "bytes": 2674084,
+      "sha256": "4e26becb3bbd0e5d426072df474af5d0fc014e372a06b05209fc0bff82752712",
+      "mean_normalized_mse": 1.3912467098242476
+    },
+    "generic_1024": {
+      "windows": 612,
+      "max_frame_bytes": 1024,
+      "mse_sum": 2872.6514897248708,
+      "configurations": {
+        "4:16:16": 81,
+        "4:8:32": 225,
+        "3:4:64": 294,
+        "3:4:128": 4,
+        "4:4:64": 3,
+        "4:4:128": 5
+      },
+      "bytes": 473927,
+      "sha256": "5c1fca3145b5aa0a7fe2e6d0627c53624247da66c27a7396c754ee3aaaa3bfe3",
+      "mean_normalized_mse": 4.6938749832105735
+    },
+    "generic_2048": {
+      "windows": 612,
+      "max_frame_bytes": 2034,
+      "mse_sum": 1740.8139522322454,
+      "configurations": {
+        "4:16:32": 110,
+        "4:8:64": 177,
+        "3:4:256": 31,
+        "3:4:128": 264,
+        "4:4:256": 30
+      },
+      "bytes": 833862,
+      "sha256": "532a40c76e9dbc8f12113e0d083f5af00c2925acf1c8ea013ec8435b75653a54",
+      "mean_normalized_mse": 2.8444672422095514
+    },
+    "generic_4096": {
+      "windows": 612,
+      "max_frame_bytes": 4096,
+      "mse_sum": 371.2946509141475,
+      "configurations": {
+        "4:16:64": 154,
+        "3:4:512": 247,
+        "3:4:256": 119,
+        "4:8:256": 73,
+        "4:8:128": 19
+      },
+      "bytes": 1886762,
+      "sha256": "dc08cefbb767aea0c70fc7dab8b5e6c2c4c69135b2040bcf25e93be0d79b4a8e",
+      "mean_normalized_mse": 0.6066906060688685
+    },
+    "generic_8192": {
+      "windows": 612,
+      "max_frame_bytes": 8166,
+      "mse_sum": 223.9061398784761,
+      "configurations": {
+        "3:4:512": 537,
+        "4:8:256": 65,
+        "4:16:128": 6,
+        "3:8:512": 3,
+        "3:8:256": 1
+      },
+      "bytes": 2506059,
+      "sha256": "dc5148206c790711fa6a854da683378326bee3c50bfbb86b6a49fe3f1b0ad782",
+      "mean_normalized_mse": 0.36585970568378445
+    }
+  },
+  "wall_seconds": 35.12250140000833
+}

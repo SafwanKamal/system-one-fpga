@@ -1,0 +1,46 @@
+{
+  "training_windows": 1444,
+  "known_classes": [
+    1,
+    2,
+    3,
+    4,
+    7,
+    13,
+    16,
+    17,
+    24
+  ],
+  "future_categories_in_fit": 0,
+  "feature_dimension": 378,
+  "shared_bytes": {
+    "pca16": 29732,
+    "pca32": 53924,
+    "pca64": 102308,
+    "known_scores": 1698039,
+    "statistics": 0,
+    "raw32": 0,
+    "lossless_zlib": 0,
+    "lossless_lzma": 0,
+    "downsample_1024": 200,
+    "dct_1024": 200,
+    "generic_1024": 200,
+    "downsample_2048": 200,
+    "dct_2048": 200,
+    "generic_2048": 200,
+    "downsample_4096": 200,
+    "dct_4096": 200,
+    "generic_4096": 200,
+    "downsample_8192": 200,
+    "dct_8192": 200,
+    "generic_8192": 200
+  },
+  "model_hashes": {
+    "known_classifier.pkl": "f638c50ba1d85251eb32cf681cdf5fee10f639ac363b4eb9df3a060f65058be8",
+    "pca16.npz": "63dd8f40dac7b6d692f7a916f0c2012678e7d09aa71bf1fe7dbe34042257767a",
+    "pca32.npz": "276947dfd343b970598d0805fc93370928913fd7d831a6b6cd474f570ee2f28f",
+    "pca64.npz": "4ad3107c95f93dacfbd01dd09c669b171e87e0a3011330bb3576581b561a10c2",
+    "scales.npy": "6ca0be556a8d54ff0d812f4d3d8e4b57bd57cfacc3c02c00bfab32b4edd578f5"
+  },
+  "fitted_utc": "2026-11-16T18:51:46.332679+00:00"
+}

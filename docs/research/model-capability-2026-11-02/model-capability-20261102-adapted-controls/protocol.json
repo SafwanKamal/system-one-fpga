@@ -1,0 +1,99 @@
+{
+  "research_date": "2026-11-02",
+  "candidates": [
+    {
+      "key": "qwen06-sft-q4",
+      "base_key": "qwen06-q4",
+      "repo": "local/maintenance-sft-v3-qwen",
+      "revision": "checkpoint-sha256:980fe3717ffb7a316c5e91dee9ec4ba1c2e75a84f98550cc62be07c9167373be",
+      "filename": "Qwen3-0.6B-maintenance-sft-v3-Q4_0.gguf",
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\adapted-qwen06\\Qwen3-0.6B-maintenance-sft-v3-Q4_0.gguf",
+      "bytes": 381565728,
+      "sha256": "09119178e4871ca38e0e68428482cebbaf4acc5deb3bac36e1669f5655d5776d",
+      "quantization": "Q4_0",
+      "adaptation": "Existing final-two-block maintenance SFT on 720 authored examples. Not matched adaptation budget to pretrained candidates."
+    },
+    {
+      "key": "qwen06-sft-q8",
+      "base_key": "qwen06-q4",
+      "repo": "local/maintenance-sft-v3-qwen",
+      "revision": "checkpoint-sha256:980fe3717ffb7a316c5e91dee9ec4ba1c2e75a84f98550cc62be07c9167373be",
+      "filename": "Qwen3-0.6B-maintenance-sft-v3-Q8_0.gguf",
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\adapted-qwen06\\Qwen3-0.6B-maintenance-sft-v3-Q8_0.gguf",
+      "bytes": 639446816,
+      "sha256": "4e4c62885e961ac864ed626f1fc7a3b54b00c56ac136c04a755bf0123eb698b6",
+      "quantization": "Q8_0",
+      "adaptation": "Existing final-two-block maintenance SFT on 720 authored examples. Not matched adaptation budget to pretrained candidates."
+    }
+  ],
+  "selection": "Adapted capability controls, separate from the eight pretrained candidates. Same fixed prompts, development route budget and 104-task screen.",
+  "routes": "Direct shared JSON versus native tool template selected separately per domain/model on development only; ties prefer direct. Maintenance native uses submit_maintenance_plan(plan_json:string). Episodes use selected general route.",
+  "primary_context": 2048,
+  "output_tokens": 256,
+  "reasoning": "disabled via official template kwargs, no forced reasoning tokens",
+  "temperature": 0,
+  "seed": 20261102,
+  "repeat_penalty": 1.0,
+  "grammar": false,
+  "repair": false,
+  "retries": false,
+  "cache_prompt": false,
+  "server_parallel": 4,
+  "server_context": 8192,
+  "threads": 8,
+  "batch": 512,
+  "ubatch": 512,
+  "evaluation_counts": {
+    "maintenance_fresh": 120,
+    "maintenance_conditional": 64,
+    "bfcl": 200,
+    "episodes": 12
+  },
+  "screen_records": 104,
+  "development_records": 22,
+  "pretrained_weights": false,
+  "fine_tuning": "Existing sealed checkpoint only; no new training.",
+  "historical_adapted_results": "Separate controls; not directly comparable to pretrained checkpoints.",
+  "data_scope": "Previously inspected authored maintenance development and public BFCL; not an independent reliability test. New simulator episodes authored by the implementing agent, not blind human review.",
+  "bfcl_revision": "6ea57973c7a6097fd7c5915698c54c17c5b1b6c8",
+  "general_scoring": "Pinned upstream BFCL Python AST checker; synthetic episodes use exact call-set equality.",
+  "maintenance_scoring": "Strict schema + exact canonical plan + trusted simulator counterfactual agreement.",
+  "generation": "Pinned b11540 Vulkan runtime, requested full GPU layer offload on Radeon780M. Backend arithmetic is not FPGA arithmetic. All primary candidates use this same runtime/configuration.",
+  "files": {
+    "development.jsonl": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41",
+    "evaluation.jsonl": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d",
+    "screen-ids.json": "7c475af0c02cf25d5464551a96b7dc6bea935fb17505f64f8c7e1795792a1aa9",
+    "demonstrations.jsonl": "95bd942fdc49c62b78341e741cb415ecd2d1c6cf54f1bb52e39a32a23f2587f4"
+  },
+  "server_sha256": "4335c03bbba2a1d8631119c491faa59e31ff020d0c58f6c8dd7c4011b65aea7e",
+  "server_version": "version: 0.6.0-dev (build 11540, commit 1e6f04a75)\nbuilt with Clang 20.1.8 for Windows x86_64",
+  "maintenance_demonstrations": {
+    "count": 2,
+    "source": "Existing maintenance training split; fixed first direct metric request and first three-step conditional request. Same examples for every candidate.",
+    "ids": [
+      "v2-train-direct-000",
+      "v2-train-conditional-001"
+    ]
+  },
+  "amendment": {
+    "reason": "Observed 0/12 valid maintenance development outputs for both zero-shot 0.6B and 1.7B; codec unfamiliarity can confound interpretation. Add fixed training demonstrations uniformly before revised evaluation.",
+    "observed_parent_results": "0.6B screen maintenance 0/48; 1.7B development direct/native 0/12 each. Parent artifacts retained; revised evaluation is development evidence, not blind.",
+    "selection_rule_unchanged": true,
+    "all_evaluation_inputs_unchanged": true,
+    "all_models_same_examples": true
+  },
+  "gpu_layers": 99,
+  "runtime_amendment": {
+    "reason": "CPU study is slow; use locally available GPU for the complete primary comparison. CPU attempts retained separately, never mixed into primary rankings.",
+    "qualification": "11 fixed development probes; all prompt IDs identical to CPU, 10/11 raw outputs identical, one complete-decision difference. Not bit-exact. Same source commit, different backend.",
+    "data_and_model_hashes_unchanged": true,
+    "prompt_selection_and_finalist_rules_unchanged": true,
+    "parent_attempt": "C:\\Users\\user\\OneDrive - Texas Tech University\\Desktop\\Code\\FPGA Project\\system-one-fpga\\system-one-fpga\\build\\v2\\model-capability-20261102-r2",
+    "qualification_directory": "C:\\Users\\user\\OneDrive - Texas Tech University\\Desktop\\Code\\FPGA Project\\system-one-fpga\\system-one-fpga\\build\\v2\\model-capability-20261102-r2\\vulkan-qualification"
+  },
+  "adapted_control": {
+    "checkpoint_sha256": "980fe3717ffb7a316c5e91dee9ec4ba1c2e75a84f98550cc62be07c9167373be",
+    "parent": "C:\\Users\\user\\OneDrive - Texas Tech University\\Desktop\\Code\\FPGA Project\\system-one-fpga\\system-one-fpga\\build\\v2\\maintenance-sft-v3",
+    "historical_float32_results": "Fresh111/120; conditional22/64. Different backend/precision/framing, not substituted for new results."
+  }
+}

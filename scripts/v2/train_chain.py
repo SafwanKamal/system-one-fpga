@@ -375,6 +375,8 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0, help="smoke test: use N chains per split")
     ap.add_argument("--resume", action="store_true",
                     help="continue from logs/<name>_checkpoint.pt (saved every 200 batches)")
+    ap.add_argument("--checkpoint-dir", default=str(ROOT / "logs"),
+                    help="checkpoint directory; prefer a local directory outside OneDrive on Windows")
     ap.add_argument("--slot-weight", type=float, default=1.0,
                     help="weight of each utterance's slot-tagging loss against an intent/pair loss")
     ap.add_argument("--hwu", action="store_true", help="add HWU64 (intent + slots) to the corpus")
@@ -438,16 +440,14 @@ def main() -> None:
     best, best_state = -1.0, None
     rng = random.Random(args.seed)
     # end-of-epoch checkpoint, so a run on a machine that may be reclaimed can resume
-    ckpt_path = ROOT / "logs" / f"{name}_checkpoint.pt"
+    ckpt_path = Path(args.checkpoint_dir) / f"{name}_checkpoint.pt"
     first_epoch, skip = 0, 0
 
     def save_checkpoint(ep, batch_done, epoch_rng):
-        ckpt_path.parent.mkdir(exist_ok=True)
-        tmp = ckpt_path.with_suffix(".tmp")
-        torch.save({"model": model.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
+        from sysone.v2.checkpoint_io import write_checkpoint
+        write_checkpoint({"model": model.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
                     "rng": epoch_rng, "best": best, "best_state": best_state,
-                    "history": history, "epoch": ep, "batch_done": batch_done}, tmp)
-        tmp.replace(ckpt_path)
+                    "history": history, "epoch": ep, "batch_done": batch_done}, ckpt_path, torch.save)
 
     if args.resume and ckpt_path.exists():
         ck = torch.load(ckpt_path, weights_only=False)

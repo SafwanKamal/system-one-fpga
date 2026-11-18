@@ -1,0 +1,17 @@
+{
+  "frozen_utc": "2026-11-16T18:51:47.877003+00:00",
+  "code_sha256": "b30dc8526649701c8bec44fa9dd63a906a34709803e637974f63cfc6e8351b97",
+  "protocol_sha256": "8c01b52640f6d59cad080bfc09491785ad621dcbd99b599eae0b0fae51abef30",
+  "future_labels_revealed": false,
+  "primary_task": "running",
+  "secondary_tasks": [
+    "cycling",
+    "ascending_stairs"
+  ],
+  "test_subjects": [
+    105,
+    106,
+    107,
+    108
+  ]
+}

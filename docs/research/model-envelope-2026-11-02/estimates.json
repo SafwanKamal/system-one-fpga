@@ -1,0 +1,121 @@
+[
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "unique_parameters_from_config": 596049920,
+    "api_parameter_count_not_used_for_budget": 751632384,
+    "matrix_parameters": 595984384,
+    "other_parameters": 65536,
+    "Q4_0_matrix_bytes_plus_FP32_other": 335503360,
+    "Q8_0_matrix_bytes_plus_FP32_other": 633495552,
+    "BF16_KV_bytes_by_total_context": {
+      "512": 58720256,
+      "1024": 117440512,
+      "2048": 234881024,
+      "4096": 469762048
+    },
+    "scope": "Ideal tensor budget, not a GGUF file or deployment fit; no metadata/alignment/scratch/OS."
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "unique_parameters_from_config": 1720574976,
+    "api_parameter_count_not_used_for_budget": 2031739904,
+    "matrix_parameters": 1720451072,
+    "other_parameters": 123904,
+    "Q4_0_matrix_bytes_plus_FP32_other": 968249344,
+    "Q8_0_matrix_bytes_plus_FP32_other": 1828474880,
+    "BF16_KV_bytes_by_total_context": {
+      "512": 58720256,
+      "1024": 117440512,
+      "2048": 234881024,
+      "4096": 469762048
+    },
+    "scope": "Ideal tensor budget, not a GGUF file or deployment fit; no metadata/alignment/scratch/OS."
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "unique_parameters_from_config": 4022468096,
+    "api_parameter_count_not_used_for_budget": 4022468096,
+    "matrix_parameters": 4022272000,
+    "other_parameters": 196096,
+    "Q4_0_matrix_bytes_plus_FP32_other": 2263312384,
+    "Q8_0_matrix_bytes_plus_FP32_other": 4274448384,
+    "BF16_KV_bytes_by_total_context": {
+      "512": 75497472,
+      "1024": 150994944,
+      "2048": 301989888,
+      "4096": 603979776
+    },
+    "scope": "Ideal tensor budget, not a GGUF file or deployment fit; no metadata/alignment/scratch/OS."
+  },
+  {
+    "model": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "unique_parameters_from_config": 8190735360,
+    "api_parameter_count_not_used_for_budget": 8190735360,
+    "matrix_parameters": 8190427136,
+    "other_parameters": 308224,
+    "Q4_0_matrix_bytes_plus_FP32_other": 4608348160,
+    "Q8_0_matrix_bytes_plus_FP32_other": 8703561728,
+    "BF16_KV_bytes_by_total_context": {
+      "512": 75497472,
+      "1024": 150994944,
+      "2048": 301989888,
+      "4096": 603979776
+    },
+    "scope": "Ideal tensor budget, not a GGUF file or deployment fit; no metadata/alignment/scratch/OS."
+  },
+  {
+    "model": "HuggingFaceTB/SmolLM3-3B",
+    "revision": "a07cc9a04f16550a088caea529712d1d335b0ac1",
+    "unique_parameters_from_config": 3075098624,
+    "api_parameter_count_not_used_for_budget": 3075098624,
+    "matrix_parameters": 3074949120,
+    "other_parameters": 149504,
+    "Q4_0_matrix_bytes_plus_FP32_other": 1730256896,
+    "Q8_0_matrix_bytes_plus_FP32_other": 3267731456,
+    "BF16_KV_bytes_by_total_context": {
+      "512": 37748736,
+      "1024": 75497472,
+      "2048": 150994944,
+      "4096": 301989888
+    },
+    "scope": "Ideal tensor budget, not a GGUF file or deployment fit; no metadata/alignment/scratch/OS."
+  },
+  {
+    "model": "Salesforce/xLAM-2-1b-fc-r",
+    "revision": "6870fcf102f434bd01819302d85780b8e767925d",
+    "unique_parameters_from_config": 1543714304,
+    "api_parameter_count_not_used_for_budget": 1543714304,
+    "matrix_parameters": 1543569408,
+    "other_parameters": 144896,
+    "Q4_0_matrix_bytes_plus_FP32_other": 868837376,
+    "Q8_0_matrix_bytes_plus_FP32_other": 1640622080,
+    "BF16_KV_bytes_by_total_context": {
+      "512": 14680064,
+      "1024": 29360128,
+      "2048": 58720256,
+      "4096": 117440512
+    },
+    "scope": "Ideal tensor budget, not a GGUF file or deployment fit; no metadata/alignment/scratch/OS."
+  },
+  {
+    "model": "Salesforce/xLAM-2-3b-fc-r",
+    "revision": "be83286f6a1a82c8bd4bfb751190271f58693f30",
+    "unique_parameters_from_config": 3085938688,
+    "api_parameter_count_not_used_for_budget": 3085938688,
+    "matrix_parameters": 3085697024,
+    "other_parameters": 241664,
+    "Q4_0_matrix_bytes_plus_FP32_other": 1736671232,
+    "Q8_0_matrix_bytes_plus_FP32_other": 3279519744,
+    "BF16_KV_bytes_by_total_context": {
+      "512": 18874368,
+      "1024": 37748736,
+      "2048": 75497472,
+      "4096": 150994944
+    },
+    "scope": "Ideal tensor budget, not a GGUF file or deployment fit; no metadata/alignment/scratch/OS."
+  }
+]

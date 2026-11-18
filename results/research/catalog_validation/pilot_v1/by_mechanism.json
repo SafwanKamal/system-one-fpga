@@ -1,0 +1,365 @@
+[
+  {
+    "decoder": "physics",
+    "selector": "action_oracle",
+    "unknown_rejection_by_family": {
+      "lag": 0.655,
+      "deadzone": 0.06,
+      "latency": 0.94
+    },
+    "unknown_false_named_fault": 0.31666666666666665,
+    "unknown_false_healthy": 0.13166666666666665
+  },
+  {
+    "decoder": "physics",
+    "selector": "eig",
+    "unknown_rejection_by_family": {
+      "lag": 0.405,
+      "deadzone": 0.025,
+      "latency": 0.745
+    },
+    "unknown_false_named_fault": 0.37666666666666665,
+    "unknown_false_healthy": 0.23166666666666666
+  },
+  {
+    "decoder": "physics",
+    "selector": "fixed",
+    "unknown_rejection_by_family": {
+      "lag": 0.415,
+      "deadzone": 0.01,
+      "latency": 0.895
+    },
+    "unknown_false_named_fault": 0.335,
+    "unknown_false_healthy": 0.225
+  },
+  {
+    "decoder": "physics",
+    "selector": "fixed1",
+    "unknown_rejection_by_family": {
+      "lag": 0.205,
+      "deadzone": 0.02,
+      "latency": 0.675
+    },
+    "unknown_false_named_fault": 0.41333333333333333,
+    "unknown_false_healthy": 0.2866666666666667
+  },
+  {
+    "decoder": "physics",
+    "selector": "overlap",
+    "unknown_rejection_by_family": {
+      "lag": 0.265,
+      "deadzone": 0.02,
+      "latency": 0.74
+    },
+    "unknown_false_named_fault": 0.37833333333333335,
+    "unknown_false_healthy": 0.28
+  },
+  {
+    "decoder": "physics",
+    "selector": "passive10",
+    "unknown_rejection_by_family": {
+      "lag": 0.15,
+      "deadzone": 0.015,
+      "latency": 0.225
+    },
+    "unknown_false_named_fault": 0.455,
+    "unknown_false_healthy": 0.415
+  },
+  {
+    "decoder": "physics",
+    "selector": "passive8",
+    "unknown_rejection_by_family": {
+      "lag": 0.16,
+      "deadzone": 0.03,
+      "latency": 0.39
+    },
+    "unknown_false_named_fault": 0.44333333333333336,
+    "unknown_false_healthy": 0.36333333333333334
+  },
+  {
+    "decoder": "physics",
+    "selector": "persistent",
+    "unknown_rejection_by_family": {
+      "lag": 0.44,
+      "deadzone": 0.015,
+      "latency": 0.89
+    },
+    "unknown_false_named_fault": 0.3416666666666667,
+    "unknown_false_healthy": 0.21
+  },
+  {
+    "decoder": "physics",
+    "selector": "random0",
+    "unknown_rejection_by_family": {
+      "lag": 0.255,
+      "deadzone": 0.015,
+      "latency": 0.635
+    },
+    "unknown_false_named_fault": 0.39,
+    "unknown_false_healthy": 0.30833333333333335
+  },
+  {
+    "decoder": "physics",
+    "selector": "random1",
+    "unknown_rejection_by_family": {
+      "lag": 0.235,
+      "deadzone": 0.015,
+      "latency": 0.69
+    },
+    "unknown_false_named_fault": 0.38666666666666666,
+    "unknown_false_healthy": 0.3
+  },
+  {
+    "decoder": "physics",
+    "selector": "random2",
+    "unknown_rejection_by_family": {
+      "lag": 0.245,
+      "deadzone": 0.02,
+      "latency": 0.63
+    },
+    "unknown_false_named_fault": 0.38333333333333336,
+    "unknown_false_healthy": 0.31833333333333336
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "action_oracle",
+    "unknown_rejection_by_family": {
+      "lag": 0.82,
+      "deadzone": 0.3,
+      "latency": 0.99
+    },
+    "unknown_false_named_fault": 0.23333333333333334,
+    "unknown_false_healthy": 0.06333333333333334
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "eig",
+    "unknown_rejection_by_family": {
+      "lag": 0.615,
+      "deadzone": 0.13,
+      "latency": 0.88
+    },
+    "unknown_false_named_fault": 0.295,
+    "unknown_false_healthy": 0.16333333333333333
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "fixed",
+    "unknown_rejection_by_family": {
+      "lag": 0.645,
+      "deadzone": 0.115,
+      "latency": 0.98
+    },
+    "unknown_false_named_fault": 0.2966666666666667,
+    "unknown_false_healthy": 0.12333333333333334
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "fixed1",
+    "unknown_rejection_by_family": {
+      "lag": 0.595,
+      "deadzone": 0.05,
+      "latency": 0.925
+    },
+    "unknown_false_named_fault": 0.3333333333333333,
+    "unknown_false_healthy": 0.14333333333333334
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "overlap",
+    "unknown_rejection_by_family": {
+      "lag": 0.54,
+      "deadzone": 0.125,
+      "latency": 0.88
+    },
+    "unknown_false_named_fault": 0.305,
+    "unknown_false_healthy": 0.18
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "passive10",
+    "unknown_rejection_by_family": {
+      "lag": 0.24,
+      "deadzone": 0.035,
+      "latency": 0.47
+    },
+    "unknown_false_named_fault": 0.3433333333333333,
+    "unknown_false_healthy": 0.4083333333333333
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "passive8",
+    "unknown_rejection_by_family": {
+      "lag": 0.225,
+      "deadzone": 0.05,
+      "latency": 0.565
+    },
+    "unknown_false_named_fault": 0.34833333333333333,
+    "unknown_false_healthy": 0.37166666666666665
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "persistent",
+    "unknown_rejection_by_family": {
+      "lag": 0.655,
+      "deadzone": 0.045,
+      "latency": 0.965
+    },
+    "unknown_false_named_fault": 0.31833333333333336,
+    "unknown_false_healthy": 0.12666666666666668
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "random0",
+    "unknown_rejection_by_family": {
+      "lag": 0.42,
+      "deadzone": 0.06,
+      "latency": 0.815
+    },
+    "unknown_false_named_fault": 0.3233333333333333,
+    "unknown_false_healthy": 0.245
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "random1",
+    "unknown_rejection_by_family": {
+      "lag": 0.43,
+      "deadzone": 0.055,
+      "latency": 0.85
+    },
+    "unknown_false_named_fault": 0.32,
+    "unknown_false_healthy": 0.235
+  },
+  {
+    "decoder": "forest_fit",
+    "selector": "random2",
+    "unknown_rejection_by_family": {
+      "lag": 0.505,
+      "deadzone": 0.06,
+      "latency": 0.825
+    },
+    "unknown_false_named_fault": 0.33166666666666667,
+    "unknown_false_healthy": 0.205
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "action_oracle",
+    "unknown_rejection_by_family": {
+      "lag": 0.07,
+      "deadzone": 0.41,
+      "latency": 0.655
+    },
+    "unknown_false_named_fault": 0.20666666666666667,
+    "unknown_false_healthy": 0.415
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "eig",
+    "unknown_rejection_by_family": {
+      "lag": 0.015,
+      "deadzone": 0.08,
+      "latency": 0.15
+    },
+    "unknown_false_named_fault": 0.465,
+    "unknown_false_healthy": 0.4533333333333333
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "fixed",
+    "unknown_rejection_by_family": {
+      "lag": 0.015,
+      "deadzone": 0.08,
+      "latency": 0.31
+    },
+    "unknown_false_named_fault": 0.3383333333333333,
+    "unknown_false_healthy": 0.5266666666666666
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "fixed1",
+    "unknown_rejection_by_family": {
+      "lag": 0.01,
+      "deadzone": 0.09,
+      "latency": 0.075
+    },
+    "unknown_false_named_fault": 0.485,
+    "unknown_false_healthy": 0.45666666666666667
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "overlap",
+    "unknown_rejection_by_family": {
+      "lag": 0.015,
+      "deadzone": 0.08,
+      "latency": 0.15
+    },
+    "unknown_false_named_fault": 0.4633333333333333,
+    "unknown_false_healthy": 0.455
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "passive10",
+    "unknown_rejection_by_family": {
+      "lag": 0.05,
+      "deadzone": 0.265,
+      "latency": 0.38
+    },
+    "unknown_false_named_fault": 0.29833333333333334,
+    "unknown_false_healthy": 0.47
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "passive8",
+    "unknown_rejection_by_family": {
+      "lag": 0.0,
+      "deadzone": 0.065,
+      "latency": 0.01
+    },
+    "unknown_false_named_fault": 0.485,
+    "unknown_false_healthy": 0.49
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "persistent",
+    "unknown_rejection_by_family": {
+      "lag": 0.01,
+      "deadzone": 0.1,
+      "latency": 0.375
+    },
+    "unknown_false_named_fault": 0.34833333333333333,
+    "unknown_false_healthy": 0.49
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "random0",
+    "unknown_rejection_by_family": {
+      "lag": 0.015,
+      "deadzone": 0.085,
+      "latency": 0.145
+    },
+    "unknown_false_named_fault": 0.41333333333333333,
+    "unknown_false_healthy": 0.505
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "random1",
+    "unknown_rejection_by_family": {
+      "lag": 0.015,
+      "deadzone": 0.075,
+      "latency": 0.18
+    },
+    "unknown_false_named_fault": 0.4033333333333333,
+    "unknown_false_healthy": 0.5066666666666667
+  },
+  {
+    "decoder": "forest_knn",
+    "selector": "random2",
+    "unknown_rejection_by_family": {
+      "lag": 0.015,
+      "deadzone": 0.075,
+      "latency": 0.135
+    },
+    "unknown_false_named_fault": 0.4116666666666667,
+    "unknown_false_healthy": 0.5133333333333333
+  }
+]

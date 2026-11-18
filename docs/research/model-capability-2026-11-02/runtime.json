@@ -1,0 +1,261 @@
+{
+  "device_stdout": "Available devices:\n  Vulkan0: AMD Radeon 780M Graphics (9108 MiB, 8652 MiB free)\n",
+  "device_stderr": "",
+  "binaries": [
+    {
+      "name": "ggml-base.dll",
+      "bytes": 803840,
+      "sha256": "f1a65515dbcc64a0175c103f62fe12ee46189eefe4d4efb7592d3611a927f2fc"
+    },
+    {
+      "name": "ggml-cpu-alderlake.dll",
+      "bytes": 1435136,
+      "sha256": "fe8a7e27d969703c5e041b320a261c090f7852e2348c490df942ffbf68ca4152"
+    },
+    {
+      "name": "ggml-cpu-cannonlake.dll",
+      "bytes": 1614848,
+      "sha256": "4b1cb6aa7a593f472d4376c024998659e6db686af789078b0f1755340bdb2dca"
+    },
+    {
+      "name": "ggml-cpu-cascadelake.dll",
+      "bytes": 1599488,
+      "sha256": "b90b24d91ba748e9c1d9e0bc6941a23c7ce9647952c1709c46fda3a78aaaecb0"
+    },
+    {
+      "name": "ggml-cpu-cooperlake.dll",
+      "bytes": 1609216,
+      "sha256": "8e201eb8c0a918d817b3cc94b4f5686e92966d6c1111286eed4837980dc7b5fe"
+    },
+    {
+      "name": "ggml-cpu-haswell.dll",
+      "bytes": 1439744,
+      "sha256": "00656b6073a1b4eb049b5ed77e3f0cf57637e6fabbe656cb159542b764441f88"
+    },
+    {
+      "name": "ggml-cpu-icelake.dll",
+      "bytes": 1606656,
+      "sha256": "8f8e855bbdd2f8ca7ca98c298f04e147d292be33980ed407ae1f22675661efe0"
+    },
+    {
+      "name": "ggml-cpu-ivybridge.dll",
+      "bytes": 1315328,
+      "sha256": "007f070347b89054ac600f4bfeeedea7eaa7717ad04bc93bd30eef289aa16109"
+    },
+    {
+      "name": "ggml-cpu-piledriver.dll",
+      "bytes": 1308160,
+      "sha256": "0f8af0c09ed4481a75ea80b7d63ba7ff3e1f848dc2da56d22fb5e1cccaa5df68"
+    },
+    {
+      "name": "ggml-cpu-sandybridge.dll",
+      "bytes": 1290240,
+      "sha256": "c2f7c541429fc50453bb2dc0e9f50d34e61f5d374587a8b19cdf344f46fcb245"
+    },
+    {
+      "name": "ggml-cpu-sapphirerapids.dll",
+      "bytes": 1886208,
+      "sha256": "0b7eb16d307ef933ab0d6a36e989960a063d136c6d712e8c9e3115b5d6e9ac7f"
+    },
+    {
+      "name": "ggml-cpu-skylakex.dll",
+      "bytes": 1608704,
+      "sha256": "726099f3066f51146e837e0f28a10df8c5ea5962616daaa1dd2165962203e07d"
+    },
+    {
+      "name": "ggml-cpu-sse42.dll",
+      "bytes": 915968,
+      "sha256": "f2b8bd34b84504717d39b3c383abf7c477e117b458c158776fe9b79f3740d958"
+    },
+    {
+      "name": "ggml-cpu-x64.dll",
+      "bytes": 908800,
+      "sha256": "da40610a6ed1a18ea170e52e4fc1af0585e8792af4cec98af21ea919d09a4150"
+    },
+    {
+      "name": "ggml-cpu-zen4.dll",
+      "bytes": 1615872,
+      "sha256": "e718fac0c7a0bd3dfd98540a3533f6bb5edfd6683876401adbbc663398621dc2"
+    },
+    {
+      "name": "ggml-rpc-server.exe",
+      "bytes": 117248,
+      "sha256": "c41cc3d8c31392c60176328109913710de8eb410edaf9b1d4e139e6d002b006c"
+    },
+    {
+      "name": "ggml-rpc.dll",
+      "bytes": 204800,
+      "sha256": "db0c4a436367e6e9be73f776a168f417c94fdb5b50e25a631aa3ed879b00c1d3"
+    },
+    {
+      "name": "ggml-vulkan.dll",
+      "bytes": 45382656,
+      "sha256": "aa0efdf89b821f878f1a854bfeaac0b9d503f3d61d15288d64ceb2e8574bc0e9"
+    },
+    {
+      "name": "ggml.dll",
+      "bytes": 79872,
+      "sha256": "001d24ac921c0b3dc450cdbb2c54d22b75ca23f51164cd04a2b361ca3f1b5b84"
+    },
+    {
+      "name": "libomp.dll",
+      "bytes": 768000,
+      "sha256": "a12116ba72d1d6820407cf30be23da04ce79d6bb8a71a5ee71759c5a1faa6f1c"
+    },
+    {
+      "name": "llama-batched-bench-impl.dll",
+      "bytes": 61952,
+      "sha256": "fb042d99d7256daa3801e6cf51d1a0e64abcfd32a200c279abf4209b55534f19"
+    },
+    {
+      "name": "llama-batched-bench.exe",
+      "bytes": 9216,
+      "sha256": "a4ef80e0129a8cf09eb8f5ba8e65d7df4b50732607c19f6cff84cefc6399f0d9"
+    },
+    {
+      "name": "llama-bench-impl.dll",
+      "bytes": 404480,
+      "sha256": "100441e227567cceef6dfb33f688de930f4682b9475a38437c928a1314ad0b88"
+    },
+    {
+      "name": "llama-bench.exe",
+      "bytes": 9216,
+      "sha256": "bd5ece4a8cc61f1d818e38a4320914459aad616a928c5970585dba5cc651d66b"
+    },
+    {
+      "name": "llama-cli-impl.dll",
+      "bytes": 3317248,
+      "sha256": "b2895b1ad7e984613bb6e73ae671ba98043747b92c48d34da3312e45145e7043"
+    },
+    {
+      "name": "llama-cli.exe",
+      "bytes": 9216,
+      "sha256": "2eebc87e39ec80b60bbf6b775d32821f202cc93f19b5be59d712d43a9195c5b7"
+    },
+    {
+      "name": "llama-common.dll",
+      "bytes": 8002048,
+      "sha256": "eca088c260976139c4d6001544ea6c47679799f7e02a520aec242777fbc220b5"
+    },
+    {
+      "name": "llama-completion-impl.dll",
+      "bytes": 140288,
+      "sha256": "142cc035403df7d128ebaf0d8eb7271f64ee1303bf961e64d1d667da995856aa"
+    },
+    {
+      "name": "llama-completion.exe",
+      "bytes": 9216,
+      "sha256": "456a7e9ed2a93ffb1c5796016ab961238366891345e3fea0e02c95509fa6b626"
+    },
+    {
+      "name": "llama-fit-params-impl.dll",
+      "bytes": 43008,
+      "sha256": "31f7b787d2c84111016bde6a34a8fd9f3affb59460b5b7012190b2e49d6ecad9"
+    },
+    {
+      "name": "llama-fit-params.exe",
+      "bytes": 9216,
+      "sha256": "49f34b7d2987fa8e0020a9a8970e076ae33e7e1048a13d4b947542347aa9acf9"
+    },
+    {
+      "name": "llama-gemma3-cli.exe",
+      "bytes": 27136,
+      "sha256": "82353b0ea4fc9c68750414fb35115461022b3066ce8835291d62ee22e6432a6b"
+    },
+    {
+      "name": "llama-gguf-split.exe",
+      "bytes": 60416,
+      "sha256": "66f4e28c9a9de205921c4ec1e54eaf5ae2ed860824cd2821b08541760e46ef4c"
+    },
+    {
+      "name": "llama-imatrix.exe",
+      "bytes": 252416,
+      "sha256": "3fbefff14736be66df88b0f565dccfe1d07b21a56e023f302240afc7dced5d44"
+    },
+    {
+      "name": "llama-llava-cli.exe",
+      "bytes": 27136,
+      "sha256": "82353b0ea4fc9c68750414fb35115461022b3066ce8835291d62ee22e6432a6b"
+    },
+    {
+      "name": "llama-minicpmv-cli.exe",
+      "bytes": 27136,
+      "sha256": "82353b0ea4fc9c68750414fb35115461022b3066ce8835291d62ee22e6432a6b"
+    },
+    {
+      "name": "llama-mtmd-cli.exe",
+      "bytes": 92672,
+      "sha256": "8943f31e3c0cc69f613b934c457f349c6f91fae20730c4f6cfa2110bb95b33a7"
+    },
+    {
+      "name": "llama-mtmd-debug.exe",
+      "bytes": 55808,
+      "sha256": "9a8c8d4c03666fadb8a4378a3013948496c85444a71ac3bb0332fbeea6abe0a9"
+    },
+    {
+      "name": "llama-perplexity-impl.dll",
+      "bytes": 197632,
+      "sha256": "eb824d2f58ad012fa2e28f5f0a93ee58e19cd43181c2f3a275217f7eec5245f3"
+    },
+    {
+      "name": "llama-perplexity.exe",
+      "bytes": 9216,
+      "sha256": "6a23fdf0ac666bfa1190fdaeaf827728f95fe755481fc4dd169e8056d5c3e5f7"
+    },
+    {
+      "name": "llama-quantize-impl.dll",
+      "bytes": 137216,
+      "sha256": "c21d2c011a53c31e1427e630389047e428e103991c5aa9b5a233d14d0df08b51"
+    },
+    {
+      "name": "llama-quantize.exe",
+      "bytes": 9216,
+      "sha256": "6f1b3ae5414fc3a02c334476503a9bbcf7afe4275e8376690de9fce478f999f0"
+    },
+    {
+      "name": "llama-qwen2vl-cli.exe",
+      "bytes": 27136,
+      "sha256": "82353b0ea4fc9c68750414fb35115461022b3066ce8835291d62ee22e6432a6b"
+    },
+    {
+      "name": "llama-results.exe",
+      "bytes": 46592,
+      "sha256": "2a0f530fc974152386bc574ab2bc9de9d68397961fea6d001b38f5dbd921b017"
+    },
+    {
+      "name": "llama-server-impl.dll",
+      "bytes": 9231872,
+      "sha256": "5043b93b0bc7a4c1034b478142b646ab28a91e69017ead94e0bdbb129d6b88e8"
+    },
+    {
+      "name": "llama-server.exe",
+      "bytes": 9216,
+      "sha256": "4335c03bbba2a1d8631119c491faa59e31ff020d0c58f6c8dd7c4011b65aea7e"
+    },
+    {
+      "name": "llama-tokenize.exe",
+      "bytes": 58880,
+      "sha256": "eaf688a94848f7f53d783aee3d250e5ed36c022a906e2afec90bf66b86e50e1f"
+    },
+    {
+      "name": "llama-tts.exe",
+      "bytes": 41984,
+      "sha256": "916122870e65e7b3de822c5c60ee4613aff61db9be8824f48850822b60ee4099"
+    },
+    {
+      "name": "llama.dll",
+      "bytes": 3382784,
+      "sha256": "9f3c2d5d36f0d46feded3a358805ba2dec0d264599714ac08ab26b1d10daa19b"
+    },
+    {
+      "name": "llama.exe",
+      "bytes": 104448,
+      "sha256": "82f832e57653423c6a32ada826215d89bdaba966686846c21145c35007803257"
+    },
+    {
+      "name": "mtmd.dll",
+      "bytes": 1817600,
+      "sha256": "98e08174cb89d8c41b206c1978f5d83fd45d33d80b6dcf7e32a637d6463ed022"
+    }
+  ]
+}

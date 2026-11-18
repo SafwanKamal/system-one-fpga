@@ -29,6 +29,24 @@ module encoder_system
     parameter integer DRAIN_LANES = 1,
     parameter integer NORM_LANES = 2,
     parameter integer MAC_PACK = 0,
+    parameter integer MAC_INPUT_REGISTERS = 0,
+    parameter integer PIPELINED_DOT = 0,
+    parameter integer EXP_TABLE_IN_BRAM = 0,
+    parameter integer PIPELINED_URAM = 0,
+    parameter integer LOCAL_READ_CAPTURE = 0,
+    parameter integer INCREMENTAL_SOURCE_ROW = 0,
+    parameter integer LINEAR_ACCUMULATORS_IN_BRAM = 0,
+    parameter integer FABRIC_CONTEXT_CAPTURE = 0,
+    parameter integer FABRIC_SCORE_DISTANCE = 0,
+    parameter integer CACHED_REQUEST_WINDOW = 0,
+    parameter integer DSP_EMBED_ROW_ADDRESS = 0,
+    parameter integer PROBABILITY_INPUT_CAPTURE = 0,
+    parameter integer LOCAL_EMBED_CONTROLS = 0,
+    parameter integer PROBABILITY_PIPELINE = 0,
+    parameter integer PIPELINED_DRAIN_SELECT = 0,
+    parameter integer STREAM_RESULTS = 0,
+    parameter integer LOCAL_QUERY_REGISTERS = 0,
+    parameter integer LOCAL_ACCUMULATOR_CONTROLS = 0,
     parameter integer ATTENTION_LANES = TILE_OUT,
     parameter integer ACCUMULATORS_IN_LUTS = 0,
     parameter integer ADDRESS_WIDTH = 27,
@@ -43,6 +61,7 @@ module encoder_system
     output logic run_done,                       // one clock, with run_result
     output logic [127:0] run_result,
     output logic busy,
+    output logic [3:0] perf_events,
 
     // memory port (read and write)
     output logic read_request_valid,
@@ -62,6 +81,8 @@ module encoder_system
     input logic write_ready,
     output logic [127:0] write_data
 );
+
+    localparam integer READ_LATENCY = encoder_pkg::READ_LATENCY + PIPELINED_URAM + (LOCAL_READ_CAPTURE != 0);
 
     localparam integer BUFFER_ADDRESS_WIDTH = $clog2(4 * MAX_TOKENS * MAX_HIDDEN / 16);
 
@@ -107,11 +128,29 @@ module encoder_system
         .DRAIN_LANES(DRAIN_LANES),
         .NORM_LANES(NORM_LANES),
         .MAC_PACK(MAC_PACK),
+        .MAC_INPUT_REGISTERS(MAC_INPUT_REGISTERS),
+        .PIPELINED_DOT(PIPELINED_DOT),
+        .EXP_TABLE_IN_BRAM(EXP_TABLE_IN_BRAM),
+        .PIPELINED_URAM(PIPELINED_URAM),
+        .LOCAL_READ_CAPTURE(LOCAL_READ_CAPTURE),
+        .INCREMENTAL_SOURCE_ROW(INCREMENTAL_SOURCE_ROW),
+        .LINEAR_ACCUMULATORS_IN_BRAM(LINEAR_ACCUMULATORS_IN_BRAM),
+        .FABRIC_CONTEXT_CAPTURE(FABRIC_CONTEXT_CAPTURE),
+        .FABRIC_SCORE_DISTANCE(FABRIC_SCORE_DISTANCE),
+        .CACHED_REQUEST_WINDOW(CACHED_REQUEST_WINDOW),
+        .DSP_EMBED_ROW_ADDRESS(DSP_EMBED_ROW_ADDRESS),
+        .PROBABILITY_INPUT_CAPTURE(PROBABILITY_INPUT_CAPTURE),
+        .PROBABILITY_PIPELINE(PROBABILITY_PIPELINE),
+        .LOCAL_EMBED_CONTROLS(LOCAL_EMBED_CONTROLS),
+        .PIPELINED_DRAIN_SELECT(PIPELINED_DRAIN_SELECT),
+        .LOCAL_QUERY_REGISTERS(LOCAL_QUERY_REGISTERS),
+        .LOCAL_ACCUMULATOR_CONTROLS(LOCAL_ACCUMULATOR_CONTROLS),
         .ATTENTION_LANES(ATTENTION_LANES),
         .ACCUMULATORS_IN_LUTS(ACCUMULATORS_IN_LUTS),
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
         .BEATS_WIDTH(BEATS_WIDTH)
     ) encoder_inst (
+        .perf_events(perf_events),
         .clk(clk),
         .reset(reset),
         .start(encoder_start),
@@ -157,7 +196,7 @@ module encoder_system
     end
 
     assign host_write = (state_reg == IDS_RECEIVE) && read_valid;
-    assign host_address = BUFFER_ADDRESS_WIDTH'(word_reg);
+    assign host_address = STREAM_RESULTS != 0 && state_reg == OUT_BEAT ? stream_address : BUFFER_ADDRESS_WIDTH'(word_reg);
     assign encoder_start = (state_reg == RUN);
 
     logic [15:0] chunk;
@@ -166,8 +205,23 @@ module encoder_system
     assign write_request_valid = (state_reg == OUT_REQUEST);
     assign write_request_address = result_reg + ADDRESS_WIDTH'({word_reg, 4'b0000});
     assign write_request_beats = BEATS_WIDTH'(chunk);
-    assign write_valid = (state_reg == OUT_BEAT);
-    assign write_data = host_read_data;
+    logic [BUFFER_ADDRESS_WIDTH-1:0] stream_address;
+    logic stream_valid;
+    logic [127:0] stream_data;
+    if (STREAM_RESULTS != 0) begin : gen_stream_results
+        result_streamer #(.ADDRESS_WIDTH(BUFFER_ADDRESS_WIDTH), .READ_LATENCY(READ_LATENCY)) stream_inst (
+            .clk(clk), .reset(reset), .start(state_reg == OUT_REQUEST && write_request_ready),
+            .first_address(BUFFER_ADDRESS_WIDTH'(word_reg)), .words(chunk),
+            .read_address(stream_address), .read_data(host_read_data),
+            .valid(stream_valid), .ready(state_reg == OUT_BEAT && write_ready), .data(stream_data)
+        );
+    end else begin : gen_result_default
+        assign stream_address = '0;
+        assign stream_valid = 1'b0;
+        assign stream_data = '0;
+    end
+    assign write_valid = state_reg == OUT_BEAT && (STREAM_RESULTS == 0 || stream_valid);
+    assign write_data = STREAM_RESULTS != 0 ? stream_data : host_read_data;
 
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -234,7 +288,7 @@ module encoder_system
                 OUT_REQUEST: begin
                     if (write_request_ready) begin
                         chunk_left_reg <= chunk;
-                        state_reg <= OUT_READ;
+                        state_reg <= STREAM_RESULTS != 0 ? OUT_BEAT : OUT_READ;
                     end
                 end
                 OUT_READ: begin                          // host_address = word_reg now
@@ -246,7 +300,7 @@ module encoder_system
                     else wait_reg <= wait_reg - 1'b1;
                 end
                 OUT_BEAT: begin
-                    if (write_ready) begin
+                    if (write_ready && write_valid) begin
                         word_reg <= word_reg + 1'b1;
                         chunk_left_reg <= chunk_left_reg - 1'b1;
                         if (word_reg + 1'b1 == words_reg) begin
@@ -254,7 +308,7 @@ module encoder_system
                         end else if (chunk_left_reg == 16'd1) begin
                             state_reg <= OUT_REQUEST;
                         end else begin
-                            state_reg <= OUT_READ;
+                            state_reg <= STREAM_RESULTS != 0 ? OUT_BEAT : OUT_READ;
                         end
                     end
                 end

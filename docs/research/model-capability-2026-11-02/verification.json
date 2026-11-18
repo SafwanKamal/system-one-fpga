@@ -1,0 +1,242 @@
+{
+  "stages": [
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "qwen06-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "qwen17-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "qwen17-q4",
+      "stage": "confirm",
+      "n": 396,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "qwen4-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "qwen4-q4",
+      "stage": "confirm",
+      "n": 396,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "qwen35-2-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "qwen35-4-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "xlam3-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "lfm12-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-r3",
+      "model": "smol3-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-boundary",
+      "model": "qwen8-q2",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-boundary",
+      "model": "qwen8-q2",
+      "stage": "confirm",
+      "n": 396,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-adapted-controls",
+      "model": "qwen06-sft-q4",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-adapted-controls",
+      "model": "qwen06-sft-q8",
+      "stage": "screen",
+      "n": 104,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\off",
+      "model": "qwen06-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\off",
+      "model": "qwen17-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\off",
+      "model": "qwen35-2-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\off",
+      "model": "qwen35-4-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\on",
+      "model": "qwen06-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\on",
+      "model": "qwen17-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\on",
+      "model": "qwen35-2-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "work": "build\\v2\\model-capability-20261102-reasoning\\on",
+      "model": "qwen35-4-q4",
+      "stage": "screen",
+      "n": 32,
+      "ids_match": true
+    },
+    {
+      "model": "qwen4-q4",
+      "id": "episode-01",
+      "note": "Second-turn precision prompts differ because generated histories differ"
+    }
+  ],
+  "records_rescored": 2716,
+  "scorer_disagreements": 0,
+  "weights": [
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-0.6B-Q4_0.gguf",
+      "bytes": 382156480,
+      "sha256": "33bcc57074ec7b6eada5a90651ee546ec0c2b271002c22baf9f1b2dd1e8f75cb"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-1.7B-Q4_0.gguf",
+      "bytes": 1056782912,
+      "sha256": "c876f159707a4e4f70e045106c69db15bfc935a4981706fd4f65c6e7ea1e81c5"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-4B-Instruct-2507-Q4_0.gguf",
+      "bytes": 2375773280,
+      "sha256": "e0ba675d86ab277c61701c6793659b2ae801d95e3be791464c321e6fbf613be2"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3.5-2B-Q4_0.gguf",
+      "bytes": 1214873856,
+      "sha256": "cd70221bebaee0503e0f6717e174250cd7825aa88438b3aabec9ad55731d9bb1"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3.5-4B-Q4_0.gguf",
+      "bytes": 2583221408,
+      "sha256": "298fcb5fe7a77ccc79745ae24751560c5ac56874caff4bb39b1f2055bd72b8bb"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\xLAM-2-3B-fc-r-Q4_0.gguf",
+      "bytes": 1822849600,
+      "sha256": "ca1d5e9083784a950d1895f6d3461ede2a9fbe90d927d5cba3a5e3b87c178f04"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\LFM2.5-1.2B-Instruct-Q4_0.gguf",
+      "bytes": 695751488,
+      "sha256": "2ea801949d760cdf1a2cc04a54262c22c3c0c54f0769d57760c9adeb0e59233f"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\SmolLM3-3B-Q4_0.gguf",
+      "bytes": 1811456544,
+      "sha256": "7077558daebcbb2b598aef526e420f82517d766084aff0e03950c56b86429622"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-8B-Q2_K.gguf",
+      "bytes": 3281733440,
+      "sha256": "7226e0183d31dca14d81c6f799ada2944be62160b8b7549a70254fba4124a5cf"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\adapted-qwen06\\Qwen3-0.6B-maintenance-sft-v3-Q4_0.gguf",
+      "bytes": 381565728,
+      "sha256": "09119178e4871ca38e0e68428482cebbaf4acc5deb3bac36e1669f5655d5776d"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\adapted-qwen06\\Qwen3-0.6B-maintenance-sft-v3-Q8_0.gguf",
+      "bytes": 639446816,
+      "sha256": "4e4c62885e961ac864ed626f1fc7a3b54b00c56ac136c04a755bf0123eb698b6"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-1.7B-Q8_0.gguf",
+      "bytes": 1834426944,
+      "sha256": "0becaa825564295d82e9af4d008bca5f8b7f5f73bf1c6a0b58f7c53ef26b47fd"
+    },
+    {
+      "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-4B-Instruct-2507-Q8_0.gguf",
+      "bytes": 4280405600,
+      "sha256": "391c1e410fd9f4cf2de2b510273b56a84c19ce18f4fa3bfb3774031dac4ef068"
+    }
+  ],
+  "tests": ".......................                                                  [100%]\n23 passed in 0.29s\n",
+  "qualification": {
+    "gold_fixture_passes": 210,
+    "failures": [],
+    "method": "Choose first allowed value for non-optional arguments; omit any argument with an explicit omission alternative. No model output used.",
+    "initial_probe_note": "An optional allowed gold parameter not present in its tool schema was rejected when included; canonical omission produces a valid fixture. No labels, evaluator or model results changed."
+  },
+  "historical_checkpoint_sha256": "980fe3717ffb7a316c5e91dee9ec4ba1c2e75a84f98550cc62be07c9167373be",
+  "historical_base_weights_unchanged": true,
+  "caveat": "Separate execution of the same pinned scorers; not independent labels or a blinded reliability study."
+}

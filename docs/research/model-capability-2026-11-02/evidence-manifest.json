@@ -1,0 +1,4242 @@
+[
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\controls\\rules.jsonl",
+    "bytes": 76344,
+    "sha256": "6c9b4b56ac01bc7ab7d5d6d118972618b20565c1dc544024bb37b4961577e263"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\controls\\summary.json",
+    "bytes": 274,
+    "sha256": "375451464b1435f80a5a4305f1d30dafad415ef3c89b7b2695da06d662f971fb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\demonstrations.jsonl",
+    "bytes": 1911,
+    "sha256": "95bd942fdc49c62b78341e741cb415ecd2d1c6cf54f1bb52e39a32a23f2587f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\enums.py",
+    "bytes": 896,
+    "sha256": "2182becfa2a1d071ee1db30db593b4758c6bf866aa12d2d4b8daf09175ea518a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\model_config.py",
+    "bytes": 182,
+    "sha256": "494c6153714be993b1e53709b4efc61dd792b80213907ed6254d2e773e16f422"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\type_mappings.py",
+    "bytes": 1813,
+    "sha256": "1702fb67afbe2c492608e58e2b7d02e46381f50166b47f3c952f76e34c7cd3bd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\ast_checker.py",
+    "bytes": 25032,
+    "sha256": "2aae7a68461a8f76c0be3894c8901b66b56967a1989d3ab066051e3fb97f1538"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\java_type_converter.py",
+    "bytes": 15716,
+    "sha256": "2fd4f4b0443b3dd974a1723bb4e45c086d7b352631062da7807ad1ad40706604"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\js_type_converter.py",
+    "bytes": 11706,
+    "sha256": "a114e9ff75c025cb52787ac33d6c2fbaa390905c6125a2b3c6afebab232bb5e4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\LICENSE",
+    "bytes": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\dependencies\\bfcl-python-checker\\receipt.json",
+    "bytes": 2288,
+    "sha256": "d59d4908d4e170bd2b0f1496302e02049963a6bc8471d1912396595aac4ab671"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\development.jsonl",
+    "bytes": 26368,
+    "sha256": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\downloads\\qwen17-q4-q8reference.json",
+    "bytes": 583,
+    "sha256": "2e3ad8a7e847e503e40f06c43fdcec236ac76523d6a9e6a1d49a0c0e73a6c4a6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\downloads\\qwen4-q4-q8reference.json",
+    "bytes": 617,
+    "sha256": "7414248eaab2e635378ca86b629c963b5529c6f795abb5d1eb0c19f4ef94387f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\evaluation.jsonl",
+    "bytes": 509084,
+    "sha256": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\independent-rescore.json",
+    "bytes": 290719,
+    "sha256": "f5e067e68c196e37b2251a12ab5b972b52105d5fffa853c8b3f910b4aa48bafc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793651521217100100\\invocation.json",
+    "bytes": 560,
+    "sha256": "492ceacc3df62834b8fb80e95896661cce8aa64d6c05596474bae41ec228aa03"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793651521217100100\\runner.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793654008029205500\\invocation.json",
+    "bytes": 889,
+    "sha256": "a964ba9ae7459968c264a3e730501590df7c23c4ae9199a02c0d282eb3f13bb9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793654008029205500\\runner.py",
+    "bytes": 45820,
+    "sha256": "affe887fed2c47e08e27f35b9d34287b68ca1cdc24a4eb261e86c3bd4e6f0e0d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793655242529809900\\invocation.json",
+    "bytes": 560,
+    "sha256": "45240d1b548569815343b6cb40072aafc7c2d104a82c0a73fc64530568c6ca6f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793655242529809900\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793655927749880700\\invocation.json",
+    "bytes": 889,
+    "sha256": "91f49b9c66bb10a280a191f8a6a1413f151103bc1e760f54fcce5a5c697d92f2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793655927749880700\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793656170180836800\\invocation.json",
+    "bytes": 889,
+    "sha256": "91f49b9c66bb10a280a191f8a6a1413f151103bc1e760f54fcce5a5c697d92f2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793656170180836800\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793658130198680800\\invocation.json",
+    "bytes": 926,
+    "sha256": "3fcb2880bbda52aa0bf824d2a980f0eef8348621607f662badd97525a961124e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793658130198680800\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793662484585924800\\invocation.json",
+    "bytes": 928,
+    "sha256": "7776ed24903ea64905ca06b9019622b8cf4292c6b10f5de4e25c60e7fc497376"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793662484585924800\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793662901295759300\\invocation.json",
+    "bytes": 925,
+    "sha256": "7f1f8e79c24705b5490620797967225b7a02af23e689c44cbadc00284dfe600d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\invocations\\1793662901295759300\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\memory-envelope.json",
+    "bytes": 8799,
+    "sha256": "1f6e22c5638e8c3e0c3eff6a2d085347513c7f7614e8f07efbe9ad0c74fbece8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\models.json",
+    "bytes": 3757,
+    "sha256": "ef33b89429e2e57fa3132c37255c1be2953bb83418aa783953c58affbc2fc7d9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\native-message-semantics-amendment.json",
+    "bytes": 977,
+    "sha256": "2bdff4843f8792f8f0465a8d2e921798cd7fd431edcda7f1ae2410f3e11b55e4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\parent-gold-fixture-qualification.json",
+    "bytes": 417,
+    "sha256": "ed1c9719880e1f6c8ea8ebd659387280bb4ea013d2b3e8c8170fb51d1a14996d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\parent-protocol.json",
+    "bytes": 7362,
+    "sha256": "34371da21b6b8a0884d33c88614bf7a3fecbe52b4f797b2c74e4079306a0b786"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\parent-runtime-environment.json",
+    "bytes": 7023,
+    "sha256": "5b1cd46ae751a3c640248b6756d00229d1d125e3b900634eae5346243d27a8f8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\pipeline-complete.json",
+    "bytes": 590,
+    "sha256": "12b4669ea43b81c469e75955c0c54792c519a83c90bedbf72e446550347b278d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\pipeline-failure-before-native-message-v2.json",
+    "bytes": 453,
+    "sha256": "731fbed09bb0115b912d0bd8d097d6e4b3395579cfd1985870c5c3851a0d93e8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\pipeline.log",
+    "bytes": 84637,
+    "sha256": "14be687afb5cd49010851a063597833d4fe5df333c7ae971efd3286de60aec91"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\comparison.json",
+    "bytes": 2394,
+    "sha256": "2c7b483bc3508eece5f6691038c2c2eaa0bb1ffee48390107790224c947a5cfb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q4\\attempts\\1793662491016021300\\server-props.json",
+    "bytes": 7573,
+    "sha256": "09d20a12f12c12c1387ebf30b1bcf5f7a036b86acf9e9ea2c39859e184c39e56"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q4\\attempts\\1793662491016021300\\server-start.json",
+    "bytes": 1206,
+    "sha256": "bb5a495ba3f7b94096d69376b13b87170c91ba1d50370980aa307f6eea904d9d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q4\\predictions.jsonl",
+    "bytes": 377190,
+    "sha256": "48026a52dcb8ef892a2f9befb838ffd740f0ac5a5ec4aeadf10206d2be9c6541"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q4\\server-props.json",
+    "bytes": 7573,
+    "sha256": "09d20a12f12c12c1387ebf30b1bcf5f7a036b86acf9e9ea2c39859e184c39e56"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q4\\server-start.json",
+    "bytes": 1206,
+    "sha256": "bb5a495ba3f7b94096d69376b13b87170c91ba1d50370980aa307f6eea904d9d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q4\\server.log",
+    "bytes": 83065,
+    "sha256": "006b1e2c7fac306ea47e4db060faf9247b55ef475daae7031ece78145892ead2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q8\\attempts\\1793662545793844300\\server-props.json",
+    "bytes": 7573,
+    "sha256": "4c1bcfb1f3b0d1aecac6f308c82005dda018d01996a617926ab3c388db1aabd6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q8\\attempts\\1793662545793844300\\server-start.json",
+    "bytes": 1246,
+    "sha256": "ce671cc6e6f71be56feb3aca6f8438362b0a67c9fe1f039f4cccf819631a3edf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q8\\predictions.jsonl",
+    "bytes": 379890,
+    "sha256": "d4b761b23495dade484e470806a4416a83984410b46483f08545da789aa075c9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q8\\server-props.json",
+    "bytes": 7573,
+    "sha256": "4c1bcfb1f3b0d1aecac6f308c82005dda018d01996a617926ab3c388db1aabd6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q8\\server-start.json",
+    "bytes": 1246,
+    "sha256": "ce671cc6e6f71be56feb3aca6f8438362b0a67c9fe1f039f4cccf819631a3edf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen17-q4\\q8\\server.log",
+    "bytes": 83293,
+    "sha256": "25279da3237436a6495f0b7b425d65460c6501d8272960499810e1bbe9c326c5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\comparison.json",
+    "bytes": 2464,
+    "sha256": "1dfc0eb05d1edbd207e0f6b882f30450bde6f01c121d9233211d438bad9263e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q4\\attempts\\1793662634646879500\\server-props.json",
+    "bytes": 6871,
+    "sha256": "e9c3738fde67ad9bc27acf5fdc2f0d04a90941de86819b3831f3196974d98c8c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q4\\attempts\\1793662634646879500\\server-start.json",
+    "bytes": 1253,
+    "sha256": "a977504854a641808a5d95e20796cb1ffa9d236ec8bc31eb2021b2698364c286"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q4\\predictions.jsonl",
+    "bytes": 358009,
+    "sha256": "598d978fad6d4d698f14b5f18ebae649abe9249d649d7932b43cecf855652839"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q4\\server-props.json",
+    "bytes": 6871,
+    "sha256": "e9c3738fde67ad9bc27acf5fdc2f0d04a90941de86819b3831f3196974d98c8c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q4\\server-start.json",
+    "bytes": 1253,
+    "sha256": "a977504854a641808a5d95e20796cb1ffa9d236ec8bc31eb2021b2698364c286"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q4\\server.log",
+    "bytes": 84353,
+    "sha256": "97621546891e288277518973b0f895c575df102b60f88e0e9f78bd7727968d08"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q8\\attempts\\1793662748847420400\\server-props.json",
+    "bytes": 6871,
+    "sha256": "b1cd032b44c9c79b7b128eed0de85f0ebae5b0c661ca87fb299947653f7fe6f1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q8\\attempts\\1793662748847420400\\server-start.json",
+    "bytes": 1291,
+    "sha256": "d74d1f29d06001863e5ed1ed0237f1c6994d6d890d50e854c95bf0b1ce44f311"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q8\\predictions.jsonl",
+    "bytes": 357812,
+    "sha256": "16d79dff499ad4abe7319e08aab2b15839f34ead390565eed486f0f53ba6c69c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q8\\server-props.json",
+    "bytes": 6871,
+    "sha256": "b1cd032b44c9c79b7b128eed0de85f0ebae5b0c661ca87fb299947653f7fe6f1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q8\\server-start.json",
+    "bytes": 1291,
+    "sha256": "d74d1f29d06001863e5ed1ed0237f1c6994d6d890d50e854c95bf0b1ce44f311"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision\\qwen4-q4\\q8\\server.log",
+    "bytes": 84193,
+    "sha256": "e1c67ef3af96efb25c8d88901c276aa6d5307124d520afa0154bec5310301a79"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\precision-plan.json",
+    "bytes": 5444,
+    "sha256": "690186e96ee7c8e52bf05812b610c90b789a8ccde13426b4667b66433a9f7676"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\protocol.json",
+    "bytes": 8338,
+    "sha256": "cba296e3d965ec482978e0a46088c4e2a6b97c439b738fee579a3104434f4025"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\RESULTS.md",
+    "bytes": 2298,
+    "sha256": "3c8607fd98a44ef3744d296adce1a01f88561ab2223c86d12188cda7264fcd2d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\dev-general-direct.jsonl",
+    "bytes": 96360,
+    "sha256": "6011b07e2af5ca139b4aafca34fb73ff16766e3a319aa3b6570b49b61f15133e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\dev-general-native.jsonl",
+    "bytes": 91638,
+    "sha256": "9da0554d362885f4b3666cef603ceea3b12e5aa72e3ba57a762ee1bdf54c8c1b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 158388,
+    "sha256": "0500b8374dacf0bab19b05629706de588691ca9af21f89077f91dc391829069d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\dev-maintenance-native.jsonl",
+    "bytes": 184660,
+    "sha256": "c5b5b5f1f00048844382e7c35a4ea643d7c74d30cbc0d57ab3ba101756542fd1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "b24e441016e12bd35125a075d37c07e702b196d9e0f309b5510e3d9572973484"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen\\attempts\\1793653384318213900\\server-props.json",
+    "bytes": 4552,
+    "sha256": "f8de8604af8c9e5e03481af2d54e25bd00598322ef047b23e84c65be301a70ab"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen\\attempts\\1793653384318213900\\server-start.json",
+    "bytes": 1246,
+    "sha256": "23afc3e9574a9c29d56971c450fbe7e8ba17e83672d5a0a2d587f91f05c5aadc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen\\attempts\\1793655916194342900\\server-props.json",
+    "bytes": 4552,
+    "sha256": "ef62a51d0eb4418cc199948b09423ce6b4b8096ce5394a8c591144b6bdbc7123"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen\\attempts\\1793655916194342900\\server-start.json",
+    "bytes": 1245,
+    "sha256": "cbbf3e87eda2db54fa934bd8b2bc8434c9f90fa6b6361093b6c7bebf9e1e1ef0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen\\server-props.json",
+    "bytes": 4552,
+    "sha256": "ef62a51d0eb4418cc199948b09423ce6b4b8096ce5394a8c591144b6bdbc7123"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen\\server-start.json",
+    "bytes": 1245,
+    "sha256": "cbbf3e87eda2db54fa934bd8b2bc8434c9f90fa6b6361093b6c7bebf9e1e1ef0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen\\server.log",
+    "bytes": 481000,
+    "sha256": "f861574bf42fec7fbdcf5a4f0f9b48e4447efb8e5bd0cad69040754067507007"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-complete.before-token-replay.json",
+    "bytes": 1795,
+    "sha256": "a4a7eb610e2657a253122f6ce4bad83b88a8381c7c9c689bb3be65c66d8ea266"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-complete.json",
+    "bytes": 1797,
+    "sha256": "55369bbf2ecf65b6d6aa41731e4527e5d90b5fa96a00c6a22ff53ed7573bd36f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-episode.before-token-replay-1793655047763205700.jsonl",
+    "bytes": 96615,
+    "sha256": "bfda637d338bf3d31f4f8f1dac91e7508e3ef12bea52f5468a686fb70614d452"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-episode.before-token-replay.jsonl",
+    "bytes": 96338,
+    "sha256": "007253e3c309bd9a130f246abaa19bdc27f315f08ed1dc759b9536fd3c3764d1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-episode.jsonl",
+    "bytes": 96375,
+    "sha256": "8416ac670cc0220099ed2e885140aff1a42706c02529f1c0a7b004dfe08eb548"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-general.jsonl",
+    "bytes": 475910,
+    "sha256": "17f6a451fd7ef74b6d47a0565baac85d3e79589c2100c4953e159ffaa0660d1c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-maintenance.jsonl",
+    "bytes": 641261,
+    "sha256": "447fdac4d0cc63923c428ecb0fec123ed3928f014948c0e38fd1a648c192f2bd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\lfm12-q4\\token-replay-complete.json",
+    "bytes": 2928,
+    "sha256": "d946e834b01354ea12edfb738c2b335579898506bbb6fc57cce2847bb1379e24"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\dev-general-direct.jsonl",
+    "bytes": 85918,
+    "sha256": "63cb6e946b9bd697942f2e72f4a265a09d94cf3a388b7f0bb32f30c3b0b63760"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\dev-general-native.jsonl",
+    "bytes": 100395,
+    "sha256": "f166be4004afe04eea166b9217e7f1d3e2caecb768bdb7ee06f419ddf560a08f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 154078,
+    "sha256": "0296204be578925b26d38adfadde341cf2558f7984e6d01fcd146b45636dcd55"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\dev-maintenance-native.jsonl",
+    "bytes": 219587,
+    "sha256": "c886858de0b48bfa5bc0e89f428601ccfbb49ab7e09f1088f6bc54c97affa857"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "a98475aa018581e8f20645dffb17421387a3eddf4ded1ab74b4dc654406d1ae5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen\\attempts\\1793651526255806900\\server-props.json",
+    "bytes": 7718,
+    "sha256": "6a38c371c6fd9d40553cd6442ecbbdebf5cdd44379a1e95d8cdb8f8ff52d830c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen\\attempts\\1793651526255806900\\server-start.json",
+    "bytes": 1205,
+    "sha256": "f3ce312eedb18f28c7337865884c56a20ca6f9dd377a034e8c52adbe2515d6c5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen\\attempts\\1793655247939318700\\server-props.json",
+    "bytes": 7718,
+    "sha256": "4e5143e2804c956f94c59fc62edd3819025f39efc67ffa02644dc2368fbc386c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen\\attempts\\1793655247939318700\\server-start.json",
+    "bytes": 1206,
+    "sha256": "1c8f1e27659eec3f3c5a75a20152b99805c300f2c6fa1d9b4fabf370edcd1298"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen\\server-props.json",
+    "bytes": 7718,
+    "sha256": "4e5143e2804c956f94c59fc62edd3819025f39efc67ffa02644dc2368fbc386c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen\\server-start.json",
+    "bytes": 1206,
+    "sha256": "1c8f1e27659eec3f3c5a75a20152b99805c300f2c6fa1d9b4fabf370edcd1298"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen\\server.log",
+    "bytes": 454118,
+    "sha256": "b1ec270593d600a1bd51120905083b0fae832c5423ab5a6100b0c102dbd3dbe7"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-complete.before-token-replay-1793654977206872400.json",
+    "bytes": 1867,
+    "sha256": "a01d094f7855027e6672a57a6051c1b6265f5c2d860b835866a30b3945efeb81"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-complete.json",
+    "bytes": 1766,
+    "sha256": "aab7662600eeb2c3cb6b71d964d14028fbf4913220e9fed6da7e98d427319684"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-episode.before-token-replay-1793654977196530900.jsonl",
+    "bytes": 82794,
+    "sha256": "de5ae1fd9b3fde8c30ac828558dd9a482d1d2b2b1b02c6d30caa9c216c844d13"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-episode.jsonl",
+    "bytes": 102737,
+    "sha256": "9bd15f2fb41aa9253c21561977f119ce1f4ac1c5dbb12e994a5394f3897f90a8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-general.before-token-replay-1793654977199601500.jsonl",
+    "bytes": 453726,
+    "sha256": "6691441ec6e928a914c0eabc831b15a54d077f08c9a5f62c9632dd59757837a2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-general.jsonl",
+    "bytes": 515175,
+    "sha256": "19dd1564378357a1719f0528be0f3a7ce14b43d6dcf5660c77826482e88ae515"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-maintenance.jsonl",
+    "bytes": 618490,
+    "sha256": "7859b11f8b2bfdca88a1fdfff1127c536839312746ffd520f62c8fb61be39bca"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen06-q4\\token-replay-complete.json",
+    "bytes": 1015,
+    "sha256": "e3391f700d19c9ce7f1439d7dc66ade9438b51852f2be98d5261b29851293a02"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm\\attempts\\1793658135933377900\\server-props.json",
+    "bytes": 7573,
+    "sha256": "34e6ed896f447ba5cb60d436802664a1ec8cfa7f34082dbc9a50dcd23180a4b3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm\\attempts\\1793658135933377900\\server-start.json",
+    "bytes": 1206,
+    "sha256": "d88579e31df9a25e623f3712205661db68c3a3d1259cbca815ac72c006fd3d7f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm\\server-props.json",
+    "bytes": 7573,
+    "sha256": "34e6ed896f447ba5cb60d436802664a1ec8cfa7f34082dbc9a50dcd23180a4b3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm\\server-start.json",
+    "bytes": 1206,
+    "sha256": "d88579e31df9a25e623f3712205661db68c3a3d1259cbca815ac72c006fd3d7f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm\\server.log",
+    "bytes": 817551,
+    "sha256": "d1e89ed61e3c9157fbd32fe33225e0d945a6987337ba3256ac0ee3e6d63ddee8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm-complete.json",
+    "bytes": 1780,
+    "sha256": "ff9898128b6b93680080eb341e5f230e6b4cb761d589f8a94a01aeeb30fbc7fa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm-episode.jsonl",
+    "bytes": 206375,
+    "sha256": "f78d131b16abd671eab55a60eece56205843e7a612db1cba38ec598590df1ac1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm-general.jsonl",
+    "bytes": 2042702,
+    "sha256": "c9e5bef90bfeb667b34fbe689b7c662343af6200c570a7d67781a0b293d8a38f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm-maintenance.jsonl",
+    "bytes": 2269238,
+    "sha256": "0dba0b38cb3ecdac0c340f8a403b788b03b9aebfe264122d839bbbacda2bf551"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\confirm-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\context4096-summary.json",
+    "bytes": 65,
+    "sha256": "08d68dcc0050b3b43fac2a1904f6e7e5de0ca79313aedebf5698ecbb96f5a171"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\dev-general-direct.jsonl",
+    "bytes": 88773,
+    "sha256": "f95bb64386639438ab5a922a4f0f9a4a59b0bc42a5e72c6a5e9bd8c9a53ecb46"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\dev-general-native.jsonl",
+    "bytes": 103405,
+    "sha256": "ae69c229d7d418056e9ce3a1dd65111ae47f64a58815e367c0ac6cae0efba664"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 148440,
+    "sha256": "437622d8ea2e5d5c6fa5333ca3fb829ed01f106320372b9ac287a4ce98124700"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\dev-maintenance-native.jsonl",
+    "bytes": 197748,
+    "sha256": "116c8b6049b1cac222f7fff9a0a5e202b344e81f2c6d888fdc0365c1a2929a6b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "5908e8b5b7ae8e79a7ff50ef78646b3b20bda5e2ca0eb2ef362ec66eedfc318a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen\\attempts\\1793651652373059500\\server-props.json",
+    "bytes": 7573,
+    "sha256": "c5aa247231d642e3e28efa6a2147797d6dfbcb44fd58eaaba644e7bc6499d838"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen\\attempts\\1793651652373059500\\server-start.json",
+    "bytes": 1206,
+    "sha256": "750d86beb168f91201b2619ce2911988f1f766310a604e686c70216afd88e6fa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen\\server-props.json",
+    "bytes": 7573,
+    "sha256": "c5aa247231d642e3e28efa6a2147797d6dfbcb44fd58eaaba644e7bc6499d838"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen\\server-start.json",
+    "bytes": 1206,
+    "sha256": "750d86beb168f91201b2619ce2911988f1f766310a604e686c70216afd88e6fa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen\\server.log",
+    "bytes": 318920,
+    "sha256": "4239bb73a67c4dbfb7feaa5fe6331911b74c054fd972106165975be9804fc095"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen-complete.json",
+    "bytes": 1869,
+    "sha256": "852b10b1cb242b7a5abf4c8ef5a1acb3f3a98a71cbe5241db3e8842e5bef8e5b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen-episode.jsonl",
+    "bytes": 105024,
+    "sha256": "b0cc1c90a07650d2f5dbdb392d2737fc8e24cd2f0c02b30321e9b07528189c10"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen-general.jsonl",
+    "bytes": 536743,
+    "sha256": "cbf058e6d8bcdb812f91a89212673873d7c61ef07c880cdf0c7f218779277ea6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen-maintenance.jsonl",
+    "bytes": 602882,
+    "sha256": "69f5bbb2d5dd7bdad39d7bfa61222e4f64994b13b41232c2343a187a3c918a24"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen17-q4\\token-replay-complete.json",
+    "bytes": 2406,
+    "sha256": "3bd0e872bb93a560772f797039159e9574f99ef871a5a824a204ef9aec453171"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\dev-general-direct.jsonl",
+    "bytes": 87259,
+    "sha256": "c9888eba18282e6da134a477fa4897f97d227e568c174fe68431af03707f0b90"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\dev-general-native.jsonl",
+    "bytes": 125941,
+    "sha256": "26385075f0fe8434bcd50415cd1a158039933f417a5978f4cb839b68f420b09d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 151521,
+    "sha256": "14b0f048b68dc71db5a79ba9dc980527fb85f78f2941b51f37355778832845e7"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\dev-maintenance-native.jsonl",
+    "bytes": 220986,
+    "sha256": "bc37330e5cb2e3de83b79605dede6803911617b85d4c356d0ee227e42daa128b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "fd48252e9f2b0c2c2d896153773ec2b521007fbfab3273c364322c524d7e8824"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen\\attempts\\1793652308222315900\\server-props.json",
+    "bytes": 10696,
+    "sha256": "cfeb178cddc3451645bece1c92dd5f7c10491f8a950d95eb1e36bf7b5ca1843a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen\\attempts\\1793652308222315900\\server-start.json",
+    "bytes": 1208,
+    "sha256": "a556e745fd4e0a0c55471fc43a4e6217402a8a8fa15adc9db34e442bd1699d54"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen\\attempts\\1793655299487565900\\server-props.json",
+    "bytes": 10696,
+    "sha256": "dfefb1bb8257b12c027a82426c92c33c51a3664f942d98f88b5b0e93726410e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen\\attempts\\1793655299487565900\\server-start.json",
+    "bytes": 1209,
+    "sha256": "27d9d6d56ced2e553a8e181e7ac717934fd39f7221d4c7af6dad1862d64ecf1c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "dfefb1bb8257b12c027a82426c92c33c51a3664f942d98f88b5b0e93726410e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen\\server-start.json",
+    "bytes": 1209,
+    "sha256": "27d9d6d56ced2e553a8e181e7ac717934fd39f7221d4c7af6dad1862d64ecf1c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen\\server.log",
+    "bytes": 633318,
+    "sha256": "e7fb8169fc4ddf2258b9a2f44b240739d4cd50d5b6bb7cbaa5297a4993a6e588"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-complete.before-token-replay-1793655015926588700.json",
+    "bytes": 1870,
+    "sha256": "b941a88fc506ee80f106ceb448107db992f0634fbd2067016d4a9452589a387d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-complete.json",
+    "bytes": 1769,
+    "sha256": "e1c0d54164fbca1c9c73b070c5faaefa1c2ed2ffecf73ef7f8147fb3c52b9164"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-episode.before-token-replay-1793655015922471000.jsonl",
+    "bytes": 89467,
+    "sha256": "776469a9c506017aa9dd065e5bc9066f9602c2c0e628c7cfd548f30b9a92c394"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-episode.jsonl",
+    "bytes": 126511,
+    "sha256": "62987d1fcd51f8a8667554ab0c30046d2cf5019566a2f57095d6c672858fe4d1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-general.before-token-replay-1793655015926588700.jsonl",
+    "bytes": 442815,
+    "sha256": "c69196eacf3a408733284be19cb1d8c5d30a32625a4b2ee37bdf2c00bb1e11ae"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-general.jsonl",
+    "bytes": 635127,
+    "sha256": "b0025c5b72340e40e934e13d08cfcf00aec8d3d0a0d9bd7a09eac494d5f27891"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-maintenance.jsonl",
+    "bytes": 611093,
+    "sha256": "7ea660b27910645d8a1e3b58ee7f8036843543f02b33fa54435e34000f849c1f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-2-q4\\token-replay-complete.json",
+    "bytes": 883,
+    "sha256": "12a494bebe11660165fb08b8cf6c5f14c95db6e2a56c59e51d14f5bda9d5f05b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\dev-general-direct.jsonl",
+    "bytes": 90802,
+    "sha256": "7189cbfe47be8c6cce0f90ec585f262b9e061b1b9bdbdce6a0e52ef93cfe36cb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\dev-general-native.jsonl",
+    "bytes": 123415,
+    "sha256": "7e0aecad2a7acace551b923f60c70d1fa43d068e82608d213b9cc8db3a70cc1f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 147524,
+    "sha256": "36f3d84810fdee83a376dc0638ecda6bbffad8b4a577749d73dffdacdf31d6e3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\dev-maintenance-native.jsonl",
+    "bytes": 216750,
+    "sha256": "d660f334ea68259cf16f84072502a51d9ecde31939fb10fc33aa8485433cd893"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "4b13834ad38baf003915a81c65e3d37b05e5e05ef2e7c920804ea639dfd42622"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen\\attempts\\1793652545770743400\\server-props.json",
+    "bytes": 10696,
+    "sha256": "195fd1911c04f1ee21bddd7112c9dc24abc4cacd7fdf6575fadb17387b0007d4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen\\attempts\\1793652545770743400\\server-start.json",
+    "bytes": 1208,
+    "sha256": "c1d2190da7208b25eb2f82776c468f4fc1876d792d42710ab097ca52f31d59b4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen\\attempts\\1793655457222842600\\server-props.json",
+    "bytes": 10696,
+    "sha256": "b476f5f43ddd98e80f29f331103bf6edad91c05072e310745327b012cdc47f7d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen\\attempts\\1793655457222842600\\server-start.json",
+    "bytes": 1209,
+    "sha256": "1caaeae4d66949fe36bef7ffc553a592a59f052bda55a5a45cb0cd18ba18ba9f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "b476f5f43ddd98e80f29f331103bf6edad91c05072e310745327b012cdc47f7d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen\\server-start.json",
+    "bytes": 1209,
+    "sha256": "1caaeae4d66949fe36bef7ffc553a592a59f052bda55a5a45cb0cd18ba18ba9f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen\\server.log",
+    "bytes": 660917,
+    "sha256": "7b298a0d39636772ca53428b4bb58ccdff4da4499b5010635d357d8b133b84d1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-complete.before-token-replay-1793655030549075600.json",
+    "bytes": 1868,
+    "sha256": "64813a16ee942c6244a090fdc2073c5a104f936ff54603d948546bbba9ed6f05"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-complete.json",
+    "bytes": 1770,
+    "sha256": "8b6513c7a5f2b826302e82144f5bf391f03e9e72aede9ded70b9b47f0220e1f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-episode.before-token-replay-1793655030543306000.jsonl",
+    "bytes": 88687,
+    "sha256": "06fa7cb84715519ef2f51bd93d37e62117fc210e1e37d3a34ca92a32122bf473"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-episode.jsonl",
+    "bytes": 124943,
+    "sha256": "694f751fcee5b1a387e68347c8046de2a0319b4ba2e67f2b5b740fbfd4250dcf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-general.before-token-replay-1793655030546021800.jsonl",
+    "bytes": 441227,
+    "sha256": "acb95b7b6351eefa66b7a70f56e1329517072ca4dfbca4ef1bd5a08be5775732"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-general.jsonl",
+    "bytes": 630470,
+    "sha256": "b3cfc666bb2b8a8342cdccbf39fdc3191ee0f3fe2b8e6acddbf330c2220626a0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-maintenance.jsonl",
+    "bytes": 597840,
+    "sha256": "3083de348667d63586b1976cba34c4889aa6a6b84a35c8845148b79f51859a17"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen35-4-q4\\token-replay-complete.json",
+    "bytes": 882,
+    "sha256": "1817885090dda4607e6215413aee17c1afeeb42323986565f91f6d0e0b73f32d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm\\attempts\\1793658679279815700\\server-props.json",
+    "bytes": 6871,
+    "sha256": "c025e5113fc3b39a2d66189955820302195d2c0b3adc94b623adca7a65178d60"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm\\attempts\\1793658679279815700\\server-start.json",
+    "bytes": 1253,
+    "sha256": "b4f059bcef0d73d9db0c245ae2751bd0f125fcb121129f1bc77aa4ba673a7e55"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm\\server-props.json",
+    "bytes": 6871,
+    "sha256": "c025e5113fc3b39a2d66189955820302195d2c0b3adc94b623adca7a65178d60"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm\\server-start.json",
+    "bytes": 1253,
+    "sha256": "b4f059bcef0d73d9db0c245ae2751bd0f125fcb121129f1bc77aa4ba673a7e55"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm\\server.log",
+    "bytes": 821955,
+    "sha256": "5d76dd1d2da7fe85549a0420e524d4e5a98b47b0896e824845319987b40c5680"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm-complete.json",
+    "bytes": 1815,
+    "sha256": "a98901ea747b95fbfc440a307c9fae194600a1b1031584eb075a3001583010d0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm-episode.jsonl",
+    "bytes": 177449,
+    "sha256": "174dc4c178ffecf861ea4ce9fdd9d2518885a58c025a87f86327f17fc847635a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm-general.jsonl",
+    "bytes": 1722468,
+    "sha256": "0e643ce4fdcca839179f9ef21dda304374901dc0b888f09d7f746dd1509366ed"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm-maintenance.jsonl",
+    "bytes": 2272696,
+    "sha256": "bbbc370516cad35d4e6f5e18d454631bf2a0e843d615dd2f6f964e3288af2019"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\confirm-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\context4096-summary.json",
+    "bytes": 65,
+    "sha256": "08d68dcc0050b3b43fac2a1904f6e7e5de0ca79313aedebf5698ecbb96f5a171"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\dev-general-direct.jsonl",
+    "bytes": 86724,
+    "sha256": "5d37d5ebe6f6adda7f44412d39b8d06ac09f8c1ee0f67e05394b461c5694b707"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\dev-general-native.jsonl",
+    "bytes": 103699,
+    "sha256": "7d89bbc248f343a23fef03e5629a5b254671c82b0358e53e209a0a901b176f36"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 147784,
+    "sha256": "a94a5fcee9f7d5f88f6108a759b47c6ec1bd18a15fb5a768c113005aba4703cf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\dev-maintenance-native.jsonl",
+    "bytes": 197246,
+    "sha256": "20a2b752ddef56e9992983d33e3c9fb628fe6da9837d8feb49192b7e2c7241d4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "5880c2995d08985b20b77cf0a3fbd80f6fabc289cd501bd36af90baaf6bda4e0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen\\attempts\\1793651860080885800\\server-props.json",
+    "bytes": 6871,
+    "sha256": "729f1ded7da64e3e7929a12e649d578c545d490ae9af46d5d44a8a8c4216f7fd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen\\attempts\\1793651860080885800\\server-start.json",
+    "bytes": 1253,
+    "sha256": "348e127606c8e8f7d737a979372b71b6f53b0e09f26241abf8a233c55572b549"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen\\server-props.json",
+    "bytes": 6871,
+    "sha256": "729f1ded7da64e3e7929a12e649d578c545d490ae9af46d5d44a8a8c4216f7fd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen\\server-start.json",
+    "bytes": 1253,
+    "sha256": "348e127606c8e8f7d737a979372b71b6f53b0e09f26241abf8a233c55572b549"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen\\server.log",
+    "bytes": 320691,
+    "sha256": "51dff8e5406264fc4351eba542947844f86b7a00964b7d1f348d3a82d57454ea"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen-complete.json",
+    "bytes": 1904,
+    "sha256": "2f49d274984b9bb64ae50b7660a951036c86bc59f3315c6d25d79bf1370acf23"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen-episode.jsonl",
+    "bytes": 89722,
+    "sha256": "a5fb84789e8cc7b6a4180bdd8dd61c61cdbcdcf5bee36e0659ca4e86aa3229aa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen-general.jsonl",
+    "bytes": 451822,
+    "sha256": "f81c25cd051b9a2439188312918ac8ddad6adc994d8bbb72cd8fd90e87c389e8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen-maintenance.jsonl",
+    "bytes": 605094,
+    "sha256": "c78ca6ba1257b76da0dfc92f7a27642a9a1ac0e0c375f8c51a985850d60410e9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\qwen4-q4\\token-replay-complete.json",
+    "bytes": 707,
+    "sha256": "d3c11d5f721a9eab6494c11b7dff9d0e9915460ed872ba549777076096e4d91c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\dev-general-direct.jsonl",
+    "bytes": 105419,
+    "sha256": "7340125ae09bf02dfbb49ca60b5124bcfbf1f847c51fc2099870858737782b5c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\dev-general-native.jsonl",
+    "bytes": 90815,
+    "sha256": "c78943beb63dae8f46b4f2fac632cca42bef48ebd0545c96b53adc89a5cae57d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 155113,
+    "sha256": "422fbc3c7624393608a1cd64fb2e693584b961e5ff8c14167a6914fcea62a6a1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\dev-maintenance-native.jsonl",
+    "bytes": 176797,
+    "sha256": "061bac112ad180ef0fe95ae9a397b8a04f1482f96d4759e54c6a64fe32ca2bcf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "fc4a73072bf5394197d82535b549680bca2fedeb9e377d0092e68f4f2cfd1b03"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen\\attempts\\1793653526543457700\\server-props.json",
+    "bytes": 8928,
+    "sha256": "c6d6a2ac8f69494db9d57a706f28083f7dd913a7105b14796f56ebd004e8ebe0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen\\attempts\\1793653526543457700\\server-start.json",
+    "bytes": 1205,
+    "sha256": "87b03f0afe28897130f4a14a5b8712266029cb63108fed6cf632d2d212bdd68a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen\\server-props.json",
+    "bytes": 8928,
+    "sha256": "c6d6a2ac8f69494db9d57a706f28083f7dd913a7105b14796f56ebd004e8ebe0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen\\server-start.json",
+    "bytes": 1205,
+    "sha256": "87b03f0afe28897130f4a14a5b8712266029cb63108fed6cf632d2d212bdd68a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen\\server.log",
+    "bytes": 327247,
+    "sha256": "feddbefdd32e760f0e4278ccaaeb0d0eb2c677f95898948576a54f20e7e25a5a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen-complete.json",
+    "bytes": 1867,
+    "sha256": "f22674b922956df8e1cf695edbe51f958223e1a7db49f2775023d495c9cda083"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen-episode.jsonl",
+    "bytes": 112472,
+    "sha256": "bb1d069948af3e79ee138fff6bb3a8955576b9c9645c8d8160360b9697359308"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen-general.jsonl",
+    "bytes": 535225,
+    "sha256": "2d41bac89479b1ddd30801386fb6ac0df258840177e824d1b980b2ea5c6f6c50"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen-maintenance.jsonl",
+    "bytes": 646833,
+    "sha256": "d771bf06aa97e5e7ba2676e85e6546c115551dfe014f110777a269b803c50bfb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\smol3-q4\\token-replay-complete.json",
+    "bytes": 979,
+    "sha256": "12a8713998dab77b7866dd178efd67dfeda334f0cb1bf79158f9d8bd4e327c53"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\dev-general-direct.jsonl",
+    "bytes": 91424,
+    "sha256": "762ff5095fc72f31663520356f4523197bd42c2dcfa82984c7ed5ad4530f6cf6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\dev-general-native.jsonl",
+    "bytes": 106526,
+    "sha256": "4349aee21182c60bba51cf820b566e967eeb8509a194e8256361c973d006ea99"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 149909,
+    "sha256": "40b0ee2cbfc50fd4991c45bbdff0d492c4e5f6bf362185d86766666a8a1af91b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\dev-maintenance-native.jsonl",
+    "bytes": 190898,
+    "sha256": "451cd28e25ceffad0ab330fbd30f70df83d42b00341df7a9a76f12564ccc4177"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "9adf5803f2445986e7f2f1631e7b92b9ec02c8c5ea7e781e8446ffac38c73a8c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen\\attempts\\1793653069632913200\\server-props.json",
+    "bytes": 5486,
+    "sha256": "48bb51fe2f06c8ded4885b6fcadef2400d47450f7add36b18ed34767be10cc9a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen\\attempts\\1793653069632913200\\server-start.json",
+    "bytes": 1225,
+    "sha256": "7476374540eb130d9a62238af3a567f76d01e35666f26ae8a2f5e1cfaa6318de"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen\\attempts\\1793655787241283200\\server-props.json",
+    "bytes": 5486,
+    "sha256": "50b8e419ee1467680110c634e2ffeb77eda2024980d48be5e4bb244eaefc3e5e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen\\attempts\\1793655787241283200\\server-start.json",
+    "bytes": 1225,
+    "sha256": "55f40e943f9a6fa3caab9ac6e4e72e3a2936c76483028d49830aebc66f957859"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen\\server-props.json",
+    "bytes": 5486,
+    "sha256": "50b8e419ee1467680110c634e2ffeb77eda2024980d48be5e4bb244eaefc3e5e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen\\server-start.json",
+    "bytes": 1225,
+    "sha256": "55f40e943f9a6fa3caab9ac6e4e72e3a2936c76483028d49830aebc66f957859"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen\\server.log",
+    "bytes": 453606,
+    "sha256": "c8e378b785aa293b27fc2220dff2069d2b53596af553c3522cb40cf7346dad62"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-complete.before-token-replay-1793655040845744100.json",
+    "bytes": 1881,
+    "sha256": "8b7b5b0223e05b2cf48d0dbc2cdab16a587fa29d2cd7cdfe6481df84be7d9b2a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-complete.json",
+    "bytes": 1778,
+    "sha256": "c5c47dbdb6fd3ef3d7545b78d22f0d9eb86d2e1cfc8454a39f772bfe04cb1225"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-episode.before-token-replay-1793655040840298000.jsonl",
+    "bytes": 90059,
+    "sha256": "753bbd09911d6aa3357892edca6989cf4961b179c6dfc90230709d1c2afc054a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-episode.jsonl",
+    "bytes": 104705,
+    "sha256": "51aad55b044cf776db553970cda84ff6e4a9c3aad3f8a61a9b601cdd3ea98d8e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-general.before-token-replay-1793655040843742700.jsonl",
+    "bytes": 454874,
+    "sha256": "c007d41d7bd58b9eb89d80fec6297f242920ef04a3e16315a6ab5b15a2b7f3d0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-general.jsonl",
+    "bytes": 539490,
+    "sha256": "b755bf8f90b1e1d295f363ebca2080afe95102cf8ac0524e2b8a800c01e1341d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-maintenance.jsonl",
+    "bytes": 608483,
+    "sha256": "8e79f6235eba540164536855e73208b12aa146523817b7fb2ac2998f63163602"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\runs\\xlam3-q4\\token-replay-complete.json",
+    "bytes": 879,
+    "sha256": "699950faa0bd380d6a85a5a641a0486136786bec4dcc090366a880febf80a69b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\screen-comparison.json",
+    "bytes": 11213,
+    "sha256": "81c7b1af171c8637f7eb38f35b13240229d3f267a29f2eaa03f6f19a79b4b6b9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\screen-ids.json",
+    "bytes": 2564,
+    "sha256": "7c475af0c02cf25d5464551a96b7dc6bea935fb17505f64f8c7e1795792a1aa9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\dev-general-direct.jsonl",
+    "bytes": 89108,
+    "sha256": "3ca4157e25ded8a27954cdea802f80b500c03c85bac17a97f1a53aba2c3aca9b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\dev-general-native.jsonl",
+    "bytes": 84570,
+    "sha256": "c2ff920ffdd75b55768a732dd1fac25f5a447a78ba3691e95438ec13c496aca2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 152434,
+    "sha256": "569417a05ae87fe93f3b758a98c5f10f20626190a7aa5e797ca831344ccd4e92"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\dev-maintenance-native.jsonl",
+    "bytes": 178169,
+    "sha256": "ea935e97d7756bd61c31bd26f32ecc589d8580e614031c964529773e784475c8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "7d227fc54bee74cfc4b855cd32f9b578d9d9463c7ed2c66e127ea5ee03670bbe"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen\\attempts\\1793653384318213900\\server-props.json",
+    "bytes": 4552,
+    "sha256": "f8de8604af8c9e5e03481af2d54e25bd00598322ef047b23e84c65be301a70ab"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen\\attempts\\1793653384318213900\\server-start.json",
+    "bytes": 1246,
+    "sha256": "23afc3e9574a9c29d56971c450fbe7e8ba17e83672d5a0a2d587f91f05c5aadc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen\\server-props.json",
+    "bytes": 4552,
+    "sha256": "f8de8604af8c9e5e03481af2d54e25bd00598322ef047b23e84c65be301a70ab"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen\\server-start.json",
+    "bytes": 1246,
+    "sha256": "23afc3e9574a9c29d56971c450fbe7e8ba17e83672d5a0a2d587f91f05c5aadc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen\\server.log",
+    "bytes": 438083,
+    "sha256": "997b805426fb990283e45ba54ee78786f7ff541d53ea06a987938515246a8537"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen-complete.json",
+    "bytes": 1795,
+    "sha256": "a4a7eb610e2657a253122f6ce4bad83b88a8381c7c9c689bb3be65c66d8ea266"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen-episode.jsonl",
+    "bytes": 91126,
+    "sha256": "e06668a06eb6833c67d9b774e8c49b88bb293711d8b6f4cd3c98358b515a2e4d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen-general.jsonl",
+    "bytes": 437583,
+    "sha256": "8a28b78b20fca85ad7207f833fb216fd6aa0b6b4d3c8c4a407f804852b53c208"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen-maintenance.jsonl",
+    "bytes": 615357,
+    "sha256": "bbf5c7210115cf7e9b7074981c0d41ace5c38f95b7224675ac525cc6ce9b11a3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\lfm12-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\dev-general-direct.jsonl",
+    "bytes": 80875,
+    "sha256": "80563f43a58fc506b42882a063e20db22cd759f21147d6fbf545412da53605ec"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\dev-general-native.jsonl",
+    "bytes": 94691,
+    "sha256": "2c840812e878fea5f9ddaebcb28da451148b172261e2311159e0b2ca615cdd21"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 147581,
+    "sha256": "5ce49a3187c54400d6a14d90ebcc95aaa1235bd923e30d16a44abcae9cf38b9e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\dev-maintenance-native.jsonl",
+    "bytes": 207869,
+    "sha256": "f58e410f5911d78875fe4cafc2b41d6a1887147eff1a0d972adbc57d65673c45"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "f0d68f0676fa68b923d885085f6c95033b33d54ce5aa54814d184dab531941bc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen\\attempts\\1793651526255806900\\server-props.json",
+    "bytes": 7718,
+    "sha256": "6a38c371c6fd9d40553cd6442ecbbdebf5cdd44379a1e95d8cdb8f8ff52d830c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen\\attempts\\1793651526255806900\\server-start.json",
+    "bytes": 1205,
+    "sha256": "f3ce312eedb18f28c7337865884c56a20ca6f9dd377a034e8c52adbe2515d6c5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen\\server-props.json",
+    "bytes": 7718,
+    "sha256": "6a38c371c6fd9d40553cd6442ecbbdebf5cdd44379a1e95d8cdb8f8ff52d830c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen\\server-start.json",
+    "bytes": 1205,
+    "sha256": "f3ce312eedb18f28c7337865884c56a20ca6f9dd377a034e8c52adbe2515d6c5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen\\server.log",
+    "bytes": 318160,
+    "sha256": "a7fbabfda1214b89b54681ee36642cc96c28bded6383e34cb053b1118371e41d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen-complete.json",
+    "bytes": 1766,
+    "sha256": "6289feffd8417f1a7ba2db337b21693800ce538b920475add0a11869f7b84479"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen-episode.jsonl",
+    "bytes": 80080,
+    "sha256": "c4b506c40c006a6829581dad2b6f1f8baed53daf8972011b51cee13d699a2291"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen-general.jsonl",
+    "bytes": 427110,
+    "sha256": "9fd0767d05b62a84d0d8337bf4938acc63eaac7114c4365f79eb0aa6fd8146a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen-maintenance.jsonl",
+    "bytes": 593204,
+    "sha256": "55fe228656737449a483abf2aec272b50a43cf9db79345817bae4513fbdf2407"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen06-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\dev-general-direct.jsonl",
+    "bytes": 82742,
+    "sha256": "fa6e1ba81478b2ed5fd289dfb40d8b92c36e943d8b29e91f370d804a905f5346"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\dev-general-native.jsonl",
+    "bytes": 96620,
+    "sha256": "ca50a8595d5fc5b3f1c209d4dd4051ac1da4cbe9646456525bbaf8fcd4d4002f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 143204,
+    "sha256": "9aabb441cb6c3bc03351623e77146a08178dd60fa4a2026cd19841dd507a321e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\dev-maintenance-native.jsonl",
+    "bytes": 190984,
+    "sha256": "df1d150578a7074a6434361bfdb58f145224492c213e548eceb866fe99884e15"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "af5a74d0ad4b90d3497c26e95fd8015f54583b9b794cbe9b64452a49c59680c1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen\\attempts\\1793651652373059500\\server-props.json",
+    "bytes": 7573,
+    "sha256": "c5aa247231d642e3e28efa6a2147797d6dfbcb44fd58eaaba644e7bc6499d838"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen\\attempts\\1793651652373059500\\server-start.json",
+    "bytes": 1206,
+    "sha256": "750d86beb168f91201b2619ce2911988f1f766310a604e686c70216afd88e6fa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen\\server-props.json",
+    "bytes": 7573,
+    "sha256": "c5aa247231d642e3e28efa6a2147797d6dfbcb44fd58eaaba644e7bc6499d838"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen\\server-start.json",
+    "bytes": 1206,
+    "sha256": "750d86beb168f91201b2619ce2911988f1f766310a604e686c70216afd88e6fa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen\\server.log",
+    "bytes": 318920,
+    "sha256": "4239bb73a67c4dbfb7feaa5fe6331911b74c054fd972106165975be9804fc095"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen-complete.json",
+    "bytes": 1768,
+    "sha256": "dc2b66b4b05539d457380c4927ce7c273aed2d9e4006ab6e54f4fa80d6bd5397"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen-episode.jsonl",
+    "bytes": 100460,
+    "sha256": "c76e1c1306e1a0d55ab285ebf842f21e59f9715b47869a835c4d92ca738c0c01"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen-general.jsonl",
+    "bytes": 501325,
+    "sha256": "96ea6d06c44a3d230df1340333821c96430735355941944d426bedbc6ffa8f25"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen-maintenance.jsonl",
+    "bytes": 580601,
+    "sha256": "95af830ed1e5e4345969c55fd3a4b242e8b802ee1c2c46f56cb4bdf0ff47c120"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen17-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\dev-general-direct.jsonl",
+    "bytes": 81829,
+    "sha256": "20285b8e8903c32187b6a20a4ea21048d17371c3a0f063d3b71e44ac5f93f3cd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\dev-general-native.jsonl",
+    "bytes": 118244,
+    "sha256": "edd55d61a7fc5eb8ff046877e31039844996fd3b646f4d555b01919869e842c8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 145532,
+    "sha256": "82ece282c89e13565279e6783164f359e9241230ff849ef59b21b63a4f43700e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\dev-maintenance-native.jsonl",
+    "bytes": 213317,
+    "sha256": "f42d1fcd0520a9a503c8d3c763d741c46b16d7350ec621d43857be645a321d4e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "b23f7b2e520e7a3b45151b10e74a3cc1d4b215acbdb9ff91ac62b9cbcde2d7b9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen\\attempts\\1793652308222315900\\server-props.json",
+    "bytes": 10696,
+    "sha256": "cfeb178cddc3451645bece1c92dd5f7c10491f8a950d95eb1e36bf7b5ca1843a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen\\attempts\\1793652308222315900\\server-start.json",
+    "bytes": 1208,
+    "sha256": "a556e745fd4e0a0c55471fc43a4e6217402a8a8fa15adc9db34e442bd1699d54"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "cfeb178cddc3451645bece1c92dd5f7c10491f8a950d95eb1e36bf7b5ca1843a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen\\server-start.json",
+    "bytes": 1208,
+    "sha256": "a556e745fd4e0a0c55471fc43a4e6217402a8a8fa15adc9db34e442bd1699d54"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen\\server.log",
+    "bytes": 443299,
+    "sha256": "691f265cfc24e86925b703ba12602065b41f1f1616cb628a0c8c019604a1d5c3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen-complete.json",
+    "bytes": 1769,
+    "sha256": "e3df58109147c3c5e77f0b9241495bb52430aa7f170f994966d6d863822c56c9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen-episode.jsonl",
+    "bytes": 85085,
+    "sha256": "42750421044e78150903eeb9fac63d73735a3ac4d612bbc844ab56fa1eebf72c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen-general.jsonl",
+    "bytes": 416516,
+    "sha256": "db44bd52a30f97ec4e1a2272aecd7e81a3b9107382189693aae8e63830994618"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen-maintenance.jsonl",
+    "bytes": 586569,
+    "sha256": "f391050740a67b0cfd91eda0a6738a706dc31de5708a8685ab95a18f812f235b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-2-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\dev-general-direct.jsonl",
+    "bytes": 84754,
+    "sha256": "f255265b164c97be8bb44f0367c6c8f5234432fae5f38abc8e0faa01fb76289c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\dev-general-native.jsonl",
+    "bytes": 115922,
+    "sha256": "55912f70e439c45dfcdfa88364a6791ccf4552d4c51e12d72fb228ba27e2298f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 142354,
+    "sha256": "f31b3cc36a620103829f5c2ecf5e7a7d2d33c5b8498c4eb43e46978d970f997c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\dev-maintenance-native.jsonl",
+    "bytes": 209802,
+    "sha256": "4c90abc291fc1885727bb0000f660ebb1f5f81371f6a53c4b716999d6a4aa998"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "108952663a45e0bde94f0317d5592bc9fca14d1e9042cf6193280af8e83a02c5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen\\attempts\\1793652545770743400\\server-props.json",
+    "bytes": 10696,
+    "sha256": "195fd1911c04f1ee21bddd7112c9dc24abc4cacd7fdf6575fadb17387b0007d4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen\\attempts\\1793652545770743400\\server-start.json",
+    "bytes": 1208,
+    "sha256": "c1d2190da7208b25eb2f82776c468f4fc1876d792d42710ab097ca52f31d59b4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "195fd1911c04f1ee21bddd7112c9dc24abc4cacd7fdf6575fadb17387b0007d4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen\\server-start.json",
+    "bytes": 1208,
+    "sha256": "c1d2190da7208b25eb2f82776c468f4fc1876d792d42710ab097ca52f31d59b4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen\\server.log",
+    "bytes": 462092,
+    "sha256": "08c17bd46125ee27e3ed69594604a8504e307ec2884b9e117cf2360106245a27"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen-complete.json",
+    "bytes": 1767,
+    "sha256": "f3e6dddd342d30a4ed15f8140b3756458ab6ccc504836e4b3906f2fcdff9672f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen-episode.jsonl",
+    "bytes": 84631,
+    "sha256": "20e33abba54dd459d878b32d9dfef6c2db8632c4fffb50c5556a644269b61479"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen-general.jsonl",
+    "bytes": 416568,
+    "sha256": "1bd1c0ab7b171555d835556fdd5e5d22695175bc4e0bbd4846ee074f3c7bcf06"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen-maintenance.jsonl",
+    "bytes": 577041,
+    "sha256": "fcdd4576ceaba9a1bece8d9039cb4d328d0cc9febb395d819ded775c7543a6fc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen35-4-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\dev-general-direct.jsonl",
+    "bytes": 80928,
+    "sha256": "b4a6382adf39d5bf1617fa82a54c97151df833e32f3a13a19c9de7d4bda10f24"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\dev-general-native.jsonl",
+    "bytes": 97403,
+    "sha256": "6b875cdc3b7d0eb876e5f1828b3db67524255e5a6ec7f4fcd1c4e7ac455800be"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 142525,
+    "sha256": "8688a946fcd16562673761632db9873347ecc572559f49686b85535cc5f566ee"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\dev-maintenance-native.jsonl",
+    "bytes": 190488,
+    "sha256": "2dc776faa32f5721b76bc0bff76be859366f3479b36026cde3bdd55c1379f95e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "5880c2995d08985b20b77cf0a3fbd80f6fabc289cd501bd36af90baaf6bda4e0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen\\attempts\\1793651860080885800\\server-props.json",
+    "bytes": 6871,
+    "sha256": "729f1ded7da64e3e7929a12e649d578c545d490ae9af46d5d44a8a8c4216f7fd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen\\attempts\\1793651860080885800\\server-start.json",
+    "bytes": 1253,
+    "sha256": "348e127606c8e8f7d737a979372b71b6f53b0e09f26241abf8a233c55572b549"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen\\server-props.json",
+    "bytes": 6871,
+    "sha256": "729f1ded7da64e3e7929a12e649d578c545d490ae9af46d5d44a8a8c4216f7fd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen\\server-start.json",
+    "bytes": 1253,
+    "sha256": "348e127606c8e8f7d737a979372b71b6f53b0e09f26241abf8a233c55572b549"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen\\server.log",
+    "bytes": 320691,
+    "sha256": "51dff8e5406264fc4351eba542947844f86b7a00964b7d1f348d3a82d57454ea"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen-complete.json",
+    "bytes": 1803,
+    "sha256": "1c96a5520495943f99e86c14d1561ccde286f3320c12a55b4ac6c239291e95c2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen-episode.jsonl",
+    "bytes": 85314,
+    "sha256": "c1c12e25db3fb3e8fcb4b7fdd94ea44b5b7d83e89e97046aaed718d92475c35e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen-general.jsonl",
+    "bytes": 421474,
+    "sha256": "ecd853956506fd87731d2aeb763a4f59a36fad93d9badae8b4fd9838c8005861"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen-maintenance.jsonl",
+    "bytes": 581839,
+    "sha256": "f104651eb31c1d3051ed044c34f4adcdd35d454a865a459fc72b6254b4f20520"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\qwen4-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\dev-general-direct.jsonl",
+    "bytes": 96892,
+    "sha256": "92a116d94e536ea0370c80b80ab5bb6004a6613c635a7ef952d812588550eaed"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\dev-general-native.jsonl",
+    "bytes": 77222,
+    "sha256": "6f581f776587ff3d66c3151275f466f81226105b6e40e7e2578aa0bf2d5077dc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 149619,
+    "sha256": "e8f20526610f311cbffaad1422df01c5a6837fdd372ab3c8c754ae7f0e42e29a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\dev-maintenance-native.jsonl",
+    "bytes": 169577,
+    "sha256": "b96bb01e1b8699e59b97e02f08356346f085383320aa4f13682f6d56eb76218b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "8f700a65662e8045781f34873e13a4c2abe46e22d8b7a029588e733456a1ca16"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen\\attempts\\1793653526543457700\\server-props.json",
+    "bytes": 8928,
+    "sha256": "c6d6a2ac8f69494db9d57a706f28083f7dd913a7105b14796f56ebd004e8ebe0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen\\attempts\\1793653526543457700\\server-start.json",
+    "bytes": 1205,
+    "sha256": "87b03f0afe28897130f4a14a5b8712266029cb63108fed6cf632d2d212bdd68a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen\\server-props.json",
+    "bytes": 8928,
+    "sha256": "c6d6a2ac8f69494db9d57a706f28083f7dd913a7105b14796f56ebd004e8ebe0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen\\server-start.json",
+    "bytes": 1205,
+    "sha256": "87b03f0afe28897130f4a14a5b8712266029cb63108fed6cf632d2d212bdd68a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen\\server.log",
+    "bytes": 327247,
+    "sha256": "feddbefdd32e760f0e4278ccaaeb0d0eb2c677f95898948576a54f20e7e25a5a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen-complete.json",
+    "bytes": 1766,
+    "sha256": "5eb2eeefb51583fd31f628e6d28082ff87fc1ac732c52d6bfe0fe04ce566f3c0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen-episode.jsonl",
+    "bytes": 104521,
+    "sha256": "a90c8fb7babeb330c7a8209c3d09f32f9bca57c84098e2f844798fe807e3a990"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen-general.jsonl",
+    "bytes": 493751,
+    "sha256": "497b8eb6c63ad31f522ce2525e87fbfb0542fd26a97e43727bc99b8297915b33"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen-maintenance.jsonl",
+    "bytes": 619682,
+    "sha256": "1fde7bd86633367c7f7c62e98535edff2b0baf6a750dcd9d9d1c99d2982311b3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\smol3-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\dev-general-direct.jsonl",
+    "bytes": 85485,
+    "sha256": "f973d50f0344efadcbe5d4213e3b0bf7c85657cf62883e557cb52d47a734cd68"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\dev-general-native.jsonl",
+    "bytes": 100309,
+    "sha256": "9a151ac745348f4bae20fee4a2c47bcd25d3072f68e429eea8f40a8ff907d761"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 144324,
+    "sha256": "a4868a7a0b320af6f25f8f23a3ff2c98ce86a89c2c781cd99b3058b3213483af"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\dev-maintenance-native.jsonl",
+    "bytes": 183639,
+    "sha256": "a74bfa9a5723b847e83beda570bf2c81d8e09835252125ff62459cdedcabf2f2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "3b93a235babebec65afd18c2f11929caf18263012e8e3d629bf9f1aab2cecb0d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen\\attempts\\1793653069632913200\\server-props.json",
+    "bytes": 5486,
+    "sha256": "48bb51fe2f06c8ded4885b6fcadef2400d47450f7add36b18ed34767be10cc9a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen\\attempts\\1793653069632913200\\server-start.json",
+    "bytes": 1225,
+    "sha256": "7476374540eb130d9a62238af3a567f76d01e35666f26ae8a2f5e1cfaa6318de"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen\\server-props.json",
+    "bytes": 5486,
+    "sha256": "48bb51fe2f06c8ded4885b6fcadef2400d47450f7add36b18ed34767be10cc9a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen\\server-start.json",
+    "bytes": 1225,
+    "sha256": "7476374540eb130d9a62238af3a567f76d01e35666f26ae8a2f5e1cfaa6318de"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen\\server.log",
+    "bytes": 317397,
+    "sha256": "bf2e4e403b9cb26c4b5bffc096182827f8c9106cc78f369f80c4fef71dda0b76"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen-complete.json",
+    "bytes": 1780,
+    "sha256": "cdde9f369746b0f909ddc6ba06e80e14fc0a883fcaa208ce61d91360e287f9fd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen-episode.jsonl",
+    "bytes": 85657,
+    "sha256": "84a0c247a87609c20621f71511b32d59675a915a1f127e7701abbc7d742f65e0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen-general.jsonl",
+    "bytes": 426389,
+    "sha256": "4a18ecf90169f0aed69c702250183c8c8ca7d215f0aa2f3f698ffcc7b476b379"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen-maintenance.jsonl",
+    "bytes": 585413,
+    "sha256": "047a8ff28411b2709c40d4ab9cacd738b43b3467a709708f92623691583bea27"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-original\\xlam3-q4\\screen-source-35e538887d45.py",
+    "bytes": 44941,
+    "sha256": "35e538887d45128886c9c79f5e89526a73ef5d5caf7c7d1539410f57324cb0a4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\lfm12-q4\\attempts\\1793654694936203000\\server-props.json",
+    "bytes": 4551,
+    "sha256": "7593f5b1bab71056241a890e8b2b2321a1de32d497a9ee57eebb5897cc6ec664"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\lfm12-q4\\attempts\\1793654694936203000\\server-start.json",
+    "bytes": 1239,
+    "sha256": "af16fba47eff48915b0bd2aadffbcff4064f85e6cb230b4b74219c22b19235cf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\lfm12-q4\\attempts\\1793655045532555400\\server-props.json",
+    "bytes": 4551,
+    "sha256": "c591eaabf3518fa85234dcf26357c7264ca4d5cfffd4fd974bbebea00bce50b5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\lfm12-q4\\attempts\\1793655045532555400\\server-start.json",
+    "bytes": 1240,
+    "sha256": "7d4b1ed8b698dc9ae107119399fff4b433dbad9a0f24e425a7c031baddaef34d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\lfm12-q4\\server-props.json",
+    "bytes": 4551,
+    "sha256": "c591eaabf3518fa85234dcf26357c7264ca4d5cfffd4fd974bbebea00bce50b5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\lfm12-q4\\server-start.json",
+    "bytes": 1240,
+    "sha256": "7d4b1ed8b698dc9ae107119399fff4b433dbad9a0f24e425a7c031baddaef34d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\lfm12-q4\\server.log",
+    "bytes": 30483,
+    "sha256": "b6696fb32a9cf067e96e319f6da2e0f637ac74e96a3544f91d354cef62ed349d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen06-q4\\attempts\\1793654614166418000\\server-props.json",
+    "bytes": 7717,
+    "sha256": "ca70d520f42fdd93d8563db2d36a7c18e09fdbb203fbcaaac1c019730621653a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen06-q4\\attempts\\1793654614166418000\\server-start.json",
+    "bytes": 1199,
+    "sha256": "81fa99dc2ef6afbc63e545fbf14355c1ff45e11c986e851d64167e891b72c83b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen06-q4\\attempts\\1793654974988637200\\server-props.json",
+    "bytes": 7717,
+    "sha256": "1ee75d2f55f7ab25d6ce7a150e4fb93937531a80b80c989941b6986a48daf479"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen06-q4\\attempts\\1793654974988637200\\server-start.json",
+    "bytes": 1199,
+    "sha256": "be3e4a4b5e6c6510718d9ab2b1ae266fc06528ca76c970e0f2c5804bd7af5b3e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen06-q4\\server-props.json",
+    "bytes": 7717,
+    "sha256": "1ee75d2f55f7ab25d6ce7a150e4fb93937531a80b80c989941b6986a48daf479"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen06-q4\\server-start.json",
+    "bytes": 1199,
+    "sha256": "be3e4a4b5e6c6510718d9ab2b1ae266fc06528ca76c970e0f2c5804bd7af5b3e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen06-q4\\server.log",
+    "bytes": 31418,
+    "sha256": "6162995b63d9b06742c4cdf358791294930f20c31afa6563633b4ab288c4fe92"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen17-q4\\attempts\\1793654626076168800\\server-props.json",
+    "bytes": 7572,
+    "sha256": "60d3b76fb63fc236766e28e5eb03443dfea96c6bf89c0610a5b5c4ae49172237"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen17-q4\\attempts\\1793654626076168800\\server-start.json",
+    "bytes": 1200,
+    "sha256": "6228e002fa1e304058bb584e458b7d61cb22e06670f96dde5532577580cba702"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen17-q4\\attempts\\1793654983888943200\\server-props.json",
+    "bytes": 7572,
+    "sha256": "85d848ceeed8bebcc2d90c8221bc6950535efeba6e5b0053f338aecf6532c56d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen17-q4\\attempts\\1793654983888943200\\server-start.json",
+    "bytes": 1200,
+    "sha256": "af3727c23093237e781b14424e1242257c8674c977c9a060c06cf011a757b6d9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen17-q4\\server-props.json",
+    "bytes": 7572,
+    "sha256": "85d848ceeed8bebcc2d90c8221bc6950535efeba6e5b0053f338aecf6532c56d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen17-q4\\server-start.json",
+    "bytes": 1200,
+    "sha256": "af3727c23093237e781b14424e1242257c8674c977c9a060c06cf011a757b6d9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen17-q4\\server.log",
+    "bytes": 31416,
+    "sha256": "8aa690174bf027678cfe33f11562fcd695046ff840f7ee8f060a53541310460f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-2-q4\\attempts\\1793654656879663700\\server-props.json",
+    "bytes": 10695,
+    "sha256": "ca8848b62094522bf45420264355d827913e1ad4a4a8a7264ab0420768e14246"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-2-q4\\attempts\\1793654656879663700\\server-start.json",
+    "bytes": 1202,
+    "sha256": "be1575dfe3ea9b7fba33c238084e9764d50dd90df5ad4ebb28391a594667a99d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-2-q4\\attempts\\1793655013583113100\\server-props.json",
+    "bytes": 10695,
+    "sha256": "47cc63df1fcdbe4166b62f73a7bac2cdecde6903148fc708fb31ff708142df63"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-2-q4\\attempts\\1793655013583113100\\server-start.json",
+    "bytes": 1202,
+    "sha256": "f727863902da3b98c0a1a1874d3aa52a32d64e581e802a2f7dfa788df17fa388"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-2-q4\\server-props.json",
+    "bytes": 10695,
+    "sha256": "47cc63df1fcdbe4166b62f73a7bac2cdecde6903148fc708fb31ff708142df63"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-2-q4\\server-start.json",
+    "bytes": 1202,
+    "sha256": "f727863902da3b98c0a1a1874d3aa52a32d64e581e802a2f7dfa788df17fa388"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-2-q4\\server.log",
+    "bytes": 36054,
+    "sha256": "cfa5a189a6a69358313683693b96af231a62ca42e6346c0cbd4e25c2c8615ca1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-4-q4\\attempts\\1793654675517971500\\server-props.json",
+    "bytes": 10695,
+    "sha256": "fe33da8e667e93a5ede64519940e89b9117a2194e9aa4dcb7390c4524318ecec"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-4-q4\\attempts\\1793654675517971500\\server-start.json",
+    "bytes": 1202,
+    "sha256": "e896df0be2b64496e5fb617224349339b3235fe8b924e0e4eeaaae362005e0e9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-4-q4\\attempts\\1793655027637406300\\server-props.json",
+    "bytes": 10695,
+    "sha256": "20174aec99450494ed2f536dcd6f672a6131d054ec278ea29a38c11e2d4836d7"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-4-q4\\attempts\\1793655027637406300\\server-start.json",
+    "bytes": 1202,
+    "sha256": "abedceb88cde24cdb994e5e3578b573112408537f85d4c7dc86b819f6704ef59"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-4-q4\\server-props.json",
+    "bytes": 10695,
+    "sha256": "20174aec99450494ed2f536dcd6f672a6131d054ec278ea29a38c11e2d4836d7"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-4-q4\\server-start.json",
+    "bytes": 1202,
+    "sha256": "abedceb88cde24cdb994e5e3578b573112408537f85d4c7dc86b819f6704ef59"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen35-4-q4\\server.log",
+    "bytes": 36062,
+    "sha256": "25da2dbc8888c3ea8bd419cdbbd8e3480c3d74e04b628fb9d3873ba61d2002f0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen4-q4\\attempts\\1793654646289193100\\server-props.json",
+    "bytes": 6870,
+    "sha256": "a92d3c31784ca3504b5969a1a283e54d56a5b749b4b4948a53f1918ac26436a8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen4-q4\\attempts\\1793654646289193100\\server-start.json",
+    "bytes": 1248,
+    "sha256": "be6bbc61e3e10ef52f397239ebd3647007776b225eafe05fd6c3660fa0555e2e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen4-q4\\attempts\\1793655002715616100\\server-props.json",
+    "bytes": 6870,
+    "sha256": "36bfac27effc4398fe8f3d0510dfebde71a95f5d0b34d981637e5062ef891290"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen4-q4\\attempts\\1793655002715616100\\server-start.json",
+    "bytes": 1248,
+    "sha256": "ca39f1c18f8497b723fed290117fcad31c500055c8802faf94884eb19285a5b4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen4-q4\\server-props.json",
+    "bytes": 6870,
+    "sha256": "36bfac27effc4398fe8f3d0510dfebde71a95f5d0b34d981637e5062ef891290"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen4-q4\\server-start.json",
+    "bytes": 1248,
+    "sha256": "ca39f1c18f8497b723fed290117fcad31c500055c8802faf94884eb19285a5b4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\qwen4-q4\\server.log",
+    "bytes": 34082,
+    "sha256": "201df48318057f3e884cebb524aa3817134a4c43852fd6a853285a97220e0d1b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\smol3-q4\\attempts\\1793654707750051200\\server-props.json",
+    "bytes": 8927,
+    "sha256": "1b763d3560e4231de091316e2a06e2e80a033c21fc867efceb360593b9fb819e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\smol3-q4\\attempts\\1793654707750051200\\server-start.json",
+    "bytes": 1197,
+    "sha256": "a71ea27ae12a06c5b9e577e99c9a962157fc9e55595153a8925b93796fa45b1c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\smol3-q4\\attempts\\1793655055479304500\\server-props.json",
+    "bytes": 8927,
+    "sha256": "20ec3accac688db1bf9b57f06de16957749f54387698e8f8f6a642a92307423d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\smol3-q4\\attempts\\1793655055479304500\\server-start.json",
+    "bytes": 1198,
+    "sha256": "98481323943b7d3ce01d80fe9fe15578cc8ff245972e6e3bb6ce362550dfe9e6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\smol3-q4\\server-props.json",
+    "bytes": 8927,
+    "sha256": "20ec3accac688db1bf9b57f06de16957749f54387698e8f8f6a642a92307423d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\smol3-q4\\server-start.json",
+    "bytes": 1198,
+    "sha256": "98481323943b7d3ce01d80fe9fe15578cc8ff245972e6e3bb6ce362550dfe9e6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\smol3-q4\\server.log",
+    "bytes": 31446,
+    "sha256": "70bc736ec0b56ca13901dac04543178e8710455cde7575b59d34fee2a2a13b98"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\xlam3-q4\\attempts\\1793654687283335300\\server-props.json",
+    "bytes": 5485,
+    "sha256": "d93abc794df49a571d01612c2fc8977074057dc236953648e28bd49a271da280"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\xlam3-q4\\attempts\\1793654687283335300\\server-start.json",
+    "bytes": 1218,
+    "sha256": "6010573daca8ff790f41379d882a1f7966f29e50f549fccaad9e510385540ec8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\xlam3-q4\\attempts\\1793655038241178900\\server-props.json",
+    "bytes": 5485,
+    "sha256": "4e6dc24d1eff7e0d28884843ef5dc979ec0c5cb2578ea2303bf6e87dfa334bdd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\xlam3-q4\\attempts\\1793655038241178900\\server-start.json",
+    "bytes": 1218,
+    "sha256": "121c65a27ec43abac04a318049fc1307e64e66c208804275d424e10805d13d0a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\xlam3-q4\\server-props.json",
+    "bytes": 5485,
+    "sha256": "4e6dc24d1eff7e0d28884843ef5dc979ec0c5cb2578ea2303bf6e87dfa334bdd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\xlam3-q4\\server-start.json",
+    "bytes": 1218,
+    "sha256": "121c65a27ec43abac04a318049fc1307e64e66c208804275d424e10805d13d0a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-servers\\xlam3-q4\\server.log",
+    "bytes": 30117,
+    "sha256": "6ed42041bec2cf24babeb4a01bc1577eedb07606bdddbc449291d4fc6485811e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r3\\token-replay-summary.json",
+    "bytes": 13124,
+    "sha256": "44ee0d99f89b62c0f63db3e5e4e79975b631d59b82e6934801e86789e00c1bfe"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\demonstrations.jsonl",
+    "bytes": 1911,
+    "sha256": "95bd942fdc49c62b78341e741cb415ecd2d1c6cf54f1bb52e39a32a23f2587f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\development.jsonl",
+    "bytes": 26368,
+    "sha256": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\downloads\\qwen8-q2.json",
+    "bytes": 557,
+    "sha256": "07c86269304ae4170374ba1a8db5cdad3ec0505bae5e9b4ead04950cfd4d7d0e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\evaluation.jsonl",
+    "bytes": 509084,
+    "sha256": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\independent-rescore.json",
+    "bytes": 62012,
+    "sha256": "43257461604f367abaf3804b18d84272baa362d591877cf5ae1cf56fcdede2c9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793654009937346800\\invocation.json",
+    "bytes": 921,
+    "sha256": "d0594306a96f9b49f7ca34adbb14547995883a3d3014f89b9fd46dbf76cc8890"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793654009937346800\\runner.py",
+    "bytes": 45820,
+    "sha256": "affe887fed2c47e08e27f35b9d34287b68ca1cdc24a4eb261e86c3bd4e6f0e0d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793655929654041500\\invocation.json",
+    "bytes": 921,
+    "sha256": "f75f455f3dc89d231c17794610d3321e1da354ed6f774bec4757e7bb7e4dfbbb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793655929654041500\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793656172256233800\\invocation.json",
+    "bytes": 921,
+    "sha256": "f75f455f3dc89d231c17794610d3321e1da354ed6f774bec4757e7bb7e4dfbbb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793656172256233800\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793659789767500300\\invocation.json",
+    "bytes": 922,
+    "sha256": "c7282eba5daf7404dcac61ebeb883740663c7652c1ea37845f9b47aa4a1de1ec"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\invocations\\1793659789767500300\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\models.json",
+    "bytes": 473,
+    "sha256": "4376efde96c24e9060c930302df1f33ffee17ac542ca5325b049835e966e42e0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\promotion-decision.json",
+    "bytes": 399,
+    "sha256": "7f7369b5b2f29454f3a346d1a4f1340477f42e17765caf497c29ef2c71a2bba1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\protocol.json",
+    "bytes": 5405,
+    "sha256": "78236f52e383cd47436e5628ea85a7a9ad9607c40f1a95745d727f3b79713cab"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\RESULTS.md",
+    "bytes": 1974,
+    "sha256": "28cbaaee7f765972642fe2ad4e8a829084018e08e5c8b6f79d7f72594d4b559f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm\\attempts\\1793659802925032700\\server-props.json",
+    "bytes": 7723,
+    "sha256": "8d488a3ae57ea3c5a6a7477653a2a052b1b2bdc2fc7a045752b1b90a2ce5979e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm\\attempts\\1793659802925032700\\server-start.json",
+    "bytes": 1215,
+    "sha256": "41d8b2a801d07c993c90b5824d4698a8763a3be15fa5f10c86f52bcd81843934"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm\\server-props.json",
+    "bytes": 7723,
+    "sha256": "8d488a3ae57ea3c5a6a7477653a2a052b1b2bdc2fc7a045752b1b90a2ce5979e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm\\server-start.json",
+    "bytes": 1215,
+    "sha256": "41d8b2a801d07c993c90b5824d4698a8763a3be15fa5f10c86f52bcd81843934"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm\\server.log",
+    "bytes": 869174,
+    "sha256": "cabe03cb63a3da734366daff9afa690e5f62fc9042065047799e8d3fc30b724b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm-complete.json",
+    "bytes": 1792,
+    "sha256": "33e87b6b43c9558ddc034c302e0ec4a11f9c6bc2bffac69fc29e8302116ae89a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm-episode.jsonl",
+    "bytes": 172429,
+    "sha256": "899ed494b428ab744aa5c9fbe22ad4641db22342a3070a3d829bae8542ae7ac5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm-general.jsonl",
+    "bytes": 1723651,
+    "sha256": "a9196f6fc2a929448c9a02e25b5244724325aaac4f6710b31c3fe212d5de5e6a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm-maintenance.jsonl",
+    "bytes": 3068316,
+    "sha256": "23549fadd447382bf903b80fcc2c1ff4c41d349cd907d50ee3639d69070054a8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\confirm-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\dev-general-direct.jsonl",
+    "bytes": 88196,
+    "sha256": "8eb2692c94b390d585dca7ece597a84f5fabd4ef9de5623956658ea1fef3c9e9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\dev-general-native.jsonl",
+    "bytes": 103513,
+    "sha256": "8bb143d61ed73c7e05fe8435d26adc27c219f10f75d9bd5b10413d33e57855c3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\dev-maintenance-direct.jsonl",
+    "bytes": 151376,
+    "sha256": "328094cf16af287add73e73e1127336422a85a3523bd41bc807525b8d364037d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\dev-maintenance-native.jsonl",
+    "bytes": 201394,
+    "sha256": "9ae59c91259835a00f8e5488e019601290593440edd49fc97060cb3898f1a29f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\routes.json",
+    "bytes": 189,
+    "sha256": "c5ffbda324a89faf9bad0e015e84a9f24b93cf310fa506f32a310d6dceb730f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen\\attempts\\1793654023099515700\\server-props.json",
+    "bytes": 7723,
+    "sha256": "a47bf53152aa422c883770775b9836c942a42f008b634df9e00d9790ab2d1fb9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen\\attempts\\1793654023099515700\\server-start.json",
+    "bytes": 1215,
+    "sha256": "6cea2a714bd35a3ccde290978e723c49a0568bdd2519083dbff6b866bead6f89"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen\\server-props.json",
+    "bytes": 7723,
+    "sha256": "a47bf53152aa422c883770775b9836c942a42f008b634df9e00d9790ab2d1fb9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen\\server-start.json",
+    "bytes": 1215,
+    "sha256": "6cea2a714bd35a3ccde290978e723c49a0568bdd2519083dbff6b866bead6f89"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen\\server.log",
+    "bytes": 337106,
+    "sha256": "ce617ea6f78fcf008257b53991fe4339104c804e21527916f826d680853f51da"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen-complete.json",
+    "bytes": 1881,
+    "sha256": "95aeff505e2a1b07a2a1a184ddd898ebb0dd96a36f039b4018ed661a05c2afdc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen-episode.jsonl",
+    "bytes": 89333,
+    "sha256": "32c3a8d1fe655f298ae53f634301c54897caddb2d066ebb440a6b75d3ff6f0ed"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen-general.jsonl",
+    "bytes": 454451,
+    "sha256": "c10ec718a124739fb4f4ebe78c988a1734b8e6daf164298cb963f36cb465ad31"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen-maintenance.jsonl",
+    "bytes": 815564,
+    "sha256": "b10d301b45a8e2c29a07933443ac8b218316a22753793be1a63123f07fc71563"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\screen-source-affe887fed2c.py",
+    "bytes": 45820,
+    "sha256": "affe887fed2c47e08e27f35b9d34287b68ca1cdc24a4eb261e86c3bd4e6f0e0d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\runs\\qwen8-q2\\token-replay-complete.json",
+    "bytes": 844,
+    "sha256": "dc9c015f41eb035008c3481c4e6139129bc58490a483c8fae2bacd43a1309fc4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\screen-ids.json",
+    "bytes": 2564,
+    "sha256": "7c475af0c02cf25d5464551a96b7dc6bea935fb17505f64f8c7e1795792a1aa9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\source-metadata.json",
+    "bytes": 9800,
+    "sha256": "095bf3cef0f32db449955e7b5260c9ed068c77c0c3604ec791a0222b64cabf6d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\dev-general-direct.jsonl",
+    "bytes": 82318,
+    "sha256": "71bd74ab45d723a0a0b969655e5660337b86aee69ef3802b74a14f3e9371a0ab"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\dev-general-native.jsonl",
+    "bytes": 96791,
+    "sha256": "678cc9fdb817566bd5c62f0075a16422d4412ded0a72dbf3dce3a05465932a18"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\dev-maintenance-direct.jsonl",
+    "bytes": 145531,
+    "sha256": "ea2359a04ad5878de415a7289d0bf80e0c435652c1c5a536996d83e8bf4c305f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\dev-maintenance-native.jsonl",
+    "bytes": 193748,
+    "sha256": "4d1366defd1f6b64ee889efb265cf3e9e8d1d0b8670d75db8b4933964ec8fe49"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\routes.json",
+    "bytes": 189,
+    "sha256": "97276e606cd92287547ce2b38954d184c2c13143cdf8aa87c578f5b23c9b93f0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen\\attempts\\1793654023099515700\\server-props.json",
+    "bytes": 7723,
+    "sha256": "a47bf53152aa422c883770775b9836c942a42f008b634df9e00d9790ab2d1fb9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen\\attempts\\1793654023099515700\\server-start.json",
+    "bytes": 1215,
+    "sha256": "6cea2a714bd35a3ccde290978e723c49a0568bdd2519083dbff6b866bead6f89"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen\\server-props.json",
+    "bytes": 7723,
+    "sha256": "a47bf53152aa422c883770775b9836c942a42f008b634df9e00d9790ab2d1fb9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen\\server-start.json",
+    "bytes": 1215,
+    "sha256": "6cea2a714bd35a3ccde290978e723c49a0568bdd2519083dbff6b866bead6f89"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen\\server.log",
+    "bytes": 337106,
+    "sha256": "ce617ea6f78fcf008257b53991fe4339104c804e21527916f826d680853f51da"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen-complete.json",
+    "bytes": 1780,
+    "sha256": "41b17543fb8edcea292034ca635ca0dc10ad7526be144e1f35b7d17743f1f9d8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen-episode.jsonl",
+    "bytes": 85279,
+    "sha256": "82d7173af16ec383d1179dacf712cc3f2716ee71b48924e14b3fffaebfbf7a96"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen-general.jsonl",
+    "bytes": 425457,
+    "sha256": "99602e29698322f56b06a050c83988c66020892d45e6cdded743263971967052"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen-maintenance.jsonl",
+    "bytes": 784249,
+    "sha256": "6d5485ff4429915447aacfdb5c99d7840729b9c49db09ff8d5f6f4c741d3f3f8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-original\\qwen8-q2\\screen-source-affe887fed2c.py",
+    "bytes": 45820,
+    "sha256": "affe887fed2c47e08e27f35b9d34287b68ca1cdc24a4eb261e86c3bd4e6f0e0d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-servers\\qwen8-q2\\attempts\\1793655259745335800\\server-props.json",
+    "bytes": 7722,
+    "sha256": "436778c799e5577d33428168bc0d15b426d3a07fdd7544ac0af93267aae83e55"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-servers\\qwen8-q2\\attempts\\1793655259745335800\\server-start.json",
+    "bytes": 1209,
+    "sha256": "26aa57c246d9c52d4c1e5d0cb5dda93b179270b93c5ce17595ee349e605d492b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-servers\\qwen8-q2\\server-props.json",
+    "bytes": 7722,
+    "sha256": "436778c799e5577d33428168bc0d15b426d3a07fdd7544ac0af93267aae83e55"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-servers\\qwen8-q2\\server-start.json",
+    "bytes": 1209,
+    "sha256": "26aa57c246d9c52d4c1e5d0cb5dda93b179270b93c5ce17595ee349e605d492b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-servers\\qwen8-q2\\server.log",
+    "bytes": 15760,
+    "sha256": "e7bdb8a6f90c5c8a24fdd2ff45b7caae04435ebd4021f1d0d4288bdd6a1bfbbf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-boundary\\token-replay-summary.json",
+    "bytes": 1319,
+    "sha256": "233a951aeb748f2f703a526a8aaac9b2c7143bbf26f996f5b7f42b2c6a65b28c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\conversion.log",
+    "bytes": 64359,
+    "sha256": "cc7f597f89e25867d053c0343ccb7db339a7c363d61b66dc5d6e2e560fe4282d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\demonstrations.jsonl",
+    "bytes": 1911,
+    "sha256": "95bd942fdc49c62b78341e741cb415ecd2d1c6cf54f1bb52e39a32a23f2587f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\development.jsonl",
+    "bytes": 26368,
+    "sha256": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\evaluation.jsonl",
+    "bytes": 509084,
+    "sha256": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\export-receipt.json",
+    "bytes": 1430,
+    "sha256": "c905ff8e43dbf83d3bb35fd5ae04e13d83a42159cb86d1c782b03229576de1a1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\gguf-audits\\qwen06-sft-q4.json",
+    "bytes": 61876,
+    "sha256": "49a8a9b468a127359b14727fdeb006eb4509bb1ffde209c7a77835a59f4b47f1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\gguf-audits\\qwen06-sft-q8.json",
+    "bytes": 61835,
+    "sha256": "86f8d7e38553ee22c70981d9a06f19108b087470da13c7a5d33be5dd1afd8aaf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\independent-rescore.json",
+    "bytes": 56761,
+    "sha256": "ead7e37013d87e0f3712693df88fae61622a36f0a8f65cfe2912fffc1d2e0aaf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\invocations\\1793655931341373500\\invocation.json",
+    "bytes": 948,
+    "sha256": "edfd025251705c05b476216126c815984e42c03d6eaa3157688fb80c999e491c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\invocations\\1793655931341373500\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\invocations\\1793656174009844700\\invocation.json",
+    "bytes": 948,
+    "sha256": "edfd025251705c05b476216126c815984e42c03d6eaa3157688fb80c999e491c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\invocations\\1793656174009844700\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\models.json",
+    "bytes": 1405,
+    "sha256": "bd57912c3ec87fa9af37b38904986c569c6be7d86ffff5c91f2dda631ce8f358"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\preparation-complete.json",
+    "bytes": 1871,
+    "sha256": "72a488e73dde1890560971382be1c1afa7799da3a2b6815c4024bcff3443b34e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\protocol.json",
+    "bytes": 6237,
+    "sha256": "c5b6cb96792385f46da875dfc8f74e2f44f2c705e9a539ac9884a62dd0a5d52a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\quantize-q4.log",
+    "bytes": 49461,
+    "sha256": "6d7930852ecae1694683c52edacbe98faa2603dff84516e8e8364b07e000ec31"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\quantize-q8.log",
+    "bytes": 49461,
+    "sha256": "aced6a635886d445a277aabcafcb26ff243a398e64fe726f1874b817472332b7"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\RESULTS.md",
+    "bytes": 1996,
+    "sha256": "bdc949a8e386ddf2ee3fc2dc9f24546d54416139c0e440d6b10092012167cf89"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\dev-general-direct.jsonl",
+    "bytes": 78572,
+    "sha256": "eb7edf8277dd8eb775783492542c6efab50229dd7c0922fc5af44996d5cfb2bb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\dev-general-native.jsonl",
+    "bytes": 95288,
+    "sha256": "397e6136b9c588e061e2bc00902745d1a62773196df2e9a925809b218cc4ef23"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 145520,
+    "sha256": "32fc73e755ae4eb0a693292d6f58fda3855a2d9da82e48c7b7b5f1d638d95e8e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\dev-maintenance-native.jsonl",
+    "bytes": 182543,
+    "sha256": "37827aa1f534032c27a5df80272291725e74461de88c6df1c8af566f00acd7ce"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "335fed991245f9cbd41c2e461e93bbfec6cffe4169b73416bffdd2b5ce2802cf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen\\attempts\\1793655935421101900\\server-props.json",
+    "bytes": 7054,
+    "sha256": "a036e3012efa40f4618a7183b73f4aa29cba10ab3ca7c5106289238c54f1cca9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen\\attempts\\1793655935421101900\\server-start.json",
+    "bytes": 1483,
+    "sha256": "91aacb7457131bd9d3ac9280cb077a117b942c444c49760b64cec4c196dd22d6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen\\server-props.json",
+    "bytes": 7054,
+    "sha256": "a036e3012efa40f4618a7183b73f4aa29cba10ab3ca7c5106289238c54f1cca9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen\\server-start.json",
+    "bytes": 1483,
+    "sha256": "91aacb7457131bd9d3ac9280cb077a117b942c444c49760b64cec4c196dd22d6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen\\server.log",
+    "bytes": 316650,
+    "sha256": "c7cd2d1ef0d2d5a8faf449aa857e9e1db62ff7720d2f79907145222168ae6205"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen-complete.json",
+    "bytes": 2014,
+    "sha256": "31ab16118349ca4f0b8f3f67011ffed2a60919e3e8847050cdb2ccc4fdf46535"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen-episode.jsonl",
+    "bytes": 103766,
+    "sha256": "d95a470acf43dd56e6ebd4b349dd8eac44aa1a7f0b6e760edc0d55a0d54028f8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen-general.jsonl",
+    "bytes": 489768,
+    "sha256": "19c83d06fcb52dfddffd7636ce77d3052b165533d5ce48cbcf1d47c1bf7ca6dc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen-maintenance.jsonl",
+    "bytes": 586685,
+    "sha256": "d92423681fb83586780aa48187a4717fba2698ccc0b99c1822a10d6de787cdac"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\dev-general-direct.jsonl",
+    "bytes": 83584,
+    "sha256": "f8bfee0b000d2a359f3ae8b363087836f064983e0591fd71c3c737f083912991"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\dev-general-native.jsonl",
+    "bytes": 96125,
+    "sha256": "2e71306c32a33106ab2de887bee12fe436a9315862f21b786dae915c8a93d0ad"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\dev-maintenance-direct.jsonl",
+    "bytes": 145802,
+    "sha256": "387ca4df26665051dd600e9879eff71d1f62ae7d23c871a481ea7cffe57ee6e5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\dev-maintenance-native.jsonl",
+    "bytes": 191782,
+    "sha256": "6b00d7ac574863804459ef2ccc780eb0a5637dd2e70c58cccdf47e922df2383b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\routes.json",
+    "bytes": 189,
+    "sha256": "fb38875d6b80cc883ddd9d161f9498edf91b48f4745997d264f5ecdca60f03cd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen\\attempts\\1793656021796955300\\server-props.json",
+    "bytes": 7054,
+    "sha256": "650097986853a21e32e3ca1e2080e451204794386bcd4cb0440077a370bc16c3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen\\attempts\\1793656021796955300\\server-start.json",
+    "bytes": 1482,
+    "sha256": "bef41216b50f6c6f71567acd4b75850a1a54ddd752e662e26ceca4e88a0ad595"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen\\server-props.json",
+    "bytes": 7054,
+    "sha256": "650097986853a21e32e3ca1e2080e451204794386bcd4cb0440077a370bc16c3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen\\server-start.json",
+    "bytes": 1482,
+    "sha256": "bef41216b50f6c6f71567acd4b75850a1a54ddd752e662e26ceca4e88a0ad595"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen\\server.log",
+    "bytes": 317393,
+    "sha256": "adf2f57e02d01c7e76df39ad58fc6ccd195675341167ef76d3ede3742c69ff28"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen-complete.json",
+    "bytes": 2014,
+    "sha256": "29d8517d5a1ce4d1b82573784440a40b2e69d3f5c8b226bb3262cdf017331bc8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen-episode.jsonl",
+    "bytes": 101486,
+    "sha256": "230bf2d152a3f7c78a2761338d33fce80d149656c7c7b8981249776615cacbdf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen-general.jsonl",
+    "bytes": 505761,
+    "sha256": "63130a6bb7bb46e0a75b3ced24c949723b00b655a7d468b8501758caba7692dc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen-maintenance.jsonl",
+    "bytes": 593267,
+    "sha256": "3febc946de31b0ee5987526992275d639b3507cf01a938265753137d2201c17a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\runs\\qwen06-sft-q8\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\screen-ids.json",
+    "bytes": 2564,
+    "sha256": "7c475af0c02cf25d5464551a96b7dc6bea935fb17505f64f8c7e1795792a1aa9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-adapted-controls\\serialization-compatibility.json",
+    "bytes": 803,
+    "sha256": "8bc17095aca06894e0355cec1b59eb9e2c97b92fac8f2f7d3761b0e956c90dc9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\demonstrations.jsonl",
+    "bytes": 1911,
+    "sha256": "95bd942fdc49c62b78341e741cb415ecd2d1c6cf54f1bb52e39a32a23f2587f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\development.jsonl",
+    "bytes": 26368,
+    "sha256": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\evaluation.jsonl",
+    "bytes": 509084,
+    "sha256": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\independent-rescore.json",
+    "bytes": 111881,
+    "sha256": "b6b90ad861b713687fabe3d274f84b67ed6be5769bd76cbed3058dd81bcbb2d6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\invocations\\1793656138470875700\\invocation.json",
+    "bytes": 1030,
+    "sha256": "25a85620ae63fefd76adaace7328aab345593b596217845c496f57382b4ab777"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\invocations\\1793656138470875700\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\invocations\\1793656179723637400\\invocation.json",
+    "bytes": 1030,
+    "sha256": "25a85620ae63fefd76adaace7328aab345593b596217845c496f57382b4ab777"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\invocations\\1793656179723637400\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\models.json",
+    "bytes": 1844,
+    "sha256": "bc6a06cb106984bbab96287faedfba93d6eb2e459eb695b27e41918209db3dfd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\precision-plan.json",
+    "bytes": 5444,
+    "sha256": "690186e96ee7c8e52bf05812b610c90b789a8ccde13426b4667b66433a9f7676"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\protocol.json",
+    "bytes": 7486,
+    "sha256": "ae8aafb0242b32fa9d95926c7db982d195b89bdf4ffeb1b2e0788a3a2a097060"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\RESULTS.md",
+    "bytes": 2053,
+    "sha256": "2575131d8457ce1ece93e8b3c83d5eb2572ce5ad17a7cf432260511736f7a88c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "a98475aa018581e8f20645dffb17421387a3eddf4ded1ab74b4dc654406d1ae5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen\\attempts\\1793656143558274100\\server-props.json",
+    "bytes": 7718,
+    "sha256": "277ca5cd4caf34aab9e416aba28480e4f8cf78c8e9f69dd79124c60303af0a8b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen\\attempts\\1793656143558274100\\server-start.json",
+    "bytes": 1207,
+    "sha256": "d38e09508c5f1eb1a511f116c41f1f40e8a45df173cb0083ff7ec14a2dc43328"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen\\server-props.json",
+    "bytes": 7718,
+    "sha256": "277ca5cd4caf34aab9e416aba28480e4f8cf78c8e9f69dd79124c60303af0a8b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen\\server-start.json",
+    "bytes": 1207,
+    "sha256": "d38e09508c5f1eb1a511f116c41f1f40e8a45df173cb0083ff7ec14a2dc43328"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen\\server.log",
+    "bytes": 82913,
+    "sha256": "9882ed26907da5e4ffd17281d556b50abf5602d80a642c37506739ec949a9b07"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen-complete.json",
+    "bytes": 1762,
+    "sha256": "acab18a1847ba75703d8a6fe686ad131ddba316e070adbe1f831d576a7f07c89"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen-episode.jsonl",
+    "bytes": 34291,
+    "sha256": "14c6454c72cb126cf6edaca4bfe50ee6e862ac880ccbad94cc455754376a7dc8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen-general.jsonl",
+    "bytes": 96678,
+    "sha256": "791b1e387a30dd84ee1db3c819e2eb313e1935f089b27b484b381458e78ace3e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen-maintenance.jsonl",
+    "bytes": 254938,
+    "sha256": "74b197b852273e2b70ef1a244a21e731b5e820a400922a567b819cbbe6fbe36f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen06-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "5908e8b5b7ae8e79a7ff50ef78646b3b20bda5e2ca0eb2ef362ec66eedfc318a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen\\attempts\\1793656178745267700\\server-props.json",
+    "bytes": 7573,
+    "sha256": "269550414d77f91fd3ad2a813539345f001bd847351c57d90fef953080f555bb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen\\attempts\\1793656178745267700\\server-start.json",
+    "bytes": 1208,
+    "sha256": "d5a9dfc2a6060733937beedc6eceb932bc7152ce5f7586b1b4da0cd8c3fc9f6f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen\\server-props.json",
+    "bytes": 7573,
+    "sha256": "269550414d77f91fd3ad2a813539345f001bd847351c57d90fef953080f555bb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen\\server-start.json",
+    "bytes": 1208,
+    "sha256": "d5a9dfc2a6060733937beedc6eceb932bc7152ce5f7586b1b4da0cd8c3fc9f6f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen\\server.log",
+    "bytes": 82661,
+    "sha256": "5f04bd53540a4a19a371f67ee80286cda32ae857764473c33e840556640b8dff"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen-complete.json",
+    "bytes": 1763,
+    "sha256": "cab1837f7e5e6d798868a0f68040266a23eaaf7627ff57e6e8d3c6eb89c7da13"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen-episode.jsonl",
+    "bytes": 34331,
+    "sha256": "a33badc7005b4fc0e0a9eb7b1d04808b309d5cddc84f2d6c00c0ad120d146aea"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen-failure-1793656182.json",
+    "bytes": 166,
+    "sha256": "0d172b01f7bf40a8faa1f3006a5c80a0bdcb196e3e11c457240b499540874dd0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen-general.jsonl",
+    "bytes": 99161,
+    "sha256": "622583709e88701e8955dc6b8151030a5be25905ae35a6299f12152a9cee92ef"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen-maintenance.jsonl",
+    "bytes": 243764,
+    "sha256": "6be22b349ba5c0f920a6f13ad506a5b241363e0881894c42a33f09acb66eb69a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen17-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "fd48252e9f2b0c2c2d896153773ec2b521007fbfab3273c364322c524d7e8824"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen\\attempts\\1793656226471479100\\server-props.json",
+    "bytes": 10696,
+    "sha256": "a2484ed8a8f0acc1a3a76c30405ee7037232f7097c13bcc1bcfecc66c8feb744"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen\\attempts\\1793656226471479100\\server-start.json",
+    "bytes": 1209,
+    "sha256": "186f51633588fc461aa4457e3c2f5a2851534abc93fe0fce6834c24d4abfb740"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "a2484ed8a8f0acc1a3a76c30405ee7037232f7097c13bcc1bcfecc66c8feb744"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen\\server-start.json",
+    "bytes": 1209,
+    "sha256": "186f51633588fc461aa4457e3c2f5a2851534abc93fe0fce6834c24d4abfb740"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen\\server.log",
+    "bytes": 116138,
+    "sha256": "a11f0b29606ab72276f26b70ecdb5261cc4661a48b82faaa7a8f01ea2bd748a2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen-complete.json",
+    "bytes": 1764,
+    "sha256": "acd8fd3d2dcb8a1360f98f76f8a4b0519c55ff81876e6ea980515eec758e8f77"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen-episode.jsonl",
+    "bytes": 41532,
+    "sha256": "f38c955df1660ba09462a88b5a25688d548c8a05a51f64371a2b04fa590151f5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen-general.jsonl",
+    "bytes": 119612,
+    "sha256": "459913d7a4ab816c3bd72102ca9e04e130e2ee99ceb857b595a00fda3d6f11e1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen-maintenance.jsonl",
+    "bytes": 247230,
+    "sha256": "b3b27d237740fb77433eeb45fb70d0738dc757b1971ae0db7424ba53bab3f8e6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-2-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "4b13834ad38baf003915a81c65e3d37b05e5e05ef2e7c920804ea639dfd42622"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen\\attempts\\1793656294707996100\\server-props.json",
+    "bytes": 10696,
+    "sha256": "c93eade350b7e684b1f42a8fbd08b393660ee75bb127b30225d6820f81dc776d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen\\attempts\\1793656294707996100\\server-start.json",
+    "bytes": 1210,
+    "sha256": "bd09280530f8b98d5cf82011e47e2eeba8b0cc037f1dc4c654b9fcfd29d1330d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "c93eade350b7e684b1f42a8fbd08b393660ee75bb127b30225d6820f81dc776d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen\\server-start.json",
+    "bytes": 1210,
+    "sha256": "bd09280530f8b98d5cf82011e47e2eeba8b0cc037f1dc4c654b9fcfd29d1330d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen\\server.log",
+    "bytes": 120751,
+    "sha256": "c883cb5479ac80c79c5ac186aac9083d6c4bf35c8e74969f08294afd171eb1b6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen-complete.json",
+    "bytes": 1764,
+    "sha256": "4d79aa1ba0a448533de6126d43b52e0764fe9b70a436280c436f633df21108a1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen-episode.jsonl",
+    "bytes": 41403,
+    "sha256": "b5abf6ef46922d79bf3ea93a62bf796033153c1aa176be2ad2a801d47b2927d6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen-general.jsonl",
+    "bytes": 120773,
+    "sha256": "a560cdc539322d7e5faeb5f1a3ce0d021f8e72ccf3dbb2d1f5286cf2134459a0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen-maintenance.jsonl",
+    "bytes": 244384,
+    "sha256": "ade756a41d3f9fc59fd7fc0f2b29fb6312175758ab3d53c8c6d98d7c65d0a21d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\runs\\qwen35-4-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\off\\screen-ids.json",
+    "bytes": 839,
+    "sha256": "dea8537ecc825830d9d25ea67867fc6dbd2ddd4f5fc9225924520cec79e8d4c0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\demonstrations.jsonl",
+    "bytes": 1911,
+    "sha256": "95bd942fdc49c62b78341e741cb415ecd2d1c6cf54f1bb52e39a32a23f2587f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\development.jsonl",
+    "bytes": 26368,
+    "sha256": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\evaluation.jsonl",
+    "bytes": 509084,
+    "sha256": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\independent-rescore.json",
+    "bytes": 112157,
+    "sha256": "1532f6b333e238b69711f61d35b4a77b959e6f2380332648f20a19b537bcf56d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\invocations\\1793656434442517700\\invocation.json",
+    "bytes": 1048,
+    "sha256": "1e032f81c21727b7e13b16e5f28b5594ddd328bc48033f6c52c1a38c012e708c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\invocations\\1793656434442517700\\runner.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\models.json",
+    "bytes": 1844,
+    "sha256": "bc6a06cb106984bbab96287faedfba93d6eb2e459eb695b27e41918209db3dfd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\precision-plan.json",
+    "bytes": 5444,
+    "sha256": "690186e96ee7c8e52bf05812b610c90b789a8ccde13426b4667b66433a9f7676"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\protocol.json",
+    "bytes": 7481,
+    "sha256": "3bffeebe5e77898f0c6670c75c46c65d3051c9d5bf8dc866cd2b00ffd74f3ab1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\RESULTS.md",
+    "bytes": 2052,
+    "sha256": "60ab7604813f8dd9e926b01ab6593134ac5dfaf09504dded5a6a4ad3a50c630a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "a98475aa018581e8f20645dffb17421387a3eddf4ded1ab74b4dc654406d1ae5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen\\attempts\\1793656439618226400\\server-props.json",
+    "bytes": 7718,
+    "sha256": "aeceb5ae8601740b90b987ca4e18e872be64e4b994b155714dccad473fc2c8f5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen\\attempts\\1793656439618226400\\server-start.json",
+    "bytes": 1208,
+    "sha256": "930b7cf05dd7aacebb5df7eb89afe1d937c6270e0603812e274aec62a86712a1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen\\server-props.json",
+    "bytes": 7718,
+    "sha256": "aeceb5ae8601740b90b987ca4e18e872be64e4b994b155714dccad473fc2c8f5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen\\server-start.json",
+    "bytes": 1208,
+    "sha256": "930b7cf05dd7aacebb5df7eb89afe1d937c6270e0603812e274aec62a86712a1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen\\server.log",
+    "bytes": 101653,
+    "sha256": "52ae6c999f9058adceea6f286f6a647715a5178c25f5992cfd32ed45c05bc0aa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen-complete.json",
+    "bytes": 1761,
+    "sha256": "d44fb9fb58235a652104726aa556c68f0a38979f18ea0e321fd251447898b220"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen-episode.jsonl",
+    "bytes": 108295,
+    "sha256": "519091bcb2d60f6d620c61c0e07803f0e7d6b687424e5010be8148a777984ab0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen-general.jsonl",
+    "bytes": 158675,
+    "sha256": "fd70f3edd959ebc77282142dc9a75f55674a8d6d4bd313db1996835f0e5c15cc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen-maintenance.jsonl",
+    "bytes": 482543,
+    "sha256": "ee5750cbce96190021f984999889a68fe6bb39f16f574733247e0785593ab7b8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen06-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "5908e8b5b7ae8e79a7ff50ef78646b3b20bda5e2ca0eb2ef362ec66eedfc318a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen\\attempts\\1793656656610788600\\server-props.json",
+    "bytes": 7573,
+    "sha256": "78711e0971ed4cf97f8ced7585439fd75e720366dc32878961f2e58bebadd6a9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen\\attempts\\1793656656610788600\\server-start.json",
+    "bytes": 1208,
+    "sha256": "66389ba9f1ed81fe0f1cfc4b4b7d1b5af172594a7121a1d4d4a2d32d76728db0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen\\server-props.json",
+    "bytes": 7573,
+    "sha256": "78711e0971ed4cf97f8ced7585439fd75e720366dc32878961f2e58bebadd6a9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen\\server-start.json",
+    "bytes": 1208,
+    "sha256": "66389ba9f1ed81fe0f1cfc4b4b7d1b5af172594a7121a1d4d4a2d32d76728db0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen\\server.log",
+    "bytes": 92353,
+    "sha256": "0f7e7603d92cf7413f7e25d129239e468435f335dd40a23d243838be2b405c00"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen-complete.json",
+    "bytes": 1763,
+    "sha256": "70631ce203dc6c13cc9393291c5c9a9d33c9445bbf828d1b2b4d229184555dd9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen-episode.jsonl",
+    "bytes": 92269,
+    "sha256": "79a338b78145987c6c073dc0f67f992bb0464a6ac251bcb757ee48d78e99183b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen-general.jsonl",
+    "bytes": 148228,
+    "sha256": "779c58de5a14f39f2e2c6068af090a1109c47b769f7c78f861ba0ea27bd66560"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen-maintenance.jsonl",
+    "bytes": 285329,
+    "sha256": "f18d703dbdff3f91fdc452adce80b632483547d592f307019c1d5a8bbafcdbeb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen17-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "fd48252e9f2b0c2c2d896153773ec2b521007fbfab3273c364322c524d7e8824"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen\\attempts\\1793656836468532600\\server-props.json",
+    "bytes": 10696,
+    "sha256": "10247d6784ae4632c355880a1a6449549b1dc3b7f402034849adda39e5dff8d2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen\\attempts\\1793656836468532600\\server-start.json",
+    "bytes": 1210,
+    "sha256": "12d8a8d4350f31efad4cd807876bfc443a7692a132f2afa66b1d262dffff50fb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "10247d6784ae4632c355880a1a6449549b1dc3b7f402034849adda39e5dff8d2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen\\server-start.json",
+    "bytes": 1210,
+    "sha256": "12d8a8d4350f31efad4cd807876bfc443a7692a132f2afa66b1d262dffff50fb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen\\server.log",
+    "bytes": 157802,
+    "sha256": "0d9f1033ac4dfd3990973e457e50412f372db2ae451d3f2d8002c852fe7d3cf2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen-complete.json",
+    "bytes": 1764,
+    "sha256": "5f62a78fedbd14da754dcee06ba775e0c04d124e77bd5b7eba57aa408fa3336b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen-episode.jsonl",
+    "bytes": 47425,
+    "sha256": "b6f38c260e9a70b3615500f40beba306776362c94771430c8e37e73a6c0c1396"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen-general.jsonl",
+    "bytes": 146890,
+    "sha256": "c51ce1e811690918d878ac1e00802b3d4e6459225352ea0191c798588614a1cd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen-maintenance.jsonl",
+    "bytes": 574091,
+    "sha256": "e355a154daf35dcd920378371626ba3e16706befced65a38918fa33306a7466d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-2-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "4b13834ad38baf003915a81c65e3d37b05e5e05ef2e7c920804ea639dfd42622"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen\\attempts\\1793657216534325700\\server-props.json",
+    "bytes": 10696,
+    "sha256": "2cea27c139ea3fb89772ca88ab9e943f6f2a2d2282177bc7f55db68c74402b77"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen\\attempts\\1793657216534325700\\server-start.json",
+    "bytes": 1210,
+    "sha256": "c0954c771a7bce00532c8054db5b6616bf546d197b42df95bc13b87d2977e143"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen\\server-props.json",
+    "bytes": 10696,
+    "sha256": "2cea27c139ea3fb89772ca88ab9e943f6f2a2d2282177bc7f55db68c74402b77"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen\\server-start.json",
+    "bytes": 1210,
+    "sha256": "c0954c771a7bce00532c8054db5b6616bf546d197b42df95bc13b87d2977e143"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen\\server.log",
+    "bytes": 220718,
+    "sha256": "1bc90163c1ecb33cd3e0dbd611b65d0c113146d73fd0722473b568b29184b82e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen-complete.json",
+    "bytes": 1764,
+    "sha256": "b4b2236af6da5deaf3b4662eb9df26f977d72cac6c46787481d7daf7988c0841"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen-episode.jsonl",
+    "bytes": 49688,
+    "sha256": "3f8dbf5cb2494d21b061141afd5cebb06279427ec2582247fb9aece1725df6bf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen-general.jsonl",
+    "bytes": 152282,
+    "sha256": "3bb7c4a66ba4688f385e0f0ce9f60b398c5bac276401d08769ea34d7baa704e4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen-maintenance.jsonl",
+    "bytes": 570590,
+    "sha256": "cc8393a1f47b1c67b5fadfebcb60e7ce5ef507f2c08f3ba765da164cb4b56d47"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\runs\\qwen35-4-q4\\screen-source-4b562604989b.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\on\\screen-ids.json",
+    "bytes": 839,
+    "sha256": "dea8537ecc825830d9d25ea67867fc6dbd2ddd4f5fc9225924520cec79e8d4c0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\attempt-amendment.json",
+    "bytes": 202,
+    "sha256": "ecf160758ad8b184b864e5f4f86aeccd91a0e8f41371e944439a21a845260f0f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\development.jsonl",
+    "bytes": 26368,
+    "sha256": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\lfm12-q4.json",
+    "bytes": 574,
+    "sha256": "c0e527990ff6066b96d77437e4f12a2ae915efe2868def3c0f6c003d4e7c496b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\qwen06-q4.json",
+    "bytes": 492,
+    "sha256": "2e563aa299980c41cd2cce52353cd75ff547ce9ab17266ae59b8ef06febe1f9d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\qwen17-q4.json",
+    "bytes": 492,
+    "sha256": "d56aa2223be94602efaeb5af45a84565094db03285986fbbb8799e8c3241fddd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\qwen35-2-q4.json",
+    "bytes": 494,
+    "sha256": "ba687dc1aba5702d9e728a073aab5dd76e6ebe8b0ba73855e12a8bb480a30a1d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\qwen35-4-q4.json",
+    "bytes": 548,
+    "sha256": "66b22a6489f259915dd54b3e640dc8fc61b342a25e65ee4769e6375102007cd2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\qwen4-q4.json",
+    "bytes": 579,
+    "sha256": "6b6d74c3f3279e8816d0a9668ef76b8ace26ae14e0ec782ca5aacc650672df20"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\smol3-q4.json",
+    "bytes": 543,
+    "sha256": "84112dec160d301b5cd47beba0703093605ff56a61aed451acd660c741e93990"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\downloads\\xlam3-q4.json",
+    "bytes": 560,
+    "sha256": "6217c0f6693d35bbe517672fa4db1db9b58fb30d6e10e7e0e180424958726820"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\evaluation.jsonl",
+    "bytes": 509084,
+    "sha256": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\lfm12-q4.json",
+    "bytes": 30889,
+    "sha256": "56ffa8a45d8dff2a2e01e2c36c8083852bf34ac6809ebdea9a610a26e4a2ec5e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\qwen06-q4.json",
+    "bytes": 62768,
+    "sha256": "cd15e743dceff8847b49a828dc873632011f8a7a9fc7902defaa3952948bed12"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\qwen17-q4.json",
+    "bytes": 62729,
+    "sha256": "105fb6687bf5ec96f52ba8890f6ce587532d99f03d02ff1a54f98aa2267db394"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\qwen35-2-q4.json",
+    "bytes": 68247,
+    "sha256": "aacaa50c542cc38acfb866fccef3e565c5fded511e2bc040eab618f65c9d0e13"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\qwen35-4-q4.json",
+    "bytes": 87715,
+    "sha256": "3b6bc1904bf9ad219b0d6f95162583ae23205d4392425e1f77377da242ab2e9b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\qwen4-q4.json",
+    "bytes": 78923,
+    "sha256": "5eb5786ce46c96cf5e0bee8f026166aea029f604218475e50f38014856ecc2f3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\smol3-q4.json",
+    "bytes": 68519,
+    "sha256": "061b6fced4bd625c864739b48c0576d7ca881b5016138d1ac59ee95dbda0492c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\gguf-audits\\xlam3-q4.json",
+    "bytes": 81904,
+    "sha256": "d40b15b8eee5f24f229fa9f86fc4744aecc331c11ac3930dd39dbed65e7c1f52"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\lfm12-q4.json",
+    "bytes": 6381,
+    "sha256": "39a4b3537e2a93bfbef78df18fc5aedd0231308f8c4e2c69dcdb531caa097610"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\qwen06-q4.json",
+    "bytes": 11308,
+    "sha256": "32fd151ebbaa25da8ba823554b25dedbabfe1526d05fb7b7fdd3fa8f1dcc4d51"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\qwen17-q4.json",
+    "bytes": 11479,
+    "sha256": "722c5eb24d507efee8e6285aa3b8a93745f004a05270207fa04cdec946966066"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\qwen35-2-q4.json",
+    "bytes": 13047,
+    "sha256": "2ff9268d71e3969b37cc41aa78072d8a3bae5d58f3948ec378a8b399b878e231"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\qwen35-4-q4.json",
+    "bytes": 12779,
+    "sha256": "2a4e147d4fcd9a66b6a44f8dc799863bc357a7dede98ce73fe70e1ba87646ef2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\qwen4-q4.json",
+    "bytes": 9422,
+    "sha256": "bcee68e46df9f03c17048e2231696d6af49adf2b5ae2d0dfed12199a9971d86b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\smol3-q4.json",
+    "bytes": 10142,
+    "sha256": "4947a7e2b2f2f0c18ee4b1cc790afc902e39b0355684b4a916f706da45094d51"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\metadata\\xlam3-q4.json",
+    "bytes": 6487,
+    "sha256": "51efaf61363c6d1e3f5cb393722382a32efd5e3c3c23c4263b7a0e292052ddcc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\models.json",
+    "bytes": 3757,
+    "sha256": "ef33b89429e2e57fa3132c37255c1be2953bb83418aa783953c58affbc2fc7d9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\probe\\qwen06-q4\\general-direct.json",
+    "bytes": 8186,
+    "sha256": "c209d76afb35ffae223d84c073913d373d9e6f23ec1941c6336487c13c5ec93a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\probe\\qwen06-q4\\general-native.json",
+    "bytes": 9577,
+    "sha256": "300be96bb0b6219d83008c36f2e8a28bef6e5c3a921bdcf81ccef1475062d71a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\probe\\qwen06-q4\\maintenance-direct.json",
+    "bytes": 16054,
+    "sha256": "1db01c66a12a158578f49b06216ff9dd47395de3e6a72d9f78e668e920066dfa"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\probe\\qwen06-q4\\maintenance-native.json",
+    "bytes": 19580,
+    "sha256": "eb73e1d69109a8019a6ef6cf53daac02921a49035ed572713ecefd2d38867d6e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\probe\\qwen06-q4\\server-props.json",
+    "bytes": 7718,
+    "sha256": "83b6d462bc98951a1d0c55dc70688f9ec0a5fda09432531d9e650a6c10488c2c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\probe\\qwen06-q4\\server-start.json",
+    "bytes": 1158,
+    "sha256": "8295578747f39783c742049f8cdc1e4f57c7a05004e5c066ddfac769c7824f25"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\probe\\qwen06-q4\\server.log",
+    "bytes": 5152,
+    "sha256": "2c4c40f10563c09f734033a88280b7ca332ca9086d4b44662dcac97e9ee6d8d8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\protocol.json",
+    "bytes": 6396,
+    "sha256": "1801d37d91307936c98ca8e2e0cb96731d9b0be4abee2817d83c6dc9afd574f1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\dev-general-direct.jsonl",
+    "bytes": 78921,
+    "sha256": "14d14848b7ceab4e050e8ef2ab947f3f0ada8b574ecf9cff6ae912816ac92b32"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\dev-general-native.jsonl",
+    "bytes": 93258,
+    "sha256": "f3305f2eddb4b7834bbcd1f6c87057c4df4a3ebd504f42e49d319da4f807b66a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 127750,
+    "sha256": "fb16ec92f00608d768ec5699e4ad2d3383f09b482f2884d93be2ad81c2436cb8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\dev-maintenance-native.jsonl",
+    "bytes": 164461,
+    "sha256": "180bca228f51235422b90f1bd5e427a0b265fe2b474280eddc0320d3ae2a62f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "585bf2aaef4c21c14cd130c4657337a38ac198cae88f9a800b3c58ae8c8deb4f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen\\server-props.json",
+    "bytes": 7718,
+    "sha256": "2ec27dc5a77eb9ad943b7cad35956b4767ea651204c31079f9a5dab57b5ec4a9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen\\server-start.json",
+    "bytes": 1159,
+    "sha256": "e1d2e6bb68293632c63015b0cd6a07fc3f81c9d25615d014785def2bb3013aaf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen\\server.log",
+    "bytes": 136403,
+    "sha256": "51e79460c80a071bb6161c8a3af4116f10b9a98426f83eda8ba6125483684632"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen-complete.json",
+    "bytes": 1768,
+    "sha256": "c264571e3655ff3958f1323f4415366630b9464e123e6404e11023316c69434a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen-episode.jsonl",
+    "bytes": 78135,
+    "sha256": "14f3009b734183064eda032cd4f13b91541b139471335d901753d553c5818056"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen-failure-1793649345.json",
+    "bytes": 156,
+    "sha256": "d3299884d3e788663a85761e9a781b1bf41506d2b95be1a70081cc1a7c808eb8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen-general.jsonl",
+    "bytes": 413461,
+    "sha256": "5cf32c01498c6ec1caff111fec1704832b463599359e3c08d2573769aa28065c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen-maintenance.jsonl",
+    "bytes": 517887,
+    "sha256": "28e80813d5593008067100c4e725f62a700cd0ff6ab939fd46b3a6e0c51b5565"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen-source-8fac572c8bc4.py",
+    "bytes": 29368,
+    "sha256": "8fac572c8bc4e5e81ebacaf35fd89274728460a77f1084924b4282c30204d3e8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen06-q4\\screen-source-f6056094da58.py",
+    "bytes": 30076,
+    "sha256": "f6056094da58e0956b91c765bf0d5252ea02e77cc20856ae8a66d99ce425c9d8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\dev-general-direct.jsonl",
+    "bytes": 81229,
+    "sha256": "f7cb0ebb478a78c4a6c751ff840c4aa7d793d99dd6301ffef2930389e04ae568"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\dev-general-native.jsonl",
+    "bytes": 95051,
+    "sha256": "2b3c86a2da44514ee96097a531fcaac70be02fd362c2f19043aec9bd39c4f150"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 103418,
+    "sha256": "475da31d05b817841728539f90da9b7069798d32fb4b0faccef2e0ec7352798f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\dev-maintenance-native.jsonl",
+    "bytes": 135715,
+    "sha256": "3d96db08c6866cc089fc2da46f882d2853f6b729400a1e0ea02728089ee54d78"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "df46b1f382dc38ddacc091fbc5eafb2686f68b87d08bca6bdc0fc63d83cdb62d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\screen\\server-props.json",
+    "bytes": 7573,
+    "sha256": "3ebce0437faa097f0c169ec8ea4e91e0a571a4053168fe049e68a72ed93e4c33"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\screen\\server-start.json",
+    "bytes": 1159,
+    "sha256": "3d716b342e75f245e824b10387de10c615f5b6ddae9593c93f8be75515d25705"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\screen\\server.log",
+    "bytes": 36184,
+    "sha256": "961c8fea52e6094487e3edef6040c2fe39e561e072a42e7c9a76fbfea6385245"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\screen-failure-1793649739.json",
+    "bytes": 222,
+    "sha256": "d8218608b23f598ef7796b92c7bef13b99471d9b5dccca8c971327538b1cd933"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\screen-maintenance.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\runs\\qwen17-q4\\screen-source-f6056094da58.py",
+    "bytes": 30076,
+    "sha256": "f6056094da58e0956b91c765bf0d5252ea02e77cc20856ae8a66d99ce425c9d8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\screen-ids.json",
+    "bytes": 2564,
+    "sha256": "7c475af0c02cf25d5464551a96b7dc6bea935fb17505f64f8c7e1795792a1aa9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\scripts\\v2\\capability_comparison_20261102.py",
+    "bytes": 22613,
+    "sha256": "93da092f654ec862d6d27d050405505d4a133ea3d69a32d6a217b1a7246e8cea"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\src\\sysone\\v2\\general_tool_eval.py",
+    "bytes": 3868,
+    "sha256": "6c34a72ab74608681af8e9f4db1d76248e0f53d69378a7f7059361af257dfca1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\src\\sysone\\v2\\maintenance\\__init__.py",
+    "bytes": 82,
+    "sha256": "364d09ad4ffcfa5453e97ee323cfd8a929cd4c6f9c307b0c5e5485064d4ecdde"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\src\\sysone\\v2\\maintenance\\baselines.py",
+    "bytes": 6317,
+    "sha256": "fff97489c83dcbe3a30ca2e647a65c4f3bbfc35c16d948d1a8983301f83e3f33"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\src\\sysone\\v2\\maintenance\\dataset.py",
+    "bytes": 10627,
+    "sha256": "8cd0430c50b696b4d30bde1a60b8b262e44cc7f95fe144b2af66da5492a2976f"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\src\\sysone\\v2\\maintenance\\revision2.py",
+    "bytes": 3625,
+    "sha256": "d8ff110b03606ce69648eb8ea2fe6fc68963bdbbf3edcca82e70c525931fbd50"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\src\\sysone\\v2\\maintenance\\schema.py",
+    "bytes": 7971,
+    "sha256": "6fb0809b83d86b14f4cd46793a038e27ac8e40e1db7cff3de855fda41226af84"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102\\sources\\src\\sysone\\v2\\maintenance\\simulator.py",
+    "bytes": 4007,
+    "sha256": "5977b7f31f69c43c297dd01dd2dc53c92d7dea647c3164fba9208bf8e55ed654"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\controls\\rules.jsonl",
+    "bytes": 76344,
+    "sha256": "6c9b4b56ac01bc7ab7d5d6d118972618b20565c1dc544024bb37b4961577e263"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\controls\\summary.json",
+    "bytes": 274,
+    "sha256": "375451464b1435f80a5a4305f1d30dafad415ef3c89b7b2695da06d662f971fb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\demonstrations.jsonl",
+    "bytes": 1911,
+    "sha256": "95bd942fdc49c62b78341e741cb415ecd2d1c6cf54f1bb52e39a32a23f2587f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\enums.py",
+    "bytes": 896,
+    "sha256": "2182becfa2a1d071ee1db30db593b4758c6bf866aa12d2d4b8daf09175ea518a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\model_config.py",
+    "bytes": 182,
+    "sha256": "494c6153714be993b1e53709b4efc61dd792b80213907ed6254d2e773e16f422"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\constants\\type_mappings.py",
+    "bytes": 1813,
+    "sha256": "1702fb67afbe2c492608e58e2b7d02e46381f50166b47f3c952f76e34c7cd3bd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\ast_checker.py",
+    "bytes": 25032,
+    "sha256": "2aae7a68461a8f76c0be3894c8901b66b56967a1989d3ab066051e3fb97f1538"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\java_type_converter.py",
+    "bytes": 15716,
+    "sha256": "2fd4f4b0443b3dd974a1723bb4e45c086d7b352631062da7807ad1ad40706604"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\js_type_converter.py",
+    "bytes": 11706,
+    "sha256": "a114e9ff75c025cb52787ac33d6c2fbaa390905c6125a2b3c6afebab232bb5e4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\LICENSE",
+    "bytes": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\dependencies\\bfcl-python-checker\\receipt.json",
+    "bytes": 2288,
+    "sha256": "d59d4908d4e170bd2b0f1496302e02049963a6bc8471d1912396595aac4ab671"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\development.jsonl",
+    "bytes": 26368,
+    "sha256": "50923fe0841385604cbc2f21661b0946ca7d7c370d824cbe47d626ca541aca41"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\evaluation.jsonl",
+    "bytes": 509084,
+    "sha256": "9a38a79dbf404b59ea8fea62723da8d5c2fad0621184c86f96ecf1cc96e4fe8d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\framing-qualification-amendment.json",
+    "bytes": 446,
+    "sha256": "f7e3c7a1f77f8360fc0a271d845216bc6b3fd22f4850df6cd98234da29a9550a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\gold-fixture-qualification.json",
+    "bytes": 417,
+    "sha256": "ed1c9719880e1f6c8ea8ebd659387280bb4ea013d2b3e8c8170fb51d1a14996d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\independent-rescore.json",
+    "bytes": 11792,
+    "sha256": "3e2c179d8f544a4deacecbe9a72011625fd18dcaa4459f37f4f9aed8a1e0bd36"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\invocations\\1793650806610081300\\invocation.json",
+    "bytes": 434,
+    "sha256": "34221d1371a8c2a61521937f761c26fb5bf1536ff2fcaa56d4adf9eafc07aee8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\invocations\\1793650806610081300\\runner.py",
+    "bytes": 42643,
+    "sha256": "fec98cc064fedd9cc054f42e299e440a74e832d494629e77ba45dbcf01442462"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\JOURNAL.md",
+    "bytes": 3776,
+    "sha256": "461791757969f600b616dd54d1c96ce0b6860ee3814c4927ee2c6f9b2f0b005b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\models.json",
+    "bytes": 3757,
+    "sha256": "ef33b89429e2e57fa3132c37255c1be2953bb83418aa783953c58affbc2fc7d9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\parent-protocol.json",
+    "bytes": 6396,
+    "sha256": "1801d37d91307936c98ca8e2e0cb96731d9b0be4abee2817d83c6dc9afd574f1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\precision-plan.json",
+    "bytes": 5444,
+    "sha256": "690186e96ee7c8e52bf05812b610c90b789a8ccde13426b4667b66433a9f7676"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\protocol.json",
+    "bytes": 7362,
+    "sha256": "34371da21b6b8a0884d33c88614bf7a3fecbe52b4f797b2c74e4079306a0b786"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\RESULTS.md",
+    "bytes": 1638,
+    "sha256": "63e39ce08c99e03bf82b19fd0c8a6d72c28041aee8fbd7edeacd0861497bbf70"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\dev-general-direct.jsonl",
+    "bytes": 79386,
+    "sha256": "124f0f05670f4f1ade6ad4024abed301ce9fd31843aa037a383aadbd1697eb2d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\dev-general-native.jsonl",
+    "bytes": 93240,
+    "sha256": "be35caa72c92ce0bb41cb942f79db15bfd69d391111cd72496ec0f167077feb6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 145685,
+    "sha256": "a1fe99c7f628d910ed5966539b312a8787dda80a5f62dcd264a188c2f9115384"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\dev-maintenance-native.jsonl",
+    "bytes": 206127,
+    "sha256": "6d9f5ace6c6f10493e7fe19332658005b64bce1fbf83f48442f731ce89719a06"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "f0d68f0676fa68b923d885085f6c95033b33d54ce5aa54814d184dab531941bc"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen\\server-props.json",
+    "bytes": 7718,
+    "sha256": "402357d0707e6701e864a9472a8ae7de39af7a1c98dbd5e06831af6e5afa8f81"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen\\server-start.json",
+    "bytes": 1158,
+    "sha256": "58e4253cd6b711f92c07703fd1283b659e718cfc03e970b1934f868c86a9f555"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen\\server.log",
+    "bytes": 120807,
+    "sha256": "ab1e24f5c705ed6a72064019d7473ef3b82ab70871c69e8e11d0f4590651f503"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen-complete.json",
+    "bytes": 1766,
+    "sha256": "77d20bf16f64adab3109083aa3a9dc4ff3e3acb5d2d73e71e57435f86038fc62"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen-episode.jsonl",
+    "bytes": 78127,
+    "sha256": "a46c4f72ecf18daffd235533ac775eb4f5476cbf5e4c66aca0dbfbe8675656cd"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen-general.jsonl",
+    "bytes": 414620,
+    "sha256": "f7880b502b5abf62b6d6b8b34770db6f28185a391f4f5bb5580df2397dfa8556"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen-maintenance.jsonl",
+    "bytes": 586545,
+    "sha256": "419dee932260e23dc05f7a431189b9bbd70977b492bd59135068c55da11b2628"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen06-q4\\screen-source-98ecd269b9af.py",
+    "bytes": 32625,
+    "sha256": "98ecd269b9afedbfd11589cd21d0fa93c58c8d21c8694143dd5e4dc352fffe4e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\dev-general-direct.jsonl",
+    "bytes": 81230,
+    "sha256": "451520376cdbc15e2d72eb4096a3796dbac8fbd326cad4d0f811507d1ebeb1f4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\dev-general-native.jsonl",
+    "bytes": 95388,
+    "sha256": "2262ea8b89149f6d210cdc1cd27cf8432e2d6fd4d4f3e6206933170575d2c7c0"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 141449,
+    "sha256": "921942351a1e0d91a776dad0f8dfe8484c616f3185ee7d6eeee1440750e5d16b"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\dev-maintenance-native.jsonl",
+    "bytes": 189638,
+    "sha256": "fb79ed8d8a98bcc0d6937843b7966090accdb9a71ed22a2f9315624c01498a9c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "af5a74d0ad4b90d3497c26e95fd8015f54583b9b794cbe9b64452a49c59680c1"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen\\attempts\\1793650811105745200\\server-props.json",
+    "bytes": 7573,
+    "sha256": "c3419525d70852aa6b5c0eca7bed1d10d72bd458037ba6b03045cbc55fa27e1d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen\\attempts\\1793650811105745200\\server-start.json",
+    "bytes": 1159,
+    "sha256": "4572c1a488b4fcfc2bf7da8fb6ca890ea1b4c0ca752de5dd6027325527301911"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen\\server-props.json",
+    "bytes": 7573,
+    "sha256": "c3419525d70852aa6b5c0eca7bed1d10d72bd458037ba6b03045cbc55fa27e1d"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen\\server-start.json",
+    "bytes": 1159,
+    "sha256": "4572c1a488b4fcfc2bf7da8fb6ca890ea1b4c0ca752de5dd6027325527301911"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen\\server.log",
+    "bytes": 129380,
+    "sha256": "83ed3b1b043fa82837007a01b1217df7f3fe5d3473a12c0090545dc3867bbc58"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-complete.json",
+    "bytes": 1769,
+    "sha256": "d6d335585f5c45f84988659a22ef98c24f0779e1fe109216cac443002a4fed61"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-episode.jsonl",
+    "bytes": 100655,
+    "sha256": "456692733033bb9c8337177aa3f11164d87f1d7b7490fa125152d4500e4cdda4"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-failure-1793650067.json",
+    "bytes": 222,
+    "sha256": "548299aef3fcb0f4d27678db1ad13925b5ec805fa67d11a4de51cbb7653d6ce2"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-failure-1793650540.json",
+    "bytes": 160,
+    "sha256": "68449c47b7be991c9fe0d5742f5b5f3381974e4078fdfb667cb3ae7b2ec04f76"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-general.jsonl",
+    "bytes": 498299,
+    "sha256": "7d1ad3aecc282362d02e07c1e9fd459d5c217200f0e7a08a8f92e7f613b0aeb5"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-maintenance.jsonl",
+    "bytes": 575763,
+    "sha256": "a388ec13bd9c25e149dfc538163e859af0338c0edb7241a306de213b3ea64ada"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-source-98ecd269b9af.py",
+    "bytes": 32625,
+    "sha256": "98ecd269b9afedbfd11589cd21d0fa93c58c8d21c8694143dd5e4dc352fffe4e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-source-e62eedd72fac.py",
+    "bytes": 33046,
+    "sha256": "e62eedd72facd96f207e026ba3c46604e312160d71db2de18fd5efabd4731b90"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen17-q4\\screen-source-fec98cc064fe.py",
+    "bytes": 42643,
+    "sha256": "fec98cc064fedd9cc054f42e299e440a74e832d494629e77ba45dbcf01442462"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\dev-general-direct.jsonl",
+    "bytes": 80981,
+    "sha256": "5777459d25ae77d835b19cf429c7c124be460e72fa3e8b582d4f10f4092279b3"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\dev-general-native.jsonl",
+    "bytes": 97445,
+    "sha256": "dc0ea2648602f1a7da286931e8bc493ff13699213daf950540f7d5392af1a8e9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\dev-maintenance-direct.jsonl",
+    "bytes": 142742,
+    "sha256": "a71b280bc70abafe2ee947c51f8a5dab9609e4b72e9d38fbe0841c18def1650c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\dev-maintenance-native.jsonl",
+    "bytes": 190404,
+    "sha256": "bc83bbeda1baf987d703091211cf4e8781ec37fbc4d028911e8214e2a8d142e6"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\routes.json",
+    "bytes": 189,
+    "sha256": "c6581435d64f07d805697c53754bd60f98cfaba30ad516c6d14ad820b8b1f42a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\screen\\attempts\\1793650911762973900\\server-props.json",
+    "bytes": 6871,
+    "sha256": "126584a4bf8d879119b4a56f7f40474fd40acea623aae2fa6d3835dc4e5553f9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\screen\\attempts\\1793650911762973900\\server-start.json",
+    "bytes": 1206,
+    "sha256": "6ea429584d54aa8f2ee85482457f0391288078655ff9ab0b52163455ab523e6c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\screen\\server-props.json",
+    "bytes": 6871,
+    "sha256": "126584a4bf8d879119b4a56f7f40474fd40acea623aae2fa6d3835dc4e5553f9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\screen\\server-start.json",
+    "bytes": 1206,
+    "sha256": "6ea429584d54aa8f2ee85482457f0391288078655ff9ab0b52163455ab523e6c"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\screen\\server.log",
+    "bytes": 53028,
+    "sha256": "d960327162c961a362c61e0ae3c53cc88b51e4904d9a250ee7143b730e5b9c1e"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\screen-maintenance.jsonl",
+    "bytes": 143460,
+    "sha256": "c67de719f99c574e6cf4559aed8d820d78d39ebd19ef57dc23aec5c2b437f9d7"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runs\\qwen4-q4\\screen-source-fec98cc064fe.py",
+    "bytes": 42643,
+    "sha256": "fec98cc064fedd9cc054f42e299e440a74e832d494629e77ba45dbcf01442462"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\runtime-environment.json",
+    "bytes": 7023,
+    "sha256": "5b1cd46ae751a3c640248b6756d00229d1d125e3b900634eae5346243d27a8f8"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\screen-ids.json",
+    "bytes": 2564,
+    "sha256": "7c475af0c02cf25d5464551a96b7dc6bea935fb17505f64f8c7e1795792a1aa9"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\vulkan-qualification\\cpu-comparison.json",
+    "bytes": 352,
+    "sha256": "7f049b0f859dd8df71266844071d4632f633fba6ac4506c143aa290f9d1c58df"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\vulkan-qualification\\predictions.jsonl",
+    "bytes": 113197,
+    "sha256": "c8cc34ad93a2029aa2117708d772c9867d674c08429782b88c63fdd8688a6b0a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\vulkan-qualification\\server.log",
+    "bytes": 9381,
+    "sha256": "525be17bc647d539cb82ad669d2d3b3638723a7b590fea4d468ee0f2791e847a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\vulkan-qualification\\setup.json",
+    "bytes": 1131,
+    "sha256": "b561f118f9aadbd3d977bdb7fdcecd4971aa34723adc1a42fdaa09402292c537"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-r2\\vulkan-qualification\\summary.json",
+    "bytes": 563,
+    "sha256": "ad7d365053f922cd6e8730b9b8a88e7f5a998cac9fda38b6e78887849abf9b61"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\comparison.json",
+    "bytes": 10878,
+    "sha256": "cafca0931c528105a515a3eed975a78d4c37852cf8b64625d98856aa8a3a8dbb"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\complete.json",
+    "bytes": 102,
+    "sha256": "763dc04d2c0fe9e6eab2fbed42fd307ef085cdc1f4b3108512e58ef0506367bf"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\inference.log",
+    "bytes": 11731,
+    "sha256": "356cdc08dd8b4ec0d8dc2a742dc7603911567d70c02d7548013116bc2264f11a"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\mode-guidance-review.json",
+    "bytes": 959,
+    "sha256": "6eaaa335944b27cece6f9c28e9bb20508147f19c8b717b8a5b8bad002f65d364"
+  },
+  {
+    "path": "build\\v2\\model-capability-20261102-reasoning\\registration.json",
+    "bytes": 1090,
+    "sha256": "46d8b8a0d4af95bd78efd39225001f6aa95e639ce67373901fe2a5b2b7878cd8"
+  },
+  {
+    "path": "scripts\\v2\\capability_comparison_20261102.py",
+    "bytes": 47485,
+    "sha256": "4b562604989b3b6142a3cdc923c9b75358304719ac8cac07c82f33323dcd47e2"
+  },
+  {
+    "path": "scripts\\v2\\report_capability_comparison_20261102.py",
+    "bytes": 11028,
+    "sha256": "e669cfd016d94c9be66cd599dea2b0b3b3c8d2245a32b4e9a76e45b4b88c9ff5"
+  },
+  {
+    "path": "scripts\\v2\\reasoning_capability_20261102.py",
+    "bytes": 6038,
+    "sha256": "ae9ef096152d8a2047e9987f6f4f835f4b71d9ed141b03766342bbf4260eaedd"
+  },
+  {
+    "path": "scripts\\v2\\seal_capability_comparison_20261102.py",
+    "bytes": 11659,
+    "sha256": "e695cc4ebb4db01362f8657be878ada3051f288b3ad4e575768d0be4805c2f63"
+  },
+  {
+    "path": "scripts\\v2\\replay_capability_tokens_20261102.py",
+    "bytes": 7284,
+    "sha256": "c3bf987cc70bb66ea6524870e39898bea61ef18c60a9d1bcfc01a5d4f22afada"
+  },
+  {
+    "path": "scripts\\v2\\export_capability_adapted_control_20261102.py",
+    "bytes": 5538,
+    "sha256": "243009f53e91b4a69d2dfd588ba7f750a81b19767c498d152f0a6c3960b4f5ff"
+  },
+  {
+    "path": "scripts\\v2\\finish_capability_campaign_20261102.py",
+    "bytes": 3414,
+    "sha256": "2663ae9e82c5e9bb2857be83f116a8f1ca4bad06345a05ee97776b2649361f4d"
+  },
+  {
+    "path": "scripts\\v2\\audit_capability_gguf_20261102.py",
+    "bytes": 3507,
+    "sha256": "e433c1e4da7d7b46b27492424d2d06d203f5b322ddfecc7c82a023319a327a47"
+  },
+  {
+    "path": "tests\\test_capability_comparison_20261102.py",
+    "bytes": 7651,
+    "sha256": "187559334ebe7929b17e89bcc4b4f9b363deb363b8a776b3c19eaefcbbf2b359"
+  },
+  {
+    "path": "src\\sysone\\v2\\maintenance\\baselines.py",
+    "bytes": 6317,
+    "sha256": "fff97489c83dcbe3a30ca2e647a65c4f3bbfc35c16d948d1a8983301f83e3f33"
+  },
+  {
+    "path": "src\\sysone\\v2\\maintenance\\dataset.py",
+    "bytes": 10627,
+    "sha256": "8cd0430c50b696b4d30bde1a60b8b262e44cc7f95fe144b2af66da5492a2976f"
+  },
+  {
+    "path": "src\\sysone\\v2\\maintenance\\revision2.py",
+    "bytes": 3625,
+    "sha256": "d8ff110b03606ce69648eb8ea2fe6fc68963bdbbf3edcca82e70c525931fbd50"
+  },
+  {
+    "path": "src\\sysone\\v2\\maintenance\\schema.py",
+    "bytes": 7971,
+    "sha256": "6fb0809b83d86b14f4cd46793a038e27ac8e40e1db7cff3de855fda41226af84"
+  },
+  {
+    "path": "src\\sysone\\v2\\maintenance\\simulator.py",
+    "bytes": 4007,
+    "sha256": "5977b7f31f69c43c297dd01dd2dc53c92d7dea647c3164fba9208bf8e55ed654"
+  },
+  {
+    "path": "src\\sysone\\v2\\maintenance\\__init__.py",
+    "bytes": 82,
+    "sha256": "364d09ad4ffcfa5453e97ee323cfd8a929cd4c6f9c307b0c5e5485064d4ecdde"
+  },
+  {
+    "path": "src\\sysone\\v2\\general_tool_eval.py",
+    "bytes": 3868,
+    "sha256": "6c34a72ab74608681af8e9f4db1d76248e0f53d69378a7f7059361af257dfca1"
+  },
+  {
+    "path": "scripts\\v2\\synthesize_capability_comparison_20261102.py",
+    "bytes": 21822,
+    "sha256": "0051ca5924eecdd9cb7462a7fe385b20e28a23a86a73ac0006d7c435f5d12294"
+  },
+  {
+    "path": "docs\\research\\2026-11-02-quantized-model-capability-comparison.md",
+    "bytes": 17537,
+    "sha256": "af06f35f8904126dc171e60c82407492a70cc51de00a47ea44284fa1b83c190f"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\constants\\enums.py",
+    "bytes": 896,
+    "sha256": "2182becfa2a1d071ee1db30db593b4758c6bf866aa12d2d4b8daf09175ea518a"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\constants\\model_config.py",
+    "bytes": 182,
+    "sha256": "494c6153714be993b1e53709b4efc61dd792b80213907ed6254d2e773e16f422"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\constants\\type_mappings.py",
+    "bytes": 1813,
+    "sha256": "1702fb67afbe2c492608e58e2b7d02e46381f50166b47f3c952f76e34c7cd3bd"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\constants\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\eval_checker\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\ast_checker.py",
+    "bytes": 25032,
+    "sha256": "2aae7a68461a8f76c0be3894c8901b66b56967a1989d3ab066051e3fb97f1538"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\java_type_converter.py",
+    "bytes": 15716,
+    "sha256": "2fd4f4b0443b3dd974a1723bb4e45c086d7b352631062da7807ad1ad40706604"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\js_type_converter.py",
+    "bytes": 11706,
+    "sha256": "a114e9ff75c025cb52787ac33d6c2fbaa390905c6125a2b3c6afebab232bb5e4"
+  },
+  {
+    "path": "build\\v2\\general-tool-data-v1\\bfcl-python-checker\\bfcl_eval\\eval_checker\\ast_eval\\type_convertor\\__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

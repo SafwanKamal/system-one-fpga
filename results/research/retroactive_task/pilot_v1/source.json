@@ -1,0 +1,54 @@
+{
+  "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/00231/PAMAP2_Dataset.zip",
+  "sha256": "6c2282b5b52775cd0588d450d10a315260c94fa3228b9fe453f48c47fda106f4",
+  "subjects": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108
+  ],
+  "train": [
+    101,
+    102,
+    103,
+    104
+  ],
+  "test": [
+    105,
+    106,
+    107,
+    108
+  ],
+  "channels": [
+    4,
+    5,
+    6,
+    10,
+    11,
+    12,
+    21,
+    22,
+    23,
+    27,
+    28,
+    29,
+    38,
+    39,
+    40,
+    44,
+    45,
+    46
+  ],
+  "window_samples": 512,
+  "sample_rate": 100,
+  "custodian_only_future_categories": {
+    "5": "running",
+    "6": "cycling",
+    "12": "ascending_stairs"
+  },
+  "created_utc": "2026-11-16T18:50:34.246438+00:00"
+}

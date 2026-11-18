@@ -1,0 +1,42 @@
+    logic reset;
+    assign reset=!reset_n;
+    wire run_start,run_done,busy,memory_drained;
+    wire [127:0] run_result;
+    wire [3:0] perf_events;
+    wire [31:0] program_reg=PROGRAM_ADDRESS,ids_reg=IDS_ADDRESS,result_reg=RESULT_ADDRESS;
+    wire [15:0] admission_tokens,admission_first,admission_count;
+    wire [15:0] owned_tokens,owned_first,owned_count;
+    wire [31:0] shape_reg={16'd384,admission_tokens};
+    wire [63:0] admitted_session,admitted_request_id,core_session,core_request_id;
+    wire core_complete,core_success,owned,fault_seen,done_seen,terminal_valid,quarantined,retired;
+    wire live_quiet=!busy && memory_drained;
+    // Captured immediately at the original completion boundary, unaffected by
+    // memory-response drain or ARM head/publication latency.
+    logic [31:0] encoder_clocks,request_clocks;
+    always_ff @(posedge clk) begin
+        if(reset || run_start) begin encoder_clocks<=0;request_clocks<=0;end
+        else if(run_done) begin encoder_clocks<=run_result[31:0];request_clocks<=run_result[63:32];end
+    end
+    typed_epoch_tracker epoch_inst (
+        .clk(clk),.reset(reset),.admitted(run_start),.retired(retired),
+        .admission_session(admitted_session),.admission_request_id(admitted_request_id),
+        .run_done(run_done),.busy(busy),.memory_drained(memory_drained),.memory_error(memory_error),
+        .run_status(run_result[71:64]),.owned(owned),.complete(core_complete),.success(core_success),
+        .fault_seen(fault_seen),.done_seen(done_seen),.session(core_session),.request_id(core_request_id)
+    );
+    typed_intent_axil publication_inst (
+        .clk(clk),.reset(reset),.environment_ready(deployment_ready && !memory_error),
+        .s_awaddr(s_axil_awaddr),.s_awvalid(s_axil_awvalid),.s_awready(s_axil_awready),
+        .s_wdata(s_axil_wdata),.s_wstrb(s_axil_wstrb),.s_wvalid(s_axil_wvalid),.s_wready(s_axil_wready),
+        .s_bresp(s_axil_bresp),.s_bvalid(s_axil_bvalid),.s_bready(s_axil_bready),
+        .s_araddr(s_axil_araddr),.s_arvalid(s_axil_arvalid),.s_arready(s_axil_arready),
+        .s_rdata(s_axil_rdata),.s_rresp(s_axil_rresp),.s_rvalid(s_axil_rvalid),.s_rready(s_axil_rready),
+        .core_complete(core_complete),.core_success(core_success && deployment_ready),.live_quiet(live_quiet),
+        .core_session(core_session),.core_request_id(core_request_id),
+        .admitted(run_start),.admitted_session(admitted_session),.admitted_request_id(admitted_request_id),
+        .encoder_clocks(encoder_clocks),.request_clocks(request_clocks),
+        .terminal_valid(terminal_valid),.terminal_quarantined(quarantined),.retired(retired),
+        .admission_tokens(admission_tokens),.admission_first(admission_first),.admission_count(admission_count),
+        .owned_tokens(owned_tokens),.owned_first(owned_first),.owned_count(owned_count)
+    );
+    assign irq=terminal_valid;

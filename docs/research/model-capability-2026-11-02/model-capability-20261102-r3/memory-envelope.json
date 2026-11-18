@@ -1,0 +1,277 @@
+{
+  "scope": "Analytic candidate budget, not measured FPGA fit. BF16 full-attention KV + FP32 recurrent/conv windows. Excludes Linux, activation/scratch/AXI tables, alignment and allocation fragmentation. Quantized releases include higher-precision tensors.",
+  "candidates": [
+    {
+      "model": "qwen06-q4",
+      "weight_file_bytes": 382156480,
+      "full_attention_layers": 28,
+      "total_layers": 28,
+      "head_dim": 128,
+      "KV_heads": 8,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 58720256,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 440876736
+        },
+        "1024": {
+          "BF16_KV_bytes": 117440512,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 499596992
+        },
+        "2048": {
+          "BF16_KV_bytes": 234881024,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 617037504
+        },
+        "4096": {
+          "BF16_KV_bytes": 469762048,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 851918528
+        }
+      }
+    },
+    {
+      "model": "qwen17-q4",
+      "weight_file_bytes": 1056782912,
+      "full_attention_layers": 28,
+      "total_layers": 28,
+      "head_dim": 128,
+      "KV_heads": 8,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 58720256,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1115503168
+        },
+        "1024": {
+          "BF16_KV_bytes": 117440512,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1174223424
+        },
+        "2048": {
+          "BF16_KV_bytes": 234881024,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1291663936
+        },
+        "4096": {
+          "BF16_KV_bytes": 469762048,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1526544960
+        }
+      }
+    },
+    {
+      "model": "qwen4-q4",
+      "weight_file_bytes": 2375773280,
+      "full_attention_layers": 36,
+      "total_layers": 36,
+      "head_dim": 128,
+      "KV_heads": 8,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 75497472,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 2451270752
+        },
+        "1024": {
+          "BF16_KV_bytes": 150994944,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 2526768224
+        },
+        "2048": {
+          "BF16_KV_bytes": 301989888,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 2677763168
+        },
+        "4096": {
+          "BF16_KV_bytes": 603979776,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 2979753056
+        }
+      }
+    },
+    {
+      "model": "qwen35-2-q4",
+      "weight_file_bytes": 1214873856,
+      "full_attention_layers": 6,
+      "total_layers": 24,
+      "head_dim": 256,
+      "KV_heads": 2,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 6291456,
+          "FP32_recurrent_bytes": 18874368,
+          "FP32_conv_window_bytes": 1769472,
+          "weights_plus_estimated_state_bytes": 1241809152
+        },
+        "1024": {
+          "BF16_KV_bytes": 12582912,
+          "FP32_recurrent_bytes": 18874368,
+          "FP32_conv_window_bytes": 1769472,
+          "weights_plus_estimated_state_bytes": 1248100608
+        },
+        "2048": {
+          "BF16_KV_bytes": 25165824,
+          "FP32_recurrent_bytes": 18874368,
+          "FP32_conv_window_bytes": 1769472,
+          "weights_plus_estimated_state_bytes": 1260683520
+        },
+        "4096": {
+          "BF16_KV_bytes": 50331648,
+          "FP32_recurrent_bytes": 18874368,
+          "FP32_conv_window_bytes": 1769472,
+          "weights_plus_estimated_state_bytes": 1285849344
+        }
+      }
+    },
+    {
+      "model": "qwen35-4-q4",
+      "weight_file_bytes": 2583221408,
+      "full_attention_layers": 8,
+      "total_layers": 32,
+      "head_dim": 256,
+      "KV_heads": 4,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 16777216,
+          "FP32_recurrent_bytes": 50331648,
+          "FP32_conv_window_bytes": 3145728,
+          "weights_plus_estimated_state_bytes": 2653476000
+        },
+        "1024": {
+          "BF16_KV_bytes": 33554432,
+          "FP32_recurrent_bytes": 50331648,
+          "FP32_conv_window_bytes": 3145728,
+          "weights_plus_estimated_state_bytes": 2670253216
+        },
+        "2048": {
+          "BF16_KV_bytes": 67108864,
+          "FP32_recurrent_bytes": 50331648,
+          "FP32_conv_window_bytes": 3145728,
+          "weights_plus_estimated_state_bytes": 2703807648
+        },
+        "4096": {
+          "BF16_KV_bytes": 134217728,
+          "FP32_recurrent_bytes": 50331648,
+          "FP32_conv_window_bytes": 3145728,
+          "weights_plus_estimated_state_bytes": 2770916512
+        }
+      }
+    },
+    {
+      "model": "xlam3-q4",
+      "weight_file_bytes": 1822849600,
+      "full_attention_layers": 36,
+      "total_layers": 36,
+      "head_dim": 128,
+      "KV_heads": 2,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 18874368,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1841723968
+        },
+        "1024": {
+          "BF16_KV_bytes": 37748736,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1860598336
+        },
+        "2048": {
+          "BF16_KV_bytes": 75497472,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1898347072
+        },
+        "4096": {
+          "BF16_KV_bytes": 150994944,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1973844544
+        }
+      }
+    },
+    {
+      "model": "lfm12-q4",
+      "weight_file_bytes": 695751488,
+      "full_attention_layers": 6,
+      "total_layers": 16,
+      "head_dim": 64,
+      "KV_heads": 8,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 6291456,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 245760,
+          "weights_plus_estimated_state_bytes": 702288704
+        },
+        "1024": {
+          "BF16_KV_bytes": 12582912,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 245760,
+          "weights_plus_estimated_state_bytes": 708580160
+        },
+        "2048": {
+          "BF16_KV_bytes": 25165824,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 245760,
+          "weights_plus_estimated_state_bytes": 721163072
+        },
+        "4096": {
+          "BF16_KV_bytes": 50331648,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 245760,
+          "weights_plus_estimated_state_bytes": 746328896
+        }
+      }
+    },
+    {
+      "model": "smol3-q4",
+      "weight_file_bytes": 1811456544,
+      "full_attention_layers": 36,
+      "total_layers": 36,
+      "head_dim": 128,
+      "KV_heads": 4,
+      "contexts": {
+        "512": {
+          "BF16_KV_bytes": 37748736,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1849205280
+        },
+        "1024": {
+          "BF16_KV_bytes": 75497472,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1886954016
+        },
+        "2048": {
+          "BF16_KV_bytes": 150994944,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 1962451488
+        },
+        "4096": {
+          "BF16_KV_bytes": 301989888,
+          "FP32_recurrent_bytes": 0,
+          "FP32_conv_window_bytes": 0,
+          "weights_plus_estimated_state_bytes": 2113446432
+        }
+      }
+    }
+  ]
+}

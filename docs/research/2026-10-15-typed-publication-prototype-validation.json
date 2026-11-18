@@ -1,0 +1,31 @@
+{
+  "updated_utc": "2026-10-15T06:55:27.907915+00:00",
+  "standalone_prototype": true,
+  "integrated_in_counter300": false,
+  "simulation_passed": true,
+  "deadline_boundary_combinations": 288,
+  "checks": [
+    "exact deadline and tie",
+    "request and contract identity",
+    "finite label/outcome",
+    "threshold abstention",
+    "empty failure payload",
+    "replayed ID",
+    "quiescence and quarantine",
+    "immutable captured budget"
+  ],
+  "formal_proof": false,
+  "physical_timing_qualified": false,
+  "hardware_qualified": false,
+  "r5_firmware_implemented": false,
+  "host_delivery_guarantee": false,
+  "successful_inference_guarantee": false,
+  "failed_attempt": "build/v2/typed-publication-prototype (testbench dangling-else compile error)",
+  "sha256": {
+    "rtl/contracts/typed_publication_gate.sv": "16844fd634ce2856ceec060f99345a8411395af02e0edd5d95f8b7f233369913",
+    "simulation/v2/typed_publication_gate_tb.sv": "95d222def6e260d638d605d5e3d9e9b0d19fe154f6159d800dabfa53bfa7357c",
+    "simulation/v2/run_typed_publication.sh": "270ed35df7beb7519b051fb4fbdbc57570c4d9f6bfa8433ad2579005d0770f9e",
+    "build/v2/typed-publication-prototype-v2/run.log": "5f4abb15ffa9b75d72e475c78f88a745c1b64ef7884e1b0b0d63f0b9d0d4d746",
+    "build/v2/typed-publication-prototype-v2/source-sha256.txt": "40693c3deb04ecda608702d9077c416669a37be08e0b76d3a8c54e98d825bd8f"
+  }
+}

@@ -1,0 +1,1447 @@
+{
+  "completed_utc": "2026-11-16T23:40:38.754137+00:00",
+  "source_sha256": "18cbe464cc1c902f16a84ecd579e4bb15d3d03611cc62f18c90ba3e81d52a699",
+  "exploratory": true,
+  "results": [
+    {
+      "config": 3100,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.4666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3100,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.4,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3100,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3100,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.4666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3100,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.4,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3100,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3101,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.1,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3101,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.075,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3101,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.8,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.075,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3101,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 0.8333333333333334,
+        "healthy_false_alarm": 0.2,
+        "known_abstention": 0.15,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3101,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.1,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3101,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.8333333333333334,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.1,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3102,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.2,
+        "known_abstention": 0.125,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3102,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.2,
+        "known_abstention": 0.125,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3102,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.2,
+        "known_abstention": 0.125,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3102,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.2,
+        "known_abstention": 0.125,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3102,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.2,
+        "known_abstention": 0.125,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3102,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.2,
+        "known_abstention": 0.125,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3103,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3103,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3103,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3103,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3103,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3103,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3104,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.05,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3104,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3104,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3104,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3104,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3104,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3105,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3105,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3105,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3105,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.025,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3105,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3105,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.8333333333333334,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3106,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.075,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3106,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3106,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3106,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 0.8333333333333334,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.125,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3106,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3106,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3107,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3107,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3107,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3107,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.4666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3107,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3107,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3108,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3108,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.36666666666666664,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3108,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3108,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.4666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3108,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.36666666666666664,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3108,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3109,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.7,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3109,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3109,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.8333333333333334,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3109,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3109,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3109,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.8,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3110,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3110,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3110,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3110,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.1,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3110,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3110,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.8,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.075,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3111,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.43333333333333335,
+        "known_macro_recall": 0.7666666666666666,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.175,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3111,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.36666666666666664,
+        "known_macro_recall": 0.7666666666666666,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.175,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3111,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.7666666666666666,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.175,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3111,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.4,
+        "known_macro_recall": 0.7666666666666666,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.175,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3111,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.4666666666666667,
+        "known_macro_recall": 0.7999999999999999,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.15,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3111,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 0.7999999999999999,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.15,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3112,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3112,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.4666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3112,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3112,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3112,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.36666666666666664,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3112,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3113,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3113,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3113,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3113,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3113,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3113,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3114,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3114,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3114,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3114,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3114,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3114,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3115,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.025,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3115,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3115,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3115,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.1,
+        "known_abstention": 0.05,
+        "feasible": false
+      }
+    },
+    {
+      "config": 3115,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.4,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3115,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.8666666666666667,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3116,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3116,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.43333333333333335,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3116,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3116,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5333333333333333,
+        "known_macro_recall": 0.9333333333333332,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.05,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3116,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.43333333333333335,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3116,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 0.9666666666666667,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.025,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3117,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3117,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3117,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3117,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3117,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3117,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3118,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3118,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.4666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3118,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3118,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3118,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3118,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3119,
+      "draw": 1,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6333333333333333,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3119,
+      "draw": 1,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3119,
+      "draw": 1,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.6666666666666666,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3119,
+      "draw": 2,
+      "selector": "fixed",
+      "metrics": {
+        "unknown_rejection": 0.6,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3119,
+      "draw": 2,
+      "selector": "transferred_oracle",
+      "metrics": {
+        "unknown_rejection": 0.5666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    },
+    {
+      "config": 3119,
+      "draw": 2,
+      "selector": "new_noise_oracle",
+      "metrics": {
+        "unknown_rejection": 0.7666666666666667,
+        "known_macro_recall": 1.0,
+        "healthy_false_alarm": 0.0,
+        "known_abstention": 0.0,
+        "feasible": true
+      }
+    }
+  ]
+}

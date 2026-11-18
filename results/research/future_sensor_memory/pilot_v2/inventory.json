@@ -1,0 +1,422 @@
+[
+  {
+    "user": "00EABED2-271D-49D8-B599-1D4A09240601",
+    "split": "train",
+    "observations": 2287,
+    "elapsed_hours": 186.57416666666666,
+    "gap_fraction": 0.01968503937007874
+  },
+  {
+    "user": "098A72A5-E3E5-4F54-A152-BBDA0DF7B694",
+    "split": "test",
+    "observations": 6813,
+    "elapsed_hours": 675.2761111111112,
+    "gap_fraction": 0.0024955960070463887
+  },
+  {
+    "user": "0A986513-7828-4D53-AA1F-E02D6DF9561B",
+    "split": "train",
+    "observations": 3960,
+    "elapsed_hours": 71.69722222222222,
+    "gap_fraction": 0.001262945188178833
+  },
+  {
+    "user": "0BFC35E2-4817-4865-BFA7-764742302A2D",
+    "split": "train",
+    "observations": 3108,
+    "elapsed_hours": 167.5836111111111,
+    "gap_fraction": 0.12745413582233667
+  },
+  {
+    "user": "0E6184E1-90C0-48EE-B25A-F1ECB7B9714E",
+    "split": "validation",
+    "observations": 7521,
+    "elapsed_hours": 167.24527777777777,
+    "gap_fraction": 0.14095744680851063
+  },
+  {
+    "user": "1155FF54-63D3-4AB2-9863-8385D0BD0A13",
+    "split": "validation",
+    "observations": 2685,
+    "elapsed_hours": 210.475,
+    "gap_fraction": 0.7175856929955291
+  },
+  {
+    "user": "11B5EC4D-4133-4289-B475-4E737182A406",
+    "split": "train",
+    "observations": 8845,
+    "elapsed_hours": 170.03222222222223,
+    "gap_fraction": 0.0006784260515603799
+  },
+  {
+    "user": "136562B6-95B2-483D-88DC-065F28409FD2",
+    "split": "test",
+    "observations": 6218,
+    "elapsed_hours": 168.4177777777778,
+    "gap_fraction": 0.0038603828212964452
+  },
+  {
+    "user": "1538C99F-BA1E-4EFB-A949-6C7C47701B20",
+    "split": "train",
+    "observations": 6549,
+    "elapsed_hours": 167.63888888888889,
+    "gap_fraction": 0.004123396456933414
+  },
+  {
+    "user": "1DBB0F6F-1F81-4A50-9DF4-CD62ACFA4842",
+    "split": "train",
+    "observations": 7375,
+    "elapsed_hours": 184.89194444444445,
+    "gap_fraction": 0.07255221046921617
+  },
+  {
+    "user": "24E40C4C-A349-4F9F-93AB-01D00FB994AF",
+    "split": "train",
+    "observations": 4771,
+    "elapsed_hours": 274.69305555555553,
+    "gap_fraction": 0.004821802935010482
+  },
+  {
+    "user": "27E04243-B138-4F40-A164-F40B60165CF3",
+    "split": "test",
+    "observations": 4927,
+    "elapsed_hours": 188.95416666666668,
+    "gap_fraction": 0.09845716605765327
+  },
+  {
+    "user": "2C32C23E-E30C-498A-8DD2-0EFB9150A02E",
+    "split": "validation",
+    "observations": 8516,
+    "elapsed_hours": 167.8227777777778,
+    "gap_fraction": 0.001644157369348209
+  },
+  {
+    "user": "33A85C34-CFE4-4732-9E73-0A7AC861B27A",
+    "split": "train",
+    "observations": 6172,
+    "elapsed_hours": 170.3672222222222,
+    "gap_fraction": 0.10354885755955275
+  },
+  {
+    "user": "3600D531-0C55-44A7-AE95-A7A38519464E",
+    "split": "train",
+    "observations": 5203,
+    "elapsed_hours": 187.525,
+    "gap_fraction": 0.006343713956170703
+  },
+  {
+    "user": "40E170A7-607B-4578-AF04-F021C3B0384A",
+    "split": "validation",
+    "observations": 7649,
+    "elapsed_hours": 167.96055555555554,
+    "gap_fraction": 0.12186192468619247
+  },
+  {
+    "user": "481F4DD2-7689-43B9-A2AA-C8772227162B",
+    "split": "train",
+    "observations": 6691,
+    "elapsed_hours": 213.7836111111111,
+    "gap_fraction": 0.14050822122571002
+  },
+  {
+    "user": "4E98F91F-4654-42EF-B908-A3389443F2E7",
+    "split": "validation",
+    "observations": 3250,
+    "elapsed_hours": 167.92194444444445,
+    "gap_fraction": 0.15635580178516467
+  },
+  {
+    "user": "4FC32141-E888-4BFF-8804-12559A491D8C",
+    "split": "validation",
+    "observations": 4979,
+    "elapsed_hours": 118.00944444444444,
+    "gap_fraction": 0.0034150261149055844
+  },
+  {
+    "user": "5119D0F8-FCA8-4184-A4EB-19421A40DE0D",
+    "split": "train",
+    "observations": 6617,
+    "elapsed_hours": 152.33833333333334,
+    "gap_fraction": 0.0013603385731559856
+  },
+  {
+    "user": "5152A2DF-FAF3-4BA8-9CA9-E66B32671A53",
+    "split": "train",
+    "observations": 6617,
+    "elapsed_hours": 167.79333333333332,
+    "gap_fraction": 0.0013603385731559856
+  },
+  {
+    "user": "59818CD2-24D7-4D32-B133-24C2FE3801E5",
+    "split": "train",
+    "observations": 5947,
+    "elapsed_hours": 164.80305555555555,
+    "gap_fraction": 0.09973091153716784
+  },
+  {
+    "user": "59EEFAE0-DEB0-4FFF-9250-54D2A03D0CF2",
+    "split": "train",
+    "observations": 7542,
+    "elapsed_hours": 165.2602777777778,
+    "gap_fraction": 0.1551518366264421
+  },
+  {
+    "user": "5EF64122-B513-46AE-BCF1-E62AAC285D2C",
+    "split": "train",
+    "observations": 3911,
+    "elapsed_hours": 68.95,
+    "gap_fraction": 0.002301790281329923
+  },
+  {
+    "user": "61359772-D8D8-480D-B623-7C636EAD0C81",
+    "split": "validation",
+    "observations": 6079,
+    "elapsed_hours": 174.41833333333332,
+    "gap_fraction": 0.08522540309312274
+  },
+  {
+    "user": "61976C24-1C50-4355-9C49-AAE44A7D09F6",
+    "split": "test",
+    "observations": 8730,
+    "elapsed_hours": 2925.5433333333335,
+    "gap_fraction": 0.011685187306678887
+  },
+  {
+    "user": "665514DE-49DC-421F-8DCB-145D0B2609AD",
+    "split": "train",
+    "observations": 9167,
+    "elapsed_hours": 167.9911111111111,
+    "gap_fraction": 0.08913375518219507
+  },
+  {
+    "user": "74B86067-5D4B-43CF-82CF-341B76BEA0F4",
+    "split": "train",
+    "observations": 7298,
+    "elapsed_hours": 149.10888888888888,
+    "gap_fraction": 0.09222968343154721
+  },
+  {
+    "user": "78A91A4E-4A51-4065-BDA7-94755F0BB3BB",
+    "split": "train",
+    "observations": 11996,
+    "elapsed_hours": 222.3177777777778,
+    "gap_fraction": 0.0007503126302626094
+  },
+  {
+    "user": "797D145F-3858-4A7F-A7C2-A4EB721E133C",
+    "split": "train",
+    "observations": 3593,
+    "elapsed_hours": 142.095,
+    "gap_fraction": 0.05929844097995546
+  },
+  {
+    "user": "7CE37510-56D0-4120-A1CF-0E23351428D2",
+    "split": "train",
+    "observations": 9761,
+    "elapsed_hours": 163.59194444444444,
+    "gap_fraction": 0.0007172131147540983
+  },
+  {
+    "user": "7D9BB102-A612-4E2A-8E22-3159752F55D8",
+    "split": "train",
+    "observations": 1600,
+    "elapsed_hours": 163.17694444444444,
+    "gap_fraction": 0.025015634771732333
+  },
+  {
+    "user": "8023FE1A-D3B0-4E2C-A57A-9321B7FC755F",
+    "split": "train",
+    "observations": 9189,
+    "elapsed_hours": 191.075,
+    "gap_fraction": 0.0031562908141053547
+  },
+  {
+    "user": "806289BC-AD52-4CC1-806C-0CDB14D65EB6",
+    "split": "test",
+    "observations": 9242,
+    "elapsed_hours": 168.2488888888889,
+    "gap_fraction": 0.06016664863110053
+  },
+  {
+    "user": "81536B0A-8DBF-4D8A-AC24-9543E2E4C8E0",
+    "split": "validation",
+    "observations": 6407,
+    "elapsed_hours": 168.98361111111112,
+    "gap_fraction": 0.22619419294411489
+  },
+  {
+    "user": "83CF687B-7CEC-434B-9FE8-00C3D5799BE6",
+    "split": "test",
+    "observations": 9539,
+    "elapsed_hours": 168.32194444444445,
+    "gap_fraction": 0.0007339064793457748
+  },
+  {
+    "user": "86A4F379-B305-473D-9D83-FC7D800180EF",
+    "split": "train",
+    "observations": 10738,
+    "elapsed_hours": 283.29,
+    "gap_fraction": 0.15190462885349726
+  },
+  {
+    "user": "96A358A0-FFF2-4239-B93E-C7425B901B47",
+    "split": "train",
+    "observations": 5819,
+    "elapsed_hours": 192.85972222222222,
+    "gap_fraction": 0.09419044345135785
+  },
+  {
+    "user": "9759096F-1119-4E19-A0AD-6F16989C7E1C",
+    "split": "train",
+    "observations": 9959,
+    "elapsed_hours": 167.29416666666665,
+    "gap_fraction": 0.0004016870857601928
+  },
+  {
+    "user": "99B204C0-DD5C-4BB7-83E8-A37281B8D769",
+    "split": "test",
+    "observations": 6038,
+    "elapsed_hours": 186.68583333333333,
+    "gap_fraction": 0.1696206725194633
+  },
+  {
+    "user": "9DC38D04-E82E-4F29-AB52-B476535226F2",
+    "split": "validation",
+    "observations": 9686,
+    "elapsed_hours": 167.6063888888889,
+    "gap_fraction": 0.0022715539494062983
+  },
+  {
+    "user": "A5A30F76-581E-4757-97A2-957553A2C6AA",
+    "split": "test",
+    "observations": 1667,
+    "elapsed_hours": 112.93222222222222,
+    "gap_fraction": 0.287515006002401
+  },
+  {
+    "user": "A5CDF89D-02A2-4EC1-89F8-F534FDABDD96",
+    "split": "train",
+    "observations": 6040,
+    "elapsed_hours": 203.1886111111111,
+    "gap_fraction": 0.0024838549428713363
+  },
+  {
+    "user": "A7599A50-24AE-46A6-8EA6-2576F1011D81",
+    "split": "test",
+    "observations": 3898,
+    "elapsed_hours": 151.5611111111111,
+    "gap_fraction": 0.036181678214010776
+  },
+  {
+    "user": "A76A5AF5-5A93-4CF2-A16E-62353BB70E8A",
+    "split": "train",
+    "observations": 7520,
+    "elapsed_hours": 167.96083333333334,
+    "gap_fraction": 0.00039898922729086314
+  },
+  {
+    "user": "B09E373F-8A54-44C8-895B-0039390B859F",
+    "split": "train",
+    "observations": 8134,
+    "elapsed_hours": 262.8122222222222,
+    "gap_fraction": 0.0014754703061600886
+  },
+  {
+    "user": "B7F9D634-263E-4A97-87F9-6FFB4DDCB36C",
+    "split": "test",
+    "observations": 9383,
+    "elapsed_hours": 185.76194444444445,
+    "gap_fraction": 0.09209123854188872
+  },
+  {
+    "user": "B9724848-C7E2-45F4-9B3F-A1F38D864495",
+    "split": "test",
+    "observations": 7626,
+    "elapsed_hours": 166.61277777777778,
+    "gap_fraction": 0.002098360655737705
+  },
+  {
+    "user": "BE3CA5A6-A561-4BBD-B7C9-5DF6805400FC",
+    "split": "train",
+    "observations": 8309,
+    "elapsed_hours": 167.4336111111111,
+    "gap_fraction": 0.0026480500722195475
+  },
+  {
+    "user": "BEF6C611-50DA-4971-A040-87FB979F3FC1",
+    "split": "train",
+    "observations": 3451,
+    "elapsed_hours": 138.90666666666667,
+    "gap_fraction": 0.1055072463768116
+  },
+  {
+    "user": "C48CE857-A0DD-4DDB-BEA5-3A25449B2153",
+    "split": "train",
+    "observations": 5092,
+    "elapsed_hours": 163.97861111111112,
+    "gap_fraction": 0.014142604596346494
+  },
+  {
+    "user": "CA820D43-E5E2-42EF-9798-BE56F776370B",
+    "split": "validation",
+    "observations": 7865,
+    "elapsed_hours": 149.72833333333332,
+    "gap_fraction": 0.001525940996948118
+  },
+  {
+    "user": "CCAF77F0-FABB-4F2F-9E24-D56AD0C5A82F",
+    "split": "test",
+    "observations": 8472,
+    "elapsed_hours": 166.86527777777778,
+    "gap_fraction": 0.1166332192185102
+  },
+  {
+    "user": "CDA3BBF7-6631-45E8-85BA-EEB416B32A3C",
+    "split": "train",
+    "observations": 2860,
+    "elapsed_hours": 72.1986111111111,
+    "gap_fraction": 0.0006995452955578874
+  },
+  {
+    "user": "CF722AA9-2533-4E51-9FEB-9EAC84EE9AAC",
+    "split": "validation",
+    "observations": 3615,
+    "elapsed_hours": 145.84166666666667,
+    "gap_fraction": 0.0030437188710570003
+  },
+  {
+    "user": "D7D20E2E-FC78-405D-B346-DBD3FD8FC92B",
+    "split": "validation",
+    "observations": 6210,
+    "elapsed_hours": 166.4638888888889,
+    "gap_fraction": 0.002737961024319536
+  },
+  {
+    "user": "E65577C1-8D5D-4F70-AF23-B3ADB9D3DBA3",
+    "split": "train",
+    "observations": 3441,
+    "elapsed_hours": 161.8997222222222,
+    "gap_fraction": 0.003197674418604651
+  },
+  {
+    "user": "ECECC2AB-D32F-4F90-B74C-E12A1C69BBE2",
+    "split": "train",
+    "observations": 3530,
+    "elapsed_hours": 261.9913888888889,
+    "gap_fraction": 0.003967129498441485
+  },
+  {
+    "user": "F50235E0-DD67-4F2A-B00B-1F31ADA998B9",
+    "split": "train",
+    "observations": 2266,
+    "elapsed_hours": 142.14277777777778,
+    "gap_fraction": 0.20485651214128037
+  },
+  {
+    "user": "FDAA70A1-42A3-4E3F-9AE3-3FDA412E03BF",
+    "split": "train",
+    "observations": 4973,
+    "elapsed_hours": 168.29416666666665,
+    "gap_fraction": 0.003218020917135961
+  }
+]

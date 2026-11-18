@@ -14,7 +14,7 @@
   "combined_accuracy": 0.9025454545454545
  },
  "hwu_router": {
-  "tau_hwu": 0.515,
+  "tau_hwu": 0.48,
   "extra_budget": 0.03,
   "test_without_hwu_threshold": {
    "oos_rejected": 0.0,
@@ -25,18 +25,18 @@
    "note": "HWU always accepts"
   },
   "test": {
-   "oos_rejected": 0.234,
+   "oos_rejected": 0.292,
    "clinc_in_scope_accepted": 0.9897777777777778,
-   "hwu_accepted": 0.9736012608353034,
+   "hwu_accepted": 0.9696611505122144,
    "hwu_intent_accuracy": 0.9144996059889677,
-   "hwu_accepted_and_correct": 0.9018912529550828
+   "hwu_accepted_and_correct": 0.900709219858156
   },
   "test_clinc_only": {
-   "oos_rejected": 0.405,
-   "clinc_in_scope_accepted": 0.9782222222222222,
-   "hwu_accepted": 0.7494089834515366,
+   "oos_rejected": 0.703,
+   "clinc_in_scope_accepted": 0.9768888888888889,
+   "hwu_accepted": 0.7005516154452325,
    "hwu_intent_accuracy": 0.9144996059889677,
-   "hwu_accepted_and_correct": 0.693853427895981
+   "hwu_accepted_and_correct": 0.6560283687943262
   }
  }
 }

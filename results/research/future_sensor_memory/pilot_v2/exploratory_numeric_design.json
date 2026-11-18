@@ -1,0 +1,9 @@
+{
+  "exploratory": true,
+  "questions_per_person": 320,
+  "participants": 12,
+  "query_source": "four directly observed normalized sensor feature channels; excludes all activity classifiers",
+  "no_new_memory_selection": true,
+  "no_new_ingestion": true,
+  "zero_reference": 0.11001420454545459
+}

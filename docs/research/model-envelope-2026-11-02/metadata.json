@@ -1,0 +1,1208 @@
+[
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Qwen/Qwen3-0.6B/resolve/c1899de289a04d12100db370d81485cdf75e47ca/config.json",
+        "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Qwen/Qwen3-0.6B/resolve/c1899de289a04d12100db370d81485cdf75e47ca/README.md",
+        "sha256": "1ab64a26fcb3b461423b89a433a8c858f1bf8d4086f979cbb3ff878d47cf20e9"
+      }
+    },
+    "errors": {},
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "parameters": 751632384,
+    "parameter_dtypes": {
+      "BF16": 751632384
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "Qwen3ForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "eos_token_id": 151645,
+      "head_dim": 128,
+      "hidden_act": "silu",
+      "hidden_size": 1024,
+      "initializer_range": 0.02,
+      "intermediate_size": 3072,
+      "max_position_embeddings": 40960,
+      "max_window_layers": 28,
+      "model_type": "qwen3",
+      "num_attention_heads": 16,
+      "num_hidden_layers": 28,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 1000000,
+      "sliding_window": null,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.51.0",
+      "use_cache": true,
+      "use_sliding_window": false,
+      "vocab_size": 151936
+    }
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Qwen/Qwen3-1.7B/resolve/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/config.json",
+        "sha256": "1ddb5b89ebc90dcb417a45c213d818577e65976454d29385c8f6140771d95197"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Qwen/Qwen3-1.7B/resolve/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/README.md",
+        "sha256": "257e52c419dac2258852643f18af6c974f21f8c6c1b6f371b6cca6201cf29091"
+      }
+    },
+    "errors": {},
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "parameters": 2031739904,
+    "parameter_dtypes": {
+      "BF16": 2031739904
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "Qwen3ForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "eos_token_id": 151645,
+      "head_dim": 128,
+      "hidden_act": "silu",
+      "hidden_size": 2048,
+      "initializer_range": 0.02,
+      "intermediate_size": 6144,
+      "max_position_embeddings": 40960,
+      "max_window_layers": 28,
+      "model_type": "qwen3",
+      "num_attention_heads": 16,
+      "num_hidden_layers": 28,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 1000000,
+      "sliding_window": null,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.51.0",
+      "use_cache": true,
+      "use_sliding_window": false,
+      "vocab_size": 151936
+    }
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/resolve/cdbee75f17c01a7cc42f958dc650907174af0554/config.json",
+        "sha256": "5beea1a4a34c62782bfb2f911c606741a3bab8f92d80a118fa053c28af12e8ba"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507/resolve/cdbee75f17c01a7cc42f958dc650907174af0554/README.md",
+        "sha256": "8e3dd0c3b5b11897cc71092ccfe517bb7a9783479baa3665aad73c8d1a2041cd"
+      }
+    },
+    "errors": {},
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "parameters": 4022468096,
+    "parameter_dtypes": {
+      "BF16": 4022468096
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "Qwen3ForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "eos_token_id": 151645,
+      "head_dim": 128,
+      "hidden_act": "silu",
+      "hidden_size": 2560,
+      "initializer_range": 0.02,
+      "intermediate_size": 9728,
+      "max_position_embeddings": 262144,
+      "max_window_layers": 36,
+      "model_type": "qwen3",
+      "num_attention_heads": 32,
+      "num_hidden_layers": 36,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 5000000,
+      "sliding_window": null,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.51.0",
+      "use_cache": true,
+      "use_sliding_window": false,
+      "vocab_size": 151936
+    }
+  },
+  {
+    "model": "Qwen/Qwen3-8B",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Qwen/Qwen3-8B/resolve/b968826d9c46dd6066d109eabc6255188de91218/config.json",
+        "sha256": "f7c4eadfbbf522470667b797a3c89be2524832d2d599797248dc304fff447c30"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Qwen/Qwen3-8B/resolve/b968826d9c46dd6066d109eabc6255188de91218/README.md",
+        "sha256": "0f36caaff9c2516411a7738db384606263ba653c1e63e61d72f511606164d5a6"
+      }
+    },
+    "errors": {},
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "parameters": 8190735360,
+    "parameter_dtypes": {
+      "BF16": 8190735360
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "Qwen3ForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "eos_token_id": 151645,
+      "head_dim": 128,
+      "hidden_act": "silu",
+      "hidden_size": 4096,
+      "initializer_range": 0.02,
+      "intermediate_size": 12288,
+      "max_position_embeddings": 40960,
+      "max_window_layers": 36,
+      "model_type": "qwen3",
+      "num_attention_heads": 32,
+      "num_hidden_layers": 36,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 1000000,
+      "sliding_window": null,
+      "tie_word_embeddings": false,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.51.0",
+      "use_cache": true,
+      "use_sliding_window": false,
+      "vocab_size": 151936
+    }
+  },
+  {
+    "model": "Qwen/Qwen3.5-0.8B",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/resolve/2fc06364715b967f1860aea9cf38778875588b17/config.json",
+        "sha256": "b90b86f35c8e6925ef74ee04d0e758f0a845c83a42089ad82bbaa948de9b4204"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B/resolve/2fc06364715b967f1860aea9cf38778875588b17/README.md",
+        "sha256": "87a163af54f32fa608a0f8d3ac67945c53dd2b4a7c96740b3d7fdc28e8458864"
+      }
+    },
+    "errors": {},
+    "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+    "parameters": 873438784,
+    "parameter_dtypes": {
+      "F32": 2592,
+      "BF16": 873436192
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "Qwen3_5ForConditionalGeneration"
+      ],
+      "image_token_id": 248056,
+      "model_type": "qwen3_5",
+      "text_config": {
+        "attention_bias": false,
+        "attention_dropout": 0.0,
+        "attn_output_gate": true,
+        "dtype": "bfloat16",
+        "eos_token_id": 248044,
+        "full_attention_interval": 4,
+        "head_dim": 256,
+        "hidden_act": "silu",
+        "hidden_size": 1024,
+        "initializer_range": 0.02,
+        "intermediate_size": 3584,
+        "layer_types": [
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention"
+        ],
+        "linear_conv_kernel_dim": 4,
+        "linear_key_head_dim": 128,
+        "linear_num_key_heads": 16,
+        "linear_num_value_heads": 16,
+        "linear_value_head_dim": 128,
+        "max_position_embeddings": 262144,
+        "mlp_only_layers": [],
+        "model_type": "qwen3_5_text",
+        "mtp_num_hidden_layers": 1,
+        "mtp_use_dedicated_embeddings": false,
+        "num_attention_heads": 8,
+        "num_hidden_layers": 24,
+        "num_key_value_heads": 2,
+        "rms_norm_eps": 1e-06,
+        "tie_word_embeddings": true,
+        "use_cache": true,
+        "vocab_size": 248320,
+        "mamba_ssm_dtype": "float32",
+        "rope_parameters": {
+          "mrope_interleaved": true,
+          "mrope_section": [
+            11,
+            11,
+            10
+          ],
+          "rope_type": "default",
+          "rope_theta": 10000000,
+          "partial_rotary_factor": 0.25
+        }
+      },
+      "tie_word_embeddings": true,
+      "transformers_version": "4.57.0.dev0",
+      "video_token_id": 248057,
+      "vision_config": {
+        "deepstack_visual_indexes": [],
+        "depth": 12,
+        "hidden_act": "gelu_pytorch_tanh",
+        "hidden_size": 768,
+        "in_channels": 3,
+        "initializer_range": 0.02,
+        "intermediate_size": 3072,
+        "model_type": "qwen3_5",
+        "num_heads": 12,
+        "num_position_embeddings": 2304,
+        "out_hidden_size": 1024,
+        "patch_size": 16,
+        "spatial_merge_size": 2,
+        "temporal_patch_size": 2
+      },
+      "vision_end_token_id": 248054,
+      "vision_start_token_id": 248053
+    }
+  },
+  {
+    "model": "Qwen/Qwen3.5-2B",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-2B/resolve/15852e8c16360a2fea060d615a32b45270f8a8fc/config.json",
+        "sha256": "ed1c1723241f23f7f4e23430759cbd7dcfb4103cbdfe052bfe7626b57c2615b4"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-2B/resolve/15852e8c16360a2fea060d615a32b45270f8a8fc/README.md",
+        "sha256": "c0e83a849c776e6fa843d011f023132d942a0f0140d903205bf1c363adad2275"
+      }
+    },
+    "errors": {},
+    "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+    "parameters": 2274069824,
+    "parameter_dtypes": {
+      "F32": 2592,
+      "BF16": 2274067232
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "Qwen3_5ForConditionalGeneration"
+      ],
+      "image_token_id": 248056,
+      "model_type": "qwen3_5",
+      "text_config": {
+        "attention_bias": false,
+        "attention_dropout": 0.0,
+        "attn_output_gate": true,
+        "dtype": "bfloat16",
+        "eos_token_id": 248044,
+        "full_attention_interval": 4,
+        "head_dim": 256,
+        "hidden_act": "silu",
+        "hidden_size": 2048,
+        "initializer_range": 0.02,
+        "intermediate_size": 6144,
+        "layer_types": [
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention"
+        ],
+        "linear_conv_kernel_dim": 4,
+        "linear_key_head_dim": 128,
+        "linear_num_key_heads": 16,
+        "linear_num_value_heads": 16,
+        "linear_value_head_dim": 128,
+        "max_position_embeddings": 262144,
+        "mlp_only_layers": [],
+        "model_type": "qwen3_5_text",
+        "mtp_num_hidden_layers": 1,
+        "mtp_use_dedicated_embeddings": false,
+        "num_attention_heads": 8,
+        "num_hidden_layers": 24,
+        "num_key_value_heads": 2,
+        "rms_norm_eps": 1e-06,
+        "tie_word_embeddings": true,
+        "use_cache": true,
+        "vocab_size": 248320,
+        "mamba_ssm_dtype": "float32",
+        "rope_parameters": {
+          "mrope_interleaved": true,
+          "mrope_section": [
+            11,
+            11,
+            10
+          ],
+          "rope_type": "default",
+          "rope_theta": 10000000,
+          "partial_rotary_factor": 0.25
+        }
+      },
+      "tie_word_embeddings": true,
+      "transformers_version": "4.57.0.dev0",
+      "video_token_id": 248057,
+      "vision_config": {
+        "deepstack_visual_indexes": [],
+        "depth": 24,
+        "hidden_act": "gelu_pytorch_tanh",
+        "hidden_size": 1024,
+        "in_channels": 3,
+        "initializer_range": 0.02,
+        "intermediate_size": 4096,
+        "model_type": "qwen3_5",
+        "num_heads": 16,
+        "num_position_embeddings": 2304,
+        "out_hidden_size": 2048,
+        "patch_size": 16,
+        "spatial_merge_size": 2,
+        "temporal_patch_size": 2
+      },
+      "vision_end_token_id": 248054,
+      "vision_start_token_id": 248053
+    }
+  },
+  {
+    "model": "Qwen/Qwen3.5-4B",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/config.json",
+        "sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+        "sha256": "1406be1b6b8fd8a6545870da516912804756593628a1d0fb0a7965211e82a7bb"
+      }
+    },
+    "errors": {},
+    "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+    "parameters": 4659865088,
+    "parameter_dtypes": {
+      "BF16": 4659861248,
+      "F32": 3840
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "Qwen3_5ForConditionalGeneration"
+      ],
+      "image_token_id": 248056,
+      "model_type": "qwen3_5",
+      "text_config": {
+        "attention_bias": false,
+        "attention_dropout": 0.0,
+        "attn_output_gate": true,
+        "dtype": "bfloat16",
+        "eos_token_id": 248044,
+        "full_attention_interval": 4,
+        "head_dim": 256,
+        "hidden_act": "silu",
+        "hidden_size": 2560,
+        "initializer_range": 0.02,
+        "intermediate_size": 9216,
+        "layer_types": [
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention",
+          "linear_attention",
+          "linear_attention",
+          "linear_attention",
+          "full_attention"
+        ],
+        "linear_conv_kernel_dim": 4,
+        "linear_key_head_dim": 128,
+        "linear_num_key_heads": 16,
+        "linear_num_value_heads": 32,
+        "linear_value_head_dim": 128,
+        "max_position_embeddings": 262144,
+        "mlp_only_layers": [],
+        "model_type": "qwen3_5_text",
+        "mtp_num_hidden_layers": 1,
+        "mtp_use_dedicated_embeddings": false,
+        "num_attention_heads": 16,
+        "num_hidden_layers": 32,
+        "num_key_value_heads": 4,
+        "rms_norm_eps": 1e-06,
+        "tie_word_embeddings": true,
+        "use_cache": true,
+        "vocab_size": 248320,
+        "mamba_ssm_dtype": "float32",
+        "rope_parameters": {
+          "mrope_interleaved": true,
+          "mrope_section": [
+            11,
+            11,
+            10
+          ],
+          "rope_type": "default",
+          "rope_theta": 10000000,
+          "partial_rotary_factor": 0.25
+        }
+      },
+      "tie_word_embeddings": true,
+      "transformers_version": "4.57.0.dev0",
+      "video_token_id": 248057,
+      "vision_config": {
+        "deepstack_visual_indexes": [],
+        "depth": 24,
+        "hidden_act": "gelu_pytorch_tanh",
+        "hidden_size": 1024,
+        "in_channels": 3,
+        "initializer_range": 0.02,
+        "intermediate_size": 4096,
+        "model_type": "qwen3_5",
+        "num_heads": 16,
+        "num_position_embeddings": 2304,
+        "out_hidden_size": 2560,
+        "patch_size": 16,
+        "spatial_merge_size": 2,
+        "temporal_patch_size": 2
+      },
+      "vision_end_token_id": 248054,
+      "vision_start_token_id": 248053
+    }
+  },
+  {
+    "model": "HuggingFaceTB/SmolLM3-3B",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B/resolve/a07cc9a04f16550a088caea529712d1d335b0ac1/config.json",
+        "sha256": "c72b1031274ff4626e434d0019e88e95a767460135db9ee492eb80652b786af1"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B/resolve/a07cc9a04f16550a088caea529712d1d335b0ac1/README.md",
+        "sha256": "24f16f90b883af3618425a589783a944356a7fc2e3cfa69b579c9ff06963e178"
+      }
+    },
+    "errors": {},
+    "revision": "a07cc9a04f16550a088caea529712d1d335b0ac1",
+    "parameters": 3075098624,
+    "parameter_dtypes": {
+      "BF16": 3075098624
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "SmolLM3ForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 128000,
+      "eos_token_id": 128012,
+      "hidden_act": "silu",
+      "hidden_size": 2048,
+      "initializer_range": 0.02,
+      "intermediate_size": 11008,
+      "layer_types": [
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention",
+        "full_attention"
+      ],
+      "max_position_embeddings": 65536,
+      "max_window_layers": 28,
+      "mlp_bias": false,
+      "model_type": "smollm3",
+      "no_rope_layer_interval": 4,
+      "no_rope_layers": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "num_attention_heads": 16,
+      "num_hidden_layers": 36,
+      "num_key_value_heads": 4,
+      "pad_token_id": 128004,
+      "pretraining_tp": 2,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 5000000.0,
+      "sliding_window": null,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.54.0.dev0",
+      "use_cache": false,
+      "use_sliding_window": false,
+      "vocab_size": 128256
+    }
+  },
+  {
+    "model": "Salesforce/xLAM-2-1b-fc-r",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Salesforce/xLAM-2-1b-fc-r/resolve/6870fcf102f434bd01819302d85780b8e767925d/config.json",
+        "sha256": "74c8a46546583b5c74ab1963d60d5a77353f868239282de2200e85e45a209c7c"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Salesforce/xLAM-2-1b-fc-r/resolve/6870fcf102f434bd01819302d85780b8e767925d/README.md",
+        "sha256": "c4b20fab7d3918710a0b87ab67158f20c0d12b77f2f9db28b80187d107c2cfed"
+      }
+    },
+    "errors": {},
+    "revision": "6870fcf102f434bd01819302d85780b8e767925d",
+    "parameters": 1543714304,
+    "parameter_dtypes": {
+      "BF16": 1543714304
+    },
+    "license": "cc-by-nc-4.0",
+    "config": {
+      "_name_or_path": "Salesforce/xLAM-2-1b-fc-r",
+      "architectures": [
+        "Qwen2ForCausalLM"
+      ],
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "eos_token_id": 151645,
+      "hidden_act": "silu",
+      "hidden_size": 1536,
+      "initializer_range": 0.02,
+      "intermediate_size": 8960,
+      "max_position_embeddings": 32768,
+      "max_window_layers": 21,
+      "model_type": "qwen2",
+      "num_attention_heads": 12,
+      "num_hidden_layers": 28,
+      "num_key_value_heads": 2,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 1000000.0,
+      "sliding_window": null,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.46.1",
+      "use_cache": false,
+      "use_sliding_window": false,
+      "vocab_size": 151936
+    }
+  },
+  {
+    "model": "Salesforce/xLAM-2-3b-fc-r",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/Salesforce/xLAM-2-3b-fc-r/resolve/be83286f6a1a82c8bd4bfb751190271f58693f30/config.json",
+        "sha256": "5f7841e6c047d7767b8d04dbb2138ebb417d5dd7b02bb970370e2fe784b62b2e"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/Salesforce/xLAM-2-3b-fc-r/resolve/be83286f6a1a82c8bd4bfb751190271f58693f30/README.md",
+        "sha256": "c4b20fab7d3918710a0b87ab67158f20c0d12b77f2f9db28b80187d107c2cfed"
+      }
+    },
+    "errors": {},
+    "revision": "be83286f6a1a82c8bd4bfb751190271f58693f30",
+    "parameters": 3085938688,
+    "parameter_dtypes": {
+      "BF16": 3085938688
+    },
+    "license": "cc-by-nc-4.0",
+    "config": {
+      "_name_or_path": "Salesforce/xLAM-2-3b-fc-r",
+      "architectures": [
+        "Qwen2ForCausalLM"
+      ],
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "eos_token_id": 151645,
+      "hidden_act": "silu",
+      "hidden_size": 2048,
+      "initializer_range": 0.02,
+      "intermediate_size": 11008,
+      "max_position_embeddings": 32768,
+      "max_window_layers": 70,
+      "model_type": "qwen2",
+      "num_attention_heads": 16,
+      "num_hidden_layers": 36,
+      "num_key_value_heads": 2,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": null,
+      "rope_theta": 1000000.0,
+      "sliding_window": null,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.46.1",
+      "use_cache": false,
+      "use_sliding_window": false,
+      "vocab_size": 151936
+    }
+  },
+  {
+    "model": "google/functiongemma-270m-it",
+    "sources": {
+      "README.md": {
+        "url": "https://huggingface.co/google/functiongemma-270m-it/resolve/39eccb091651513a5dfb56892d3714c1b5b8276c/README.md",
+        "sha256": "83d5bc5eab2536cd4064fc502cc40e987388cc0ed7136067a423bafab1ece81d"
+      }
+    },
+    "errors": {
+      "config.json": "HTTP Error 401: Unauthorized"
+    },
+    "revision": "39eccb091651513a5dfb56892d3714c1b5b8276c",
+    "parameters": 268098176,
+    "parameter_dtypes": {
+      "BF16": 268098176
+    },
+    "license": "gemma"
+  },
+  {
+    "model": "LiquidAI/LFM2.5-1.2B-Instruct",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct/resolve/0f604ada3f766f9f257460c4c9f0b5d6f69d431b/config.json",
+        "sha256": "15d6157fb6df3f8272e2fe90e18f57727ccf02a125c94469198b0f3281510185"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct/resolve/0f604ada3f766f9f257460c4c9f0b5d6f69d431b/README.md",
+        "sha256": "682de876c2d172eaeffff775ad8422b5fd7ada701543916e62129e3be8eab077"
+      }
+    },
+    "errors": {},
+    "revision": "0f604ada3f766f9f257460c4c9f0b5d6f69d431b",
+    "parameters": 1170340608,
+    "parameter_dtypes": {
+      "BF16": 1170340608
+    },
+    "license": "other",
+    "config": {
+      "architectures": [
+        "Lfm2ForCausalLM"
+      ],
+      "block_auto_adjust_ff_dim": true,
+      "block_dim": 2048,
+      "block_ff_dim": 12288,
+      "block_ffn_dim_multiplier": 1.0,
+      "block_mlp_init_scale": 1.0,
+      "block_multiple_of": 256,
+      "block_norm_eps": 1e-05,
+      "block_out_init_scale": 1.0,
+      "block_use_swiglu": true,
+      "block_use_xavier_init": true,
+      "bos_token_id": 1,
+      "conv_L_cache": 3,
+      "conv_bias": false,
+      "conv_dim": 2048,
+      "conv_use_xavier_init": true,
+      "dtype": "bfloat16",
+      "eos_token_id": 7,
+      "hidden_size": 2048,
+      "initializer_range": 0.02,
+      "intermediate_size": 12288,
+      "layer_types": [
+        "conv",
+        "conv",
+        "full_attention",
+        "conv",
+        "conv",
+        "full_attention",
+        "conv",
+        "conv",
+        "full_attention",
+        "conv",
+        "full_attention",
+        "conv",
+        "full_attention",
+        "conv",
+        "full_attention",
+        "conv"
+      ],
+      "max_position_embeddings": 128000,
+      "model_type": "lfm2",
+      "norm_eps": 1e-05,
+      "num_attention_heads": 32,
+      "num_heads": 32,
+      "num_hidden_layers": 16,
+      "num_key_value_heads": 8,
+      "pad_token_id": 0,
+      "rope_theta": 1000000.0,
+      "tie_embedding": true,
+      "transformers_version": "4.57.2",
+      "use_cache": true,
+      "use_pos_enc": true,
+      "vocab_size": 65536
+    }
+  },
+  {
+    "model": "ibm-granite/granite-4.0-micro",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/ibm-granite/granite-4.0-micro/resolve/56111ae135df9c53a78c99028e7bc24035a9e979/config.json",
+        "sha256": "e11a24434769f1926c2b73ea4b6bf7115533e3644d553d5a347797082e65c0f2"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/ibm-granite/granite-4.0-micro/resolve/56111ae135df9c53a78c99028e7bc24035a9e979/README.md",
+        "sha256": "76e0f4a3b2ac930a03ec6bde09deacb464f66aa8adebeb0ad4926c201624cd29"
+      }
+    },
+    "errors": {},
+    "revision": "56111ae135df9c53a78c99028e7bc24035a9e979",
+    "parameters": 3402836480,
+    "parameter_dtypes": {
+      "BF16": 3402836480
+    },
+    "license": "apache-2.0",
+    "config": {
+      "architectures": [
+        "GraniteMoeHybridForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "attention_multiplier": 0.015625,
+      "bos_token_id": 100257,
+      "embedding_multiplier": 12,
+      "eos_token_id": 100257,
+      "hidden_act": "silu",
+      "hidden_size": 2560,
+      "initializer_range": 0.1,
+      "intermediate_size": 8192,
+      "layer_types": [
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention",
+        "attention"
+      ],
+      "logits_scaling": 10,
+      "mamba_chunk_size": 256,
+      "mamba_conv_bias": true,
+      "mamba_d_conv": 4,
+      "mamba_d_head": 40,
+      "mamba_d_state": 256,
+      "mamba_expand": 2,
+      "mamba_n_groups": 1,
+      "mamba_n_heads": 128,
+      "mamba_proj_bias": false,
+      "max_position_embeddings": 131072,
+      "model_type": "granitemoehybrid",
+      "normalization_function": "rmsnorm",
+      "num_attention_heads": 40,
+      "num_experts_per_tok": 0,
+      "num_hidden_layers": 40,
+      "num_key_value_heads": 8,
+      "num_local_experts": 0,
+      "output_router_logits": false,
+      "pad_token_id": 100256,
+      "position_embedding_type": "rope",
+      "residual_multiplier": 0.22,
+      "rms_norm_eps": 1e-05,
+      "rope_scaling": null,
+      "rope_theta": 10000000,
+      "router_aux_loss_coef": 0.01,
+      "shared_intermediate_size": 8192,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.56.0",
+      "use_cache": true,
+      "vocab_size": 100352
+    }
+  },
+  {
+    "model": "microsoft/Phi-4-mini-instruct",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/microsoft/Phi-4-mini-instruct/resolve/cfbefacb99257ffa30c83adab238a50856ac3083/config.json",
+        "sha256": "ac65d86061d3d0d704ee2511fd0eb8713ef19eb6eedba17c3080a4165d5b933b"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/microsoft/Phi-4-mini-instruct/resolve/cfbefacb99257ffa30c83adab238a50856ac3083/README.md",
+        "sha256": "c4f34916182a3ee87d95d00c92847cfa687ab21dc338a577275f0c34cf0e1dfd"
+      }
+    },
+    "errors": {},
+    "revision": "cfbefacb99257ffa30c83adab238a50856ac3083",
+    "parameters": 3836021760,
+    "parameter_dtypes": {
+      "BF16": 3836021760
+    },
+    "license": "mit",
+    "config": {
+      "_name_or_path": "Phi-4-mini-instruct",
+      "architectures": [
+        "Phi3ForCausalLM"
+      ],
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "auto_map": {
+        "AutoConfig": "configuration_phi3.Phi3Config",
+        "AutoModelForCausalLM": "modeling_phi3.Phi3ForCausalLM",
+        "AutoTokenizer": "Xenova/gpt-4o"
+      },
+      "bos_token_id": 199999,
+      "embd_pdrop": 0.0,
+      "eos_token_id": 199999,
+      "full_attn_mod": 1,
+      "hidden_act": "silu",
+      "hidden_size": 3072,
+      "initializer_range": 0.02,
+      "intermediate_size": 8192,
+      "interpolate_factor": 1,
+      "lm_head_bias": false,
+      "max_position_embeddings": 131072,
+      "mlp_bias": false,
+      "model_type": "phi3",
+      "num_attention_heads": 24,
+      "num_hidden_layers": 32,
+      "num_key_value_heads": 8,
+      "original_max_position_embeddings": 4096,
+      "pad_token_id": 199999,
+      "partial_rotary_factor": 0.75,
+      "resid_pdrop": 0.0,
+      "rms_norm_eps": 1e-05,
+      "rope_scaling": {
+        "long_factor": [
+          1,
+          1.118320672,
+          1.250641126,
+          1.398617824,
+          1.564103225,
+          1.74916897,
+          1.956131817,
+          2.187582649,
+          2.446418898,
+          2.735880826,
+          3.059592084,
+          3.421605075,
+          3.826451687,
+          4.279200023,
+          4.785517845,
+          5.351743533,
+          5.984965424,
+          6.693110555,
+          7.485043894,
+          8.370679318,
+          9.36110372,
+          10.4687158,
+          11.70738129,
+          13.09260651,
+          14.64173252,
+          16.37415215,
+          18.31155283,
+          20.47818807,
+          22.90118105,
+          25.61086418,
+          28.64115884,
+          32.03,
+          32.1,
+          32.13,
+          32.23,
+          32.6,
+          32.61,
+          32.64,
+          32.66,
+          32.7,
+          32.71,
+          32.93,
+          32.97,
+          33.28,
+          33.49,
+          33.5,
+          44.16,
+          47.77
+        ],
+        "short_factor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "type": "longrope"
+      },
+      "rope_theta": 10000.0,
+      "sliding_window": 262144,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.45.0",
+      "use_cache": true,
+      "vocab_size": 200064
+    }
+  },
+  {
+    "model": "microsoft/bitnet-b1.58-2B-4T",
+    "sources": {
+      "config.json": {
+        "url": "https://huggingface.co/microsoft/bitnet-b1.58-2B-4T/resolve/04c3b9ad9361b824064a1f25ea60a8be9599b127/config.json",
+        "sha256": "2b43e80788972e6d53967b01ac3609d7df23cf0aabb0c866e51be694a59c1149"
+      },
+      "README.md": {
+        "url": "https://huggingface.co/microsoft/bitnet-b1.58-2B-4T/resolve/04c3b9ad9361b824064a1f25ea60a8be9599b127/README.md",
+        "sha256": "d945337057d24807958449cadead36fb57bf38ab259f3dc8d75c07e2fe7188c2"
+      }
+    },
+    "errors": {},
+    "revision": "04c3b9ad9361b824064a1f25ea60a8be9599b127",
+    "parameters": 849786880,
+    "parameter_dtypes": {
+      "BF16": 328775680,
+      "U8": 521011200
+    },
+    "license": "mit",
+    "config": {
+      "architectures": [
+        "BitNetForCausalLM"
+      ],
+      "auto_map": {
+        "AutoConfig": "configuration_bitnet.BitNetConfig",
+        "AutoModelForCausalLM": "modeling_bitnet.BitNetForCausalLM"
+      },
+      "bos_token_id": 128000,
+      "eos_token_id": 128001,
+      "hidden_act": "relu2",
+      "hidden_size": 2560,
+      "initializer_range": 0.02,
+      "intermediate_size": 6912,
+      "max_position_embeddings": 4096,
+      "model_type": "bitnet",
+      "rms_norm_eps": 1e-05,
+      "num_attention_heads": 20,
+      "num_hidden_layers": 30,
+      "num_key_value_heads": 5,
+      "rope_theta": 500000.0,
+      "tie_word_embeddings": true,
+      "torch_dtype": "bfloat16",
+      "use_cache": true,
+      "vocab_size": 128256,
+      "quantization_config": {
+        "quant_method": "bitnet",
+        "linear_class": "autobitlinear",
+        "quantization_mode": "offline"
+      }
+    }
+  }
+]

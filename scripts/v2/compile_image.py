@@ -106,12 +106,16 @@ def cmd_build(a) -> None:
         man["calibration_stat"] = old.get("calibration_stat", "max")
         man["calibration_chains_per_dataset"] = old.get("calibration_chains_per_dataset")
     man["board_profile"] = a.board
+    man["model_name"] = a.name
     out = a.name + a.suffix
     d = out_dir(out)
     d.mkdir(parents=True, exist_ok=True)
     (d / f"{out}.img").write_bytes(img)
     (d / "manifest.json").write_text(json.dumps(man, indent=1))
     (d / "program.txt").write_text(di.describe(img) + "\n")
+    decision = out_dir(a.name) / "decision.json"
+    if d != out_dir(a.name) and decision.exists():
+        (d / "decision.json").write_bytes(decision.read_bytes())
     print(di.describe(img).split("\n  ", 1)[0])
     print(f"wrote {d / (out + '.img')} ({len(img):,} bytes, sha256 {man['sha256'][:16]}…) "
           f"in {time.time() - t0:.0f}s")

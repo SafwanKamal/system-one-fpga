@@ -1,0 +1,8 @@
+{
+  "checked_utc": "2026-11-16T19:05:42.804661+00:00",
+  "evaluations_checked": 60,
+  "per_person_metric_pairs_checked": 240,
+  "predictions_match_label_vault": true,
+  "thresholds_and_cv_selection_verified": true,
+  "audit_source_sha256": "3c646793092dd7cbf428347242e5caf24941af66c487eedbf071e615032d86ba"
+}

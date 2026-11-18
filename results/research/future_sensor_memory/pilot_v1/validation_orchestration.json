@@ -1,0 +1,10 @@
+{
+  "workers": 4,
+  "wall_seconds": 51.376590200001374,
+  "participant_count": 12,
+  "resumed_participants": 11,
+  "pilot_code_sha256": "9667fa953adef92c238a815fef7acca7635ad08e383bcf0ce425a912a0a662cb",
+  "orchestrator_sha256": "549e99e61598f402e5df9b521647d0a38522aa5e2602a9cc507fe4edd14a3cd8",
+  "per_participant_query_seed": "20261108 + original participant index + stage offset",
+  "timings_note": "Concurrent host wall times; not isolated latency benchmarks"
+}

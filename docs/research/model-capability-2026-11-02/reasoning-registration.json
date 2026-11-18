@@ -1,0 +1,22 @@
+{
+  "reason": "User acceptance thresholds remain open. A nonthinking 256-output profile alone cannot establish capability of checkpoints supporting reasoning.",
+  "candidates": [
+    "qwen06-q4",
+    "qwen17-q4",
+    "qwen35-2-q4",
+    "qwen35-4-q4"
+  ],
+  "context": 4096,
+  "total_output_budget": 1024,
+  "includes_reasoning_tokens": true,
+  "sample": "Same prospectively fixed 32 IDs as precision sensitivity. No error-conditioned case selection.",
+  "paired_modes": [
+    "thinking disabled",
+    "thinking enabled"
+  ],
+  "route": "Reuse primary development-selected route; no retuning on the ablation outputs.",
+  "promotion": "Among enabled-thinking profiles with more complete correct sample tasks than paired disabled-thinking control, promote highest four-axis balanced score to the same 104-task screen as primary models. Ties follow registered candidate order.",
+  "data_scope": "Exploratory development evidence after initial short-profile results, not a blinded generalization or reliability test.",
+  "no_new_training": true,
+  "no_FPGA_access": true
+}

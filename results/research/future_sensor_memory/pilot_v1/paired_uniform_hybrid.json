@@ -1,0 +1,938 @@
+[
+  {
+    "budget": 8192,
+    "panel": "all",
+    "metric": "exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.006727430555555539,
+    "ci95": [
+      0.0012297453703703498,
+      0.012876157407407385
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "all",
+    "metric": "positive_exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.001723576584200988,
+    "ci95": [
+      -0.000791833059274917,
+      0.0057391893326904486
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "all",
+    "metric": "nmae",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.015971680993874887,
+    "ci95": [
+      -0.26310974471570003,
+      0.2431907801606374
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "composition",
+    "metric": "exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "composition",
+    "metric": "positive_exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "composition",
+    "metric": "nmae",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "metric": "exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.00868055555555556,
+    "ci95": [
+      -0.0002893518518518462,
+      0.018518518518518517
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "metric": "positive_exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.00532012836700337,
+    "ci95": [
+      -0.0023871527777777767,
+      0.017334806397306404
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "metric": "nmae",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.09360841129966715,
+    "ci95": [
+      -0.48967988440848276,
+      0.3149973286510116
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "familiar",
+    "metric": "exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "familiar",
+    "metric": "positive_exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "familiar",
+    "metric": "nmae",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "metric": "exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "metric": "positive_exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "metric": "nmae",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "metric": "exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.01822916666666667,
+    "ci95": [
+      0.00376157407407407,
+      0.035597511574073995
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "metric": "positive_exact",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.000992063492063492,
+    "ci95": [
+      0.0,
+      0.002976190476190476
+    ]
+  },
+  {
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "metric": "nmae",
+    "n": 8,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.029721687324167245,
+    "ci95": [
+      -0.6330770895656475,
+      0.8679195696005457
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "all",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0044367283950617524,
+    "ci95": [
+      0.0009162808641975569,
+      0.008825231481481502
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "all",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0019010541242029735,
+    "ci95": [
+      -0.0014137149519306317,
+      0.0057862071536671
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "all",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.22612128888468663,
+    "ci95": [
+      -0.6360534769308417,
+      0.009952280930056165
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "composition",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "composition",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "composition",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.008487654320987631,
+    "ci95": [
+      0.0015432098765431983,
+      0.016396604938271536
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.00583058859713271,
+    "ci95": [
+      -0.0019922071392659614,
+      0.015960290177891266
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.05181580503790515,
+    "ci95": [
+      -0.11408154014236897,
+      0.0003534638977800661
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "familiar",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "familiar",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "familiar",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.009259259259259254,
+    "ci95": [
+      -0.0005787037037037016,
+      0.020640432098765427
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.0008342240513502455,
+    "ci95": [
+      -0.00841560201316299,
+      0.009863123993558773
+    ]
+  },
+  {
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.8526693505008375,
+    "ci95": [
+      -2.4418488697783975,
+      0.05769492575043827
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "all",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.006172839506172839,
+    "ci95": [
+      0.0009162808641975292,
+      0.013937114197530862
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "all",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.011481053952313136,
+    "ci95": [
+      -0.00222349845617782,
+      0.030449350064253415
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "all",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.000830280326107795,
+    "ci95": [
+      -0.024309057387161076,
+      0.02023729575085239
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "composition",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "composition",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "composition",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.016203703703703737,
+    "ci95": [
+      0.0019290123456790578,
+      0.03510802469135806
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.026410476837785916,
+    "ci95": [
+      -0.0036598811509721625,
+      0.06436673071009369
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.05384340381955616,
+    "ci95": [
+      -0.1639660021919046,
+      0.016713236853823338
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "familiar",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "familiar",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "familiar",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.008487654320987664,
+    "ci95": [
+      -0.005015432098765417,
+      0.025077160493827133
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.01676343803003779,
+    "ci95": [
+      -0.008169225829205989,
+      0.05603048641543594
+    ]
+  },
+  {
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.05052228251512497,
+    "ci95": [
+      -0.004899114837343052,
+      0.11005757298321953
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "all",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.007185570987654331,
+    "ci95": [
+      0.002507716049382732,
+      0.012249228395061734
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "all",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.01229057410186892,
+    "ci95": [
+      0.0020837800796192885,
+      0.02409253356637866
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "all",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.009840899507949235,
+    "ci95": [
+      -0.01802375319450787,
+      -0.0013626923832178268
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "composition",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "composition",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "composition",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.020640432098765427,
+    "ci95": [
+      0.010995370370370369,
+      0.0316358024691358
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.029661422304871083,
+    "ci95": [
+      0.010442841798747306,
+      0.05014767209590667
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.035681361825101204,
+    "ci95": [
+      -0.04923646090662161,
+      -0.02225876804811759
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "familiar",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "familiar",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "familiar",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "metric": "exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.008101851851851869,
+    "ci95": [
+      -0.0028935185185184806,
+      0.018904320987654332
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "metric": "positive_exact",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": 0.01131983222547709,
+    "ci95": [
+      -0.009735622579578097,
+      0.032531949792179965
+    ]
+  },
+  {
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "metric": "nmae",
+    "n": 12,
+    "candidate": "hybrid_bundle",
+    "baseline": "hybrid_reservoir",
+    "delta": -0.0036822362066957367,
+    "ci95": [
+      -0.03647017039698476,
+      0.03238187145776833
+    ]
+  }
+]

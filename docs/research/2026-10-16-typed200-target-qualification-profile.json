@@ -1,0 +1,284 @@
+{
+  "schema": "sysone.typed200.qualification-preparation.v1",
+  "target_run_id": null,
+  "purpose": "Offline preparation, not a boot image or hardware permission",
+  "artifacts": {
+    "recovery": {
+      "path": "build/v2/kr260-app-attention-context-capture-large.tar.gz",
+      "sha256": "ecd320163baa3c289c64e069186497974d4703039df4a455bc8620d357d7ec99"
+    },
+    "typed_dcp": {
+      "path": "build/v2/typed200-row-range-csa-route-v1/routed.dcp",
+      "sha256": "2d24f5f04d94c17299a32a04190c32118526221f1ab76888baf814fb733cfc88"
+    },
+    "a53": {
+      "path": "build/v2/typed200-mvp-host-v5/a53.elf",
+      "sha256": "63558ce920b53d32078c866fa223149f151f98cd41e3dbf54e37e9b92861ebb2"
+    },
+    "r5": {
+      "path": "build/v2/typed200-mvp-host-v5/r5.elf",
+      "sha256": "1385d94776229eebf2dc468db2d15882a4c376623cb5eed9037fbb9aade746f4"
+    },
+    "model": {
+      "path": "export/v2/image/minilm-l12-v1-kr260/minilm-l12-v1-kr260.img",
+      "sha256": "4129baded344729ccc7ef6a3f0a2b34799280a91d88173ae1c0b197cdef8c3bb"
+    },
+    "contract": {
+      "path": "firmware/typed_intent/generated/contract.json",
+      "sha256": "db25c66b0e9fa15f351bc73e64618048ce36a5b4a6c8f25cef05fd60d3c5ba1e"
+    },
+    "ps_init": {
+      "path": "firmware/typed200_mvp/reference/psu_init.c",
+      "sha256": "79e70111dd3aa4e47d6ebcf0ab20d87eb59cf7992ba938cc7fe1aa5d1fdc7bc5"
+    },
+    "fsbl": null,
+    "pmu": null,
+    "boot_relay": null,
+    "fsbl_macros": null,
+    "pmu_macros": null,
+    "pm_config": null,
+    "typed_bitstream": null,
+    "boot_recipe": null
+  },
+  "reviews": {
+    "boot_memory_map": null,
+    "fsbl_handoff": null,
+    "pmu_ownership": null,
+    "csu_idle": null,
+    "debug_policy": null,
+    "power_permissions": null,
+    "recovery_procedure": null,
+    "physical_checks": null,
+    "cold_start": null,
+    "reset_clock_faults": null,
+    "exclusive_access": null,
+    "target_numerics": null,
+    "typed_outcomes": null,
+    "fresh_session_recovery": null,
+    "clock_calibration": null,
+    "passive_observation": null,
+    "memory_service_bounds": null,
+    "arm_phase_bounds": null,
+    "deadline_composition": null
+  },
+  "runtime_register_checks": [
+    {
+      "rule": 1,
+      "address": 4246339844,
+      "mask": 15,
+      "expected": 15
+    },
+    {
+      "rule": 2,
+      "address": 4246339840,
+      "mask": 983290,
+      "expected": 983162
+    },
+    {
+      "rule": 3,
+      "address": 4284351024,
+      "mask": 15,
+      "expected": 15
+    },
+    {
+      "rule": 4,
+      "address": 4284351032,
+      "mask": 458849,
+      "expected": 196705
+    },
+    {
+      "rule": 5,
+      "address": 4284351036,
+      "mask": 4039,
+      "expected": 4034
+    },
+    {
+      "rule": 6,
+      "address": 4246339772,
+      "mask": 16777216,
+      "expected": 0
+    },
+    {
+      "rule": 7,
+      "address": 4288282624,
+      "mask": 507,
+      "expected": 8
+    },
+    {
+      "rule": 8,
+      "address": 4288282880,
+      "mask": 5,
+      "expected": 1
+    },
+    {
+      "rule": 9,
+      "address": 4288283136,
+      "mask": 1,
+      "expected": 0
+    },
+    {
+      "rule": 10,
+      "address": 4284350528,
+      "mask": 27,
+      "expected": 27
+    },
+    {
+      "rule": 11,
+      "address": 4284350496,
+      "mask": 125009673,
+      "expected": 80896
+    },
+    {
+      "rule": 12,
+      "address": 4284350512,
+      "mask": 125009673,
+      "expected": 81920
+    },
+    {
+      "rule": 13,
+      "address": 4284350504,
+      "mask": 2147483648,
+      "expected": 0
+    },
+    {
+      "rule": 14,
+      "address": 4284350520,
+      "mask": 2147483648,
+      "expected": 0
+    },
+    {
+      "rule": 15,
+      "address": 4284350608,
+      "mask": 50347783,
+      "expected": 50332160
+    },
+    {
+      "rule": 16,
+      "address": 4284350656,
+      "mask": 20922119,
+      "expected": 16844032
+    },
+    {
+      "rule": 17,
+      "address": 4284350660,
+      "mask": 20922119,
+      "expected": 16845312
+    },
+    {
+      "rule": 18,
+      "address": 4278846276,
+      "mask": 2147483648,
+      "expected": 2147483648
+    },
+    {
+      "rule": 19,
+      "address": 4278846280,
+      "mask": 2147483648,
+      "expected": 2147483648
+    },
+    {
+      "rule": 20,
+      "address": 4278845524,
+      "mask": 2147483648,
+      "expected": 2147483648
+    }
+  ],
+  "additional_pre_admission_observations": [
+    {
+      "name": "CSUDMA_SRC_STS",
+      "address": 4291297288,
+      "mask": 8191,
+      "expected": 0
+    },
+    {
+      "name": "CSUDMA_DST_STS",
+      "address": 4291299336,
+      "mask": 8191,
+      "expected": 0
+    },
+    {
+      "name": "CSU_PCAP_RESET",
+      "address": 4291440652,
+      "mask": 1,
+      "expected": 1
+    },
+    {
+      "name": "CSU_PCAP_STATUS_PL_DONE",
+      "address": 4291440656,
+      "mask": 8,
+      "expected": 8
+    },
+    {
+      "name": "CSU_STATUS",
+      "address": 4291428352,
+      "policy": "record authentication/encryption; lab trust is not secure-boot proof"
+    },
+    {
+      "name": "CSU_JTAG_CHAIN_STATUS",
+      "address": 4291428404,
+      "policy": "record only; no security/lock writes"
+    },
+    {
+      "name": "CSU_JTAG_SEC",
+      "address": 4291428408,
+      "policy": "record only; decode against exact debug policy"
+    },
+    {
+      "name": "CSU_JTAG_DAP_CFG",
+      "address": 4291428412,
+      "policy": "record only; enabled DAP is not disconnected or noninterfering"
+    },
+    {
+      "name": "PMU_IPI_0_ISR",
+      "address": 4281532432,
+      "mask": 4294967295,
+      "expected": 0
+    },
+    {
+      "name": "PMU_IPI_1_ISR",
+      "address": 4281536528,
+      "mask": 4294967295,
+      "expected": 0
+    },
+    {
+      "name": "PMU_IPI_2_ISR",
+      "address": 4281540624,
+      "mask": 4294967295,
+      "expected": 0
+    },
+    {
+      "name": "PMU_IPI_3_ISR",
+      "address": 4281544720,
+      "mask": 4294967295,
+      "expected": 0
+    }
+  ],
+  "capture_symbols": {
+    "ty_shared": {
+      "address": 192512,
+      "size": 384
+    },
+    "ty_trace": {
+      "address": 131088,
+      "size": 1488
+    },
+    "ty_pmu_config": {
+      "address": 192896,
+      "size": 32
+    },
+    "ty_pmu_evidence": {
+      "address": 132576,
+      "size": 72
+    },
+    "mvp_boot": {
+      "address": 192960,
+      "size": 64
+    },
+    "mvp_owner": {
+      "address": 193280,
+      "size": 12
+    }
+  },
+  "r5_global_alias_note": "local TCM address + 0xffe00000 for R5_0 split-mode debug captures; prove mapping on target",
+  "lab_security_policy": "Trusted physical lab boot/debug; no eFuse or debug/security lock writes; no secure-boot claim"
+}

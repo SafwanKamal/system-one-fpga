@@ -1,0 +1,26 @@
+[
+  {
+    "key": "qwen06-sft-q4",
+    "base_key": "qwen06-q4",
+    "repo": "local/maintenance-sft-v3-qwen",
+    "revision": "checkpoint-sha256:980fe3717ffb7a316c5e91dee9ec4ba1c2e75a84f98550cc62be07c9167373be",
+    "filename": "Qwen3-0.6B-maintenance-sft-v3-Q4_0.gguf",
+    "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\adapted-qwen06\\Qwen3-0.6B-maintenance-sft-v3-Q4_0.gguf",
+    "bytes": 381565728,
+    "sha256": "09119178e4871ca38e0e68428482cebbaf4acc5deb3bac36e1669f5655d5776d",
+    "quantization": "Q4_0",
+    "adaptation": "Existing final-two-block maintenance SFT on 720 authored examples. Not matched adaptation budget to pretrained candidates."
+  },
+  {
+    "key": "qwen06-sft-q8",
+    "base_key": "qwen06-q4",
+    "repo": "local/maintenance-sft-v3-qwen",
+    "revision": "checkpoint-sha256:980fe3717ffb7a316c5e91dee9ec4ba1c2e75a84f98550cc62be07c9167373be",
+    "filename": "Qwen3-0.6B-maintenance-sft-v3-Q8_0.gguf",
+    "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\adapted-qwen06\\Qwen3-0.6B-maintenance-sft-v3-Q8_0.gguf",
+    "bytes": 639446816,
+    "sha256": "4e4c62885e961ac864ed626f1fc7a3b54b00c56ac136c04a755bf0123eb698b6",
+    "quantization": "Q8_0",
+    "adaptation": "Existing final-two-block maintenance SFT on 720 authored examples. Not matched adaptation budget to pretrained candidates."
+  }
+]

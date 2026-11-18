@@ -1,0 +1,391 @@
+{
+  "comparisons": [
+    {
+      "model": "qwen06-q4",
+      "n": 32,
+      "off_correct": 11,
+      "on_correct": 8,
+      "balanced": 0.2,
+      "off": {
+        "bfcl": {
+          "count": 10,
+          "correct": 9,
+          "valid": 10,
+          "accepted": 8,
+          "wrong_accepted": 1,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 1.8418256000149995
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 3.416018199874088
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 2,
+          "valid": 4,
+          "accepted": 4,
+          "wrong_accepted": 2,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 3.105257600080222
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 0,
+          "valid": 2,
+          "accepted": 2,
+          "wrong_accepted": 2,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 1.3371150000020862
+        }
+      },
+      "on": {
+        "bfcl": {
+          "count": 10,
+          "correct": 8,
+          "valid": 8,
+          "accepted": 6,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 1,
+          "median_wall_seconds": 8.101748200133443
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 2,
+          "median_wall_seconds": 22.89478059997782
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 0,
+          "valid": 2,
+          "accepted": 2,
+          "wrong_accepted": 2,
+          "context_rejections": 0,
+          "truncated": 4,
+          "median_wall_seconds": 23.108464800054207
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 2,
+          "median_wall_seconds": 25.163772800005972
+        }
+      }
+    },
+    {
+      "model": "qwen17-q4",
+      "n": 32,
+      "off_correct": 12,
+      "on_correct": 11,
+      "balanced": 0.26666666666666666,
+      "off": {
+        "bfcl": {
+          "count": 10,
+          "correct": 9,
+          "valid": 10,
+          "accepted": 8,
+          "wrong_accepted": 1,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 4.141172900097445
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 8,
+          "accepted": 8,
+          "wrong_accepted": 8,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 3.8897571000270545
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 2,
+          "valid": 6,
+          "accepted": 6,
+          "wrong_accepted": 4,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 4.524668199941516
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 1,
+          "valid": 2,
+          "accepted": 2,
+          "wrong_accepted": 1,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 2.6986229000613093
+        }
+      },
+      "on": {
+        "bfcl": {
+          "count": 10,
+          "correct": 9,
+          "valid": 10,
+          "accepted": 9,
+          "wrong_accepted": 1,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 17.726877700071782
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 8,
+          "accepted": 8,
+          "wrong_accepted": 8,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 4.326500700088218
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 2,
+          "valid": 6,
+          "accepted": 5,
+          "wrong_accepted": 4,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 6.8926786000374705
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 2,
+          "median_wall_seconds": 44.34172249981202
+        }
+      }
+    },
+    {
+      "model": "qwen35-2-q4",
+      "n": 32,
+      "off_correct": 13,
+      "on_correct": 9,
+      "balanced": 0.225,
+      "off": {
+        "bfcl": {
+          "count": 10,
+          "correct": 8,
+          "valid": 9,
+          "accepted": 8,
+          "wrong_accepted": 1,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 7.362688699970022
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 5.857095899991691
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 3,
+          "valid": 6,
+          "accepted": 6,
+          "wrong_accepted": 3,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 5.8514906000345945
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 2,
+          "valid": 2,
+          "accepted": 2,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 4.2654240999836475
+        }
+      },
+      "on": {
+        "bfcl": {
+          "count": 10,
+          "correct": 9,
+          "valid": 9,
+          "accepted": 7,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 16.669327499810606
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 8,
+          "median_wall_seconds": 61.67436429997906
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 12,
+          "median_wall_seconds": 61.92441759980284
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 0,
+          "valid": 2,
+          "accepted": 2,
+          "wrong_accepted": 2,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 9.153308399952948
+        }
+      }
+    },
+    {
+      "model": "qwen35-4-q4",
+      "n": 32,
+      "off_correct": 14,
+      "on_correct": 6,
+      "balanced": 0.15,
+      "off": {
+        "bfcl": {
+          "count": 10,
+          "correct": 7,
+          "valid": 8,
+          "accepted": 7,
+          "wrong_accepted": 1,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 19.75144789996557
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 14.778270500013605
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 5,
+          "valid": 8,
+          "accepted": 7,
+          "wrong_accepted": 3,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 11.462038800120354
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 2,
+          "valid": 2,
+          "accepted": 2,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 9.073535299859941
+        }
+      },
+      "on": {
+        "bfcl": {
+          "count": 10,
+          "correct": 6,
+          "valid": 9,
+          "accepted": 9,
+          "wrong_accepted": 3,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 40.90212889993563
+        },
+        "conditional": {
+          "count": 8,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 8,
+          "median_wall_seconds": 150.2315171000082
+        },
+        "fresh": {
+          "count": 12,
+          "correct": 0,
+          "valid": 0,
+          "accepted": 0,
+          "wrong_accepted": 0,
+          "context_rejections": 0,
+          "truncated": 12,
+          "median_wall_seconds": 148.05713639990427
+        },
+        "two_turn": {
+          "count": 2,
+          "correct": 0,
+          "valid": 2,
+          "accepted": 2,
+          "wrong_accepted": 2,
+          "context_rejections": 0,
+          "truncated": 0,
+          "median_wall_seconds": 28.51219079992734
+        }
+      }
+    }
+  ],
+  "promoted": null,
+  "scope": {
+    "reason": "User acceptance thresholds remain open. A nonthinking 256-output profile alone cannot establish capability of checkpoints supporting reasoning.",
+    "candidates": [
+      "qwen06-q4",
+      "qwen17-q4",
+      "qwen35-2-q4",
+      "qwen35-4-q4"
+    ],
+    "context": 4096,
+    "total_output_budget": 1024,
+    "includes_reasoning_tokens": true,
+    "sample": "Same prospectively fixed 32 IDs as precision sensitivity. No error-conditioned case selection.",
+    "paired_modes": [
+      "thinking disabled",
+      "thinking enabled"
+    ],
+    "route": "Reuse primary development-selected route; no retuning on the ablation outputs.",
+    "promotion": "Among enabled-thinking profiles with more complete correct sample tasks than paired disabled-thinking control, promote highest four-axis balanced score to the same 104-task screen as primary models. Ties follow registered candidate order.",
+    "data_scope": "Exploratory development evidence after initial short-profile results, not a blinded generalization or reliability test.",
+    "no_new_training": true,
+    "no_FPGA_access": true
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "schema": "sysone.typed200.deployment-profile-draft.v1",
+  "purpose": "Exact local artifact inventory and unresolved target evidence; not a deployable profile or certificate",
+  "deployment_ready": false,
+  "target_executed": false,
+  "successful_inference_wcet_certified": false,
+  "external_delivery_bound_certified": false,
+  "artifacts": {
+    "qualified_encoder_recovery_archive": {
+      "path": "build/v2/kr260-app-attention-context-capture-large.tar.gz",
+      "sha256": "ecd320163baa3c289c64e069186497974d4703039df4a455bc8620d357d7ec99"
+    },
+    "unqualified_typed_placed_checkpoint": {
+      "path": "build/v2/typed200-profile-cache-physical-v1/place/placed.dcp",
+      "sha256": "9863919e92f3a796d818c65311752ee875959099988dabc188dd4bd99c78da16"
+    },
+    "typed_placement_review": {
+      "path": "build/v2/typed200-profile-cache-physical-v1/placement-review.json",
+      "sha256": "89b2281bafe48f8b5db3bff1c1a5203823f82f23849ae02afcf99ebe741476b7"
+    },
+    "typed_physical_validation": {
+      "path": "docs/research/2026-10-16-typed200-profile-cache-validation.json",
+      "sha256": "399c5f29a4dec96df09731cab890a4bd0870572d7ca08f36e0d09eb43a98ce75"
+    },
+    "diagnostic_r5_elf": {
+      "path": "build/v2/typed200-timed-host-v3/typed200-trace.elf",
+      "sha256": "7238be970704692f26aa4aea818a9e1868c07f561be5bade10050317bb2f652d"
+    },
+    "diagnostic_r5_elf_audit": {
+      "path": "build/v2/typed200-timed-host-v3/audit.json",
+      "sha256": "de100252df917f2b6466f49806acaafbb3167ee0152d89be1dfc55cc3c0e39a6"
+    },
+    "diagnostic_r5_validation": {
+      "path": "docs/research/2026-10-15-typed200-timed-validation.json",
+      "sha256": "4ec28a72aedc7f3bcefe49ccca757c0afb22370fd6bd6ed8b4208f160e6eb4ec"
+    },
+    "typed_contract": {
+      "path": "firmware/typed_intent/generated/contract.json",
+      "sha256": "db25c66b0e9fa15f351bc73e64618048ce36a5b4a6c8f25cef05fd60d3c5ba1e"
+    },
+    "typed_model_manifest": {
+      "path": "firmware/typed_intent/generated/manifest.json",
+      "sha256": "80af61236df6dcb1669048d3ace0f9a0d15584653ac54e8fdc4eea4d3a8c2de7"
+    },
+    "active_digest_transport": {
+      "path": "firmware/typed200_v2/typed200.c",
+      "sha256": "49c97dcde8b666236e881f2c66de5ef826c8dfa79291b83160eb28861a19e523"
+    },
+    "r5_startup_source": {
+      "path": "firmware/typed200_timed/platform.c",
+      "sha256": "6c73fdd8fe68986f6d9edf2a3fcd64768067d9de3c959f110600bb08b96adc46"
+    },
+    "r5_pmu_source": {
+      "path": "firmware/typed200_timed/pmu.c",
+      "sha256": "83ccee37184ca996a73c4d5ed36d180407d092114badabc6f8983a2400a07cff"
+    },
+    "r5_mailbox_abi": {
+      "path": "firmware/typed200_r5/service.h",
+      "sha256": "4d0fcd7a482fb6d4a18a77f54390d647f75dd5075d420f3079c170845980a714"
+    }
+  },
+  "artifact_compatibility": {
+    "qualified_archive_is_encoder_baseline_only": true,
+    "typed_checkpoint_has_no_admitted_route_or_package": true,
+    "r5_elf_is_unexecuted_diagnostic_candidate": true,
+    "do_not_combine_inventory_as_a_qualified_system": true
+  },
+  "contract": {
+    "abi": "0x54590201",
+    "identity_sha256": "8133633315487f8f322ecac49e95e7aca3801d00fccb4b4fba36026c5b2752d2",
+    "model_sha256": "4129baded344729ccc7ef6a3f0a2b34799280a91d88173ae1c0b197cdef8c3bb",
+    "model_bytes": 33916928,
+    "hidden_width": 384,
+    "tokens_min": 1,
+    "tokens_max": 128,
+    "selected_rows": "contiguous nonempty subset within admitted tokens",
+    "outcome_type": "Accepted(label) | Clarify | Abstain | HardwareFault | DeadlineExceeded | InvalidInput; non-Accepted label and all reserved scores are zero",
+    "outcome_tags": {"Accepted":1,"Clarify":2,"Abstain":3,"HardwareFault":4,"DeadlineExceeded":5,"InvalidInput":6},
+    "active_head_policy": "Frozen head proposes Accepted or HardwareFault; no new confidence/Clarify/Abstain policy is introduced",
+    "numerical_policy": "frozen binary64 scaled head; first-index tie; 18 labels; no confidence/OOS guarantee"
+  },
+  "intended_partition": {
+    "a53": "ingress/tokenization/staging before admission; consume after local terminal",
+    "r5": "exclusive admitted service, hidden-to-TCM copy and fixed head",
+    "pl": "identity/shape/epoch checks, encoder, live bus/error veto and independent local deadline",
+    "concurrent_master_policy": null
+  },
+  "addresses": {
+    "csr": "0xa0000000",
+    "permit_gpio": "0xa0001000",
+    "model": "0x60000000",
+    "ids": 1645215744,
+    "hidden_result": 1645219840,
+    "r5_local_trace": 131088,
+    "r5_local_trace_bytes": 1488,
+    "r5_local_pmu_config": "0x2f180",
+    "mailbox_bytes": 384,
+    "shared_noload_bytes": 416,
+    "a53_to_r5_tcm_translation": null
+  },
+  "claim_boundaries": {
+    "local_terminal": "Conditional terminal-by-D PL cycles under uninterrupted clock/reset and contract assumptions; includes fail-closed outcomes",
+    "useful_success": "Requires justified native/drain/copy/head/proposal/publication service bounds; not supplied",
+    "external_delivery": "A53/consumer/network observation separate from local terminal; no bound supplied",
+    "clock_stop": "Uninterrupted-cycle argument does not bound wall time with stopped PL clock; independent supervisor required"
+  },
+  "unresolved_target_gates": {
+    "typed_routed_setup_hold_and_recoverable_package": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "loader_identity_and_load_order_after_nobits_zeroing": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "rpu_split_mode_tcm_ecc_and_reset_entry": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "measured_pl_r5_clocks_and_minimum_ratio": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "fresh_session_and_fullrate_exclusive_pmu_configuration": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "enforced_a53_dma_debug_and_other_master_exclusion": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "immutable_model_program_input_result_and_mmio_ownership": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "target_head_numerical_goldens_ties_and_scaled_argmax": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "owner_local_target_phase_captures_and_decoder_review": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "bounded_ddr_interconnect_and_mmio_service": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "nonoverlapping_phase_wcet_composition_and_margin": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "cpu_bus_consumer_fault_and_clock_reset_campaign": {
+      "status": "unresolved",
+      "evidence": null
+    },
+    "independent_external_delivery_supervisor_and_recovery": {
+      "status": "unresolved",
+      "evidence": null
+    }
+  },
+  "safety_note": "Software attestations, R5 MPU settings, core affinity and observed maxima do not discharge global ownership or WCET gates"
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "key": "qwen8-q2",
+    "repo": "unsloth/Qwen3-8B-GGUF",
+    "revision": "a6adef130ffb23ddaf1a62fec9dced968c9bc482",
+    "filename": "Qwen3-8B-Q2_K.gguf",
+    "path": "C:\\Users\\user\\AppData\\Local\\SysoneModels\\capability-20261102\\Qwen3-8B-Q2_K.gguf",
+    "bytes": 3281733440,
+    "sha256": "7226e0183d31dca14d81c6f799ada2944be62160b8b7549a70254fba4124a5cf",
+    "quantization": "Q2_K named mixed release, separate memory-boundary experiment"
+  }
+]

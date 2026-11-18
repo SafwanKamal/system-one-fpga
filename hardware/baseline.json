@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "baseline": "RC1",
+  "baseline_id": "rc1-2026-11-08",
+  "status": "adopted",
+  "adopted_on": "2026-11-08",
+  "scope": "KR260 FPGA hardware, resident runtime, default launcher and boot startup",
+  "descriptor": "hardware/candidates/consolidated-rc1/candidate.json",
+  "guide": "hardware/BASELINE.md",
+  "source_commits": {
+    "consolidation": "667cd39",
+    "hardware_qualification": "2893614",
+    "default_boot": "1969bdd"
+  },
+  "hardware": {
+    "app": "sysone-qwen-decoder-v9e",
+    "source_directory": "hls/qwen_decoder_v9e",
+    "decoder_clock_hz": 125000000,
+    "memory_clock_hz": 250000000,
+    "model_profile": {
+      "hidden": 1024,
+      "ffn": 3072,
+      "q_heads": 16,
+      "kv_heads": 8,
+      "layers": 28,
+      "vocab": 151936,
+      "max_context": 2048,
+      "head_dim": 128,
+      "quantization": "Q8_0",
+      "prefill_batch": 8,
+      "activation_quantization": "symmetric INT8 block32"
+    },
+    "kv_storage": "BF16 round-to-nearest-even",
+    "dma_abi": 2
+  },
+  "model": {
+    "name": "Qwen3-0.6B Q8_0",
+    "bytes": 639446688,
+    "sha256": "9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031"
+  },
+  "package": {
+    "installed_path": "/var/lib/sysone/hardware-consolidated-rc1-20261108",
+    "local_archive": "build/v2/hardware-consolidated-rc1/deployment-r2.tar",
+    "archive_sha256": "7ebe1a5ca5571cc71f8a05d60c41a39d3e9abf39d58173976119485e50700eac",
+    "manifest_sha256": "76837ae0aa24a81c65e1ff68a861e6a168345732d8dd7485677f94d81a5bd324"
+  },
+  "defaults": {
+    "launcher": "/usr/local/bin/sysone-qwen-fpga",
+    "launcher_sha256": "378b619e4b5d88bad3f8a71870ae92e5b113162272575ad3a9e6ffe6019594e5",
+    "service": "sysone-rc1.service",
+    "initializer": "sysone-rc1-init.service",
+    "boot_bundle": "/var/lib/sysone/rc1-default-v1",
+    "kernel": "6.8.0-1036-xilinx",
+    "module_sha256": "a50f17d787df91a06fd582ec5e105bcfab4e480bb0bede81b6bb4977802636a0",
+    "startup_sources": "firmware/rc1_default"
+  },
+  "evidence": {
+    "hardware/candidates/consolidated-rc1/board-qualification.json": "62187b430d7e06bacce0fe9b6aa112116222ce5fa94cf33bfa02424e7d2e0a21",
+    "hardware/candidates/consolidated-rc1/boot-startup.json": "34babeae754eaa400373c074febf13bb0304c2117ad94b743be5f91e4744330d"
+  },
+  "live_state_authority": "BOARD_STATUS.json in the canonical original checkout; evidence receipts are historical observations",
+  "historical_controls": {
+    "v8": "Preserved immutable historical control; do not rewrite or relabel sealed results",
+    "v9d_v16": "Preserved recovery hardware and sealed ABI2 runtime"
+  },
+  "rollback_guide": "hardware/BASELINE.md#rollback-disable-automatic-defaults-and-use-rc1-manually",
+  "full_historical_sweep": "stopped"
+}

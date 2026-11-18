@@ -1,0 +1,9 @@
+{
+  "frozen_utc": "2026-11-09T04:28:17.879718+00:00",
+  "protocol_sha256": "9ff18f668fa5e4a6b26694051134371a63ac29f58c74e59346a55d6a41121bab",
+  "code_sha256": "50405e889101b8889c196cc1da3f4ffb07de84397bf751a826f6c0e442ad42d6",
+  "stage": "before validation and held-out memory evaluation",
+  "amendment": "Budget-specific strongest-simple selection; made before validation",
+  "validation_results_exist": false,
+  "test_memory_results_exist": false
+}

@@ -1,0 +1,16 @@
+{
+  "completed_utc": "2026-11-16T23:36:34.502831+00:00",
+  "selected_model": "svm",
+  "threshold": 0.2,
+  "validation_balanced_accuracy": 0.9901041666666666,
+  "known_acceptance": 0.99,
+  "unknown_rejection": 0.9783333333333334,
+  "balanced_accuracy": 0.9841666666666666,
+  "accuracy": 0.985,
+  "passed_identifiability_gate": true,
+  "extra_knowledge": "Source training includes all final mechanism families; NEVER a fair policy comparator.",
+  "horizon_seconds": 16,
+  "probe_seconds": 8,
+  "case_count": 1400,
+  "model_sha256": "ac99cd76b559e5640c26a5637b1530f29ee6be8461a632e327834404a2b615c5"
+}

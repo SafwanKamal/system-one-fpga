@@ -1,0 +1,261 @@
+{
+  "frozen_utc": "2026-11-16T23:39:45.092230+00:00",
+  "source_sha256": "18cbe464cc1c902f16a84ecd579e4bb15d3d03611cc62f18c90ba3e81d52a699",
+  "primary_freeze_sha256": "1ca7fbdd21430a38bd5db950a57857b775f3b96a2402560211a1eec2680bad8c",
+  "source_validation_only": true,
+  "status": "Post-result baseline audit. Not preregistered with the primary experiment.",
+  "models": {
+    "recent": {
+      "calibration": {
+        "q": 0.95,
+        "thresholds": [
+          1.0269521474838257,
+          0.9828789830207825,
+          1.2542665004730225,
+          1.125901699066162
+        ],
+        "metrics": {
+          "unknown_rejection": 0.2458079268292683,
+          "known_macro_recall": 0.9487296747967479,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "fixed_probe": {
+        "branch": 61,
+        "metrics": {
+          "unknown_rejection": 0.4791666666666667,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "trials": [
+        {
+          "q": 0.9,
+          "thresholds": [
+            0.6701511144638062,
+            0.5739569664001465,
+            0.7750234007835388,
+            0.7010746598243713
+          ],
+          "metrics": {
+            "unknown_rejection": 0.5623729674796748,
+            "known_macro_recall": 0.898729674796748,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.1,
+            "feasible": false
+          }
+        },
+        {
+          "q": 0.95,
+          "thresholds": [
+            1.0269521474838257,
+            0.9828789830207825,
+            1.2542665004730225,
+            1.125901699066162
+          ],
+          "metrics": {
+            "unknown_rejection": 0.2458079268292683,
+            "known_macro_recall": 0.9487296747967479,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "q": 0.975,
+          "thresholds": [
+            1.583659052848816,
+            1.8568967580795288,
+            1.6174685955047607,
+            1.6751070022583008
+          ],
+          "metrics": {
+            "unknown_rejection": 0.05703760162601626,
+            "known_macro_recall": 0.973729674796748,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "q": 0.99,
+          "thresholds": [
+            2.2620320320129395,
+            2.6142964363098145,
+            2.3926339149475098,
+            2.488568067550659
+          ],
+          "metrics": {
+            "unknown_rejection": 0.014608739837398374,
+            "known_macro_recall": 0.9886686991869919,
+            "healthy_false_alarm": 0.010060975609756098,
+            "known_abstention": 0.010060975609756098,
+            "feasible": true
+          }
+        },
+        {
+          "q": 0.995,
+          "thresholds": [
+            3.0171549320220947,
+            2.965398073196411,
+            2.826598644256592,
+            3.0176663398742676
+          ],
+          "metrics": {
+            "unknown_rejection": 0.006224593495934959,
+            "known_macro_recall": 0.99369918699187,
+            "healthy_false_alarm": 0.005030487804878049,
+            "known_abstention": 0.005030487804878049,
+            "feasible": true
+          }
+        },
+        {
+          "q": 1.0,
+          "thresholds": [
+            4.2161712646484375,
+            3.917973756790161,
+            3.4569361209869385,
+            4.028594493865967
+          ],
+          "metrics": {
+            "unknown_rejection": 0.0021595528455284553,
+            "known_macro_recall": 0.9987296747967479,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ]
+    },
+    "worst_window": {
+      "calibration": {
+        "q": 0.95,
+        "thresholds": [
+          1.0465173721313477,
+          1.0095815658569336,
+          1.2542665004730225,
+          1.125901699066162
+        ],
+        "metrics": {
+          "unknown_rejection": 0.29458841463414637,
+          "known_macro_recall": 0.9487296747967479,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "fixed_probe": {
+        "branch": 61,
+        "metrics": {
+          "unknown_rejection": 0.5,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "trials": [
+        {
+          "q": 0.9,
+          "thresholds": [
+            0.761719822883606,
+            0.5923374891281128,
+            0.7750234007835388,
+            0.7447503209114075
+          ],
+          "metrics": {
+            "unknown_rejection": 0.5682164634146342,
+            "known_macro_recall": 0.898729674796748,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.1,
+            "feasible": false
+          }
+        },
+        {
+          "q": 0.95,
+          "thresholds": [
+            1.0465173721313477,
+            1.0095815658569336,
+            1.2542665004730225,
+            1.125901699066162
+          ],
+          "metrics": {
+            "unknown_rejection": 0.29458841463414637,
+            "known_macro_recall": 0.9487296747967479,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "q": 0.975,
+          "thresholds": [
+            1.583659052848816,
+            1.9141151905059814,
+            1.6174685955047607,
+            1.6751070022583008
+          ],
+          "metrics": {
+            "unknown_rejection": 0.061610772357723574,
+            "known_macro_recall": 0.973729674796748,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "q": 0.99,
+          "thresholds": [
+            2.2620320320129395,
+            2.674232244491577,
+            2.3926339149475098,
+            2.488568067550659
+          ],
+          "metrics": {
+            "unknown_rejection": 0.014608739837398374,
+            "known_macro_recall": 0.9886686991869919,
+            "healthy_false_alarm": 0.010060975609756098,
+            "known_abstention": 0.010060975609756098,
+            "feasible": true
+          }
+        },
+        {
+          "q": 0.995,
+          "thresholds": [
+            3.0171549320220947,
+            3.021512269973755,
+            2.826598644256592,
+            3.0176663398742676
+          ],
+          "metrics": {
+            "unknown_rejection": 0.006224593495934959,
+            "known_macro_recall": 0.99369918699187,
+            "healthy_false_alarm": 0.005030487804878049,
+            "known_abstention": 0.005030487804878049,
+            "feasible": true
+          }
+        },
+        {
+          "q": 1.0,
+          "thresholds": [
+            4.2161712646484375,
+            3.917973756790161,
+            3.4569361209869385,
+            4.028594493865967
+          ],
+          "metrics": {
+            "unknown_rejection": 0.0021595528455284553,
+            "known_macro_recall": 0.9987296747967479,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ]
+    }
+  }
+}

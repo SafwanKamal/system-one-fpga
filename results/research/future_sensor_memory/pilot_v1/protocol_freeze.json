@@ -1,0 +1,8 @@
+{
+  "frozen_utc": "2026-11-09T04:40:46.620525+00:00",
+  "protocol_sha256": "70156e9864cc8830a78c9267d5eb6e6ce8ec89ce2d05879d7315d3399b5f8e4f",
+  "code_sha256": "9667fa953adef92c238a815fef7acca7635ad08e383bcf0ce425a912a0a662cb",
+  "stage": "before held-out memory evaluation",
+  "amendments": "See PROTOCOL.md pre-test amendments; mean-record capacity edge case corrected on validation",
+  "test_memory_results_exist": false
+}

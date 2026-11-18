@@ -1,0 +1,3232 @@
+[
+  {
+    "method": "quantization_floor",
+    "budget": 0,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.8427372685185186,
+    "positive_exact": 0.5707694596124097,
+    "nmae": 0.0074920618941841715,
+    "zero_reference": 0.6287615740740741
+  },
+  {
+    "method": "quantization_floor",
+    "budget": 0,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9756944444444443,
+    "positive_exact": 0.77763363585732,
+    "nmae": 0.00473533351336915,
+    "zero_reference": 0.8793402777777778
+  },
+  {
+    "method": "quantization_floor",
+    "budget": 0,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.8449074074074073,
+    "positive_exact": 0.667749471576445,
+    "nmae": 0.004409456728173753,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "quantization_floor",
+    "budget": 0,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.7910879629629629,
+    "positive_exact": 0.4503439256543335,
+    "nmae": 0.004399454151856031,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "quantization_floor",
+    "budget": 0,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.7743055555555555,
+    "positive_exact": 0.6485050085615923,
+    "nmae": 0.012146165271381515,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "quantization_floor",
+    "budget": 0,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.8263888888888888,
+    "positive_exact": 0.4592684117916253,
+    "nmae": 0.013953725930666966,
+    "zero_reference": 0.671875
+  },
+  {
+    "method": "recognition_floor",
+    "budget": 0,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.5200441919191919,
+    "positive_exact": 0.00834255311321614,
+    "nmae": 93.27125035278215,
+    "zero_reference": 0.6403093434343435
+  },
+  {
+    "method": "recognition_floor",
+    "budget": 0,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.7630208333333335,
+    "positive_exact": 0.031638256967204334,
+    "nmae": 0.49653676281319975,
+    "zero_reference": 0.78125
+  },
+  {
+    "method": "recognition_floor",
+    "budget": 0,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.45659722222222227,
+    "positive_exact": 0.005501443001443001,
+    "nmae": 333.06105332054454,
+    "zero_reference": 0.7974537037037037
+  },
+  {
+    "method": "recognition_floor",
+    "budget": 0,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.4351851851851852,
+    "positive_exact": 0.006158575368634973,
+    "nmae": 0.7317121255563918,
+    "zero_reference": 0.4380787037037037
+  },
+  {
+    "method": "recognition_floor",
+    "budget": 0,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.5063657407407407,
+    "positive_exact": 0.005553594319417103,
+    "nmae": 7.870794672224805,
+    "zero_reference": 0.5914351851851852
+  },
+  {
+    "method": "ring",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.6362847222222223,
+    "positive_exact": 0.0152398070281072,
+    "nmae": 0.7523250190497839,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "ring",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.875,
+    "positive_exact": 0.0,
+    "nmae": 0.1236304550477948,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "ring",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5520833333333333,
+    "positive_exact": 0.0385507185828877,
+    "nmae": 0.9722657156212227,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "ring",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.6267361111111112,
+    "positive_exact": 0.0,
+    "nmae": 0.9823779997026565,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "ring",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.33333333333333337,
+    "positive_exact": 0.0,
+    "nmae": 0.9957079366387807,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "ring",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.671875,
+    "positive_exact": 0.01488095238095238,
+    "nmae": 0.6403334119638003,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "reservoir",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.6360677083333334,
+    "positive_exact": 0.015047406510804419,
+    "nmae": 0.24612781804301812,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "reservoir",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.8745659722222223,
+    "positive_exact": 0.0,
+    "nmae": 0.12161917227917932,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "reservoir",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5500578703703705,
+    "positive_exact": 0.03451794409974557,
+    "nmae": 0.24339498423020756,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "reservoir",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.6296296296296298,
+    "positive_exact": 0.005419520505727402,
+    "nmae": 0.2410308721770818,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "reservoir",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.3342013888888889,
+    "positive_exact": 0.0010964912280701754,
+    "nmae": 0.565106524530693,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "reservoir",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.670138888888889,
+    "positive_exact": 0.011268347108491093,
+    "nmae": 0.23063712606843262,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "change",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.6358506944444444,
+    "positive_exact": 0.013987191262928602,
+    "nmae": 0.3568741985794398,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "change",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.8776041666666667,
+    "positive_exact": 0.025,
+    "nmae": 0.11827239940794908,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "change",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5520833333333333,
+    "positive_exact": 0.038222296494355316,
+    "nmae": 0.4646600743061293,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "change",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.6276041666666667,
+    "positive_exact": 0.001984126984126984,
+    "nmae": 0.31304994691740723,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "change",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.33333333333333337,
+    "positive_exact": 0.0,
+    "nmae": 0.5453384465012143,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "change",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6675347222222223,
+    "positive_exact": 0.0,
+    "nmae": 0.38915902465518537,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "dyadic",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.6360677083333334,
+    "positive_exact": 0.013915682415120992,
+    "nmae": 0.2595924148586708,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "dyadic",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.875,
+    "positive_exact": 0.0,
+    "nmae": 0.12416631920762575,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "dyadic",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5503472222222223,
+    "positive_exact": 0.03454582590612002,
+    "nmae": 0.27784131457608763,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "dyadic",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.6293402777777778,
+    "positive_exact": 0.003968253968253968,
+    "nmae": 0.25382677401903836,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "dyadic",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.33333333333333337,
+    "positive_exact": 0.0,
+    "nmae": 0.5945158435617585,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "dyadic",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.670138888888889,
+    "positive_exact": 0.00900116144018583,
+    "nmae": 0.22575207684722048,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.6356336805555556,
+    "positive_exact": 0.012251188381021901,
+    "nmae": 0.2360646267165279,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.875,
+    "positive_exact": 0.0,
+    "nmae": 0.12033653476537418,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5512152777777778,
+    "positive_exact": 0.03607054709995887,
+    "nmae": 0.2521084624477639,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.6293402777777778,
+    "positive_exact": 0.0036733161733161733,
+    "nmae": 0.22162449127937964,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.33333333333333337,
+    "positive_exact": 0.0,
+    "nmae": 0.5686746236663685,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6675347222222223,
+    "positive_exact": 0.0,
+    "nmae": 0.20074298873992902,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "codec8",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.634765625,
+    "positive_exact": 0.015226656400822278,
+    "nmae": 2.827031083289912,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "codec8",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.8763020833333333,
+    "positive_exact": 0.020833333333333332,
+    "nmae": 0.11972807215144793,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "codec8",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.548611111111111,
+    "positive_exact": 0.036712483288770054,
+    "nmae": 9.735961870891925,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "codec8",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.6276041666666667,
+    "positive_exact": 0.0,
+    "nmae": 0.3534901983704305,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "codec8",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.3177083333333333,
+    "positive_exact": 0.0,
+    "nmae": 1.9242223758357475,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "codec8",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6727430555555556,
+    "positive_exact": 0.01488095238095238,
+    "nmae": 0.49744609051774624,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.7354600694444444,
+    "positive_exact": 0.34737876867533457,
+    "nmae": 2.7587990434156744,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.9778645833333334,
+    "positive_exact": 0.7943181818181818,
+    "nmae": 0.01672500562303194,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.515625,
+    "positive_exact": 0.06775439633895516,
+    "nmae": 9.287479166805673,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.8880208333333333,
+    "positive_exact": 0.6776813703537841,
+    "nmae": 0.059683731830695384,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.796875,
+    "positive_exact": 0.70288789428815,
+    "nmae": 0.994686544089672,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6206597222222222,
+    "positive_exact": 0.019582470669427192,
+    "nmae": 1.3453210899144161,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.7352430555555556,
+    "positive_exact": 0.35122570587377566,
+    "nmae": 2.80272260346006,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.9778645833333334,
+    "positive_exact": 0.7943181818181818,
+    "nmae": 0.01672500562303194,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5138888888888888,
+    "positive_exact": 0.06396651755107638,
+    "nmae": 9.304924354663662,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.8880208333333333,
+    "positive_exact": 0.6776813703537841,
+    "nmae": 0.059683731830695384,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.796875,
+    "positive_exact": 0.70288789428815,
+    "nmae": 0.994686544089672,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6215277777777778,
+    "positive_exact": 0.04594301488711427,
+    "nmae": 1.5035701422339693,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "event1",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.7335069444444444,
+    "positive_exact": 0.34202954427166177,
+    "nmae": 2.781363177562743,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "event1",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.9778645833333334,
+    "positive_exact": 0.7943181818181818,
+    "nmae": 0.01672500562303194,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "event1",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5130208333333333,
+    "positive_exact": 0.060178638763197595,
+    "nmae": 9.341315639786584,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "event1",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.8880208333333333,
+    "positive_exact": 0.6776813703537841,
+    "nmae": 0.059683731830695384,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "event1",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.796875,
+    "positive_exact": 0.70288789428815,
+    "nmae": 0.994686544089672,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "event1",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6154513888888888,
+    "positive_exact": 0.00470151828847481,
+    "nmae": 1.3817411535217823,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "event2",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.6553819444444445,
+    "positive_exact": 0.13203026305778812,
+    "nmae": 3.2388479213761463,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "event2",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.9114583333333334,
+    "positive_exact": 0.29104199893673577,
+    "nmae": 0.061717004505959225,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "event2",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5269097222222222,
+    "positive_exact": 0.04636536104826546,
+    "nmae": 6.911445721889641,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "event2",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.7239583333333333,
+    "positive_exact": 0.22084482625568466,
+    "nmae": 0.16460817482199952,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "event2",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.49739583333333337,
+    "positive_exact": 0.24402025218580858,
+    "nmae": 1.6163980169884402,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "event2",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.5972222222222222,
+    "positive_exact": 0.015589569160997732,
+    "nmae": 5.299393780126157,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.662326388888889,
+    "positive_exact": 0.13138449747421296,
+    "nmae": 2.802569783020336,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.9114583333333334,
+    "positive_exact": 0.29104199893673577,
+    "nmae": 0.061717004505959225,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5373263888888888,
+    "positive_exact": 0.04672705086308027,
+    "nmae": 6.425561034237808,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.7239583333333333,
+    "positive_exact": 0.22084482625568466,
+    "nmae": 0.16460817482199952,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.49739583333333337,
+    "positive_exact": 0.24402025218580858,
+    "nmae": 1.6163980169884402,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6145833333333333,
+    "positive_exact": 0.012046485260770973,
+    "nmae": 4.04016591435475,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.666015625,
+    "positive_exact": 0.1306974860140035,
+    "nmae": 2.5616338234631133,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.9114583333333334,
+    "positive_exact": 0.29104199893673577,
+    "nmae": 0.061717004505959225,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5416666666666667,
+    "positive_exact": 0.052047179230083646,
+    "nmae": 6.43284449403511,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.7239583333333333,
+    "positive_exact": 0.22084482625568466,
+    "nmae": 0.16460817482199952,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.49739583333333337,
+    "positive_exact": 0.24402025218580858,
+    "nmae": 1.6163980169884402,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.625,
+    "positive_exact": 0.001984126984126984,
+    "nmae": 3.0691386163285586,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 8192,
+    "panel": "all",
+    "participants": 8,
+    "exact": 0.6690538194444444,
+    "positive_exact": 0.13310807405841396,
+    "nmae": 2.786598102026461,
+    "zero_reference": 0.6310763888888888
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 8192,
+    "panel": "composition",
+    "participants": 8,
+    "exact": 0.9114583333333334,
+    "positive_exact": 0.29104199893673577,
+    "nmae": 0.061717004505959225,
+    "zero_reference": 0.875
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 8192,
+    "panel": "continuous_shift",
+    "participants": 8,
+    "exact": 0.5460069444444444,
+    "positive_exact": 0.052047179230083646,
+    "nmae": 6.331952622938142,
+    "zero_reference": 0.5347222222222222
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 8192,
+    "panel": "familiar",
+    "participants": 8,
+    "exact": 0.7239583333333333,
+    "positive_exact": 0.22084482625568466,
+    "nmae": 0.16460817482199952,
+    "zero_reference": 0.6276041666666667
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 8192,
+    "panel": "sensor_shift",
+    "participants": 8,
+    "exact": 0.49739583333333337,
+    "positive_exact": 0.24402025218580858,
+    "nmae": 1.6163980169884402,
+    "zero_reference": 0.33333333333333337
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 8192,
+    "panel": "threshold_shift",
+    "participants": 8,
+    "exact": 0.6328125,
+    "positive_exact": 0.013038548752834465,
+    "nmae": 4.069887601678918,
+    "zero_reference": 0.6675347222222223
+  },
+  {
+    "method": "ring",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.637008101851852,
+    "positive_exact": 0.017202539552178996,
+    "nmae": 0.4226332659966379,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "ring",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.881076388888889,
+    "positive_exact": 0.029797979797979796,
+    "nmae": 0.11518397530742706,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "ring",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5462962962962962,
+    "positive_exact": 0.043085890514707625,
+    "nmae": 0.4958607138964186,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "ring",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6163194444444445,
+    "positive_exact": 0.0,
+    "nmae": 0.5301454875876587,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "ring",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.34375,
+    "positive_exact": 0.0,
+    "nmae": 0.701589602194807,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "ring",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6834490740740741,
+    "positive_exact": 0.00992063492063492,
+    "nmae": 0.35387434489925407,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "reservoir",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6385995370370371,
+    "positive_exact": 0.02226932333316115,
+    "nmae": 0.22716440474785013,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "reservoir",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8807870370370372,
+    "positive_exact": 0.02848219032429559,
+    "nmae": 0.11030636509900188,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "reservoir",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5470679012345678,
+    "positive_exact": 0.04436236345171978,
+    "nmae": 0.21495772363178614,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "reservoir",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.62133487654321,
+    "positive_exact": 0.014070197471538612,
+    "nmae": 0.2630999182734823,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "reservoir",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.34664351851851855,
+    "positive_exact": 0.00415016034710432,
+    "nmae": 0.48535451782833383,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "reservoir",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6832561728395062,
+    "positive_exact": 0.011936982770316103,
+    "nmae": 0.1952775610773528,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "change",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6443865740740741,
+    "positive_exact": 0.036812459864518705,
+    "nmae": 0.3235312419713267,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "change",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8845486111111112,
+    "positive_exact": 0.05801435406698565,
+    "nmae": 0.09488726394814102,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "change",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5520833333333333,
+    "positive_exact": 0.0550724248817567,
+    "nmae": 0.32005737718556154,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "change",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.625,
+    "positive_exact": 0.020306020306020304,
+    "nmae": 0.2439272130331581,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "change",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.37326388888888884,
+    "positive_exact": 0.03963111773366682,
+    "nmae": 0.42623315401797396,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "change",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6863425925925926,
+    "positive_exact": 0.020112803575536492,
+    "nmae": 0.5248044836951682,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "dyadic",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6372974537037036,
+    "positive_exact": 0.01763917087249742,
+    "nmae": 0.23818579765617812,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "dyadic",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8802083333333335,
+    "positive_exact": 0.015151515151515152,
+    "nmae": 0.1167558781800521,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "dyadic",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5445601851851852,
+    "positive_exact": 0.0390270731746403,
+    "nmae": 0.25718887639559646,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "dyadic",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6186342592592592,
+    "positive_exact": 0.00612649307871217,
+    "nmae": 0.23446195063294192,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "dyadic",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.34375,
+    "positive_exact": 0.0,
+    "nmae": 0.5430610429742321,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "dyadic",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6846064814814815,
+    "positive_exact": 0.013716356107660454,
+    "nmae": 0.20223476381806194,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6494502314814815,
+    "positive_exact": 0.04933349863955738,
+    "nmae": 0.19211780594876246,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8862847222222222,
+    "positive_exact": 0.07111742424242423,
+    "nmae": 0.09911040255705865,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5555555555555555,
+    "positive_exact": 0.06245211116769298,
+    "nmae": 0.21685625659956098,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6435185185185185,
+    "positive_exact": 0.0621129539411775,
+    "nmae": 0.16936810859559745,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.35763888888888884,
+    "positive_exact": 0.01803904923599321,
+    "nmae": 0.4672162921292952,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6886574074074074,
+    "positive_exact": 0.027614391869807714,
+    "nmae": 0.16043449285208727,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "codec8",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6511863425925926,
+    "positive_exact": 0.06255629300800841,
+    "nmae": 4.978335480939898,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "codec8",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8871527777777778,
+    "positive_exact": 0.08813131313131313,
+    "nmae": 0.10486343071620018,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "codec8",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.560763888888889,
+    "positive_exact": 0.08307019564026662,
+    "nmae": 14.757851091713176,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "codec8",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6365740740740741,
+    "positive_exact": 0.0462962962962963,
+    "nmae": 0.32019440129031423,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "codec8",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.3489583333333333,
+    "positive_exact": 0.039473684210526314,
+    "nmae": 13.19805586468153,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "codec8",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6996527777777778,
+    "positive_exact": 0.06466358562395148,
+    "nmae": 0.36603552205146045,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7628761574074073,
+    "positive_exact": 0.40986381410773004,
+    "nmae": 3.426957084223177,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9800347222222223,
+    "positive_exact": 0.8145833333333333,
+    "nmae": 0.01519017031334828,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5474537037037037,
+    "positive_exact": 0.12207866729918336,
+    "nmae": 10.273786515791956,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.9114583333333334,
+    "positive_exact": 0.7675438596491228,
+    "nmae": 0.05755053892412357,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.845486111111111,
+    "positive_exact": 0.7645929339477727,
+    "nmae": 6.763063293450994,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6574074074074074,
+    "positive_exact": 0.07702157787324808,
+    "nmae": 1.112010070817399,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7550636574074073,
+    "positive_exact": 0.41811403955596216,
+    "nmae": 3.6780634786489697,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9800347222222223,
+    "positive_exact": 0.8145833333333333,
+    "nmae": 0.01519017031334828,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5590277777777778,
+    "positive_exact": 0.13688030595192494,
+    "nmae": 6.694776095514925,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.9114583333333334,
+    "positive_exact": 0.7675438596491228,
+    "nmae": 0.05755053892412357,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.845486111111111,
+    "positive_exact": 0.7645929339477727,
+    "nmae": 6.763063293450994,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6145833333333334,
+    "positive_exact": 0.09609292017828602,
+    "nmae": 5.695446068797601,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "event1",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7494212962962962,
+    "positive_exact": 0.38179458409849437,
+    "nmae": 3.6211097731522206,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "event1",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9800347222222223,
+    "positive_exact": 0.8145833333333333,
+    "nmae": 0.01519017031334828,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "event1",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5196759259259259,
+    "positive_exact": 0.07405941224867828,
+    "nmae": 10.861726183517595,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "event1",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.9114583333333334,
+    "positive_exact": 0.7675438596491228,
+    "nmae": 0.05755053892412357,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "event1",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.845486111111111,
+    "positive_exact": 0.7645929339477727,
+    "nmae": 6.763063293450994,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "event1",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6313657407407406,
+    "positive_exact": 0.007728362619666967,
+    "nmae": 1.3006811588079368,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "event2",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.719039351851852,
+    "positive_exact": 0.33895674818755306,
+    "nmae": 5.200649386981893,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "event2",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9704861111111112,
+    "positive_exact": 0.7415719696969697,
+    "nmae": 0.023034255072314293,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "event2",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5277777777777778,
+    "positive_exact": 0.08271626975663875,
+    "nmae": 9.725201420954786,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "event2",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.8686342592592592,
+    "positive_exact": 0.6686117467581999,
+    "nmae": 0.09070256670378551,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "event2",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.78125,
+    "positive_exact": 0.6755675954592363,
+    "nmae": 10.236082692086276,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "event2",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.572337962962963,
+    "positive_exact": 0.009130874572051043,
+    "nmae": 7.559309826192035,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7415123456790123,
+    "positive_exact": 0.3435864137327462,
+    "nmae": 3.405882244037867,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9704861111111112,
+    "positive_exact": 0.7415719696969697,
+    "nmae": 0.023034255072314293,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5499614197530863,
+    "positive_exact": 0.09194924810726417,
+    "nmae": 8.311517096710151,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.8686342592592592,
+    "positive_exact": 0.6686117467581999,
+    "nmae": 0.09070256670378551,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.78125,
+    "positive_exact": 0.6755675954592363,
+    "nmae": 10.236082692086276,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6400462962962963,
+    "positive_exact": 0.016283495547388276,
+    "nmae": 1.7939255786605595,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7441647376543209,
+    "positive_exact": 0.34670000770122117,
+    "nmae": 3.2130506237854117,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9704861111111112,
+    "positive_exact": 0.7415719696969697,
+    "nmae": 0.023034255072314293,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5563271604938271,
+    "positive_exact": 0.09847124598955614,
+    "nmae": 8.372470439173727,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.8686342592592592,
+    "positive_exact": 0.6686117467581999,
+    "nmae": 0.09070256670378551,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.78125,
+    "positive_exact": 0.6755675954592363,
+    "nmae": 10.236082692086276,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.64429012345679,
+    "positive_exact": 0.02193783914531996,
+    "nmae": 0.9616457551871656,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 16384,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7459490740740741,
+    "positive_exact": 0.34548746785694906,
+    "nmae": 3.17976095515318,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 16384,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9704861111111112,
+    "positive_exact": 0.7415719696969697,
+    "nmae": 0.023034255072314293,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 16384,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5584490740740741,
+    "positive_exact": 0.09777983670439684,
+    "nmae": 8.259701291672245,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 16384,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.8686342592592592,
+    "positive_exact": 0.6686117467581999,
+    "nmae": 0.09070256670378551,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 16384,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.78125,
+    "positive_exact": 0.6755675954592363,
+    "nmae": 10.236082692086276,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 16384,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6493055555555555,
+    "positive_exact": 0.015449271496038025,
+    "nmae": 0.9412562281597227,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "ring",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6536458333333334,
+    "positive_exact": 0.062003713544731054,
+    "nmae": 0.4319438327322181,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "ring",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8871527777777778,
+    "positive_exact": 0.08813131313131313,
+    "nmae": 0.10538344938233002,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "ring",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5648148148148148,
+    "positive_exact": 0.08347108575064914,
+    "nmae": 0.4999681564998461,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "ring",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6359953703703703,
+    "positive_exact": 0.0462962962962963,
+    "nmae": 0.3775654327613635,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "ring",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.3732638888888889,
+    "positive_exact": 0.03728070175438596,
+    "nmae": 0.5075951813962294,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "ring",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6979166666666666,
+    "positive_exact": 0.06209168599322832,
+    "nmae": 0.6107877149473663,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "reservoir",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6464120370370371,
+    "positive_exact": 0.04353335419870106,
+    "nmae": 0.16961429863859656,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "reservoir",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8894675925925926,
+    "positive_exact": 0.11089845826687932,
+    "nmae": 0.09330855987424934,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "reservoir",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5557484567901235,
+    "positive_exact": 0.06377029089184258,
+    "nmae": 0.16795997238209728,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "reservoir",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6294367283950617,
+    "positive_exact": 0.03403997461797626,
+    "nmae": 0.15605884692077807,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "reservoir",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.35185185185185186,
+    "positive_exact": 0.010564044519901906,
+    "nmae": 0.4094111947239179,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "reservoir",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6902006172839507,
+    "positive_exact": 0.033909723731833645,
+    "nmae": 0.1557622704273721,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "change",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6634837962962962,
+    "positive_exact": 0.08547360006407746,
+    "nmae": 0.14811854775551225,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "change",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.900173611111111,
+    "positive_exact": 0.17855528973950027,
+    "nmae": 0.06394531376147353,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "change",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5665509259259259,
+    "positive_exact": 0.08644735441845093,
+    "nmae": 0.1991962308466024,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "change",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6493055555555557,
+    "positive_exact": 0.07411123814056068,
+    "nmae": 0.12396760202065937,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "change",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.40277777777777773,
+    "positive_exact": 0.07929545580309817,
+    "nmae": 0.2812617015180387,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "change",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7037037037037037,
+    "positive_exact": 0.07406682147332337,
+    "nmae": 0.13292624847445855,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "dyadic",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6390335648148149,
+    "positive_exact": 0.02359870187547458,
+    "nmae": 0.20266734848238088,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "dyadic",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.881076388888889,
+    "positive_exact": 0.023484848484848487,
+    "nmae": 0.11013261294060873,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "dyadic",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5491898148148148,
+    "positive_exact": 0.05085881441814624,
+    "nmae": 0.21245696117191284,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "dyadic",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6197916666666666,
+    "positive_exact": 0.008621513015592571,
+    "nmae": 0.19629227827622317,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "dyadic",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.34375,
+    "positive_exact": 0.0,
+    "nmae": 0.4884528927450129,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "dyadic",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6851851851851851,
+    "positive_exact": 0.01829987988524574,
+    "nmae": 0.16568078160597724,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6630497685185185,
+    "positive_exact": 0.0845019278567158,
+    "nmae": 0.13734021181806702,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9001736111111112,
+    "positive_exact": 0.1807665470494418,
+    "nmae": 0.07474852493930663,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5740740740740741,
+    "positive_exact": 0.1002654213251647,
+    "nmae": 0.1498018814090357,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6556712962962963,
+    "positive_exact": 0.09456576968949913,
+    "nmae": 0.11943494434284545,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.3767361111111111,
+    "positive_exact": 0.045320804421643164,
+    "nmae": 0.34941371716404973,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6967592592592592,
+    "positive_exact": 0.05105048848989161,
+    "nmae": 0.11382043250616586,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "codec8",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7152777777777778,
+    "positive_exact": 0.2315708731757816,
+    "nmae": 3.8938003962563,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "codec8",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9253472222222223,
+    "positive_exact": 0.39052421141236926,
+    "nmae": 0.05247334731356618,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "codec8",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.6319444444444445,
+    "positive_exact": 0.22835875992431406,
+    "nmae": 11.56823923015353,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "codec8",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.7008101851851851,
+    "positive_exact": 0.2185924882816411,
+    "nmae": 0.19319447545777127,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "codec8",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.4513888888888889,
+    "positive_exact": 0.1854054777036616,
+    "nmae": 10.770324489515934,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "codec8",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7609953703703702,
+    "positive_exact": 0.24514481841123525,
+    "nmae": 0.18867748469954634,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.828125,
+    "positive_exact": 0.5811027053416954,
+    "nmae": 1.049146533195047,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.6059027777777778,
+    "positive_exact": 0.23187223828414885,
+    "nmae": 3.376869686567133,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7065972222222223,
+    "positive_exact": 0.21381924608841918,
+    "nmae": 0.8197164462130543,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.8803530092592592,
+    "positive_exact": 0.7086736013850908,
+    "nmae": 0.9440450905674921,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.6383101851851852,
+    "positive_exact": 0.2710732652016702,
+    "nmae": 0.9623485791140701,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.883101851851852,
+    "positive_exact": 0.7083333333333334,
+    "nmae": 2.8138317831558983,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "event1",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7880497685185185,
+    "positive_exact": 0.4936372154101522,
+    "nmae": 1.8559446494174103,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "event1",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "event1",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5248842592592592,
+    "positive_exact": 0.09080245143869313,
+    "nmae": 5.975869752551247,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "event1",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "event1",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "event1",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6273148148148149,
+    "positive_exact": 0.009501412265057038,
+    "nmae": 1.447908845118394,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "event2",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.771267361111111,
+    "positive_exact": 0.4976812475492205,
+    "nmae": 3.5143146445053155,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "event2",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "event2",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.532986111111111,
+    "positive_exact": 0.10602455017472373,
+    "nmae": 2.850882077900655,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "event2",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "event2",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "event2",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.5520833333333334,
+    "positive_exact": 0.006679894179894179,
+    "nmae": 11.20637650012061,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.8098476080246914,
+    "positive_exact": 0.5143773180340508,
+    "nmae": 0.13541390575169232,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5765817901234568,
+    "positive_exact": 0.13642464940302862,
+    "nmae": 0.2454402376754307,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6628086419753086,
+    "positive_exact": 0.03984897817027508,
+    "nmae": 0.2962153853313386,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.8181423611111112,
+    "positive_exact": 0.5291813518117755,
+    "nmae": 0.1267529148012094,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5910493827160495,
+    "positive_exact": 0.16465983741468979,
+    "nmae": 0.2062955022451979,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6815200617283951,
+    "positive_exact": 0.0717628825147628,
+    "nmae": 0.30071615695963966,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 32768,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.816020447530864,
+    "positive_exact": 0.525858371986364,
+    "nmae": 0.13458362542558455,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 32768,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 32768,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5927854938271605,
+    "positive_exact": 0.16283512624081453,
+    "nmae": 0.19159683385587456,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 32768,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 32768,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 32768,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6712962962962963,
+    "positive_exact": 0.05661241620031287,
+    "nmae": 0.34673766784646354,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "ring",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6804108796296297,
+    "positive_exact": 0.13467114658517762,
+    "nmae": 1.1209930435205533,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "ring",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9045138888888888,
+    "positive_exact": 0.23745625110756688,
+    "nmae": 0.07392810631562997,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "ring",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5902777777777777,
+    "positive_exact": 0.1384137333306806,
+    "nmae": 1.3805444732081646,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "ring",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6614583333333334,
+    "positive_exact": 0.11034197974222452,
+    "nmae": 0.7534895897907941,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "ring",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.4305555555555555,
+    "positive_exact": 0.115500075999392,
+    "nmae": 0.835764244350686,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "ring",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7233796296296297,
+    "positive_exact": 0.1454688322152142,
+    "nmae": 2.0220646254226056,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "reservoir",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6807484567901234,
+    "positive_exact": 0.13312120524745455,
+    "nmae": 0.11042185992537729,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "reservoir",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8958333333333334,
+    "positive_exact": 0.16000950397880223,
+    "nmae": 0.07227688673693433,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "reservoir",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5952932098765432,
+    "positive_exact": 0.14755271913335602,
+    "nmae": 0.10550662992830301,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "reservoir",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6693672839506172,
+    "positive_exact": 0.12835969135221134,
+    "nmae": 0.10262237462602332,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "reservoir",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.4212962962962963,
+    "positive_exact": 0.10075596885457334,
+    "nmae": 0.29656608564287945,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "reservoir",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7206790123456791,
+    "positive_exact": 0.13153530614780753,
+    "nmae": 0.08651848210826678,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "change",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7029803240740741,
+    "positive_exact": 0.18914303999524393,
+    "nmae": 0.07426041235005934,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "change",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9201388888888888,
+    "positive_exact": 0.3300953615098352,
+    "nmae": 0.028844636924724304,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "change",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.6180555555555556,
+    "positive_exact": 0.1921394605761447,
+    "nmae": 0.10068804485227607,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "change",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.695601851851852,
+    "positive_exact": 0.19664439365959005,
+    "nmae": 0.06343682442310306,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "change",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.47048611111111116,
+    "positive_exact": 0.17374863648077618,
+    "nmae": 0.12530389207438156,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "change",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7280092592592592,
+    "positive_exact": 0.15153287096193854,
+    "nmae": 0.07191905815024822,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "dyadic",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6705729166666666,
+    "positive_exact": 0.10726030732126883,
+    "nmae": 0.15806940483432594,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "dyadic",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.8940972222222222,
+    "positive_exact": 0.14611742424242424,
+    "nmae": 0.08856734628289335,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "dyadic",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5833333333333334,
+    "positive_exact": 0.12367552317235497,
+    "nmae": 0.16239965942121692,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "dyadic",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6603009259259258,
+    "positive_exact": 0.10257401984230241,
+    "nmae": 0.15000418076203284,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "dyadic",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.41145833333333326,
+    "positive_exact": 0.08602150537634408,
+    "nmae": 0.3895445016715369,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "dyadic",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7054398148148148,
+    "positive_exact": 0.09529178775950654,
+    "nmae": 0.13098071440827944,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.6969039351851852,
+    "positive_exact": 0.1721323146949778,
+    "nmae": 0.08486639143815138,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9131944444444443,
+    "positive_exact": 0.26936303827751196,
+    "nmae": 0.050961460145991934,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.6140046296296295,
+    "positive_exact": 0.1846030104893489,
+    "nmae": 0.08625131979564432,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.6869212962962963,
+    "positive_exact": 0.16895504076385792,
+    "nmae": 0.07567194203250972,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.4513888888888889,
+    "positive_exact": 0.14591221356423187,
+    "nmae": 0.20553870029150034,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "adaptive_segments",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7274305555555555,
+    "positive_exact": 0.1455812947432125,
+    "nmae": 0.07505509706329005,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "codec8",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.9184027777777778,
+    "positive_exact": 0.7694047466171359,
+    "nmae": 0.2735431594142888,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "codec8",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 0.9835069444444443,
+    "positive_exact": 0.8510822510822512,
+    "nmae": 0.008622246861445469,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "codec8",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.8975694444444445,
+    "positive_exact": 0.7784699037706205,
+    "nmae": 0.7304868116478246,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "codec8",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 0.9027777777777777,
+    "positive_exact": 0.7459575348527254,
+    "nmae": 0.02930441963851947,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "codec8",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 0.8472222222222222,
+    "positive_exact": 0.7796092607215864,
+    "nmae": 0.9189014468709384,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "codec8",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.9351851851851851,
+    "positive_exact": 0.7621357753792318,
+    "nmae": 0.022332759506201297,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.9542824074074074,
+    "positive_exact": 0.8814593549106823,
+    "nmae": 0.11674480521382995,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.8940972222222222,
+    "positive_exact": 0.7860241691760496,
+    "nmae": 0.3111341110798841,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "progressive_codec",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.9230324074074073,
+    "positive_exact": 0.7514890822694055,
+    "nmae": 0.15584510977543567,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.9720775462962963,
+    "positive_exact": 0.921840362327088,
+    "nmae": 0.006584053320093518,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.8883101851851851,
+    "positive_exact": 0.7641634890241774,
+    "nmae": 0.026336213280374072,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "balanced_codec",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "event1",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.7880497685185185,
+    "positive_exact": 0.4936372154101522,
+    "nmae": 1.8559446494174103,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "event1",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "event1",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.5248842592592592,
+    "positive_exact": 0.09080245143869313,
+    "nmae": 5.975869752551247,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "event1",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "event1",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "event1",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.6273148148148149,
+    "positive_exact": 0.009501412265057038,
+    "nmae": 1.447908845118394,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "event2",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.771267361111111,
+    "positive_exact": 0.4976812475492205,
+    "nmae": 3.5143146445053155,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "event2",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "event2",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.532986111111111,
+    "positive_exact": 0.10602455017472373,
+    "nmae": 2.850882077900655,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "event2",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "event2",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "event2",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.5520833333333334,
+    "positive_exact": 0.006679894179894179,
+    "nmae": 11.20637650012061,
+    "zero_reference": 0.6799768518518517
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.8299575617283951,
+    "positive_exact": 0.5554205534437081,
+    "nmae": 0.06764184600341684,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.6167052469135803,
+    "positive_exact": 0.2122287688293404,
+    "nmae": 0.127468715916191,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_reservoir",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.703125,
+    "positive_exact": 0.129227892129651,
+    "nmae": 0.14309866809747637,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.8380594135802469,
+    "positive_exact": 0.5745019632433365,
+    "nmae": 0.052139417541518136,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.636766975308642,
+    "positive_exact": 0.2529642793234616,
+    "nmae": 0.09855538925403133,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_change",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.7154706790123457,
+    "positive_exact": 0.15475738694101152,
+    "nmae": 0.11000228091204123,
+    "zero_reference": 0.679976851851852
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 65536,
+    "panel": "all",
+    "participants": 12,
+    "exact": 0.8371431327160493,
+    "positive_exact": 0.5677111275455771,
+    "nmae": 0.057800946495467596,
+    "zero_reference": 0.6306423611111112
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 65536,
+    "panel": "composition",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.8784722222222223
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 65536,
+    "panel": "continuous_shift",
+    "participants": 12,
+    "exact": 0.6373456790123456,
+    "positive_exact": 0.2418901911342114,
+    "nmae": 0.09178735409108978,
+    "zero_reference": 0.5260416666666666
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 65536,
+    "panel": "familiar",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.6163194444444445
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 65536,
+    "panel": "sensor_shift",
+    "participants": 12,
+    "exact": 1.0,
+    "positive_exact": 1.0,
+    "nmae": 0.0,
+    "zero_reference": 0.34375
+  },
+  {
+    "method": "hybrid_bundle",
+    "budget": 65536,
+    "panel": "threshold_shift",
+    "participants": 12,
+    "exact": 0.711226851851852,
+    "positive_exact": 0.1405477243551281,
+    "nmae": 0.13941643189078065,
+    "zero_reference": 0.679976851851852
+  }
+]

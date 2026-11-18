@@ -25,6 +25,27 @@
 // same encoder_system runs it; addresses are PS physical addresses below 4 GiB.
 module kr260_encoder #(
     parameter integer TILE_OUT = 32,
+    parameter integer ATTENTION_LANES = TILE_OUT,
+    parameter integer MAC_INPUT_REGISTERS = 0,
+    parameter integer PIPELINED_DOT = 0,
+    parameter integer EXP_TABLE_IN_BRAM = 0,
+    parameter integer PIPELINED_URAM = 0,
+    parameter integer LOCAL_READ_CAPTURE = 0,
+    parameter integer INCREMENTAL_SOURCE_ROW = 0,
+    parameter integer LINEAR_ACCUMULATORS_IN_BRAM = 0,
+    parameter integer FABRIC_CONTEXT_CAPTURE = 0,
+    parameter integer FABRIC_SCORE_DISTANCE = 0,
+    parameter integer CACHED_REQUEST_WINDOW = 0,
+    parameter integer DSP_EMBED_ROW_ADDRESS = 0,
+    parameter integer PROBABILITY_INPUT_CAPTURE = 0,
+    parameter integer LOCAL_EMBED_CONTROLS = 0,
+    parameter integer PROBABILITY_PIPELINE = 0,
+    parameter integer PIPELINED_DRAIN_SELECT = 0,
+    parameter integer REGISTERED_FIFO_FLAGS = 0,
+    parameter integer STREAM_RESULTS = 0,
+    parameter integer PERF_COUNTERS = 0,
+    parameter integer LOCAL_QUERY_REGISTERS = 0,
+    parameter integer LOCAL_ACCUMULATOR_CONTROLS = 0,
     parameter integer MAX_TOKENS = 128,
     parameter integer MAX_HEAD_DIM = 64,
     parameter integer MAX_HIDDEN = 384,
@@ -94,6 +115,43 @@ module kr260_encoder #(
     logic done_reg, run_start;
     logic run_done, busy;
     logic [127:0] run_result, result_latch;
+    logic [3:0] perf_events;
+    logic [31:0] perf_counts [0:9];
+    // Counters reset on each accepted RUN and freeze at completion. Events may
+    // overlap; these are diagnostics, not a partition of request clocks.
+    if (PERF_COUNTERS != 0) begin : gen_performance
+        logic [31:0] read_due;
+        logic [31:0] write_due;
+        logic [9:0] events;
+        always_comb begin
+            events[0] = m_axi_rvalid && m_axi_rready;
+            events[1] = read_due != 0 && m_axi_rready && !m_axi_rvalid;
+            events[2] = m_axi_rvalid && !m_axi_rready;
+            events[3] = perf_events[2]; // LINEAR MAC input issue
+            events[4] = perf_events[3]; // ATTENTION MAC input issue
+            events[5] = perf_events[1]; // LINEAR waiting for weight bank
+            events[6] = perf_events[0]; // LINEAR waiting for accumulator drain
+            events[7] = m_axi_wvalid && m_axi_wready;
+            events[8] = m_axi_arvalid && m_axi_arready;
+            events[9] = write_due != 0 && write_ready && !write_valid;
+        end
+        always_ff @(posedge clk) begin
+            if (reset || run_start) begin
+                read_due <= 0;
+                write_due <= 0;
+                for (int c = 0; c < 10; c++) perf_counts[c] <= 0;
+            end else if (busy) begin
+                read_due <= read_due + ((m_axi_arvalid && m_axi_arready) ? 32'(m_axi_arlen)+1 : 0)
+                                     - ((m_axi_rvalid && m_axi_rready) ? 1 : 0);
+                write_due <= write_due + ((write_request_valid && write_request_ready) ? 32'(write_request_beats) : 0)
+                                       - ((write_valid && write_ready) ? 1 : 0);
+                for (int c = 0; c < 10; c++)
+                    if (events[c]) perf_counts[c] <= perf_counts[c] + 1'b1;
+            end
+        end
+    end else begin : gen_no_performance
+        for (genvar c = 0; c < 10; c++) assign perf_counts[c] = 0;
+    end
 
     // write channel: take address and data together
     logic write_fire;
@@ -157,10 +215,45 @@ module kr260_encoder #(
                     6'h04: s_axil_rdata <= {16'd0, result_latch[95:80]};
                     6'h05: s_axil_rdata <= 32'h5359_5332;
                     6'h06: s_axil_rdata <= {8'(TILE_OUT), 8'(MAX_TOKENS), 8'(MAX_HIDDEN / 16), 8'(DRAIN_LANES)};
+                    // Versioned capability word: bit0 counters, bit1 streaming,
+                    // bit2 local queries, bit3 pipelined UltraRAM.
+                    6'h07: s_axil_rdata <= ((FABRIC_CONTEXT_CAPTURE!=0) ? 32'h53700000 :
+                         ((CACHED_REQUEST_WINDOW!=0 || DSP_EMBED_ROW_ADDRESS!=0) ? 32'h53600000 :
+                         ((FABRIC_SCORE_DISTANCE!=0 || ATTENTION_LANES!=TILE_OUT) ? 32'h535a0000 :
+                         ((INCREMENTAL_SOURCE_ROW!=0 || LINEAR_ACCUMULATORS_IN_BRAM!=0) ? 32'h53594000 :
+                         ((PROBABILITY_INPUT_CAPTURE!=0 || LOCAL_EMBED_CONTROLS!=0) ? 32'h53591000 :
+                         ((PROBABILITY_PIPELINE!=0 || PIPELINED_DRAIN_SELECT!=0) ? 32'h53590400 : 32'h53590100)))))) | 32'(PERF_COUNTERS != 0)
+                        | (32'(STREAM_RESULTS != 0) << 1) | (32'(LOCAL_QUERY_REGISTERS != 0) << 2)
+                        | (32'(LOCAL_ACCUMULATOR_CONTROLS != 0) << 4)
+                        | (32'(PIPELINED_DOT != 0) << 5)
+                        | (32'(PIPELINED_URAM != 0) << 3)
+                        | (32'(LOCAL_READ_CAPTURE != 0) << 6)
+                        | (32'(REGISTERED_FIFO_FLAGS != 0) << 7)
+                        | (32'(PROBABILITY_PIPELINE != 0) << 8)
+                        | (32'(PIPELINED_DRAIN_SELECT != 0) << 9)
+                        | (32'(PROBABILITY_INPUT_CAPTURE != 0) << 10)
+                        | (32'(LOCAL_EMBED_CONTROLS != 0) << 11)
+                        | (32'(INCREMENTAL_SOURCE_ROW != 0) << 12)
+                        | (32'(LINEAR_ACCUMULATORS_IN_BRAM != 0) << 13)
+                        | (32'(ATTENTION_LANES != TILE_OUT) << 14)
+                        | (32'(FABRIC_SCORE_DISTANCE != 0) << 15)
+                        | (32'(CACHED_REQUEST_WINDOW != 0) << 16)
+                        | (32'(DSP_EMBED_ROW_ADDRESS != 0) << 17)
+                        | (32'(FABRIC_CONTEXT_CAPTURE != 0) << 18);
                     6'h08: s_axil_rdata <= program_reg;
                     6'h09: s_axil_rdata <= shape_reg;
                     6'h0A: s_axil_rdata <= ids_reg;
                     6'h0B: s_axil_rdata <= result_reg;
+                    6'h0C: s_axil_rdata <= perf_counts[0];
+                    6'h0D: s_axil_rdata <= perf_counts[1];
+                    6'h0E: s_axil_rdata <= perf_counts[2];
+                    6'h0F: s_axil_rdata <= perf_counts[3];
+                    6'h10: s_axil_rdata <= perf_counts[4];
+                    6'h11: s_axil_rdata <= perf_counts[5];
+                    6'h12: s_axil_rdata <= perf_counts[6];
+                    6'h13: s_axil_rdata <= perf_counts[7];
+                    6'h14: s_axil_rdata <= perf_counts[8];
+                    6'h15: s_axil_rdata <= perf_counts[9];
                     default: s_axil_rdata <= '0;
                 endcase
             end
@@ -178,6 +271,25 @@ module kr260_encoder #(
 
     encoder_system #(
         .TILE_OUT(TILE_OUT),
+        .ATTENTION_LANES(ATTENTION_LANES),
+        .MAC_INPUT_REGISTERS(MAC_INPUT_REGISTERS),
+        .PIPELINED_DOT(PIPELINED_DOT),
+        .EXP_TABLE_IN_BRAM(EXP_TABLE_IN_BRAM),
+        .PIPELINED_URAM(PIPELINED_URAM),
+        .LOCAL_READ_CAPTURE(LOCAL_READ_CAPTURE),
+        .INCREMENTAL_SOURCE_ROW(INCREMENTAL_SOURCE_ROW),
+        .LINEAR_ACCUMULATORS_IN_BRAM(LINEAR_ACCUMULATORS_IN_BRAM),
+        .FABRIC_CONTEXT_CAPTURE(FABRIC_CONTEXT_CAPTURE),
+        .FABRIC_SCORE_DISTANCE(FABRIC_SCORE_DISTANCE),
+        .CACHED_REQUEST_WINDOW(CACHED_REQUEST_WINDOW),
+        .DSP_EMBED_ROW_ADDRESS(DSP_EMBED_ROW_ADDRESS),
+        .PROBABILITY_INPUT_CAPTURE(PROBABILITY_INPUT_CAPTURE),
+        .PROBABILITY_PIPELINE(PROBABILITY_PIPELINE),
+        .LOCAL_EMBED_CONTROLS(LOCAL_EMBED_CONTROLS),
+        .PIPELINED_DRAIN_SELECT(PIPELINED_DRAIN_SELECT),
+        .STREAM_RESULTS(STREAM_RESULTS),
+        .LOCAL_QUERY_REGISTERS(LOCAL_QUERY_REGISTERS),
+        .LOCAL_ACCUMULATOR_CONTROLS(LOCAL_ACCUMULATOR_CONTROLS),
         .MAX_TOKENS(MAX_TOKENS),
         .MAX_HEAD_DIM(MAX_HEAD_DIM),
         .MAX_HIDDEN(MAX_HIDDEN),
@@ -186,6 +298,7 @@ module kr260_encoder #(
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
         .BEATS_WIDTH(BEATS_WIDTH)
     ) encoder_system_inst (
+        .perf_events(perf_events),
         .clk(clk),
         .reset(reset),
         .run_start(run_start),
@@ -213,7 +326,9 @@ module kr260_encoder #(
     axi_memory_port #(
         .ADDRESS_WIDTH(ADDRESS_WIDTH),
         .DATA_WIDTH(128),
-        .BEATS_WIDTH(BEATS_WIDTH)
+        .BEATS_WIDTH(BEATS_WIDTH),
+        .REGISTERED_REQUESTS(PIPELINED_DOT),
+        .REGISTERED_FIFO_FLAGS(REGISTERED_FIFO_FLAGS)
     ) memory_port_inst (
         .clk(clk),
         .reset(reset),

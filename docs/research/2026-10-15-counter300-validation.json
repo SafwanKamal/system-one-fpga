@@ -1,0 +1,129 @@
+{
+  "updated_utc": "2026-10-15T07:38:34.156725+00:00",
+  "candidate_manifest_sha256": "14c07e87fcd2c1cf10bff3285ade6b7146467bb98677bb7e8de2d37f1aa6e582",
+  "baseline_files_checked": 602,
+  "all_baseline_files_unchanged": true,
+  "previous_placement_evidence_unchanged": true,
+  "numerical_cases": 50,
+  "exact_outputs_and_cycles": true,
+  "exact_performance_counter_values": 500,
+  "assertions_enabled": true,
+  "telemetry_unit_checked_edges": 12014,
+  "deadline_boundary_scenarios": 288,
+  "host_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "67",
+    "time": "0.264",
+    "timestamp": "2026-10-15T01:52:12.434263-05:00",
+    "hostname": "SafwanLenovo"
+  },
+  "host_tests_xml_sha256": "c863ed541f1ac3d405677b25eb41316df05ef096765f70a783de94267beae63c",
+  "physical_status": "Synthesis, placement and read-only path audit COMPLETE; 300 MHz route admission REJECTED; no active build, no route/bitstream/deployment",
+  "hardware_qualified": false,
+  "source_sha256": {
+    "scripts/v2/kr260/create_counter300_candidate.py": "27ff3bbe81269e01759bd7c215fb6f821687587a9e86d7cd6317a66638bf5771",
+    "scripts/v2/kr260/build_counter300.py": "20a1a5df2d19c71575d86f5b80a3fa2e9d183f7ca3b23b8b512728832dbf8daf",
+    "simulation/v2/run_counter300.sh": "96ef3762c230ba2780054d0017cee931fc2e5b6694aff2ada490634dd34a690d",
+    "simulation/v2/performance_telemetry_tb.sv": "a48592435bfe05829d201f76d1d76a9e602633ba0bac6b7c10aadc6c5fa620f3",
+    "rtl/contracts/performance_telemetry.sv": "5d58415ad0860d9f53dda3c384f32497f1f5016e5478534d5149274a5ff1ab82",
+    "tests/test_counter300_candidate.py": "0f58ab83586dd27b5b52c72d887f868d452b54b42f2ab6cd4558282ccad38625",
+    "scripts/v2/kr260/audit_counter300_timing.tcl": "e9bc76221f8f2d1fe54aab61edcb7b76c9227f970c14b00d47714e54f70e0e24"
+  },
+  "synthesis": {
+    "mapping": {
+      "query_data_registers": 512,
+      "local_select_registers": 128,
+      "supervisor_registers": 70,
+      "telemetry_delta_registers": 27,
+      "routed": false
+    },
+    "synth_setup_ns": -0.591,
+    "synth_hold_ns": -0.087,
+    "resources": {
+      "lut": 67627,
+      "registers": 53266,
+      "bram_tiles": 46,
+      "uram": 18,
+      "dsp": 579
+    }
+  },
+  "placement": {
+    "complete": true,
+    "frequencies": [
+      {
+        "mhz": 200,
+        "setup_ns": 0.886,
+        "hold_ns": -0.071,
+        "routed": false
+      },
+      {
+        "mhz": 250,
+        "setup_ns": -0.114,
+        "hold_ns": -0.071,
+        "routed": false
+      },
+      {
+        "mhz": 300,
+        "setup_ns": -0.781,
+        "hold_ns": -0.071,
+        "routed": false
+      }
+    ],
+    "resources": {
+      "lut": 63568,
+      "registers": 52157,
+      "occupied_clb_percent": 78.16,
+      "bram_tiles": 46,
+      "uram": 18,
+      "dsp": 579
+    },
+    "worst_path": "layernorm root_reg[9] -> root_reg[46]",
+    "data_delay_ns": 3.872,
+    "logic_delay_ns": 1.963,
+    "estimated_route_delay_ns": 1.909,
+    "route_approved": false,
+    "matched_parent_setup_300_ns": -1.011,
+    "setup_300_improvement_ns": 0.23
+  },
+  "counter_path_audit": [
+    {
+      "group": "read_due",
+      "endpoint_registers": 32,
+      "slack_ns": 1.852,
+      "data_delay_ns": 1.275,
+      "routed": false
+    },
+    {
+      "group": "write_due",
+      "endpoint_registers": 32,
+      "slack_ns": 2.038,
+      "data_delay_ns": 1.105,
+      "routed": false
+    },
+    {
+      "group": "read_delta",
+      "endpoint_registers": 10,
+      "slack_ns": -0.415,
+      "data_delay_ns": 3.565,
+      "routed": false
+    },
+    {
+      "group": "write_delta",
+      "endpoint_registers": 17,
+      "slack_ns": 0.01,
+      "data_delay_ns": 3.071,
+      "routed": false
+    },
+    {
+      "group": "event_counters",
+      "endpoint_registers": 320,
+      "slack_ns": 2.189,
+      "data_delay_ns": 1.005,
+      "routed": false
+    }
+  ],
+  "placement_review_sha256": "6ac384b383ba033dd8b0c36be5f7677e3d1623ffefb1ef3895330ec99bcff1d9"
+}

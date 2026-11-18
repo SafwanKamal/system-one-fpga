@@ -1,0 +1,36 @@
+{
+  "prior": [
+    0.3261682987213135,
+    0.43408212065696716,
+    0.13864177465438843,
+    0.07547298818826675,
+    0.0046946401707828045,
+    0.016269376501441002,
+    0.054835256189107895,
+    0.10901297628879547,
+    0.5105032920837402,
+    0.5020023584365845,
+    0.5048201680183411,
+    0.5170285701751709
+  ],
+  "labels": [
+    "LYING_DOWN",
+    "SITTING",
+    "OR_standing",
+    "FIX_walking",
+    "FIX_running",
+    "BICYCLING",
+    "EATING",
+    "COMPUTER_WORK"
+  ],
+  "numeric_features": [
+    "raw_acc:magnitude_stats:std",
+    "watch_acceleration:magnitude_stats:std",
+    "proc_gyro:magnitude_stats:std",
+    "audio_properties:max_abs_value"
+  ],
+  "train_rows": 168214,
+  "train_seconds": 264.17618340000627,
+  "model_bytes": 202542687,
+  "model_sha256": "adc8ceae3a291d1cf0e99fcb8d2b5f15f2b1d770e815f907b291e69a4e0d26e1"
+}

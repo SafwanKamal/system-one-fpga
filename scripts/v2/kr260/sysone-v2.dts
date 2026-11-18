@@ -1,0 +1,64 @@
+/dts-v1/;
+/plugin/;
+
+// Derived from Vivado 2025.2 SDTGen pl.dtsi for create_project_kr260.tcl.
+// Ubuntu 24.04 KR260 revB exports fpga_full, amba, zynqmp_clk, zynqmp_reset.
+// The host polls DONE through /dev/mem; no interrupt driver is registered here.
+// Memory reservation belongs in the boot DTB, never in this runtime overlay.
+/ {
+    fragment@0 {
+        target = <&fpga_full>;
+        __overlay__ {
+            firmware-name = "sysone-v2.bit.bin";
+            resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>,
+                 <&zynqmp_reset 118>, <&zynqmp_reset 119>;
+        };
+    };
+    fragment@1 {
+        target = <&amba>;
+        __overlay__ {
+            #address-cells = <2>;
+            #size-cells = <2>;
+            sysone_clock0: sysone-clocking0 {
+                compatible = "xlnx,fclk";
+                status = "okay";
+                clocks = <&zynqmp_clk 71>;
+                assigned-clocks = <&zynqmp_clk 71>;
+                assigned-clock-rates = <100000000>;
+                #clock-cells = <0>;
+                clock-output-names = "sysone_fabric_clk0";
+            };
+            sysone_clock1: sysone-clocking1 {
+                compatible = "xlnx,fclk";
+                status = "okay";
+                clocks = <&zynqmp_clk 72>;
+                assigned-clocks = <&zynqmp_clk 72>;
+                assigned-clock-rates = <100000000>;
+                #clock-cells = <0>;
+                clock-output-names = "sysone_fabric_clk1";
+            };
+            sysone_afi: sysone-afi {
+                compatible = "xlnx,afi-fpga";
+                status = "okay";
+                resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>,
+                         <&zynqmp_reset 118>, <&zynqmp_reset 119>;
+                config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>,
+                             <6 0>, <7 0>, <8 0>, <9 0>, <10 0>, <11 0>,
+                             <12 0>, <13 0>, <14 0xa00>, <15 0>;
+            };
+            sysone_encoder: encoder@a0000000 {
+                compatible = "xlnx,kr260-encoder-wrapper-1.0";
+                status = "okay";
+                reg = <0 0xa0000000 0 0x1000>;
+                clocks = <&zynqmp_clk 71>;
+                clock-names = "clk";
+                xlnx,tile-out = <32>;
+                xlnx,max-hidden = <384>;
+                xlnx,max-tokens = <128>;
+                xlnx,max-head-dim = <64>;
+                xlnx,drain-lanes = <4>;
+                xlnx,norm-lanes = <4>;
+            };
+        };
+    };
+};

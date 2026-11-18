@@ -1,0 +1,516 @@
+{
+  "review_date": "2026-10-25",
+  "timezone": "America/Chicago",
+  "scope": "Focused primary-source literature review; not exhaustive or a reproduced benchmark",
+  "reading_depth_legend": {
+    "full_text_selected_sections": "Full paper fetched; selected relevant sections inspected, not a line-by-line proof audit",
+    "documentation": "Official documentation or repository documentation inspected",
+    "abstract_or_record": "Author abstract, publisher/institution record, or search-returned primary-source excerpt screened",
+    "unavailable_full_text": "Official bibliographic listing inspected but full paper retrieval failed"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "An Architectural Description of the Simplex Architecture",
+      "year": 1996,
+      "url": "https://insights.sei.cmu.edu/library/an-architectural-description-of-the-simplex-architecture/",
+      "type": "institutional technical report record",
+      "depth": "abstract_or_record",
+      "role": "Foundational architecture; separate advanced behavior, recovery and switching",
+      "boundary": "Does not certify a modern language model or our implementation"
+    },
+    {
+      "id": "S02",
+      "title": "A Formal Verification Framework for Runtime Assurance",
+      "year": 2024,
+      "url": "https://ntrs.nasa.gov/citations/20230017350",
+      "full_text": "https://ntrs.nasa.gov/api/citations/20230017350/downloads/main%20final.pdf",
+      "type": "NASA Formal Methods paper",
+      "depth": "full_text_selected_sections",
+      "role": "Hybrid-program/PVS formalization and braking example",
+      "boundary": "Instantiation, recovery and timing assumptions matter; NTRS acquisition in 2023 is not the meeting date"
+    },
+    {
+      "id": "S03",
+      "title": "ASTM F3269-21: Methods to Safely Bound Behavior of Aircraft Systems Containing Complex Functions Using Run-Time Assurance",
+      "year": 2021,
+      "url": "https://store.astm.org/f3269-21.html",
+      "type": "official standard public scope",
+      "depth": "abstract_or_record",
+      "role": "RTA standardization context",
+      "boundary": "Public scope only; paywalled clauses not reviewed; no compliance conclusion"
+    },
+    {
+      "id": "S04",
+      "title": "SHEPHERD D2.2/D3.2 identification and assessment of industry standards, section 3.7",
+      "year": null,
+      "url": "https://www.easa.europa.eu/sites/default/files/dfu/shepherd_-_d2.2-d3.2_-_identification_of_satisfactory_industry_standards_and_justification_for_not_acceptable_industry_standards.pdf",
+      "type": "EASA-hosted standards assessment",
+      "depth": "abstract_or_record",
+      "role": "Limits of using F3269 alone and dependence on safety assessment",
+      "boundary": "Section excerpt inspected, not the complete assessment"
+    },
+    {
+      "id": "S05",
+      "title": "Shield Synthesis: Runtime Enforcement for Reactive Systems",
+      "year": 2015,
+      "url": "https://chaowang-vt.github.io/pubDOC/BloemKKW15.pdf",
+      "type": "author-hosted research paper",
+      "depth": "full_text_selected_sections",
+      "role": "Synthesis of reactive hardware enforcement from selected properties",
+      "boundary": "Specification completeness, realizability and state-space complexity"
+    },
+    {
+      "id": "S06",
+      "title": "Copilot runtime-verification framework",
+      "year": null,
+      "url": "https://github.com/Copilot-Language/copilot",
+      "type": "official repository",
+      "depth": "documentation",
+      "role": "C99 monitor generation with fixed memory/time structure and verification facilities",
+      "boundary": "Fixed specification and target qualification required; not GitHub Copilot"
+    },
+    {
+      "id": "S07",
+      "title": "Copilot 3, NASA/TM-2020-220587",
+      "year": 2020,
+      "url": "https://ntrs.nasa.gov/api/citations/20200003164/downloads/20200003164.pdf",
+      "type": "NASA technical memorandum",
+      "depth": "full_text_selected_sections",
+      "role": "Embedded monitoring design and implementation",
+      "boundary": "Search crawl dates were misleading; PDF explicitly dates report April 2020"
+    },
+    {
+      "id": "S08",
+      "title": "Integrating FRET with Copilot: Automated Translation of Natural Language Requirements to Runtime Monitors",
+      "year": 2022,
+      "url": "https://ntrs.nasa.gov/citations/20220000049",
+      "type": "NASA report record",
+      "depth": "abstract_or_record",
+      "role": "Structured requirements to formal monitor toolchain via Ogma",
+      "boundary": "Structured requirements are not arbitrary operator utterances"
+    },
+    {
+      "id": "S09",
+      "title": "R2U2 Version 3.0: Re-imagining a Toolchain for Specification, Resource Estimation, and Optimized Observer Generation for Runtime Verification in Hardware and Software",
+      "year": 2023,
+      "url": "https://cgjohannsen.com/papers/JJKRZ23.pdf",
+      "type": "CAV paper",
+      "depth": "full_text_selected_sections",
+      "role": "FPGA/software temporal monitoring, static arenas, resource and WCET estimation",
+      "boundary": "Resource estimates are configuration/platform dependent; delayed temporal verdicts need sufficient observations"
+    },
+    {
+      "id": "S10",
+      "title": "R2U2 official documentation",
+      "year": null,
+      "url": "https://r2u2.github.io/r2u2/",
+      "type": "official documentation",
+      "depth": "documentation",
+      "role": "Current toolchain scope and bibliography",
+      "boundary": "Documentation availability does not establish our platform integration"
+    },
+    {
+      "id": "S11",
+      "title": "Towards a Safe, Verified Runtime Monitor for Embedded Systems: R2U2 in Embedded Rust",
+      "year": 2025,
+      "url": "https://temporallogic.org/research/R2U2Rust/R2U2_Rust_Extended.pdf",
+      "record": "https://r2u2.github.io/r2u2/References/publications.html",
+      "type": "NFM paper listed by official project",
+      "depth": "unavailable_full_text",
+      "role": "Recent embedded implementation lead",
+      "boundary": "Full PDF retrieval failed; no detailed proof or performance claim used"
+    },
+    {
+      "id": "S12",
+      "title": "TeSSLa: Runtime Verification of Non-synchronized Real-Time Streams",
+      "year": 2018,
+      "url": "https://research.uni-luebeck.de/en/publications/tessla-runtime-verification-of-non-synchronized-real-time-streams/",
+      "type": "institutional publication record",
+      "depth": "abstract_or_record",
+      "role": "Asynchronous temporal stream monitoring",
+      "boundary": "No target cost measurements reviewed"
+    },
+    {
+      "id": "S13",
+      "title": "Runtime Verification with TeSSLa on a CPU/FPGA hybrid system",
+      "year": 2020,
+      "url": "https://www.pirmin-schmid.ch/publications/computer-science/runtime-verification/",
+      "type": "author thesis summary",
+      "depth": "abstract_or_record",
+      "role": "Concrete CPU/FPGA monitoring precedent",
+      "boundary": "Author summary dated August 27, 2020; underlying thesis date not independently verified; implementation not reproduced"
+    },
+    {
+      "id": "S14",
+      "title": "PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models",
+      "year": 2021,
+      "url": "https://aclanthology.org/2021.emnlp-main.779.pdf",
+      "type": "EMNLP paper",
+      "depth": "abstract_or_record",
+      "role": "Incremental parsing constraints for SQL generation",
+      "boundary": "SQL validity does not imply intended query correctness"
+    },
+    {
+      "id": "S15",
+      "title": "Automata-based constraints for language model decoding",
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2407.08103",
+      "type": "COLM camera-ready author record",
+      "depth": "abstract_or_record",
+      "role": "Formal treatment of tokenization and regular/deterministic context-free constraints",
+      "boundary": "Language membership and tokenizer assumptions, not world/task truth"
+    },
+    {
+      "id": "S16",
+      "title": "SynCode: LLM Generation with Grammar Augmentation",
+      "year": 2024,
+      "url": "https://arxiv.org/html/2403.01632v3",
+      "type": "author full paper",
+      "depth": "full_text_selected_sections",
+      "role": "DFA mask store and precise soundness/completeness conditions",
+      "boundary": "Paper soundness retains valid tokens; exclusion of all invalid tokens needs additional conditions; syntax only"
+    },
+    {
+      "id": "S17",
+      "title": "XGrammar: Flexible and Efficient Structured Generation Engine for Large Language Models",
+      "year": 2025,
+      "url": "https://proceedings.mlsys.org/paper_files/paper/2025/file/5c20ca4b0b20b0bd2f1d839dc605e70f-Paper-Conference.pdf",
+      "preprint": "https://arxiv.org/abs/2411.15100",
+      "type": "MLSys paper",
+      "depth": "abstract_or_record",
+      "role": "Adaptive token-mask cache and persistent stacks",
+      "boundary": "Reported serving acceleration is not ARM/FPGA latency or WCET evidence"
+    },
+    {
+      "id": "S18",
+      "title": "XGrammar 2: Dynamic and Efficient Structured Generation Engine for Agentic LLMs",
+      "year": 2026,
+      "url": "https://arxiv.org/html/2601.04426v1",
+      "type": "January 2026 preprint",
+      "depth": "full_text_selected_sections",
+      "role": "Dynamic dispatch, JIT compilation and cross-grammar caching",
+      "boundary": "Dynamic structure support is not semantic task correctness or target qualification"
+    },
+    {
+      "id": "S19",
+      "title": "llguidance: Super-fast Structured Outputs",
+      "year": null,
+      "url": "https://github.com/guidance-ai/llguidance",
+      "type": "official repository",
+      "depth": "documentation",
+      "role": "Practical native constrained-decoding implementation candidate",
+      "boundary": "No published timing transferred to KR260"
+    },
+    {
+      "id": "S20",
+      "title": "llama.cpp GBNF and JSON Schema grammar documentation",
+      "year": null,
+      "url": "https://github.com/ggml-org/llama.cpp/blob/master/grammars/README.md",
+      "type": "official repository documentation",
+      "depth": "documentation",
+      "role": "Accessible CPU control implementation, documented schema conversion limitations",
+      "boundary": "Subset support; unsupported features may be silently skipped; pin and test actual grammar"
+    },
+    {
+      "id": "S21",
+      "title": "JSONSchemaBench: A Rigorous Benchmark of Structured Outputs for Language Models",
+      "year": 2025,
+      "url": "https://arxiv.org/abs/2501.10868",
+      "type": "author paper record",
+      "depth": "abstract_or_record",
+      "role": "10K schemas; efficiency, constraint coverage and quality evaluation",
+      "boundary": "Schema success is not semantic plan accuracy or safety"
+    },
+    {
+      "id": "S22",
+      "title": "Efficient Grammar-Constrained Decoding via Parser Stack Classification",
+      "year": 2026,
+      "url": "https://arxiv.org/abs/2608.03065",
+      "type": "author record states accepted by ISSTA 2026",
+      "depth": "abstract_or_record",
+      "role": "Preprocessing and mask computation independent of vocabulary size in its formulation",
+      "boundary": "Full algorithm and resource tradeoffs not audited; no board measurements"
+    },
+    {
+      "id": "S23",
+      "title": "Synchromesh: Reliable code generation from pre-trained language models",
+      "year": 2022,
+      "url": "https://arxiv.org/abs/2201.11227",
+      "type": "ICLR paper author record",
+      "depth": "abstract_or_record",
+      "role": "Constrained semantic decoding for scope, typing and contextual logic",
+      "boundary": "Validity against declared language constraints does not ensure intended task translation"
+    },
+    {
+      "id": "S24",
+      "title": "Logically Constrained Decoding",
+      "year": 2025,
+      "url": "https://aclanthology.org/2025.mathnlp-main.11.pdf",
+      "type": "MathNLP workshop paper",
+      "depth": "full_text_selected_sections",
+      "role": "Domain legality and sound proof steps during decoding",
+      "boundary": "Proof-of-concept chess/resolution; no general task correctness, liveness or embedded qualification"
+    },
+    {
+      "id": "S25",
+      "title": "Decode-Time Grammars: Constrained LLM Generation over a Refinement Order of Grammar Fragments",
+      "year": 2026,
+      "url": "https://arxiv.org/abs/2607.18357",
+      "type": "July 2026 preprint",
+      "depth": "abstract_or_record",
+      "role": "Runtime-environment slots and No-Ghost reference guarantee",
+      "boundary": "Reference existence is narrower than semantic task correctness; full proof/implementation not audited"
+    },
+    {
+      "id": "S26",
+      "title": "Position: LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks",
+      "year": 2024,
+      "url": "https://proceedings.mlr.press/v235/kambhampati24a.html",
+      "type": "ICML position paper",
+      "depth": "abstract_or_record",
+      "role": "Architectural case for model proposals plus external verifiers",
+      "boundary": "Position statement, not a universal impossibility theorem about LLMs"
+    },
+    {
+      "id": "S27",
+      "title": "Robust Planning with Compound LLM Architectures: An LLM-Modulo Approach",
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2411.14484",
+      "type": "technical preprint author record",
+      "depth": "abstract_or_record",
+      "role": "External sound verification and scheduling evaluation",
+      "boundary": "Guarantees conditional on a complete sound verifier set and formalized problem; retry boundedness separate"
+    },
+    {
+      "id": "S28",
+      "title": "Selective Classification for Deep Neural Networks",
+      "year": 2017,
+      "url": "https://proceedings.nips.cc/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html",
+      "type": "NeurIPS paper record",
+      "depth": "abstract_or_record",
+      "role": "Risk-controlled rejection for pretrained classifiers",
+      "boundary": "Distribution/sample assumptions and coverage cost"
+    },
+    {
+      "id": "S29",
+      "title": "SelectiveNet: A Deep Neural Network with an Integrated Reject Option",
+      "year": 2019,
+      "url": "https://proceedings.mlr.press/v97/geifman19a.html",
+      "type": "ICML paper record",
+      "depth": "abstract_or_record",
+      "role": "Joint learning of prediction and rejection",
+      "boundary": "Empirical risk-coverage improvements are not universal certified safety"
+    },
+    {
+      "id": "S30",
+      "title": "Conformal Risk Control",
+      "year": 2024,
+      "url": "https://research.google/pubs/conformal-risk-control/",
+      "full_text": "https://people.eecs.berkeley.edu/~angelopoulos/publications/downloads/conformal-risk.pdf",
+      "type": "ICLR paper publisher/author material",
+      "depth": "abstract_or_record",
+      "role": "Finite-sample expected monotone-loss control",
+      "boundary": "Not automatically accepted-set conditional risk, worst-case subgroup reliability or arbitrary-shift protection"
+    },
+    {
+      "id": "S31",
+      "title": "Learn then Test: Calibrating Predictive Algorithms to Achieve Risk Control",
+      "year": 2021,
+      "url": "https://arxiv.org/abs/2110.01052",
+      "full_text": "https://people.eecs.berkeley.edu/~angelopoulos/publications/downloads/ltt.pdf",
+      "type": "author paper and excerpt",
+      "depth": "abstract_or_record",
+      "role": "Risk-control selection as multiple hypothesis testing",
+      "boundary": "Must instantiate valid risk, samples and threshold-search correction"
+    },
+    {
+      "id": "S32",
+      "title": "Robots That Ask For Help: Uncertainty Alignment for Large Language Model Planners",
+      "year": 2023,
+      "url": "https://proceedings.mlr.press/v229/ren23a/ren23a.pdf",
+      "type": "CoRL paper",
+      "depth": "full_text_selected_sections",
+      "role": "KnowNo candidate sets, accurate-help assumption and sequence-level conformal calibration",
+      "boundary": "Scenario sampling, human correctness and help rate matter; marginal coverage differs from accepted-set risk"
+    },
+    {
+      "id": "S33",
+      "title": "CoFineLLM: Conformal Finetuning of LLMs for Language-Instructed Robot Planning",
+      "year": 2026,
+      "url": "https://proceedings.mlr.press/v331/wang26c.html",
+      "type": "L4DC publisher record",
+      "depth": "abstract_or_record",
+      "role": "Training for prediction-set efficiency and lower help rates",
+      "boundary": "Not inspected as an embedded runtime or formal physical-safety controller"
+    },
+    {
+      "id": "S34",
+      "title": "PLEXIL Language Reference",
+      "year": null,
+      "url": "https://plexil-group.github.io/plexil_docs/PLEXILLanguage/PLEXILReference.html",
+      "type": "official documentation",
+      "depth": "documentation",
+      "role": "Pre/postconditions, invariants and node execution semantics",
+      "boundary": "Correct executive behavior does not prove an arbitrary authored/generated plan meets its natural-language task"
+    },
+    {
+      "id": "S35",
+      "title": "PLEXIL Simple Unary Resources",
+      "year": null,
+      "url": "https://plexil-group.github.io/plexil_docs/PLEXILLanguage/ResourceModel/SimpleUnaryResources.html",
+      "type": "official documentation",
+      "depth": "documentation",
+      "role": "Explicit resource arbitration and command denial",
+      "boundary": "Actual tool and hardware resource models must be supplied"
+    },
+    {
+      "id": "S36",
+      "title": "Proof-Carrying Code project",
+      "year": null,
+      "url": "https://people.eecs.berkeley.edu/~necula/pcc.html",
+      "type": "original author's project documentation",
+      "depth": "abstract_or_record",
+      "role": "Separate untrusted construction from policy-specific trusted proof checking",
+      "boundary": "Architectural analogy; no existing plan-certificate implementation supplied by this review"
+    },
+    {
+      "id": "S37",
+      "title": "Control Barrier Function Based Quadratic Programs for Safety Critical Systems",
+      "year": 2017,
+      "url": "https://authors.library.caltech.edu/records/jnhr0-1ww05",
+      "full_text": "https://ames.caltech.edu/ames2017cbf.pdf",
+      "type": "IEEE TAC paper, institutional record and author excerpt",
+      "depth": "abstract_or_record",
+      "role": "Safe-set invariance via constrained control",
+      "boundary": "Dynamics, feasibility, sampling and numerical assumptions; not language grounding"
+    },
+    {
+      "id": "S38",
+      "title": "Linear model predictive safety certification for learning-based control",
+      "year": 2018,
+      "url": "https://arxiv.org/abs/1803.08552",
+      "type": "author paper record",
+      "depth": "abstract_or_record",
+      "role": "Safe-trajectory certification with minimal input modification",
+      "boundary": "Model/disturbance/terminal-set assumptions and per-cycle optimization cost"
+    },
+    {
+      "id": "S39",
+      "title": "Verifiable Reinforcement Learning via Policy Extraction",
+      "year": 2018,
+      "url": "https://papers.neurips.cc/paper_files/paper/2018/hash/e6d8545daa42d5ced125a4bf747b3688-Abstract.html",
+      "type": "NeurIPS paper record",
+      "depth": "abstract_or_record",
+      "role": "VIPER distillation to verifiable decision-tree policies",
+      "boundary": "Symbolic-state task demonstrations; not a natural-language interpretation guarantee"
+    },
+    {
+      "id": "S40",
+      "title": "EdgeML: Resource-efficient machine learning for the edge and endpoint IoT devices",
+      "year": null,
+      "url": "https://www.microsoft.com/en-us/research/project/resource-efficient-ml-for-the-edge-and-endpoint-iot-devices/?lang=zh-cn",
+      "paper": "https://www.microsoft.com/en-us/research/uploads/prod/2017/06/kumar17.pdf",
+      "type": "official project and Bonsai paper excerpts",
+      "depth": "abstract_or_record",
+      "role": "Bonsai/ProtoNN on severely constrained microcontrollers",
+      "boundary": "Small model footprint is independent of semantic reliability or formal safety"
+    },
+    {
+      "id": "S41",
+      "title": "Reluplex: An Efficient SMT Solver for Verifying Deep Neural Networks",
+      "year": 2017,
+      "url": "https://arxiv.org/abs/1702.01135",
+      "type": "CAV paper author record",
+      "depth": "abstract_or_record",
+      "role": "Offline verification of bounded neural advisory properties using ACAS Xu",
+      "boundary": "Does not establish tractable full Qwen semantic verification or certified ACAS deployment"
+    },
+    {
+      "id": "S42",
+      "title": "QEBVerif: Quantization Error Bound Verification of Neural Networks",
+      "year": 2023,
+      "url": "https://faculty.sist.shanghaitech.edu.cn/faculty/songfu/publications/CAV23a.pdf",
+      "type": "CAV paper author-hosted excerpt",
+      "depth": "abstract_or_record",
+      "role": "Verification of errors introduced by weight and activation quantization",
+      "boundary": "Properties of floating-point models need not survive quantization; no transformer-scale applicability demonstrated here"
+    },
+    {
+      "id": "S43",
+      "title": "seL4 verification and real-time caveats",
+      "year": null,
+      "url": "https://github.com/seL4/seL4/blob/master/CAVEATS.md",
+      "type": "official configuration documentation",
+      "depth": "documentation",
+      "role": "Configuration-specific proof coverage and real-time isolation constraints",
+      "boundary": "Avoid transferring generic verification claims to KR260/DMA; some MCS status text lags newer milestones"
+    },
+    {
+      "id": "S44",
+      "title": "Proofcraft News 2026",
+      "year": 2026,
+      "url": "https://proofcraft.systems/news-2026/",
+      "type": "proof developer's milestone report",
+      "depth": "abstract_or_record",
+      "role": "MCS RISC-V functional-correctness proof milestone",
+      "boundary": "Does not establish all security properties, all architectures or our target configuration"
+    },
+    {
+      "id": "S45",
+      "title": "LIR+LVM: Bounded execution of LLM-generated code on microcontrollers",
+      "year": 2026,
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S1383762126003310",
+      "type": "follow-up novelty-screening primary source",
+      "depth": "abstract_or_record",
+      "role": "Publisher introduction/section excerpts screened; full-text fetch returned 403",
+      "boundary": "Bounded VM, capability gating and compact IR already have direct embedded prior art"
+    },
+    {
+      "id": "S46",
+      "title": "VIGIL: Defending LLM Agents Against Tool-Stream Injection via Verify-Before-Commit",
+      "year": 2026,
+      "url": "https://aclanthology.org/2026.acl-long.443/",
+      "type": "follow-up novelty-screening primary source",
+      "depth": "abstract_or_record",
+      "role": "ACL 2026 publisher abstract screened",
+      "boundary": "Verify-before-commit alone is not novel; no reproduction or hardware implementation audited"
+    },
+    {
+      "id": "S47",
+      "title": "Stale Does Not Mean Unsafe: Guard Precision for Tool-Using LLM Agents under Infrastructure State Races",
+      "year": 2026,
+      "url": "https://arxiv.org/abs/2609.29522",
+      "type": "follow-up novelty-screening primary source",
+      "depth": "abstract_or_record",
+      "role": "Author abstract screened; preprint",
+      "boundary": "Guard granularity and benign-race availability have direct prior art; no novelty claim for read-set guards"
+    },
+    {
+      "id": "S48",
+      "title": "FPGA-resident guardrail fabric for large language model security, privacy, and safety enforcement",
+      "year": 2026,
+      "url": "https://www.tdcommons.org/dpubs_series/12215/",
+      "type": "follow-up novelty-screening primary source",
+      "depth": "abstract_or_record",
+      "role": "Defensive disclosure abstract screened, dated October 15, 2026",
+      "boundary": "Proposed hardware release interlock overlaps broad architecture claims; no measured implementation inspected and no legal conclusion"
+    }
+  ],
+  "additional_primary_background_screened": [
+    {
+      "title": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances",
+      "year": 2022,
+      "url": "https://arxiv.org/abs/2204.01691",
+      "depth": "abstract_or_record",
+      "note": "SayCan skill feasibility grounding is useful context; learned affordance scores are not a hard safety proof. Not central to the recommended low-cost enforcement path."
+    }
+  ],
+  "local_evidence": [
+    "docs/research/2026-10-25-maintenance-decision-models.md",
+    "docs/research/2026-10-22-maintenance-finetuning.md",
+    "docs/research/2026-10-22-sealed-verification-prefix-v16-results.md",
+    "src/sysone/v2/maintenance/schema.py"
+  ],
+  "followup_note": "Four closer sources added during the implementation-plan novelty search on 2026-10-25; initial review contained 44 core entries."
+}

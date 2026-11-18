@@ -1,0 +1,56 @@
+{
+  "frozen_utc": "2026-11-09T04:41:14.244225+00:00",
+  "code_sha256": "9667fa953adef92c238a815fef7acca7635ad08e383bcf0ce425a912a0a662cb",
+  "criterion": "mean participant/budget familiar normalized absolute error; seeds averaged",
+  "hybrids": {
+    "hybrid_reservoir": {
+      "base_bits": 2,
+      "mixing": 0.5,
+      "validation_familiar_nmae": 2.6970951983171085
+    },
+    "hybrid_change": {
+      "base_bits": 2,
+      "mixing": 0,
+      "validation_familiar_nmae": 2.7366762367927278
+    },
+    "hybrid_bundle": {
+      "base_bits": 2,
+      "mixing": 0,
+      "validation_familiar_nmae": 2.7300965165988744
+    }
+  },
+  "strongest_simple": "adaptive_segments",
+  "strongest_simple_by_budget": {
+    "8192": "adaptive_segments",
+    "16384": "adaptive_segments",
+    "32768": "reservoir",
+    "65536": "balanced_codec"
+  },
+  "selected_candidate": "hybrid_bundle",
+  "validation_scores": {
+    "('ring', 1, 0.5)": 0.949597154874289,
+    "('reservoir', 1, 0.5)": 0.23068835961851708,
+    "('change', 1, 0.5)": 0.31980638874353196,
+    "('dyadic', 1, 0.5)": 0.27916250884840654,
+    "('adaptive_segments', 1, 0.5)": 0.2167400616470435,
+    "('codec8', 1, 0.5)": 5.538298605695517,
+    "('progressive_codec', 1, 0.5)": 7.410695615889255,
+    "('balanced_codec', 1, 0.5)": 4.041022256189818,
+    "('event1', 1, 0.5)": 10.986687787082106,
+    "('event2', 1, 0.5)": 4.031642353544766,
+    "('hybrid_reservoir', 1, 0.5)": 2.850782246897068,
+    "('hybrid_reservoir', 2, 0.5)": 2.6970951983171085,
+    "('hybrid_change', 1, 0)": 3.5786994993747787,
+    "('hybrid_change', 1, 0.5)": 3.118693536804142,
+    "('hybrid_change', 1, 1)": 2.846196207707436,
+    "('hybrid_change', 2, 0)": 2.7366762367927278,
+    "('hybrid_change', 2, 0.5)": 2.7484901852430026,
+    "('hybrid_change', 2, 1)": 2.7388815008063,
+    "('hybrid_bundle', 1, 0)": 3.2776216158941485,
+    "('hybrid_bundle', 1, 0.5)": 3.0792969361861737,
+    "('hybrid_bundle', 1, 1)": 3.0243524707965856,
+    "('hybrid_bundle', 2, 0)": 2.7300965165988744,
+    "('hybrid_bundle', 2, 0.5)": 2.7629746128711177,
+    "('hybrid_bundle', 2, 1)": 2.7840630201962124
+  }
+}

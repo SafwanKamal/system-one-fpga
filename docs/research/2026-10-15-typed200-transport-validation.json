@@ -1,0 +1,79 @@
+{
+  "verified_utc": "2026-10-15T11:18:10.622386+00:00",
+  "active_transport": "firmware/typed200_v2",
+  "supersedes_sha_transport": [
+    "firmware/typed_intent/typed_mailbox.c",
+    "firmware/typed200/typed200.c"
+  ],
+  "issue": "canonical SHA digest bytes vs numeric least-significant-register-word order",
+  "candidate_rtl_changed": false,
+  "candidate_manifest_sha256": "79bcc6480e4ff5aad77f2816e3437a91577e46c3c6af784debaea0748f81c2a5",
+  "contract_sha256": "8133633315487f8f322ecac49e95e7aca3801d00fccb4b4fba36026c5b2752d2",
+  "numeric_digest_register_words_low_to_high": [
+    "0x5b2752d2",
+    "0xba36026c",
+    "0xfccb4b4f",
+    "0xa3801d00",
+    "0x9e95e7ac",
+    "0x322ecac4",
+    "0x15487f8f",
+    "0x81336333"
+  ],
+  "host_sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "known_numeric_words_checked": true,
+  "canonical_terminal_digest_decode_checked": true,
+  "compiled_c_request_proposal_frames_replayed_through_rtl": true,
+  "accepted_label_checked": 17,
+  "rtl_transactions": {
+    "writes": 668,
+    "reads": 91,
+    "validated_admissions": 15
+  },
+  "r5_relocatable_link": true,
+  "undefined_symbols": 0,
+  "target_execution": false,
+  "hardware_qualified": false,
+  "successful_inference_wcet_certified": false,
+  "new_physical_build": false,
+  "baseline_files_checked": 602,
+  "all_baseline_and_previous_sealed_artifacts_unchanged": true,
+  "earlier_validation_sha256": {
+    "docs/research/2026-10-15-typed-intent-validation.json": "0baff621ac8a6123738aa921f5c324494aa8f06b9d62015ae7a7517d30b8a1b6",
+    "docs/research/2026-10-15-typed200-validation.json": "3a1593a93f36cbe3d36248705b19eb6dd5b1122d28125d780c632ef7ad08b146"
+  },
+  "source_sha256": {
+    "firmware/typed200_v2/README.md": "57a7b145b0689a51a1f0eb9b440189d7f3b1b9ad0e0e81793e6270b9fab5755c",
+    "firmware/typed200_v2/test_driver.c": "ec718385b517dceb3bc42534eafaa402fe6d1bebc303dd0550c4adfb29b45e5f",
+    "firmware/typed200_v2/typed200.c": "49c97dcde8b666236e881f2c66de5ef826c8dfa79291b83160eb28861a19e523",
+    "firmware/typed200_v2/typed200.h": "7a5dc41238b6cb7eb08121e994f2c19ca28f1fd36d5177288d323b2981bb5579",
+    "scripts/v2/check_typed200_transport.py": "2cbe52c27780aa9f45888eab514dfb0e9b0ace27cc6d13d526886fd9c444f0a1",
+    "scripts/v2/seal_typed200_transport.py": "702d67e3f12fb7e0b715dbe6eed4dcd93d081895b19d61ea95252f0ee2f10b54",
+    "simulation/v2/run_typed200_transport.sh": "f17a90cad49ca02752318ee5d0770cd3608364ac45e28765d046e73078942af8"
+  },
+  "evidence_sha256": {
+    "build/v2/typed200-transport-v4/command-0.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-transport-v4/command-1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-transport-v4/command-2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-transport-v4/command-3.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/v2/typed200-transport-v4/command-4.log": "f55d005159e54ecec8d0aefd79226c4cb01c430fb30565e11a1da51287f0589d",
+    "build/v2/typed200-transport-v4/command-5.log": "c5f610b6065ae14dd1f7dfa418ae3c8366712dc767d83305ecdfef1a30122154",
+    "build/v2/typed200-transport-v4/driver-test": "faadcec995dad5a80cf749620ff26269d05898bbe12fca00d8bd5021d93eaaf2",
+    "build/v2/typed200-transport-v4/receipt.json": "a4d60a7763a201cd3d485d7139808846e0dddd9ba1716538218e3c64b984f4e8",
+    "build/v2/typed200-transport-v4/typed200.o": "ba3897e1860024b8da69e3fad62828187f51cf4c02db92986104f8f04c309463",
+    "build/v2/typed200-transport-v4/typed200.su": "ba9e02c35652625f0181918cfe1478015312a245bd780d9db12a44bfb0a1f777",
+    "build/v2/typed200-transport-v4/typed200_service.o": "4e5ad599b1b7402cb4875323fec81494becfe86145b0ea0d87221050fc9dd839",
+    "build/v2/typed200-transport-v4/wire-frames.hex": "3a8beec8b692d199f0422006bac726fb590f7bf2e5af34a6e4a9dbfabb9174f2",
+    "build/v2/typed200-c-transport-v2/build.log": "fcae74a0c7d87de132b9a137a9e07d9d26bb0399bbff1fcabba3e939f1349831",
+    "build/v2/typed200-c-transport-v2/completion-status.json": "dd5d926c19114c638960e0c3e81f0a783dd7af33e795c7584c8cf7a39ec63f48",
+    "build/v2/typed200-c-transport-v2/run.log": "9453c9428690a42c994ead3a28b55eabea953be4f7a736a566c7c880407c65e3",
+    "build/v2/typed200-c-transport-v2/source-sha256.txt": "dd259bb2f72d55ce4e0ab9d823e1c084663215b2af73761c9979827002dc1c18",
+    "build/v2/typed200-c-transport-v2/stage.txt": "40bc14bf08289cd74db6a465c29629347868519a3e840d124e8adb197738a35c"
+  },
+  "documentation_sha256": {
+    "docs/research/2026-10-15-typed200-transport-review.md": "054aff63eb0453beae8935d1c4d5114795a85731bf48936ddfe567cca7a371a1",
+    "firmware/typed200_v2/README.md": "57a7b145b0689a51a1f0eb9b440189d7f3b1b9ad0e0e81793e6270b9fab5755c"
+  }
+}

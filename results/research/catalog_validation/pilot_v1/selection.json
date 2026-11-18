@@ -1,0 +1,4040 @@
+{
+  "8": {
+    "physics": {
+      "calibration": {
+        "quantile": 0.975,
+        "thresholds": [
+          0.7250497341156006,
+          0.6813085675239563,
+          0.8829406499862671,
+          0.6798729300498962
+        ],
+        "metrics": {
+          "unknown_rejection": 0.28125,
+          "known_macro_recall": 0.9291666666666667,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            0.5554737448692322,
+            0.4545021951198578,
+            0.45264333486557007,
+            0.5182579755783081
+          ],
+          "metrics": {
+            "unknown_rejection": 0.5208333333333334,
+            "known_macro_recall": 0.8624999999999999,
+            "healthy_false_alarm": 0.1125,
+            "known_abstention": 0.096875,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            0.6288767457008362,
+            0.5399165749549866,
+            0.5607617497444153,
+            0.5436688661575317
+          ],
+          "metrics": {
+            "unknown_rejection": 0.3854166666666667,
+            "known_macro_recall": 0.9041666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.05,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            0.7250497341156006,
+            0.6813085675239563,
+            0.8829406499862671,
+            0.6798729300498962
+          ],
+          "metrics": {
+            "unknown_rejection": 0.28125,
+            "known_macro_recall": 0.9291666666666667,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            0.8344021439552307,
+            0.9688952565193176,
+            0.998981237411499,
+            0.8230268955230713
+          ],
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            0.9337739944458008,
+            1.0011337995529175,
+            1.0617029666900635,
+            0.9217199683189392
+          ],
+          "metrics": {
+            "unknown_rejection": 0.10416666666666667,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            1.033145785331726,
+            1.033372402191162,
+            1.1244245767593384,
+            1.0204130411148071
+          ],
+          "metrics": {
+            "unknown_rejection": 0.07291666666666667,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 0,
+        "metrics": {
+          "unknown_rejection": 0.28125,
+          "known_macro_recall": 0.9291666666666667,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 0,
+        "metrics": {
+          "unknown_rejection": 0.28125,
+          "known_macro_recall": 0.9291666666666667,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.28125,
+            "known_macro_recall": 0.9291666666666667,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        }
+      ]
+    },
+    "forest_fit": {
+      "calibration": {
+        "quantile": 0.95,
+        "thresholds": [
+          0.6288767457008362,
+          0.5399165749549866,
+          0.5607617497444153,
+          0.5436688661575317
+        ],
+        "metrics": {
+          "unknown_rejection": 0.375,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            0.5554737448692322,
+            0.4545021951198578,
+            0.45264333486557007,
+            0.5182579755783081
+          ],
+          "metrics": {
+            "unknown_rejection": 0.5208333333333334,
+            "known_macro_recall": 0.9,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.096875,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            0.6288767457008362,
+            0.5399165749549866,
+            0.5607617497444153,
+            0.5436688661575317
+          ],
+          "metrics": {
+            "unknown_rejection": 0.375,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            0.7250497341156006,
+            0.6813085675239563,
+            0.8829406499862671,
+            0.6798729300498962
+          ],
+          "metrics": {
+            "unknown_rejection": 0.28125,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            0.8344021439552307,
+            0.9688952565193176,
+            0.998981237411499,
+            0.8230268955230713
+          ],
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9833333333333334,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            0.9337739944458008,
+            1.0011337995529175,
+            1.0617029666900635,
+            0.9217199683189392
+          ],
+          "metrics": {
+            "unknown_rejection": 0.10416666666666667,
+            "known_macro_recall": 0.9833333333333334,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            1.033145785331726,
+            1.033372402191162,
+            1.1244245767593384,
+            1.0204130411148071
+          ],
+          "metrics": {
+            "unknown_rejection": 0.07291666666666667,
+            "known_macro_recall": 0.9958333333333332,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 0,
+        "metrics": {
+          "unknown_rejection": 0.375,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 0,
+        "metrics": {
+          "unknown_rejection": 0.375,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.375,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        }
+      ]
+    },
+    "forest_knn": {
+      "calibration": {
+        "quantile": 0.95,
+        "thresholds": [
+          4.729900622367858,
+          6.777609329223632,
+          7.440900754928588,
+          6.254651246070861
+        ],
+        "metrics": {
+          "unknown_rejection": 0.08333333333333333,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.046875,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            4.295907378196716,
+            6.564599809646607,
+            5.792311468124393,
+            5.5368549919128425
+          ],
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.8958333333333334,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.096875,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            4.729900622367858,
+            6.777609329223632,
+            7.440900754928588,
+            6.254651246070861
+          ],
+          "metrics": {
+            "unknown_rejection": 0.08333333333333333,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            5.066303770542144,
+            6.870996789932244,
+            8.06438128471374,
+            6.5554582238197305
+          ],
+          "metrics": {
+            "unknown_rejection": 0.052083333333333336,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            5.074111695289612,
+            8.509731520652748,
+            8.68179518699646,
+            6.802318165779113
+          ],
+          "metrics": {
+            "unknown_rejection": 0.052083333333333336,
+            "known_macro_recall": 0.9833333333333334,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.009375,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            5.080197117328644,
+            10.020234603405015,
+            8.709643588066102,
+            6.8795914044380195
+          ],
+          "metrics": {
+            "unknown_rejection": 0.052083333333333336,
+            "known_macro_recall": 0.9833333333333334,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.009375,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            5.086282539367676,
+            11.530737686157227,
+            8.737491989135743,
+            6.956864643096924
+          ],
+          "metrics": {
+            "unknown_rejection": 0.052083333333333336,
+            "known_macro_recall": 0.9958333333333332,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 0,
+        "metrics": {
+          "unknown_rejection": 0.08333333333333333,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.046875,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 0,
+        "metrics": {
+          "unknown_rejection": 0.08333333333333333,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.046875,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.08333333333333333,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        }
+      ]
+    }
+  },
+  "9": {
+    "physics": {
+      "calibration": {
+        "quantile": 0.975,
+        "thresholds": [
+          0.8439322113990784,
+          0.8064398169517517,
+          0.916100263595581,
+          0.7999091744422913
+        ],
+        "metrics": {
+          "unknown_rejection": 0.16041666666666668,
+          "known_macro_recall": 0.9654166666666667,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            0.5297088027000427,
+            0.4435342848300934,
+            0.4498006999492645,
+            0.49226367473602295
+          ],
+          "metrics": {
+            "unknown_rejection": 0.6666666666666666,
+            "known_macro_recall": 0.8937499999999999,
+            "healthy_false_alarm": 0.1125,
+            "known_abstention": 0.09875,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            0.6561713218688965,
+            0.5814018249511719,
+            0.5990521311759949,
+            0.6103798151016235
+          ],
+          "metrics": {
+            "unknown_rejection": 0.434375,
+            "known_macro_recall": 0.9404166666666667,
+            "healthy_false_alarm": 0.07125,
+            "known_abstention": 0.0509375,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            0.8439322113990784,
+            0.8064398169517517,
+            0.916100263595581,
+            0.7999091744422913
+          ],
+          "metrics": {
+            "unknown_rejection": 0.16041666666666668,
+            "known_macro_recall": 0.9654166666666667,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            1.0890268087387085,
+            1.0840049982070923,
+            1.1026188135147095,
+            1.0868768692016602
+          ],
+          "metrics": {
+            "unknown_rejection": 0.05,
+            "known_macro_recall": 0.98,
+            "healthy_false_alarm": 0.035,
+            "known_abstention": 0.0103125,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            1.2067874670028687,
+            1.0867078304290771,
+            1.1168456077575684,
+            1.2045154571533203
+          ],
+          "metrics": {
+            "unknown_rejection": 0.025,
+            "known_macro_recall": 0.985,
+            "healthy_false_alarm": 0.03,
+            "known_abstention": 0.005,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            1.2852166891098022,
+            1.2056471109390259,
+            1.2396984100341797,
+            1.2791402339935303
+          ],
+          "metrics": {
+            "unknown_rejection": 0.008333333333333333,
+            "known_macro_recall": 0.9899999999999999,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 5,
+        "metrics": {
+          "unknown_rejection": 0.17708333333333334,
+          "known_macro_recall": 0.975,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 5,
+        "metrics": {
+          "unknown_rejection": 0.17708333333333334,
+          "known_macro_recall": 0.975,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 1,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 2,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 3,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 4,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 5,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 6,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 7,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 8,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 9,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        }
+      ]
+    },
+    "forest_fit": {
+      "calibration": {
+        "quantile": 0.95,
+        "thresholds": [
+          0.6561713218688965,
+          0.5814018249511719,
+          0.5990521311759949,
+          0.6103798151016235
+        ],
+        "metrics": {
+          "unknown_rejection": 0.42604166666666665,
+          "known_macro_recall": 0.94875,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            0.5297088027000427,
+            0.4435342848300934,
+            0.4498006999492645,
+            0.49226367473602295
+          ],
+          "metrics": {
+            "unknown_rejection": 0.6552083333333333,
+            "known_macro_recall": 0.9,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.1,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            0.6561713218688965,
+            0.5814018249511719,
+            0.5990521311759949,
+            0.6103798151016235
+          ],
+          "metrics": {
+            "unknown_rejection": 0.42604166666666665,
+            "known_macro_recall": 0.94875,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            0.8439322113990784,
+            0.8064398169517517,
+            0.916100263595581,
+            0.7999091744422913
+          ],
+          "metrics": {
+            "unknown_rejection": 0.15729166666666666,
+            "known_macro_recall": 0.97375,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            1.0890268087387085,
+            1.0840049982070923,
+            1.1026188135147095,
+            1.0868768692016602
+          ],
+          "metrics": {
+            "unknown_rejection": 0.05,
+            "known_macro_recall": 0.9887499999999999,
+            "healthy_false_alarm": 0.01,
+            "known_abstention": 0.01,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            1.2067874670028687,
+            1.0867078304290771,
+            1.1168456077575684,
+            1.2045154571533203
+          ],
+          "metrics": {
+            "unknown_rejection": 0.025,
+            "known_macro_recall": 0.99375,
+            "healthy_false_alarm": 0.005,
+            "known_abstention": 0.005,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            1.2852166891098022,
+            1.2056471109390259,
+            1.2396984100341797,
+            1.2791402339935303
+          ],
+          "metrics": {
+            "unknown_rejection": 0.008333333333333333,
+            "known_macro_recall": 0.9987499999999999,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 8,
+        "metrics": {
+          "unknown_rejection": 0.5208333333333334,
+          "known_macro_recall": 0.9416666666666668,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.053125,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 8,
+        "metrics": {
+          "unknown_rejection": 0.5208333333333334,
+          "known_macro_recall": 0.9416666666666668,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.053125,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.3333333333333333,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 1,
+          "metrics": {
+            "unknown_rejection": 0.3541666666666667,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 2,
+          "metrics": {
+            "unknown_rejection": 0.3541666666666667,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 3,
+          "metrics": {
+            "unknown_rejection": 0.46875,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 4,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 5,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 6,
+          "metrics": {
+            "unknown_rejection": 0.4583333333333333,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 7,
+          "metrics": {
+            "unknown_rejection": 0.5104166666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.04375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 8,
+          "metrics": {
+            "unknown_rejection": 0.5208333333333334,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 9,
+          "metrics": {
+            "unknown_rejection": 0.3645833333333333,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        }
+      ]
+    },
+    "forest_knn": {
+      "calibration": {
+        "quantile": 0.95,
+        "thresholds": [
+          3.5557197952270494,
+          5.213899636268615,
+          4.759856867790221,
+          4.724899225234984
+        ],
+        "metrics": {
+          "unknown_rejection": 0.18958333333333333,
+          "known_macro_recall": 0.94875,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            3.3188666915893554,
+            4.4355172824859626,
+            4.255797266960144,
+            4.217584791183473
+          ],
+          "metrics": {
+            "unknown_rejection": 0.28854166666666664,
+            "known_macro_recall": 0.89875,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.1,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            3.5557197952270494,
+            5.213899636268615,
+            4.759856867790221,
+            4.724899225234984
+          ],
+          "metrics": {
+            "unknown_rejection": 0.18958333333333333,
+            "known_macro_recall": 0.94875,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            3.8541176319122306,
+            6.159107339382164,
+            5.146005449295043,
+            5.151218509674072
+          ],
+          "metrics": {
+            "unknown_rejection": 0.10104166666666667,
+            "known_macro_recall": 0.97375,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            4.889317566871642,
+            10.256664155960083,
+            5.801822497367856,
+            5.655468268394468
+          ],
+          "metrics": {
+            "unknown_rejection": 0.0125,
+            "known_macro_recall": 0.9887499999999999,
+            "healthy_false_alarm": 0.01,
+            "known_abstention": 0.01,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            5.207757935047149,
+            10.956447238922117,
+            8.08421995639801,
+            6.330789128780364
+          ],
+          "metrics": {
+            "unknown_rejection": 0.009375,
+            "known_macro_recall": 0.99375,
+            "healthy_false_alarm": 0.005,
+            "known_abstention": 0.005,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            5.74101505279541,
+            12.360628890991212,
+            9.58083381652832,
+            6.752577114105224
+          ],
+          "metrics": {
+            "unknown_rejection": 0.0020833333333333333,
+            "known_macro_recall": 0.9987499999999999,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 4,
+        "metrics": {
+          "unknown_rejection": 0.25,
+          "known_macro_recall": 0.9541666666666666,
+          "healthy_false_alarm": 0.0375,
+          "known_abstention": 0.040625,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 4,
+        "metrics": {
+          "unknown_rejection": 0.25,
+          "known_macro_recall": 0.9541666666666666,
+          "healthy_false_alarm": 0.0375,
+          "known_abstention": 0.040625,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 1,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 2,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.9416666666666665,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.0625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 3,
+          "metrics": {
+            "unknown_rejection": 0.2916666666666667,
+            "known_macro_recall": 0.9291666666666667,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.078125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 4,
+          "metrics": {
+            "unknown_rejection": 0.25,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 5,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9708333333333332,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 6,
+          "metrics": {
+            "unknown_rejection": 0.09375,
+            "known_macro_recall": 0.9916666666666667,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.003125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 7,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.05,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 8,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 9,
+          "metrics": {
+            "unknown_rejection": 0.2916666666666667,
+            "known_macro_recall": 0.8458333333333333,
+            "healthy_false_alarm": 0.125,
+            "known_abstention": 0.146875,
+            "feasible": false
+          }
+        }
+      ]
+    }
+  },
+  "10": {
+    "physics": {
+      "calibration": {
+        "quantile": 0.975,
+        "thresholds": [
+          0.9297313094139099,
+          1.000531792640686,
+          1.0822266340255737,
+          0.9220318794250488
+        ],
+        "metrics": {
+          "unknown_rejection": 0.15942581300813008,
+          "known_macro_recall": 0.9663617886178861,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025114329268292684,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            0.5671820044517517,
+            0.4678843915462494,
+            0.4936257302761078,
+            0.5139526128768921
+          ],
+          "metrics": {
+            "unknown_rejection": 0.6784806910569106,
+            "known_macro_recall": 0.8944613821138211,
+            "healthy_false_alarm": 0.11814024390243902,
+            "known_abstention": 0.09805640243902439,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            0.736322820186615,
+            0.6486573219299316,
+            0.7126622200012207,
+            0.709199070930481
+          ],
+          "metrics": {
+            "unknown_rejection": 0.38376524390243905,
+            "known_macro_recall": 0.9413617886178862,
+            "healthy_false_alarm": 0.07256097560975609,
+            "known_abstention": 0.050419207317073174,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            0.9297313094139099,
+            1.000531792640686,
+            1.0822266340255737,
+            0.9220318794250488
+          ],
+          "metrics": {
+            "unknown_rejection": 0.15942581300813008,
+            "known_macro_recall": 0.9663617886178861,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025114329268292684,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            1.216842770576477,
+            1.306455373764038,
+            1.3207738399505615,
+            1.1491382122039795
+          ],
+          "metrics": {
+            "unknown_rejection": 0.025660569105691058,
+            "known_macro_recall": 0.9813008130081302,
+            "healthy_false_alarm": 0.0350609756097561,
+            "known_abstention": 0.010060975609756098,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            1.3723530769348145,
+            1.3638709783554077,
+            1.3992010354995728,
+            1.360759973526001
+          ],
+          "metrics": {
+            "unknown_rejection": 0.008384146341463415,
+            "known_macro_recall": 0.9863313008130081,
+            "healthy_false_alarm": 0.030030487804878048,
+            "known_abstention": 0.005030487804878049,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            1.6281143426895142,
+            1.4802227020263672,
+            1.505742073059082,
+            1.6281453371047974
+          ],
+          "metrics": {
+            "unknown_rejection": 0.003556910569105691,
+            "known_macro_recall": 0.9913617886178862,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 61,
+        "metrics": {
+          "unknown_rejection": 0.25,
+          "known_macro_recall": 0.9541666666666666,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 61,
+        "metrics": {
+          "unknown_rejection": 0.25,
+          "known_macro_recall": 0.9541666666666666,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.025,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.07291666666666667,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 1,
+          "metrics": {
+            "unknown_rejection": 0.10416666666666667,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 2,
+          "metrics": {
+            "unknown_rejection": 0.10416666666666667,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 3,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 4,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.028125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 5,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 6,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 7,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 8,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.028125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 9,
+          "metrics": {
+            "unknown_rejection": 0.10416666666666667,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 10,
+          "metrics": {
+            "unknown_rejection": 0.10416666666666667,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 11,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 12,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 13,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.028125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 14,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 15,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.028125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 16,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 17,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.028125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 18,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 19,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 20,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.025,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 21,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 22,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.028125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 23,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 24,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.028125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 25,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.025,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 26,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.028125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 27,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 28,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 29,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 30,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 31,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 32,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 33,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 34,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 35,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 36,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 37,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 38,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 39,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 40,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.034375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 41,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 42,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.034375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 43,
+          "metrics": {
+            "unknown_rejection": 0.21875,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 44,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.0375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 45,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 46,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 47,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 48,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 49,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 50,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 51,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 52,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 53,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 54,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.028125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 55,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 56,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 57,
+          "metrics": {
+            "unknown_rejection": 0.23958333333333334,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 58,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.034375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 59,
+          "metrics": {
+            "unknown_rejection": 0.22916666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 60,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.0375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 61,
+          "metrics": {
+            "unknown_rejection": 0.25,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 62,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.0375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 63,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 64,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 65,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 66,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 67,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 68,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 69,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 70,
+          "metrics": {
+            "unknown_rejection": 0.21875,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 71,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 72,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 73,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 74,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.034375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 75,
+          "metrics": {
+            "unknown_rejection": 0.21875,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.025,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 76,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.034375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 77,
+          "metrics": {
+            "unknown_rejection": 0.21875,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.021875,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 78,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.034375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 79,
+          "metrics": {
+            "unknown_rejection": 0.25,
+            "known_macro_recall": 0.9500000000000001,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.028125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 80,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.040625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 81,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.03125,
+            "feasible": false
+          }
+        }
+      ]
+    },
+    "forest_fit": {
+      "calibration": {
+        "quantile": 0.95,
+        "thresholds": [
+          0.736322820186615,
+          0.6486573219299316,
+          0.7126622200012207,
+          0.709199070930481
+        ],
+        "metrics": {
+          "unknown_rejection": 0.38135162601626016,
+          "known_macro_recall": 0.9487296747967479,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            0.5671820044517517,
+            0.4678843915462494,
+            0.4936257302761078,
+            0.5139526128768921
+          ],
+          "metrics": {
+            "unknown_rejection": 0.6733993902439024,
+            "known_macro_recall": 0.9,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.09904725609756097,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            0.736322820186615,
+            0.6486573219299316,
+            0.7126622200012207,
+            0.709199070930481
+          ],
+          "metrics": {
+            "unknown_rejection": 0.38135162601626016,
+            "known_macro_recall": 0.9487296747967479,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            0.9297313094139099,
+            1.000531792640686,
+            1.0822266340255737,
+            0.9220318794250488
+          ],
+          "metrics": {
+            "unknown_rejection": 0.15967987804878048,
+            "known_macro_recall": 0.973729674796748,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            1.216842770576477,
+            1.306455373764038,
+            1.3207738399505615,
+            1.1491382122039795
+          ],
+          "metrics": {
+            "unknown_rejection": 0.023373983739837397,
+            "known_macro_recall": 0.9886686991869919,
+            "healthy_false_alarm": 0.010060975609756098,
+            "known_abstention": 0.010060975609756098,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            1.3723530769348145,
+            1.3638709783554077,
+            1.3992010354995728,
+            1.360759973526001
+          ],
+          "metrics": {
+            "unknown_rejection": 0.008384146341463415,
+            "known_macro_recall": 0.99369918699187,
+            "healthy_false_alarm": 0.005030487804878049,
+            "known_abstention": 0.005030487804878049,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            1.6281143426895142,
+            1.4802227020263672,
+            1.505742073059082,
+            1.6281453371047974
+          ],
+          "metrics": {
+            "unknown_rejection": 0.003556910569105691,
+            "known_macro_recall": 0.9987296747967479,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 79,
+        "metrics": {
+          "unknown_rejection": 0.5625,
+          "known_macro_recall": 0.9333333333333332,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.059375,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 79,
+        "metrics": {
+          "unknown_rejection": 0.5625,
+          "known_macro_recall": 0.9333333333333332,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.059375,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.21875,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 1,
+          "metrics": {
+            "unknown_rejection": 0.22916666666666666,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 2,
+          "metrics": {
+            "unknown_rejection": 0.23958333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 3,
+          "metrics": {
+            "unknown_rejection": 0.3125,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 4,
+          "metrics": {
+            "unknown_rejection": 0.3020833333333333,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 5,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 6,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 7,
+          "metrics": {
+            "unknown_rejection": 0.34375,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 8,
+          "metrics": {
+            "unknown_rejection": 0.3020833333333333,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 9,
+          "metrics": {
+            "unknown_rejection": 0.25,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 10,
+          "metrics": {
+            "unknown_rejection": 0.28125,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 11,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.04375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 12,
+          "metrics": {
+            "unknown_rejection": 0.3125,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 13,
+          "metrics": {
+            "unknown_rejection": 0.3229166666666667,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 14,
+          "metrics": {
+            "unknown_rejection": 0.3125,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 15,
+          "metrics": {
+            "unknown_rejection": 0.3229166666666667,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 16,
+          "metrics": {
+            "unknown_rejection": 0.3333333333333333,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 17,
+          "metrics": {
+            "unknown_rejection": 0.3229166666666667,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 18,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 19,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 20,
+          "metrics": {
+            "unknown_rejection": 0.3020833333333333,
+            "known_macro_recall": 0.9500000000000001,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 21,
+          "metrics": {
+            "unknown_rejection": 0.3645833333333333,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 22,
+          "metrics": {
+            "unknown_rejection": 0.3541666666666667,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 23,
+          "metrics": {
+            "unknown_rejection": 0.40625,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 24,
+          "metrics": {
+            "unknown_rejection": 0.3541666666666667,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 25,
+          "metrics": {
+            "unknown_rejection": 0.3958333333333333,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.04375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 26,
+          "metrics": {
+            "unknown_rejection": 0.3958333333333333,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 27,
+          "metrics": {
+            "unknown_rejection": 0.3125,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 28,
+          "metrics": {
+            "unknown_rejection": 0.3125,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 29,
+          "metrics": {
+            "unknown_rejection": 0.375,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 30,
+          "metrics": {
+            "unknown_rejection": 0.4375,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.059375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 31,
+          "metrics": {
+            "unknown_rejection": 0.4895833333333333,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 32,
+          "metrics": {
+            "unknown_rejection": 0.40625,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.059375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 33,
+          "metrics": {
+            "unknown_rejection": 0.4583333333333333,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 34,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.059375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 35,
+          "metrics": {
+            "unknown_rejection": 0.53125,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 36,
+          "metrics": {
+            "unknown_rejection": 0.3229166666666667,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 37,
+          "metrics": {
+            "unknown_rejection": 0.34375,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 38,
+          "metrics": {
+            "unknown_rejection": 0.3645833333333333,
+            "known_macro_recall": 0.9333333333333332,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.059375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 39,
+          "metrics": {
+            "unknown_rejection": 0.4583333333333333,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 40,
+          "metrics": {
+            "unknown_rejection": 0.40625,
+            "known_macro_recall": 0.9208333333333333,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.08125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 41,
+          "metrics": {
+            "unknown_rejection": 0.4375,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 42,
+          "metrics": {
+            "unknown_rejection": 0.3541666666666667,
+            "known_macro_recall": 0.9208333333333333,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.08125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 43,
+          "metrics": {
+            "unknown_rejection": 0.4895833333333333,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 44,
+          "metrics": {
+            "unknown_rejection": 0.4166666666666667,
+            "known_macro_recall": 0.9208333333333333,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.078125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 45,
+          "metrics": {
+            "unknown_rejection": 0.3229166666666667,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 46,
+          "metrics": {
+            "unknown_rejection": 0.3125,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 47,
+          "metrics": {
+            "unknown_rejection": 0.375,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 48,
+          "metrics": {
+            "unknown_rejection": 0.40625,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.059375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 49,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 50,
+          "metrics": {
+            "unknown_rejection": 0.3541666666666667,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.059375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 51,
+          "metrics": {
+            "unknown_rejection": 0.4270833333333333,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 52,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.059375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 53,
+          "metrics": {
+            "unknown_rejection": 0.46875,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 54,
+          "metrics": {
+            "unknown_rejection": 0.3229166666666667,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 55,
+          "metrics": {
+            "unknown_rejection": 0.3125,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 56,
+          "metrics": {
+            "unknown_rejection": 0.3541666666666667,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 57,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 58,
+          "metrics": {
+            "unknown_rejection": 0.3645833333333333,
+            "known_macro_recall": 0.9249999999999999,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.078125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 59,
+          "metrics": {
+            "unknown_rejection": 0.4270833333333333,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 60,
+          "metrics": {
+            "unknown_rejection": 0.34375,
+            "known_macro_recall": 0.9249999999999999,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.078125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 61,
+          "metrics": {
+            "unknown_rejection": 0.4791666666666667,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 62,
+          "metrics": {
+            "unknown_rejection": 0.3958333333333333,
+            "known_macro_recall": 0.9249999999999999,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.078125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 63,
+          "metrics": {
+            "unknown_rejection": 0.40625,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 64,
+          "metrics": {
+            "unknown_rejection": 0.3645833333333333,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 65,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 66,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.0625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 67,
+          "metrics": {
+            "unknown_rejection": 0.5416666666666666,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 68,
+          "metrics": {
+            "unknown_rejection": 0.4375,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.0625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 69,
+          "metrics": {
+            "unknown_rejection": 0.53125,
+            "known_macro_recall": 0.9666666666666667,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 70,
+          "metrics": {
+            "unknown_rejection": 0.4895833333333333,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.0625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 71,
+          "metrics": {
+            "unknown_rejection": 0.5416666666666666,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 72,
+          "metrics": {
+            "unknown_rejection": 0.3854166666666667,
+            "known_macro_recall": 0.9333333333333332,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.059375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 73,
+          "metrics": {
+            "unknown_rejection": 0.3854166666666667,
+            "known_macro_recall": 0.9333333333333332,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.059375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 74,
+          "metrics": {
+            "unknown_rejection": 0.4375,
+            "known_macro_recall": 0.9291666666666667,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.0625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 75,
+          "metrics": {
+            "unknown_rejection": 0.5208333333333334,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.059375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 76,
+          "metrics": {
+            "unknown_rejection": 0.4375,
+            "known_macro_recall": 0.9166666666666666,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.08125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 77,
+          "metrics": {
+            "unknown_rejection": 0.4895833333333333,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 78,
+          "metrics": {
+            "unknown_rejection": 0.4270833333333333,
+            "known_macro_recall": 0.9208333333333333,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.08125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 79,
+          "metrics": {
+            "unknown_rejection": 0.5625,
+            "known_macro_recall": 0.9333333333333332,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.059375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 80,
+          "metrics": {
+            "unknown_rejection": 0.4479166666666667,
+            "known_macro_recall": 0.9166666666666666,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.08125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 81,
+          "metrics": {
+            "unknown_rejection": 0.2604166666666667,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        }
+      ]
+    },
+    "forest_knn": {
+      "calibration": {
+        "quantile": 0.95,
+        "thresholds": [
+          3.441810510158537,
+          5.395047049522396,
+          4.2433314967155455,
+          4.535082635879516
+        ],
+        "metrics": {
+          "unknown_rejection": 0.21303353658536586,
+          "known_macro_recall": 0.9487296747967479,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.05,
+          "feasible": true
+        }
+      },
+      "calibration_trials": [
+        {
+          "quantile": 0.9,
+          "thresholds": [
+            3.093032078742981,
+            4.436192045211793,
+            3.8562091445922855,
+            4.135716819763184
+          ],
+          "metrics": {
+            "unknown_rejection": 0.3324441056910569,
+            "known_macro_recall": 0.898729674796748,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.10007621951219513,
+            "feasible": false
+          }
+        },
+        {
+          "quantile": 0.95,
+          "thresholds": [
+            3.441810510158537,
+            5.395047049522396,
+            4.2433314967155455,
+            4.535082635879516
+          ],
+          "metrics": {
+            "unknown_rejection": 0.21303353658536586,
+            "known_macro_recall": 0.9487296747967479,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.975,
+          "thresholds": [
+            3.7451052176952326,
+            6.730320427417752,
+            4.590825588703155,
+            4.840430996417998
+          ],
+          "metrics": {
+            "unknown_rejection": 0.13617886178861788,
+            "known_macro_recall": 0.973729674796748,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.99,
+          "thresholds": [
+            4.08071500301361,
+            10.19314069366455,
+            5.068500023841858,
+            5.362984144210816
+          ],
+          "metrics": {
+            "unknown_rejection": 0.07088414634146341,
+            "known_macro_recall": 0.9886686991869919,
+            "healthy_false_alarm": 0.010060975609756098,
+            "known_abstention": 0.010060975609756098,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 0.995,
+          "thresholds": [
+            4.248005133152008,
+            11.756014680862412,
+            5.398377494812012,
+            5.562564608573912
+          ],
+          "metrics": {
+            "unknown_rejection": 0.04878048780487805,
+            "known_macro_recall": 0.99369918699187,
+            "healthy_false_alarm": 0.005030487804878049,
+            "known_abstention": 0.005030487804878049,
+            "feasible": true
+          }
+        },
+        {
+          "quantile": 1.0,
+          "thresholds": [
+            6.7997486114501955,
+            14.247660827636718,
+            11.447081565856934,
+            8.168304252624512
+          ],
+          "metrics": {
+            "unknown_rejection": 0.00025406504065040653,
+            "known_macro_recall": 0.9987296747967479,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0,
+            "feasible": true
+          }
+        }
+      ],
+      "best_branch": {
+        "branch": 19,
+        "metrics": {
+          "unknown_rejection": 0.2916666666666667,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.053125,
+          "feasible": true
+        }
+      },
+      "optimized_probe": {
+        "branch": 19,
+        "metrics": {
+          "unknown_rejection": 0.2916666666666667,
+          "known_macro_recall": 0.9458333333333333,
+          "healthy_false_alarm": 0.05,
+          "known_abstention": 0.053125,
+          "feasible": true
+        }
+      },
+      "branches": [
+        {
+          "branch": 0,
+          "metrics": {
+            "unknown_rejection": 0.13541666666666666,
+            "known_macro_recall": 0.9125,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.075,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 1,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9333333333333332,
+            "healthy_false_alarm": 0.025,
+            "known_abstention": 0.05625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 2,
+          "metrics": {
+            "unknown_rejection": 0.2604166666666667,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 3,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.04375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 4,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9958333333333332,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.003125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 5,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.9125,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.08125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 6,
+          "metrics": {
+            "unknown_rejection": 0.09375,
+            "known_macro_recall": 0.9916666666666667,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.00625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 7,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 8,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9875000000000002,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.009375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 9,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9083333333333333,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.078125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 10,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9333333333333332,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.059375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 11,
+          "metrics": {
+            "unknown_rejection": 0.2916666666666667,
+            "known_macro_recall": 0.9541666666666666,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.05,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 12,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 13,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9875000000000002,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.009375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 14,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9083333333333333,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.084375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 15,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.9916666666666667,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.00625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 16,
+          "metrics": {
+            "unknown_rejection": 0.22916666666666666,
+            "known_macro_recall": 0.9499999999999998,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 17,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9875000000000002,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 18,
+          "metrics": {
+            "unknown_rejection": 0.23958333333333334,
+            "known_macro_recall": 0.9500000000000001,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.05,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 19,
+          "metrics": {
+            "unknown_rejection": 0.2916666666666667,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.053125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 20,
+          "metrics": {
+            "unknown_rejection": 0.2604166666666667,
+            "known_macro_recall": 0.8874999999999998,
+            "healthy_false_alarm": 0.1125,
+            "known_abstention": 0.1125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 21,
+          "metrics": {
+            "unknown_rejection": 0.25,
+            "known_macro_recall": 0.9083333333333332,
+            "healthy_false_alarm": 0.125,
+            "known_abstention": 0.1,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 22,
+          "metrics": {
+            "unknown_rejection": 0.2604166666666667,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 23,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.059375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 24,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 25,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.9041666666666667,
+            "healthy_false_alarm": 0.1125,
+            "known_abstention": 0.1,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 26,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 27,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9208333333333333,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.075,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 28,
+          "metrics": {
+            "unknown_rejection": 0.2916666666666667,
+            "known_macro_recall": 0.9208333333333333,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.075,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 29,
+          "metrics": {
+            "unknown_rejection": 0.2604166666666667,
+            "known_macro_recall": 0.8875000000000001,
+            "healthy_false_alarm": 0.15,
+            "known_abstention": 0.121875,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 30,
+          "metrics": {
+            "unknown_rejection": 0.4375,
+            "known_macro_recall": 0.8666666666666667,
+            "healthy_false_alarm": 0.1375,
+            "known_abstention": 0.134375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 31,
+          "metrics": {
+            "unknown_rejection": 0.3645833333333333,
+            "known_macro_recall": 0.8916666666666666,
+            "healthy_false_alarm": 0.125,
+            "known_abstention": 0.1125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 32,
+          "metrics": {
+            "unknown_rejection": 0.3229166666666667,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.04375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 33,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 34,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9166666666666666,
+            "healthy_false_alarm": 0.125,
+            "known_abstention": 0.09375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 35,
+          "metrics": {
+            "unknown_rejection": 0.25,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.046875,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 36,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9833333333333334,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.009375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 37,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.015625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 38,
+          "metrics": {
+            "unknown_rejection": 0.23958333333333334,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 39,
+          "metrics": {
+            "unknown_rejection": 0.3333333333333333,
+            "known_macro_recall": 0.9041666666666668,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.090625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 40,
+          "metrics": {
+            "unknown_rejection": 0.3645833333333333,
+            "known_macro_recall": 0.8958333333333334,
+            "healthy_false_alarm": 0.1125,
+            "known_abstention": 0.103125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 41,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 42,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.015625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 43,
+          "metrics": {
+            "unknown_rejection": 0.22916666666666666,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.034375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 44,
+          "metrics": {
+            "unknown_rejection": 0.22916666666666666,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.028125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 45,
+          "metrics": {
+            "unknown_rejection": 0.16666666666666666,
+            "known_macro_recall": 0.8624999999999999,
+            "healthy_false_alarm": 0.2,
+            "known_abstention": 0.153125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 46,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.8833333333333333,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.1125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 47,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9416666666666668,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.059375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 48,
+          "metrics": {
+            "unknown_rejection": 0.3020833333333333,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.04375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 49,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9875000000000002,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 50,
+          "metrics": {
+            "unknown_rejection": 0.23958333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.05,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 51,
+          "metrics": {
+            "unknown_rejection": 0.11458333333333333,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.025,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 52,
+          "metrics": {
+            "unknown_rejection": 0.28125,
+            "known_macro_recall": 0.9624999999999999,
+            "healthy_false_alarm": 0.1,
+            "known_abstention": 0.053125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 53,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9833333333333334,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.015625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 54,
+          "metrics": {
+            "unknown_rejection": 0.10416666666666667,
+            "known_macro_recall": 0.9875000000000002,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.00625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 55,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9875000000000002,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.00625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 56,
+          "metrics": {
+            "unknown_rejection": 0.1875,
+            "known_macro_recall": 0.9875000000000002,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.00625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 57,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 58,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9874999999999999,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.00625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 59,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 60,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.015625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 61,
+          "metrics": {
+            "unknown_rejection": 0.17708333333333334,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 62,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.0125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 63,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.075,
+            "known_abstention": 0.065625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 64,
+          "metrics": {
+            "unknown_rejection": 0.21875,
+            "known_macro_recall": 0.9208333333333334,
+            "healthy_false_alarm": 0.0625,
+            "known_abstention": 0.075,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 65,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.8833333333333333,
+            "healthy_false_alarm": 0.2125,
+            "known_abstention": 0.140625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 66,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9166666666666666,
+            "healthy_false_alarm": 0.125,
+            "known_abstention": 0.09375,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 67,
+          "metrics": {
+            "unknown_rejection": 0.2708333333333333,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.0875,
+            "known_abstention": 0.0625,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 68,
+          "metrics": {
+            "unknown_rejection": 0.2604166666666667,
+            "known_macro_recall": 0.9458333333333333,
+            "healthy_false_alarm": 0.1125,
+            "known_abstention": 0.06875,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 69,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 70,
+          "metrics": {
+            "unknown_rejection": 0.22916666666666666,
+            "known_macro_recall": 0.9375,
+            "healthy_false_alarm": 0.125,
+            "known_abstention": 0.078125,
+            "feasible": false
+          }
+        },
+        {
+          "branch": 71,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.040625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 72,
+          "metrics": {
+            "unknown_rejection": 0.125,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.015625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 73,
+          "metrics": {
+            "unknown_rejection": 0.20833333333333334,
+            "known_macro_recall": 0.975,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.015625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 74,
+          "metrics": {
+            "unknown_rejection": 0.14583333333333334,
+            "known_macro_recall": 0.9708333333333333,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.01875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 75,
+          "metrics": {
+            "unknown_rejection": 0.28125,
+            "known_macro_recall": 0.9625,
+            "healthy_false_alarm": 0.0375,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 76,
+          "metrics": {
+            "unknown_rejection": 0.25,
+            "known_macro_recall": 0.9500000000000001,
+            "healthy_false_alarm": 0.05,
+            "known_abstention": 0.046875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 77,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.9791666666666666,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.015625,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 78,
+          "metrics": {
+            "unknown_rejection": 0.19791666666666666,
+            "known_macro_recall": 0.9666666666666668,
+            "healthy_false_alarm": 0.0,
+            "known_abstention": 0.021875,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 79,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9500000000000001,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.0375,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 80,
+          "metrics": {
+            "unknown_rejection": 0.15625,
+            "known_macro_recall": 0.9583333333333334,
+            "healthy_false_alarm": 0.0125,
+            "known_abstention": 0.03125,
+            "feasible": true
+          }
+        },
+        {
+          "branch": 81,
+          "metrics": {
+            "unknown_rejection": 0.5104166666666666,
+            "known_macro_recall": 0.8125,
+            "healthy_false_alarm": 0.25,
+            "known_abstention": 0.203125,
+            "feasible": false
+          }
+        }
+      ]
+    }
+  }
+}

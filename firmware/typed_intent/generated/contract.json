@@ -1,0 +1,50 @@
+{
+  "contract_sha256": "8133633315487f8f322ecac49e95e7aca3801d00fccb4b4fba36026c5b2752d2",
+  "spec": {
+    "abi": "sysone.typed.intent.atis.v1",
+    "head": "intent.atis",
+    "image_sha256": "4129baded344729ccc7ef6a3f0a2b34799280a91d88173ae1c0b197cdef8c3bb",
+    "hidden": 384,
+    "max_tokens": 128,
+    "labels": [
+      "atis_abbreviation",
+      "atis_aircraft",
+      "atis_airfare",
+      "atis_airline",
+      "atis_airport",
+      "atis_capacity",
+      "atis_cheapest",
+      "atis_city",
+      "atis_day_name",
+      "atis_distance",
+      "atis_flight",
+      "atis_flight_no",
+      "atis_flight_time",
+      "atis_ground_fare",
+      "atis_ground_service",
+      "atis_meal",
+      "atis_quantity",
+      "atis_restriction"
+    ],
+    "input": "INT8 row-major hidden codes; sorted unique selected segment rows",
+    "pool": "floor((sum(selected rows)*image_recip[count]+32768)/65536)",
+    "logits": "exact integer dot plus bias; signed 32-bit output, signed 64-bit accumulation",
+    "decision": "binary64(logit)*binary64(image_float32_scale); first maximum wins",
+    "confidence": null,
+    "oos_rejection": false,
+    "floating_environment": "IEEE binary64 round-to-nearest ties-to-even; no fast-math/FMA",
+    "failure_payload": "label=0; reserved_score=0; only Accepted carries a label",
+    "identity": "fresh nonzero boot session + strictly increasing nonzero uint64 request ID + contract SHA256",
+    "deadline": "positive uint32 PL cycles; admission edge age=0; terminal by edge D; matching proposal at D wins",
+    "guarantee_scope": "stable local terminal record; reset/clock failure and external delivery excluded",
+    "success_prerequisites": [
+      "verified model/head deployment",
+      "complete successful encoder",
+      "live AXI/FIFO quiescence",
+      "trusted bounded head/bridge",
+      "matching session/request/profile"
+    ],
+    "max_abs_logit_bound": 1893091,
+    "deployment_certificate": "separate binding of contract, firmware, bitstream, environment and fresh boot session"
+  }
+}

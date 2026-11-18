@@ -1,0 +1,97 @@
+{
+  "schema": "sysone.typed200.amp-policy-research-draft.v1",
+  "status": "nondeployable_architecture_proposal",
+  "hardware_action_authorized": false,
+  "implemented": false,
+  "target_executed": false,
+  "hardware_exclusivity_verified": false,
+  "wcet_certified": false,
+  "current_mvp_supports_linux": false,
+  "recommended_first_scope": "one-shot AMP: A53_0 Linux/SSH; R5_0 owns one admitted inference then parks",
+  "numerical_contract_sha256": "8133633315487f8f322ecac49e95e7aca3801d00fccb4b4fba36026c5b2752d2",
+  "contract_reuse_condition": "Numerical and typed semantics unchanged; new deployment certificate binds every changed artifact/environment/session",
+  "assurance": {
+    "local_terminal_target": "By PL edge admission+D, D>0; exact-D valid matching proposal wins",
+    "failure_payload": "All non-Accepted variants have empty label/score payload",
+    "outcomes": ["Accepted", "Clarify", "Abstain", "Fault", "Deadline", "Invalid"],
+    "assumptions_to_discharge": [
+      "Continuous timing-qualified guard clock, valid reset and power",
+      "R5-only authoritative control writes, including proposals/ACK and permit",
+      "Immutable verified model/head and protected active buffers",
+      "Trusted matching R5 numerical proposal after completed/drained encoder epoch",
+      "Protected platform policy and configuration paths",
+      "No admitted critical-path dependence on Linux scheduling, IPC replies or network"
+    ],
+    "not_established": [
+      "Physical AMP access exclusion",
+      "Accepted by D under shared-resource interference",
+      "Bounded startup or Linux pre-admission queue time",
+      "Bounded SSH delivery or persistent availability through system faults",
+      "Bounded next request after quarantine without drain/recovery proof"
+    ]
+  },
+  "resource_policy": [
+    {
+      "resource": "typed CSR plus deployment permit",
+      "existing_start": "0xa0000000",
+      "existing_end_exclusive": "0xa0002000",
+      "owner": "R5 runtime; trusted initialization before lease",
+      "linux": "No direct access; use separate mailbox/status interface",
+      "enforcement": "Requester filter before full-AXI to Lite conversion, protected config/reset/bypass",
+      "master_id_bit_decode_and_policy": null,
+      "verified": false
+    },
+    {
+      "resource": "model, IDs, hidden, R5 code/stack/config",
+      "owner": "Trusted loader before seal; R5/encoder according to buffer direction afterward",
+      "linux": "No writes during owned service, including every Linux-controlled DMA path",
+      "enforcement": "Boot allocation plus applicable PS XMPU/XPPU/TZ and verified external TCM coverage",
+      "deployed_region_allocation": null,
+      "verified": false
+    },
+    {
+      "resource": "new ingress/result mailbox",
+      "owner": "Bounded transport with immutable/private input snapshot; local PL result authoritative",
+      "linux": "Submit input; read result copy; no raw authoritative ACK/proposal writes",
+      "physical_address": null,
+      "cache_and_ownership_abi": null,
+      "verified": false
+    },
+    {
+      "resource": "R5/PL clocks, reset, TCM power, critical PLLs, DDR config, AFI, CSU and protection configuration",
+      "owner": "Trusted management policy",
+      "linux": "Only proved-disjoint resource/argument operations; no broad MMIO or IOCTL escape",
+      "enforcement": "Selective PMU/secure policy, direct-MMIO protection, reset/PSCI and configuration-lock review",
+      "exact_allowlist": null,
+      "verified": false
+    },
+    {
+      "resource": "Linux/GEM/private DMA buffers",
+      "owner": "Linux on initially one A53",
+      "linux": "Keep required network/controller resources active; DMA restricted to private memory",
+      "actual_wired_gem_and_ps_configuration": null,
+      "verified": false
+    }
+  ],
+  "boot_lifecycle": {
+    "preferred": "Trusted Linux-compatible boot/platform agent establishes R5/PL lease before permit",
+    "diagnostic_alternative": "Cooperative Linux remoteproc load; Linux remains trusted and no enforced-exclusion claim",
+    "remoteproc_active_lease": "No stop/reset/reload/unprepare or unreviewed detach/unbind",
+    "stock_firmware_suffices_for_enforced_policy": false,
+    "current_standalone_ps_hwh_has_ethernet_enabled": false,
+    "existing_cold_por_launch_gates_removed_by_amp": false,
+    "new_qualified_boot_recipe": null
+  },
+  "timeouts": {
+    "local_deadline_independent_of_ddr_progress": "Existing RTL-step evidence; physical/system composition still required",
+    "deadline_cancels_axi": false,
+    "may_reuse_buffers_on_timeout_alone": false,
+    "recovery_policy": "Remain quarantined; require independently verified drain/reset/fresh-session process"
+  },
+  "evidence_paths": [
+    "build/v2/typed200-amp-feasibility-v1/source-audit.json",
+    "docs/research/2026-10-16-typed200-amp-feasibility.md",
+    "docs/research/2026-10-16-typed200-amp-experiment-plan.md",
+    "docs/research/2026-10-16-typed200-amp-ownership-matrix.csv"
+  ]
+}

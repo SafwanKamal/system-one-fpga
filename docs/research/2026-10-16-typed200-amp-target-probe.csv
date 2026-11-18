@@ -1,0 +1,8 @@
+area,result,evidence,remaining_gate
+SSH recovery,PASS saved-key authentication after physical power cycle,../../build/v2/typed200-amp-deployment-v1/board-readiness-v4/receipt.json,Availability is not a timing guarantee
+Recovery backups,PASS six application files and 64KiB no-map DDR,../../build/v2/typed200-amp-deployment-v1/board-readiness-v4/receipt.json,R5 writes require stopped-core restoration procedure
+APU diagnostic,PASS 64 exact writes and zero errors across four pinned cores,../../build/v2/typed200-amp-deployment-v1/probe-target-v1/apu-observations.json,R5 origins remain unmeasured
+Filter replay,PASS 2325 transactions including 136 new origin cases,../../build/v2/typed200-amp-deployment-v1/apu-tag-replay-v2/receipt.json,Filter integration and deployed negative tests
+Original trial service,FAIL complete-register recovery comparison,../../build/v2/typed200-amp-deployment-v1/probe-target-v1/journal.log,Do not rerun original recovery implementation
+Reviewed stock recovery,PASS exact clock gate difference and baseline/DDR verification,../../build/v2/typed200-amp-deployment-v1/probe-target-v1/recovery-reviewed-v1/recovery-reviewed.json,No raw clock write applied
+Typed-output MVP,NOT READY,2026-10-16-typed200-amp-ownership.md,Trusted activation and safe protection composition and full qualification

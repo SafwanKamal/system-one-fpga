@@ -1,0 +1,15 @@
+{
+  "fitted_utc": "2026-11-16T23:34:29.115213+00:00",
+  "model_hashes": {
+    "decoder_8.pkl": "c80f74729b9ca25b60cfcb20affe6714e11c37391ce51f35275f226e7d2dd209",
+    "decoder_9.pkl": "4f0b209782fa93a13dd8693dd953e3eb8cf7efb9e0bb01a3e30734f5a9605992",
+    "decoder_10.pkl": "636642cbba42eb6042d2743b30a5c5a537b326c8f3b90c3791d686e77a32e953"
+  },
+  "scale_sha256": "0d84ded85ed291d1770338bde1e291ce1144abb4aae506c0570c8e08a2651ee2",
+  "unknown_families_used_for_fit": [],
+  "proxy_unknowns": [
+    "quantized",
+    "held"
+  ],
+  "test_configurations_used": 0
+}

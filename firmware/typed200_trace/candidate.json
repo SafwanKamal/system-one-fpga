@@ -1,0 +1,13 @@
+{
+  "base_service_sha256": "ee133768f662ab8ba718ef2297285f3928e0a83dd8768ed2150ecac060df4398",
+  "candidate_service_sha256": "f764100256deb7bcd9f046d6979d6d6f170c2e515bfd0df147ec15c604a9299d",
+  "scope": "Owner-local one-shot diagnostic trace; not deployed",
+  "default_clock": "none; ordered events only",
+  "target_executed": false,
+  "limits": [
+    "Instrumentation adds instructions and pre-ACK read latency",
+    "No equal target timing/WCET claim",
+    "No raw-CSR snapshot coherence proof"
+  ],
+  "snapshot_release_policy": "Serialize before producer release; reflect known DONE store; never reread producer-owned bytes after DONE"
+}

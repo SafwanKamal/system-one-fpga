@@ -5,10 +5,44 @@
 // scripts/v2/kr260_vectors.py. `make kr260`.
 `timescale 1ns / 1ps
 
-module kr260_encoder_tb;
+module kr260_encoder_tb #(
+    parameter integer ATTENTION_LANES = 32,
+    parameter integer MAC_INPUT_REGISTERS = 0,
+    parameter integer PIPELINED_DOT = 0,
+    parameter integer EXP_TABLE_IN_BRAM = 0,
+    parameter integer PIPELINED_URAM = 0,
+    parameter integer LOCAL_READ_CAPTURE = 0,
+    parameter integer INCREMENTAL_SOURCE_ROW = 0,
+    parameter integer LINEAR_ACCUMULATORS_IN_BRAM = 0,
+    parameter integer FABRIC_CONTEXT_CAPTURE = 0,
+    parameter integer FABRIC_SCORE_DISTANCE = 0,
+    parameter integer CACHED_REQUEST_WINDOW = 0,
+    parameter integer DSP_EMBED_ROW_ADDRESS = 0,
+    parameter integer PROBABILITY_INPUT_CAPTURE = 0,
+    parameter integer LOCAL_EMBED_CONTROLS = 0,
+    parameter integer PROBABILITY_PIPELINE = 0,
+    parameter integer PIPELINED_DRAIN_SELECT = 0,
+    parameter integer REGISTERED_FIFO_FLAGS = 0,
+    parameter integer STREAM_RESULTS = 0,
+    parameter integer PERF_COUNTERS = 0,
+    parameter integer LOCAL_QUERY_REGISTERS = 0,
+    parameter integer LOCAL_ACCUMULATOR_CONTROLS = 0,
+    parameter integer MAX_HIDDEN = 384
+);
 
     localparam string DIR = "vectors/kr260";
+    localparam integer TILE_OUT = 32;
     localparam integer AW = 40;
+    logic [31:0] observed_reads, observed_writes, observed_bursts;
+    always @(posedge clk) begin
+        if (!reset_n || dut.run_start) begin
+            observed_reads <= 0; observed_writes <= 0; observed_bursts <= 0;
+        end else if (dut.busy) begin
+            if (m_rvalid && m_rready) observed_reads <= observed_reads + 1;
+            if (m_wvalid && m_wready) observed_writes <= observed_writes + 1;
+            if (m_arvalid && m_arready) observed_bursts <= observed_bursts + 1;
+        end
+    end
 
     logic clk = 1'b0;
     logic reset_n = 1'b0;
@@ -29,7 +63,26 @@ module kr260_encoder_tb;
     logic [15:0] m_wstrb;
     logic irq, memory_error;
 
-    kr260_encoder #(.TILE_OUT(32), .ADDRESS_WIDTH(AW)) dut (
+    kr260_encoder #(.TILE_OUT(TILE_OUT), .ATTENTION_LANES(ATTENTION_LANES), .MAC_INPUT_REGISTERS(MAC_INPUT_REGISTERS),
+        .PIPELINED_DOT(PIPELINED_DOT),
+        .EXP_TABLE_IN_BRAM(EXP_TABLE_IN_BRAM),
+        .PIPELINED_URAM(PIPELINED_URAM),
+        .LOCAL_READ_CAPTURE(LOCAL_READ_CAPTURE),
+        .INCREMENTAL_SOURCE_ROW(INCREMENTAL_SOURCE_ROW),
+        .LINEAR_ACCUMULATORS_IN_BRAM(LINEAR_ACCUMULATORS_IN_BRAM),
+        .FABRIC_CONTEXT_CAPTURE(FABRIC_CONTEXT_CAPTURE),
+        .FABRIC_SCORE_DISTANCE(FABRIC_SCORE_DISTANCE),
+        .CACHED_REQUEST_WINDOW(CACHED_REQUEST_WINDOW),
+        .DSP_EMBED_ROW_ADDRESS(DSP_EMBED_ROW_ADDRESS),
+        .PROBABILITY_INPUT_CAPTURE(PROBABILITY_INPUT_CAPTURE),
+        .PROBABILITY_PIPELINE(PROBABILITY_PIPELINE),
+        .LOCAL_EMBED_CONTROLS(LOCAL_EMBED_CONTROLS),
+        .PIPELINED_DRAIN_SELECT(PIPELINED_DRAIN_SELECT),
+        .REGISTERED_FIFO_FLAGS(REGISTERED_FIFO_FLAGS),
+        .STREAM_RESULTS(STREAM_RESULTS),
+        .PERF_COUNTERS(PERF_COUNTERS),
+        .LOCAL_ACCUMULATOR_CONTROLS(LOCAL_ACCUMULATOR_CONTROLS),
+        .LOCAL_QUERY_REGISTERS(LOCAL_QUERY_REGISTERS), .MAX_HIDDEN(MAX_HIDDEN), .ADDRESS_WIDTH(AW)) dut (
         .clk(clk), .reset_n(reset_n),
         .s_axil_awaddr(awaddr), .s_axil_awvalid(awvalid), .s_axil_awready(awready),
         .s_axil_wdata(wdata), .s_axil_wstrb(4'hF), .s_axil_wvalid(wvalid), .s_axil_wready(wready),
@@ -111,6 +164,32 @@ module kr260_encoder_tb;
         if (value != 32'h5359_5332) $fatal(1, "ID register reads %h", value);
         axil_read(8'h18, value);
         $display("BUILD register %h (TILE_OUT %0d)", value, value[31:24]);
+        axil_read(8'h1C, value);
+        $display("FEATURES %h URAM=%0d STREAM=%0d LOCAL_QUERY=%0d PERF=%0d", value,
+                 PIPELINED_URAM, STREAM_RESULTS, LOCAL_QUERY_REGISTERS, PERF_COUNTERS);
+        if (value != (((FABRIC_CONTEXT_CAPTURE!=0) ? 32'h53700000 :
+                         ((CACHED_REQUEST_WINDOW!=0 || DSP_EMBED_ROW_ADDRESS!=0) ? 32'h53600000 :
+                         ((FABRIC_SCORE_DISTANCE!=0 || ATTENTION_LANES!=TILE_OUT) ? 32'h535a0000 :
+                         ((INCREMENTAL_SOURCE_ROW!=0 || LINEAR_ACCUMULATORS_IN_BRAM!=0) ? 32'h53594000 :
+                         ((PROBABILITY_INPUT_CAPTURE!=0 || LOCAL_EMBED_CONTROLS!=0) ? 32'h53591000 :
+                         ((PROBABILITY_PIPELINE!=0 || PIPELINED_DRAIN_SELECT!=0) ? 32'h53590400 : 32'h53590100)))))) | 32'(PERF_COUNTERS != 0) | (32'(STREAM_RESULTS != 0) << 1)
+                     | (32'(LOCAL_QUERY_REGISTERS != 0) << 2) | (32'(PIPELINED_URAM != 0) << 3)
+                     | (32'(LOCAL_ACCUMULATOR_CONTROLS != 0) << 4)
+                     | (32'(PIPELINED_DOT != 0) << 5)
+                     | (32'(LOCAL_READ_CAPTURE != 0) << 6)
+                     | (32'(REGISTERED_FIFO_FLAGS != 0) << 7)
+                     | (32'(PROBABILITY_PIPELINE != 0) << 8)
+                     | (32'(PIPELINED_DRAIN_SELECT != 0) << 9)
+                        | (32'(PROBABILITY_INPUT_CAPTURE != 0) << 10)
+                        | (32'(LOCAL_EMBED_CONTROLS != 0) << 11)
+                        | (32'(INCREMENTAL_SOURCE_ROW != 0) << 12)
+                        | (32'(LINEAR_ACCUMULATORS_IN_BRAM != 0) << 13)
+                        | (32'(ATTENTION_LANES != TILE_OUT) << 14)
+                        | (32'(FABRIC_SCORE_DISTANCE != 0) << 15)
+                        | (32'(CACHED_REQUEST_WINDOW != 0) << 16)
+                        | (32'(DSP_EMBED_ROW_ADDRESS != 0) << 17)
+                        | (32'(FABRIC_CONTEXT_CAPTURE != 0) << 18)))
+            $fatal(1, "capability register does not match configuration");
 
         fd = $fopen({DIR, "/cases.txt"}, "r");
         r = $fscanf(fd, "%d", cases);
@@ -142,6 +221,17 @@ module kr260_encoder_tb;
             axil_read(8'h08, encoder_clocks);
             axil_read(8'h0C, request_clocks);
             axil_read(8'h10, stopped);
+            if (PERF_COUNTERS != 0) begin
+                logic [31:0] count;
+                for (int p = 0; p < 10; p++) begin
+                    axil_read(8'(48 + 4*p), count);
+                    if ((p == 0 && count != observed_reads) || (p == 7 && count != observed_writes)
+                        || (p == 8 && count != observed_bursts))
+                        $fatal(1, "performance counter %0d mismatch", p);
+                    if (p == 7 && count != n*hidden/16) $fatal(1, "wrong output beat count");
+                    $display("profile case %0d counter %0d = %0d", c, p, count);
+                end
+            end
             axil_write(8'h00, 32'd2);
             if (irq) begin
                 $display("case %0d: irq still high after clearing DONE", c);
@@ -169,12 +259,12 @@ module kr260_encoder_tb;
             errors++;
         end
         if (errors == 0) $display("PASS: KR260 block bit-exact, %0d cases, %0d words compared", cases, total);
-        else $display("FAIL: %0d errors", errors);
+        else $fatal(1, "FAIL: %0d errors", errors);
         $finish;
     end
 
     initial begin
-        #20_000_000_000;
+        #(64'd20_000_000_000);
         $fatal(1, "timeout");
     end
 

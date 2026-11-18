@@ -1,0 +1,7 @@
+{
+  "frozen_utc": "2026-11-09T04:25:55.733701+00:00",
+  "protocol_sha256": "82c2513f3b01aff1630ebd2a547efde63f9a9c0981e97f9c8a6b2de2b8145989",
+  "code_sha256": "f7692edeae3fd60f494af8a07729f311d017186b8f5781bafe1b74d716d1c795",
+  "stage": "before validation and held-out memory evaluation",
+  "test_memory_results_exist": false
+}

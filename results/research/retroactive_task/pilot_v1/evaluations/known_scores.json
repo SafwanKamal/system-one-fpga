@@ -1,0 +1,311 @@
+[
+  {
+    "view": "known_scores",
+    "task": 5,
+    "task_name": "running",
+    "selected": {
+      "feature": "stats",
+      "learner": "trees",
+      "threshold": 0.5,
+      "cv_f1": 0.49375
+    },
+    "cv_trials": [
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.3,
+        "cv_f1": 0.47986111111111107
+      },
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.5,
+        "cv_f1": 0.49375
+      },
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.7,
+        "cv_f1": 0.4829305715381665
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": -0.5,
+        "cv_f1": 0.46758664955070606
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": 0,
+        "cv_f1": 0.47986111111111107
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": 0.5,
+        "cv_f1": 0.48660714285714285
+      }
+    ],
+    "per_person": [
+      {
+        "subject": 105,
+        "n": 517,
+        "positive_n": 47,
+        "eligible": true,
+        "f1": 0.989247311827957,
+        "balanced_accuracy": 0.9893617021276595,
+        "precision": 1.0,
+        "recall": 0.9787234042553191,
+        "ap": 0.9806576402321083
+      },
+      {
+        "subject": 106,
+        "n": 477,
+        "positive_n": 43,
+        "eligible": true,
+        "f1": 0.9882352941176471,
+        "balanced_accuracy": 0.9883720930232558,
+        "precision": 1.0,
+        "recall": 0.9767441860465116,
+        "ap": 0.9828791553716651
+      },
+      {
+        "subject": 107,
+        "n": 442,
+        "positive_n": 6,
+        "eligible": true,
+        "f1": 0.9090909090909091,
+        "balanced_accuracy": 0.9166666666666667,
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "ap": 0.9444444444444444
+      },
+      {
+        "subject": 108,
+        "n": 497,
+        "positive_n": 31,
+        "eligible": true,
+        "f1": 0.8787878787878788,
+        "balanced_accuracy": 0.9613041672435276,
+        "precision": 0.8285714285714286,
+        "recall": 0.9354838709677419,
+        "ap": 0.8388257194910453
+      }
+    ],
+    "macro": {
+      "f1": 0.941340348456098,
+      "balanced_accuracy": 0.9639261572652774,
+      "precision": 0.9571428571428572,
+      "recall": 0.9310711986507265,
+      "ap": 0.9367017398848159
+    },
+    "test_people": 4
+  },
+  {
+    "view": "known_scores",
+    "task": 6,
+    "task_name": "cycling",
+    "selected": {
+      "feature": "stats",
+      "learner": "trees",
+      "threshold": 0.3,
+      "cv_f1": 0.5609420074865703
+    },
+    "cv_trials": [
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.3,
+        "cv_f1": 0.5609420074865703
+      },
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.5,
+        "cv_f1": 0.4831014000311961
+      },
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.7,
+        "cv_f1": 0.43621943159286186
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": -0.5,
+        "cv_f1": 0.5451892109500805
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": 0,
+        "cv_f1": 0.5039311674825693
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": 0.5,
+        "cv_f1": 0.44322622666087713
+      }
+    ],
+    "per_person": [
+      {
+        "subject": 105,
+        "n": 517,
+        "positive_n": 47,
+        "eligible": true,
+        "f1": 0.6774193548387096,
+        "balanced_accuracy": 0.9095744680851063,
+        "precision": 0.5454545454545454,
+        "recall": 0.8936170212765957,
+        "ap": 0.8702184529798538
+      },
+      {
+        "subject": 106,
+        "n": 477,
+        "positive_n": 39,
+        "eligible": true,
+        "f1": 0.5693430656934306,
+        "balanced_accuracy": 0.932648401826484,
+        "precision": 0.3979591836734694,
+        "recall": 1.0,
+        "ap": 0.8042490962205454
+      },
+      {
+        "subject": 107,
+        "n": 442,
+        "positive_n": 43,
+        "eligible": true,
+        "f1": 0.711864406779661,
+        "balanced_accuracy": 0.9470187095646092,
+        "precision": 0.56,
+        "recall": 0.9767441860465116,
+        "ap": 0.9539344490296856
+      },
+      {
+        "subject": 108,
+        "n": 497,
+        "positive_n": 49,
+        "eligible": true,
+        "f1": 0.7559055118110236,
+        "balanced_accuracy": 0.956313775510204,
+        "precision": 0.6153846153846154,
+        "recall": 0.9795918367346939,
+        "ap": 0.9633168758315669
+      }
+    ],
+    "macro": {
+      "f1": 0.6786330847807062,
+      "balanced_accuracy": 0.9363888387466008,
+      "precision": 0.5296995861281576,
+      "recall": 0.9624882610144503,
+      "ap": 0.8979297185154129
+    },
+    "test_people": 4
+  },
+  {
+    "view": "known_scores",
+    "task": 12,
+    "task_name": "ascending_stairs",
+    "selected": {
+      "feature": "stats",
+      "learner": "trees",
+      "threshold": 0.5,
+      "cv_f1": 0.9621088239724995
+    },
+    "cv_trials": [
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.3,
+        "cv_f1": 0.9028882076827283
+      },
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.5,
+        "cv_f1": 0.9621088239724995
+      },
+      {
+        "feature": "stats",
+        "learner": "trees",
+        "threshold": 0.7,
+        "cv_f1": 0.9440207156308851
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": -0.5,
+        "cv_f1": 0.8417200191113234
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": 0,
+        "cv_f1": 0.9213164944508229
+      },
+      {
+        "feature": "stats",
+        "learner": "svm",
+        "threshold": 0.5,
+        "cv_f1": 0.9431913116123642
+      }
+    ],
+    "per_person": [
+      {
+        "subject": 105,
+        "n": 517,
+        "positive_n": 26,
+        "eligible": true,
+        "f1": 0.8125,
+        "balanced_accuracy": 0.9877800407331976,
+        "precision": 0.6842105263157895,
+        "recall": 1.0,
+        "ap": 0.9690380309345826
+      },
+      {
+        "subject": 106,
+        "n": 477,
+        "positive_n": 25,
+        "eligible": true,
+        "f1": 0.6461538461538462,
+        "balanced_accuracy": 0.8989823008849558,
+        "precision": 0.525,
+        "recall": 0.84,
+        "ap": 0.7474113587478912
+      },
+      {
+        "subject": 107,
+        "n": 442,
+        "positive_n": 33,
+        "eligible": true,
+        "f1": 0.8354430379746836,
+        "balanced_accuracy": 0.9841075794621027,
+        "precision": 0.717391304347826,
+        "recall": 1.0,
+        "ap": 0.9781977002804189
+      },
+      {
+        "subject": 108,
+        "n": 497,
+        "positive_n": 22,
+        "eligible": true,
+        "f1": 0.6885245901639344,
+        "balanced_accuracy": 0.9583253588516747,
+        "precision": 0.5384615384615384,
+        "recall": 0.9545454545454546,
+        "ap": 0.9096188130269095
+      }
+    ],
+    "macro": {
+      "f1": 0.745655368573116,
+      "balanced_accuracy": 0.9572988199829826,
+      "precision": 0.6162658422812884,
+      "recall": 0.9486363636363636,
+      "ap": 0.9010664757474505
+    },
+    "test_people": 4
+  }
+]

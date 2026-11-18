@@ -1,0 +1,215 @@
+[
+  {
+    "model": "qwen17-q4",
+    "n": 32,
+    "q4_correct": 12,
+    "q8_correct": 12,
+    "identical_prompt_ids": true,
+    "correctness_disagreements": [
+      {
+        "id": "v3-fresh-direct-000",
+        "q4": true,
+        "q8": false
+      },
+      {
+        "id": "simple_python_327",
+        "q4": false,
+        "q8": true
+      }
+    ],
+    "q4_summary": {
+      "bfcl": {
+        "count": 10,
+        "correct": 9,
+        "valid": 10,
+        "accepted": 8,
+        "wrong_accepted": 1,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 1.7523658000864089
+      },
+      "conditional": {
+        "count": 8,
+        "correct": 0,
+        "valid": 8,
+        "accepted": 8,
+        "wrong_accepted": 8,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 1.1955964001826942
+      },
+      "fresh": {
+        "count": 12,
+        "correct": 2,
+        "valid": 6,
+        "accepted": 6,
+        "wrong_accepted": 4,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 1.280387399950996
+      },
+      "two_turn": {
+        "count": 2,
+        "correct": 1,
+        "valid": 2,
+        "accepted": 2,
+        "wrong_accepted": 1,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 1.9147721002809703
+      }
+    },
+    "q8_summary": {
+      "bfcl": {
+        "count": 10,
+        "correct": 10,
+        "valid": 10,
+        "accepted": 8,
+        "wrong_accepted": 0,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 2.856474599801004
+      },
+      "conditional": {
+        "count": 8,
+        "correct": 0,
+        "valid": 4,
+        "accepted": 4,
+        "wrong_accepted": 4,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 2.222302599810064
+      },
+      "fresh": {
+        "count": 12,
+        "correct": 1,
+        "valid": 2,
+        "accepted": 2,
+        "wrong_accepted": 1,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 1.6941232001408935
+      },
+      "two_turn": {
+        "count": 2,
+        "correct": 1,
+        "valid": 2,
+        "accepted": 2,
+        "wrong_accepted": 1,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 2.841663199942559
+      }
+    },
+    "scope": "Single-slot software Q4-release versus Q8-release with matched prompts. Not FPGA quantization qualification."
+  },
+  {
+    "model": "qwen4-q4",
+    "n": 32,
+    "q4_correct": 12,
+    "q8_correct": 13,
+    "identical_prompt_ids": true,
+    "correctness_disagreements": [
+      {
+        "id": "v3-fresh-direct-000",
+        "q4": false,
+        "q8": true
+      },
+      {
+        "id": "parallel_44",
+        "q4": false,
+        "q8": true
+      },
+      {
+        "id": "episode-01",
+        "q4": true,
+        "q8": false
+      }
+    ],
+    "q4_summary": {
+      "bfcl": {
+        "count": 10,
+        "correct": 7,
+        "valid": 10,
+        "accepted": 9,
+        "wrong_accepted": 3,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 2.1453890001866966
+      },
+      "conditional": {
+        "count": 8,
+        "correct": 0,
+        "valid": 2,
+        "accepted": 2,
+        "wrong_accepted": 2,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 4.9834341001696885
+      },
+      "fresh": {
+        "count": 12,
+        "correct": 4,
+        "valid": 6,
+        "accepted": 3,
+        "wrong_accepted": 1,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 2.74220580002293
+      },
+      "two_turn": {
+        "count": 2,
+        "correct": 1,
+        "valid": 2,
+        "accepted": 2,
+        "wrong_accepted": 1,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 3.032955899834633
+      }
+    },
+    "q8_summary": {
+      "bfcl": {
+        "count": 10,
+        "correct": 8,
+        "valid": 10,
+        "accepted": 9,
+        "wrong_accepted": 2,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 3.611094000050798
+      },
+      "conditional": {
+        "count": 8,
+        "correct": 0,
+        "valid": 5,
+        "accepted": 5,
+        "wrong_accepted": 5,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 3.7642280000727624
+      },
+      "fresh": {
+        "count": 12,
+        "correct": 5,
+        "valid": 8,
+        "accepted": 5,
+        "wrong_accepted": 2,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 3.905384600162506
+      },
+      "two_turn": {
+        "count": 2,
+        "correct": 0,
+        "valid": 2,
+        "accepted": 2,
+        "wrong_accepted": 2,
+        "context_rejections": 0,
+        "truncated": 0,
+        "median_wall_seconds": 4.52315070014447
+      }
+    },
+    "scope": "Single-slot software Q4-release versus Q8-release with matched prompts. Not FPGA quantization qualification."
+  }
+]
