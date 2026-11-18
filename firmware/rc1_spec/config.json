@@ -1,0 +1,11 @@
+{
+  "version": "rc1-spec-v1",
+  "base": "rc1-default-v1",
+  "package": "/var/lib/sysone/hardware-consolidated-rc1-20261108",
+  "package_manifest_sha256": "76837ae0aa24a81c65e1ff68a861e6a168345732d8dd7485677f94d81a5bd324",
+  "bundle": "/var/lib/sysone/rc1-spec-v1",
+  "dropin": "/etc/systemd/system/sysone-rc1.service.d/10-speculation.conf",
+  "speculate": "adaptive",
+  "gate_threshold": 0.25,
+  "qualification": "docs/research/2026-11-18-speculative-decoding-qualification.md"
+}

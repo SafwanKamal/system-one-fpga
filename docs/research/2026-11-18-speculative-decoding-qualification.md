@@ -89,11 +89,22 @@ The freshly flashed card runs Ubuntu `unattended-upgrades` with needrestart in a
 mode. It can restart `sysone-rc1.service` mid-request, as it did to the test units, and
 once it hung the whole board. RC1 needs a decision here: either disable unattended
 upgrades, or blacklist the sysone units in needrestart and schedule upgrades in a
-maintenance window. That is a configuration change on the board and has not been made.
+maintenance window.
+
+**Resolved later on 2026-11-18 (user-approved):** two drop-in files were added, and RC1
+kept running throughout (no restart):
+- `/etc/apt/apt.conf.d/99sysone-no-auto-upgrade` sets `Unattended-Upgrade "0"` and
+  `Download-Upgradeable-Packages "0"`. Package lists still refresh.
+- `/etc/needrestart/conf.d/99-sysone.conf` sets `restart = 'l'` (list only) and never
+  restarts `sysone-*` or `spec-qual*`.
+
+The effective configuration was verified, and RC1 then answered a query correctly. 204
+package upgrades are pending, with the kernel meta packages held. Apply them by hand in a
+maintenance window with RC1 drained, then reboot and verify RC1. To undo, delete the two files.
 
 ## Next
 
-1. Decide the unattended-upgrades and needrestart policy on the board (above).
+1. ~~Decide the unattended-upgrades and needrestart policy on the board~~ (done, above). The 204 pending upgrades still need a maintenance window.
 2. Batched-head bitstream (rule 5 says yes): one head pass that serves up to 8 lanes.
 3. Promote speculation into the RC1 default service behind a flag, after (1).
 4. Replace the SD card, which is still the card recovered on 2026-11-17.

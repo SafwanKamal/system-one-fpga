@@ -1,5 +1,10 @@
 # RC1 default launcher and boot startup
 
+> Since 2026-11-18 the default service runs **RC1.1**: a systemd drop-in replaces only
+> `ExecStart` with lossless speculative decoding, which is bit-identical and about 1.5x
+> faster. Everything below still applies. See `firmware/rc1_spec/README.md` to inspect it
+> or roll it back.
+
 The KR260 default command is `sudo sysone-qwen-fpga --query 'Read /proc/uptime'`.
 It uses the boot-managed RC1 persistent service, with sealed ABI2 weights,
 startup verification and exact-prefix reuse. Existing `--query`, `--out` and
