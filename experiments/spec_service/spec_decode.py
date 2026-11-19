@@ -67,11 +67,37 @@ class Gate:
         self.est[n] += self.alpha * (accepted - self.est[n])
 
 
-def decode(e, ids, first_token, max_new, stop, drafter=None, gate=None, logit=None, first_bits=None):
+def batched_head(e, output_offset, chunk=8192):
+    """v9f only: score slots 0..count-1 of the last batched pass in one head scan.
+
+    cmd 11 applies the final norm to every slot and cmd 12 streams each head chunk
+    once for all slots; slot b's (token, logit bits) word lands at output_offset+32*b.
+    The C-sim audit (experiments/batched_head) shows each slot equals the v9e
+    cmd 9/3/4 sequence bit for bit.
+    """
+    import struct
+
+    def score(count):
+        e.command(11, page=e.manifest['output_norm'], rows=count)
+        for start in range(0, e.vocab, chunk):
+            rows = min(chunk, e.vocab - start)
+            e.command(12, page=e.head_offset + start * e.embedding_row_bytes, layer=count, rows=rows, token_base=start)
+            e.head_rows += rows
+        res = [struct.unpack_from('<II', e.scratch, output_offset + 32 * b) for b in range(count)]
+        if any(not 0 <= t < e.vocab for t, _ in res):
+            raise RuntimeError('Invalid FPGA vocabulary result')
+        return res
+    return score
+
+
+def decode(e, ids, first_token, max_new, stop, drafter=None, gate=None, logit=None, first_bits=None, batched=None):
     """Greedy decode after prefill. `first_token` came from the prompt's last position.
 
     stop(tokens) -> True once generation must end (checked after every emitted token).
     drafter=None means plain one-token decoding (the RC1 reference path).
+    batched=None scores each verify lane with cmd 9 + a full head scan (v9e);
+    batched=batched_head(...) scores all lanes of a verify pass in one scan (v9f).
+    Emitted tokens do not depend on `batched`; only the head work does.
     Returns (tokens, logit_bits or None, stats).
     """
     out = [first_token]
@@ -98,13 +124,19 @@ def decode(e, ids, first_token, max_new, stop, drafter=None, gate=None, logit=No
         e.prefill_batch([out[-1]] + d, p, logits=False)
         st['passes'] += 1; st['drafted'] += len(d)
         a, done = 0, False
+        scored = None
+        if batched is not None:
+            scored = batched(len(d) + 1); st['head_scans'] += 1
         for lane in range(len(d) + 1):
-            if lane:
-                e.command(9, layer=lane)
-            token = e.select_token(); st['head_scans'] += 1
+            if scored is not None:
+                token = scored[lane][0]
+            else:
+                if lane:
+                    e.command(9, layer=lane)
+                token = e.select_token(); st['head_scans'] += 1
             out.append(token)
             if bits is not None:
-                bits.append(logit())
+                bits.append(scored[lane][1] if scored is not None else logit())
             if stop(out) or len(out) >= max_new:
                 done = True
                 break

@@ -44,8 +44,10 @@ Drain with `systemctl stop sysone-rc1.service` before raw hardware work, as befo
   `experiments/rc1_spec_ship/PROTOCOL.md`. The installed, rollback and after-reboot runs
   were each 66/66 equal to plain RC1.
 
-## Not covered
+## Recovery
 
-- Recovery: `experiments/kria_recovery/restore_rc1.py` restores RC1 only. After a
-  reflash, run `install_rc1_spec.py install`. Also add the update-policy files: see the
-  qualification write-up's operational section.
+`experiments/kria_recovery/restore_rc1.py` covers RC1.1. Its `policy` stage, run first,
+writes the two pinned update-policy files. Its `spec` stage, run after plain RC1 is READY,
+installs `<src>/rc1_spec`: this directory plus `scripts/v2/install_rc1_spec.py`. These
+files are pinned to LF line endings in `.gitattributes`, so the manifest hashes hold on any
+checkout.

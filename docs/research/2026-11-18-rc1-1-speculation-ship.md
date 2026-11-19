@@ -37,5 +37,5 @@ normal drain path, and every step's probe passed.
 - Tool queries only (RC1's request type), greedy decoding, one board, one request at a time.
 - Fault and refusal paths were not exercised on the board. They leave the session FAULTED
   in both versions, and that logic is shared and covered by the offline wiring tests.
-- Not yet in `restore_rc1.py`: after a reflash, run `install_rc1_spec.py install` and
-  re-add the update-policy files.
+- Recovery: `restore_rc1.py` stages `policy` and `spec` reinstall the update policy and
+  RC1.1 after a reflash.

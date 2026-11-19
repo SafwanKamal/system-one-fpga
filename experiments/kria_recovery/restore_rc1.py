@@ -1,9 +1,14 @@
 """Restore the qualified RC1 deployment onto a freshly flashed KR260 (run as root on the board).
 
-Stages (each idempotent-refusing: it stops if a target already exists):
+Stages, in order (each refuses to overwrite a target that differs):
+  policy   - update policy: no unattended upgrades, needrestart list-only and never for sysone-*.
+             Run first: a fresh card restarts services after every library upgrade.
   memory   - /etc/sysone/kr260-memory.json (0x60000000, 256 MiB) + reserved-memory kernel hooks
   files    - v9e FPGA app, RC1 package, rc1-default-v1 bundle, units, launcher; verifies every pinned hash
   enable   - systemd daemon-reload and enable sysone-rc1.service (starts on next boot)
+  (reboot; plain RC1 comes up READY)
+  spec     - RC1.1: installs <src>/rc1_spec (firmware/rc1_spec from the repo plus
+             scripts/v2/install_rc1_spec.py) and enables speculative decoding
 Nothing here programs the FPGA, loads the DMA module or the model; the RC1 boot initializer does that.
 usage: python3 restore_rc1.py <stage> --src <unpacked recovery dir>
 """
@@ -97,14 +102,60 @@ def enable(_src):
     print(run(['systemctl', 'show', 'sysone-rc1.service', 'sysone-rc1-init.service', '-p', 'UnitFileState', '-p', 'ActiveState']))
 
 
+# Update policy deployed 2026-11-18 (user-approved). Contents and hashes match the live board.
+POLICY = {
+    Path('/etc/apt/apt.conf.d/99sysone-no-auto-upgrade'): (
+        '// sysone (2026-11-18): no unattended installs; upgrade by hand in a maintenance window with RC1 drained.\n'
+        'APT::Periodic::Unattended-Upgrade "0";\n'
+        'APT::Periodic::Download-Upgradeable-Packages "0";\n',
+        'f864cd0a8878873d8bb0a76e3a4bbda9e49ac83a9b72a722a5bfdb9b21a7d227'),
+    Path('/etc/needrestart/conf.d/99-sysone.conf'): (
+        '# sysone (2026-11-18): never auto-restart services after upgrades; list only.\n'
+        "$nrconf{restart} = 'l';\n"
+        '# never restart RC1 or test units, even from an interactive prompt\n'
+        '$nrconf{override_rc}{qr(^sysone-)} = 0;\n'
+        '$nrconf{override_rc}{qr(^spec-qual)} = 0;\n',
+        'fd1af7e560c36fd630f05ec76e752655064012287b7b981b75f3caf1d6cd171e'),
+}
+
+
+def policy(_src):
+    for path, (text, digest) in POLICY.items():
+        if hashlib.sha256(text.encode()).hexdigest() != digest:
+            raise RuntimeError('embedded policy text differs from its pin: ' + str(path))
+        if path.exists():
+            if sha(path) != digest:
+                raise RuntimeError('policy file exists with other content: ' + str(path))
+            continue
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_name(path.name + '.tmp')
+        tmp.write_text(text)
+        tmp.chmod(0o644)
+        tmp.replace(path)
+        if sha(path) != digest:
+            raise RuntimeError('policy file hash differs after write: ' + str(path))
+    if subprocess.run(['perl', '-c', str(next(p for p in POLICY if 'needrestart' in str(p)))],
+                      capture_output=True).returncode != 0:
+        raise RuntimeError('needrestart policy does not parse')
+    print(run(['apt-config', 'dump', 'APT::Periodic']))
+    print(json.dumps(dict(stage='policy', passed=True)), flush=True)
+
+
+def spec(src):
+    """RC1.1 on top of a READY plain RC1 (after the post-enable reboot)."""
+    staged = src / 'rc1_spec'
+    run([sys.executable, str(staged / 'install_rc1_spec.py'), 'install', '--staged', str(staged)])
+    print(json.dumps(dict(stage='spec', passed=True)), flush=True)
+
+
 def main():
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('stage', choices=['memory', 'files', 'enable'])
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('stage', choices=['policy', 'memory', 'files', 'enable', 'spec'])
     ap.add_argument('--src', type=Path, required=True)
     a = ap.parse_args()
     if os.geteuid() != 0:
         raise SystemExit('run as root')
-    dict(memory=memory, files=files, enable=enable)[a.stage](a.src)
+    dict(policy=policy, memory=memory, files=files, enable=enable, spec=spec)[a.stage](a.src)
 
 
 if __name__ == '__main__':

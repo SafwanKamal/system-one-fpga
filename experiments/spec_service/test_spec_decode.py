@@ -135,7 +135,39 @@ def test_service_stop_rule(cases=300):
     return seen
 
 
+def fake_batched(e):
+    """v9f cmd 11/12 semantics on the fake: every slot scored in one call."""
+    def score(count):
+        res = [(e.nxt(e.lanes[b]), (e.nxt(e.lanes[b]) * 2654435761) & 0xffffffff) for b in range(count)]
+        e.lanes[0] = e.lanes[count - 1]   # slot contents are irrelevant afterwards; poison slot 0
+        return res
+    return score
+
+
+def test_batched_equivalence(cases=400):
+    """Batched-head verify emits exactly the plain tokens and logit bits, with fewer head scans."""
+    rnd = random.Random(11)
+    scans = dict(sequential=0, batched=0, plain=0)
+    for k in range(cases):
+        ids = [rnd.randrange(12) for _ in range(rnd.randrange(3, 60))]
+        mx = rnd.randrange(1, 70)
+        eos = rnd.choice([{11}, set()])
+        stop = lambda t: t[-1] in eos
+        runs = []
+        for mode in ('plain', 'sequential', 'batched'):
+            e = Fake(seed=k); f = prefill(e, ids); fb = logit_of(e)()
+            kw = {} if mode == 'plain' else dict(drafter=spec_decode.Drafter(), gate=spec_decode.Gate(threshold=0.25))
+            if mode == 'batched':
+                kw['batched'] = fake_batched(e)
+            out, bits, st = spec_decode.decode(e, ids, f, mx, stop, logit=logit_of(e), first_bits=fb, **kw)
+            kv = [e.kv[p] for p in range(len(ids) + len(out) - 1)]
+            runs.append((out, bits, kv)); scans[mode] += st['head_scans']
+        assert runs[0] == runs[1] == runs[2], k
+    return scans
+
+
 if __name__ == '__main__':
     print('equivalence', test_equivalence())
     print('service stop rule', test_service_stop_rule())
+    print('batched head', test_batched_equivalence())
     print('ALL TESTS PASSED')
