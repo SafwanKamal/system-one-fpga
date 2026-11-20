@@ -76,8 +76,16 @@ def make_session_class(svc, rt):
                     result['request_weights_hashed'] = True
                 self.identity()
                 conversation = request.get('conversation_id', 'default')
-                if conversation != self.conversation or request.get('reset_cache', False):
+                if request.get('reset_cache', False):
                     self.cache.reset()
+                elif conversation != self.conversation:
+                    # Shared system template: keep only the public template tokens (identical K/V
+                    # rows at identical positions and group boundaries); never another
+                    # conversation's user text.
+                    if self.cache.ids[:len(self.template)] == self.template:
+                        self.cache.ids = list(self.template)
+                    else:
+                        self.cache.reset()
                 self.conversation = conversation
                 reused = self.cache.begin(e, ids, enabled=self.prefix_cache)
                 result['prefix_tokens_reused'] = reused
@@ -139,6 +147,16 @@ def make_session_class(svc, rt):
     return Rc13Session
 
 
+def template_ids(svc, vocab):
+    """Token ids of the fixed system template that starts every prompt: the common prefix of
+    prompts built from unrelated queries (39 tokens for the RC1 template)."""
+    probes = [vocab.encode_text(svc.prompt_for(q)) for q in ('Read /proc/version', '0', 'x y', '{"a":1}', '\n')]
+    n = 0
+    while all(len(p) > n and p[n] == probes[0][n] for p in probes):
+        n += 1
+    return probes[0][:n]
+
+
 def factory_for(svc, rt, coef):
     cls = make_session_class(svc, rt)
 
@@ -150,6 +168,7 @@ def factory_for(svc, rt, coef):
         s.__dict__.update(base.__dict__)
         s.drafter = CostAwareDrafter(VoteDrafter(prompts=True, ns=(6, 4, 3, 2, 1)), coef, prior=0.5, prior_w=2.0, P=4)
         s.batched = spec_decode.batched_head(s.engine, rt.OUTPUT)
+        s.template = template_ids(svc, s.vocab)
         return s
     return factory
 

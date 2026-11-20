@@ -8,8 +8,10 @@ RC1.2 if it was enabled, else to RC1.1. The service is always stopped under the 
 before the drop-ins change, so each unit's ExecStopPost sees its own image.
 
   install --staged DIR   create /var/lib/sysone/rc1-3-v1 (bundle + package copy with the v9h app), then enable
+  update --staged DIR    replace the installed bundle's own files (not the package copy) and restart; rolls back on failure
   enable | disable | status
-  bench --label L        run the tool queries in queries.json through the live socket -> OUT/bench-L.json
+  bench --label L [--keep-cache]   run the tool queries in queries.json through the live socket -> OUT/bench-L.json
+                         (default reset_cache=True per query; --keep-cache sends new conversations without reset)
 
 Any failure while enabling disables again and requires RC1.1 to come up READY.
 """
@@ -140,14 +142,14 @@ def install(staged):
     return enable()
 
 
-def bench(label):
+def bench(label, keep_cache=False):
     queries = json.loads((Path(__file__).resolve().parent / 'queries.json').read_text())
     res = []
     for i, q in enumerate(queries):
         t = time.monotonic()
-        resp = exchange(dict(op='generate', query=q, max_tokens=64, conversation_id='rc13-bench-%d' % i, reset_cache=True))
+        resp = exchange(dict(op='generate', query=q, max_tokens=64, conversation_id='rc13-bench-%d' % i, reset_cache=not keep_cache))
         r = resp.get('result') or {}
-        res.append(dict(query=q, ok=resp['ok'], complete=r.get('complete'), speculate=r.get('speculate'),
+        res.append(dict(query=q, ok=resp['ok'], complete=r.get('complete'), speculate=r.get('speculate'), prefix_tokens_reused=r.get('prefix_tokens_reused'),
                         generated_ids=r.get('generated_ids'), path=(r.get('tool_result') or {}).get('path'),
                         prefill_seconds=r.get('prefill_seconds'), decode_seconds=r.get('decode_seconds'),
                         elapsed_seconds=r.get('elapsed_seconds'), wall_seconds=time.monotonic() - t, speculation=r.get('speculation')))
@@ -157,6 +159,43 @@ def bench(label):
                           decode=round(sum(x['decode_seconds'] or 0 for x in res), 3),
                           elapsed=round(sum(x['elapsed_seconds'] or 0 for x in res), 3))), flush=True)
     print('BENCH-JSON ' + json.dumps(res), flush=True)
+
+
+def update(staged):
+    if not BUNDLE.exists() or not DROPIN.exists():
+        raise RuntimeError('RC1.3 not installed and enabled')
+    new = check_bundle(staged)
+    cfg = json.loads((staged / 'config.json').read_text())
+    if sha(RC1 / 'package-sha256.json') != cfg['rc1_package_manifest_sha256']:
+        raise RuntimeError('RC1 package manifest differs')
+    old = check_bundle()
+    backup = OUT / ('bundle-backup-' + time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()))
+    backup.mkdir(parents=True)
+    old = list(old) + ['bundle-sha256.json']
+    for k in old:
+        (backup / k).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(BUNDLE / k, backup / k)
+    def put(src, names):
+        for k in names:
+            (BUNDLE / k).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(src / k, BUNDLE / k)
+    run(['systemctl', 'stop', 'sysone-rc1.service'])
+    try:
+        put(staged, list(new) + ['bundle-sha256.json'])
+        check_bundle()
+        shutil.copyfile(BUNDLE / '20-rc13.conf', DROPIN)
+        run(['systemctl', 'daemon-reload'])
+        run(['systemctl', 'start', 'sysone-rc1.service'])
+        p = probe('rc1.3-costaware')
+    except BaseException as exc:
+        log('update_failed', error=type(exc).__name__ + ': ' + str(exc))
+        run(['systemctl', 'stop', 'sysone-rc1.service'], check=False)
+        put(backup, old)
+        shutil.copyfile(BUNDLE / '20-rc13.conf', DROPIN)
+        run(['systemctl', 'daemon-reload'])
+        run(['systemctl', 'start', 'sysone-rc1.service'])
+        probe('rc1.3-costaware')
+        raise
+    log('updated', bundle_sha256=check_bundle(), probe=p)
+    return p
 
 
 def status():
@@ -170,11 +209,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='cmd', required=True)
     sub.add_parser('install').add_argument('--staged', type=Path, required=True)
-    sub.add_parser('bench').add_argument('--label', required=True)
+    b = sub.add_parser('bench'); b.add_argument('--label', required=True); b.add_argument('--keep-cache', action='store_true')
+    sub.add_parser('update').add_argument('--staged', type=Path, required=True)
     for c in ('enable', 'disable', 'status'):
         sub.add_parser(c)
     a = ap.parse_args()
-    {'install': lambda: install(a.staged), 'bench': lambda: bench(a.label), 'enable': enable,
+    {'install': lambda: install(a.staged), 'update': lambda: update(a.staged), 'bench': lambda: bench(a.label, a.keep_cache), 'enable': enable,
      'disable': disable, 'status': status}[a.cmd]()
     print('RC1.3 ' + a.cmd.upper() + ': OK', flush=True)
 
