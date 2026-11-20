@@ -18,7 +18,7 @@ from pathlib import Path
 
 BUNDLE = Path('/var/lib/sysone/rc1-3-v1')
 BASE = Path('/var/lib/sysone/rc1-default-v1')
-RC1 = Path('/var/lib/sysone/hardware-consolidated-rc1-30261108')
+RC1 = Path('/var/lib/sysone/hardware-consolidated-rc1-20261108')
 OUT = Path('/var/lib/sysone/qualifications/rc1-3')
 DROPIN_DIR = Path('/etc/systemd/system/sysone-rc1.service.d')
 DROPIN = DROPIN_DIR / '20-rc13.conf'
