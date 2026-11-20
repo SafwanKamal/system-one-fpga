@@ -62,8 +62,8 @@ LUTRAM fixed it (223 BRAM18 in HLS, 113 tiles routed).
 
 1. **P=4 exactness: PASS** (C-sim audit, pre-registered in
    `experiments/attention_p4/PROTOCOL.md`; results below).
-2. **Next:** a board pilot of v9f+P4, on the v9f pilot pattern. It needs a full bitstream
-   build from the audited source and user approval for the image swap.
+2. **Board pilot: PASS** as v9g. It is 1.21x end to end over v9f and bit-identical; see
+   `2026-11-19-v9g-p4-attention.md`.
 3. **Dual port:** needs space first. The candidate is packing two INT8 products into one
    DSP48E2, which is exact and possible because the token lanes share the weight operand. A
    new HP1 path and a second unpacker/accumulator are needed in any case.

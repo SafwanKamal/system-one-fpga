@@ -40,3 +40,10 @@ hls/qwen_decoder_v9f/*.cpp text eol=crlf
 hls/qwen_decoder_v9f/*.hpp text eol=crlf
 hls/qwen_decoder_v9f/*.tcl text eol=lf
 experiments/batched_head/* text eol=lf
+# v9g = v9f + P=4 attention. Byte copies of the routed trial in build/v2/core-feasibility/p4;
+# hashes pinned in build/v2/qwen-fpga-decoder-v9g/hardware-source-sha256.json.
+hls/qwen_decoder_v9g/*.cpp text eol=crlf
+hls/qwen_decoder_v9g/*.hpp text eol=crlf
+hls/qwen_decoder_v9g/*.tcl text eol=lf
+experiments/attention_p4/*.py text eol=lf
+experiments/attention_p4/*.md text eol=lf
