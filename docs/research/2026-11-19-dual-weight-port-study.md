@@ -110,3 +110,45 @@ these are slight underestimates. The full dual port also speeds up prefill matri
 
 Nothing here has been routed or run on the board. Exactness is argued from construction and
 the packing check; a C-sim audit would come before any board work.
+
+## Update 2026-11-20: full dual port synthesized, row-parallel small passes built (v9h)
+
+**The full dual port does not fit.** Real out-of-context synthesis of the decoder alone gives
+113,880 LUT, against the 117,120 LUT device with the platform shell still to add.
+
+**v9h** builds path 2 on top of v9g with the merged q/k-norm RMS call site
+(`experiments/dual_port/make_split.py`, `matrix_split.hpp`):
+
+- **Duplicated inputs:** passes with batch ≤ 4, columns%512==0 and an even row count copy
+  token t's quantized input and scales into slot t+4.
+- **Two weight ports:** port a (HP0) streams rows [0, R/2) into slots 0–3. Port b (new
+  `weights_b` m_axi on HP1, own page-table copy) streams rows [R/2, R) into slots 4–7.
+- **Unchanged per-row arithmetic.** The vocabulary argmax merges slot t+4 into t using the
+  same tie rule.
+- **CSR map:** `model_b` sits at 0x70, and scratch moved from 0x78 to 0x7c. The runtime
+  needs only a `registers.json` override, since `model_b` resets to 0, the same value the
+  runtime writes for model.
+
+**Routed result:**
+
+| LUT | CLB | DSP | BRAM | URAM | WNS | WHS |
+|---|---|---|---|---|---|---|
+| 101,844 (86.96%) | 99.62% | 719 | 117 | 40 | +0.357 ns | +0.010 ns |
+
+Bus skew is met.
+
+**C-sim exactness:** split-mode single-token decode reproduces the 8-token pass exactly over
+28 layers and 24 positions:
+
+- hidden 688,128 words, 0 differing;
+- K/V 688,128 words, 0 differing;
+- norm 24,576 words, 0 differing;
+- tokens and logits identical.
+
+The baseline dump also matches the v9g kernel's dump. The C-sim ran on the split source
+before the resource fixes (port-b loader with private pages, shared scales, RMS merge). Those
+fixes do not change arithmetic, and the board check is the confirmation.
+
+**Board check:** packaged as `build/v2/qwen-fpga-decoder-v9h/v9h-pilot.tar`
+(`scripts/v2/package_v9h_pilot.py`). The bench is 37 cases, in ar and candidate modes, against
+the v9e records, using `experiments/dual_port/v9h_pilot.py`. It is pending.
