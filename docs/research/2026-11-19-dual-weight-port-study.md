@@ -149,6 +149,29 @@ The baseline dump also matches the v9g kernel's dump. The C-sim ran on the split
 before the resource fixes (port-b loader with private pages, shared scales, RMS merge). Those
 fixes do not change arithmetic, and the board check is the confirmation.
 
-**Board check:** packaged as `build/v2/qwen-fpga-decoder-v9h/v9h-pilot.tar`
-(`scripts/v2/package_v9h_pilot.py`). The bench is 37 cases, in ar and candidate modes, against
-the v9e records, using `experiments/dual_port/v9h_pilot.py`. It is pending.
+**Board check (KR260, 2026-11-20): PASS.** Packaged as
+`build/v2/qwen-fpga-decoder-v9h/v9h-pilot.tar` (`scripts/v2/package_v9h_pilot.py`) and run
+with `experiments/dual_port/v9h_pilot.py` on 37 cases (every fifth case of the 181). Results
+are in `build/v2/v9h-board/{pilot,analysis}.json`.
+
+- **Exactness:** 37/37 cases match the v9e records exactly in both plain decode and RC1.2
+  speculative mode (tokens, logit bits, KV hash). The swap left the DMA buffer hash unchanged.
+- **Plain decode:** 1.50x faster than v9g on the same cases (380.4 s → 253.5 s), against a
+  model prediction of 1.51x. By domain: general 1.56x, maintenance 1.52x, long 1.34x,
+  tool 1.80x.
+- **Prefill:** unchanged at 1.00x, as expected, since batch-8 passes use only port a.
+- **Speculative decode:** RC1.2 on v9h is 2.79x faster than plain v9g, versus 2.58x for RC1.2
+  on v9g.
+
+This is not yet the 3.00x the model predicts, for two reasons:
+
+- **Different drafter history.** The drafter learns across cases, so running 37 cases instead
+  of 181 changes its choices. Generated tokens are identical, but draft statistics differ in
+  22 of 37 cases.
+- **Wrong cost model.** It still uses the v9g cost model, which overprices single steps and
+  small passes on v9h.
+
+Tool cases, which are short and come late in the order, drafted more and ran slower (0.70x).
+
+**Next:** refit the drafter cost model on v9h timings, then ship v9h as the RC1.3 image. That
+needs a `registers.json` override and the APP set to v9h in the RC1.2 package copy.
