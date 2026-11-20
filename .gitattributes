@@ -34,6 +34,9 @@ tests/test_rc1_default.py text eol=lf
 scripts/v2/install_rc1_default.py text eol=lf
 firmware/rc1_spec/* text eol=lf
 scripts/v2/install_rc1_spec.py text eol=lf
+firmware/rc1_2/* text eol=lf
+experiments/spec_service/spec_decode.py text eol=lf
+experiments/draft_research/drafters.py text eol=lf
 experiments/kria_recovery/restore_rc1.py text eol=lf
 # v9f source hashes are pinned in build/v2/qwen-fpga-decoder-v9f/hardware-source-sha256.json.
 hls/qwen_decoder_v9f/*.cpp text eol=crlf

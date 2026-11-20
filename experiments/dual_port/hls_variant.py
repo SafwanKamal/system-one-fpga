@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 name, src = sys.argv[1], Path(sys.argv[2]).resolve()
+EXTRA = '\n'.join(sys.argv[3:])  # optional extra Tcl lines inserted before csynth_design (e.g. config_op ...)
 out = ROOT / 'build/v2/dual-port-study' / ('hls-' + name)
 if out.exists():
     shutil.rmtree(out)
@@ -21,6 +22,7 @@ set_part {{xck26-sfvc784-2LV-c}}
 create_clock -period 8 -name default
 set_clock_uncertainty 1.0
 config_compile -pipeline_loops 0
+{EXTRA}
 csynth_design
 exit
 """)
