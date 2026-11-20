@@ -178,6 +178,8 @@ class CostAwareDrafter:
         c = self.coef  # FEATURES order: steps, step_pos, passes, pass_tokens, pass_pos, pass_pos_groups
         if k == 1:
             return c[0] + c[1] * p
+        if len(c) == 7:  # v9h: steps, step_pos, passes<=P, passes>P, pass_tokens, pass_pos, pass_pos_groups
+            return (c[2] if k <= self.P else c[3]) + c[4] * k + c[5] * p + c[6] * p * -(-k // self.P)
         return c[2] + c[3] * k + c[4] * p + c[5] * p * -(-k // self.P)
 
     def draft(self, ctx):

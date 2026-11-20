@@ -50,3 +50,4 @@ hls/qwen_decoder_v9g/*.hpp text eol=crlf
 hls/qwen_decoder_v9g/*.tcl text eol=lf
 experiments/attention_p4/*.py text eol=lf
 experiments/attention_p4/*.md text eol=lf
+firmware/rc1_3/* eol=lf
