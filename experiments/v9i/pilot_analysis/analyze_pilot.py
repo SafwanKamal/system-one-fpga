@@ -19,6 +19,7 @@ Supported RC1.3 / pilot board result formats:
 1. `bench-<label>.json`: JSON list produced by `install_rc13.py bench` (21 tool queries).
 2. `BENCH-JSON [...]`: stdout log containing a `BENCH-JSON ` line (`rc12_ship/compare.py`).
 3. `pilot.json`: JSON object with `cases` list and terminal status (`finished_utc` without `error`; `passed=False` completed failures are retained for `NO-GO` reporting, while interrupted/error snapshots are rejected) (`experiments/dual_port/v9h_pilot.py`).
+4. Archived wrapper JSON objects (e.g., `bench-template-cache.json` with `shared` or `bench-compare.json` with `rc13`), selected explicitly via `--rc13-arm` / `--pilot-arm`.
 
 Usage:
     python analyze_pilot.py --rc13 RC13_BENCH --pilot PILOT_BENCH [--out OUT.json]
@@ -76,24 +77,53 @@ def _parse_nonneg_int(
     return value
 
 
-def _parse_token_ids(
-    value: Any, field: str, path: Path, *, context: str
+def _parse_nonneg_int_list(
+    value: Any, field: str, path: Path, *, context: str, elem_label: str
 ) -> list[int]:
     if not isinstance(value, list):
         raise ValueError(f"{path}: {context} {field!r} must be a list")
     out: list[int] = []
-    for idx, tok in enumerate(value):
-        if isinstance(tok, bool) or not isinstance(tok, int):
+    for idx, item in enumerate(value):
+        if isinstance(item, bool) or not isinstance(item, int):
             raise ValueError(
-                f"{path}: {context} {field!r}[{idx}] must be an integer token ID, "
-                f"got {type(tok).__name__} ({tok!r})"
+                f"{path}: {context} {field!r}[{idx}] must be an {elem_label}, "
+                f"got {type(item).__name__} ({item!r})"
             )
-        if tok < 0:
+        if item < 0:
             raise ValueError(
-                f"{path}: {context} {field!r}[{idx}] must be non-negative, got {tok!r}"
+                f"{path}: {context} {field!r}[{idx}] must be non-negative, got {item!r}"
             )
-        out.append(tok)
+        out.append(item)
     return out
+
+
+def _parse_token_ids(
+    value: Any, field: str, path: Path, *, context: str
+) -> list[int]:
+    return _parse_nonneg_int_list(
+        value, field, path, context=context, elem_label="integer token ID"
+    )
+
+
+def _parse_logit_bits(
+    value: Any, field: str, path: Path, *, context: str
+) -> list[int]:
+    return _parse_nonneg_int_list(
+        value, field, path, context=context, elem_label="integer logit bit pattern"
+    )
+
+
+def _parse_kv_sha256(
+    value: Any, field: str, path: Path, *, context: str
+) -> str | None:
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise ValueError(
+            f"{path}: {context} {field!r} must be a string, "
+            f"got {type(value).__name__} ({value!r})"
+        )
+    return value if value.strip() != "" else None
 
 
 def _validate_token_list_direct(value: Any, field: str, record_id: str) -> list[int]:
@@ -102,7 +132,7 @@ def _validate_token_list_direct(value: Any, field: str, record_id: str) -> list[
     for idx, tok in enumerate(value):
         if isinstance(tok, bool) or not isinstance(tok, int):
             raise ValueError(
-                f"record {record_id!r} {field!r}[{idx}] must be an integer token ID, "
+                f"record {record_id!r} {field!r}[{idx}] must be an integer, "
                 f"got {type(tok).__name__} ({tok!r})"
             )
         if tok < 0:
@@ -145,7 +175,19 @@ def _validate_pilot_file_status(raw: dict[str, Any], path: Path) -> None:
         )
 
 
-def _load_single_file(path: Path) -> list[dict[str, Any]]:
+def _is_pilot_doc(obj: Any) -> bool:
+    return isinstance(obj, dict) and isinstance(obj.get("cases"), list)
+
+
+def _normalize_pilot_doc(raw: dict[str, Any], path: Path) -> list[dict[str, Any]]:
+    _validate_pilot_file_status(raw, path)
+    if not raw["cases"]:
+        raise ValueError(f"{path}: pilot.json contains zero cases")
+    file_passed = raw["passed"]
+    return [_normalize_pilot_case(case, path, file_passed=file_passed) for case in raw["cases"]]
+
+
+def _load_single_file(path: Path, *, arm: str | None = None) -> list[dict[str, Any]]:
     text = path.read_text(encoding="utf-8")
     raw: Any = None
     stripped = text.lstrip()
@@ -170,12 +212,36 @@ def _load_single_file(path: Path) -> list[dict[str, Any]]:
         if not raw:
             raise ValueError(f"{path}: bench result list is empty")
         return [_normalize_bench_row(row, path) for row in raw]
-    if isinstance(raw, dict) and isinstance(raw.get("cases"), list):
-        _validate_pilot_file_status(raw, path)
-        if not raw["cases"]:
-            raise ValueError(f"{path}: pilot.json contains zero cases")
-        file_passed = raw["passed"]
-        return [_normalize_pilot_case(case, path, file_passed=file_passed) for case in raw["cases"]]
+    if isinstance(raw, dict):
+        if _is_pilot_doc(raw) and (arm is None or arm == "cases" or arm not in raw):
+            return _normalize_pilot_doc(raw, path)
+        avail = [
+            str(k) for k, v in raw.items()
+            if isinstance(v, list) or _is_pilot_doc(v)
+        ]
+        if arm is None:
+            if avail:
+                raise ValueError(
+                    f"{path}: wrapper JSON object requires explicit arm selection "
+                    f"(--rc13-arm / --pilot-arm); available arm keys: {', '.join(avail)}"
+                )
+            raise ValueError(f"{path}: unsupported JSON structure; expected list or dict with 'cases'")
+        if arm not in raw:
+            avail_msg = ", ".join(avail) if avail else "<none>"
+            raise ValueError(
+                f"{path}: wrapper JSON object has no arm {arm!r}; available arm keys: {avail_msg}"
+            )
+        selected = raw[arm]
+        if isinstance(selected, list):
+            if not selected:
+                raise ValueError(f"{path}: wrapper arm {arm!r} bench result list is empty")
+            return [_normalize_bench_row(row, path) for row in selected]
+        if _is_pilot_doc(selected):
+            return _normalize_pilot_doc(selected, path)
+        raise ValueError(
+            f"{path}: wrapper arm {arm!r} must be a list or pilot.json object, "
+            f"got {type(selected).__name__}"
+        )
     raise ValueError(f"{path}: unsupported JSON structure; expected list or dict with 'cases'")
 
 
@@ -243,7 +309,9 @@ def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
         "ar_tokens": None,
         "path": row.get("path"),
         "logit_bits": None,
+        "ar_logit_bits": None,
         "kv_sha256": None,
+        "ar_kv_sha256": None,
         "ok": ok_val,
         "complete": complete_bool,
         "file_passed": True,
@@ -301,9 +369,27 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
                 path,
                 context=f"pilot.json case {case['key']!r} candidate",
             )
+        cand_logit_bits = (
+            _parse_logit_bits(
+                cand["logit_bits"],
+                "logit_bits",
+                path,
+                context=f"pilot.json case {case['key']!r} candidate",
+            )
+            if cand.get("logit_bits") is not None
+            else None
+        )
+        cand_kv_sha256 = _parse_kv_sha256(
+            cand.get("kv_sha256"),
+            "kv_sha256",
+            path,
+            context=f"pilot.json case {case['key']!r} candidate",
+        )
         decode = _parse_timing(cand.get("decode_seconds"), "candidate.decode_seconds", path, required=strict_case)
     else:
         cand_tokens = None
+        cand_logit_bits = None
+        cand_kv_sha256 = None
         decode = None
 
     prefill = _parse_timing(case.get("prefill_seconds"), "prefill_seconds", path, required=strict_case)
@@ -313,6 +399,8 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
     if ar is not None and not isinstance(ar, dict):
         raise ValueError(f"{path}: pilot.json case {case['key']!r} 'ar' must be an object")
     ar_tokens: list[int] | None = None
+    ar_logit_bits: list[int] | None = None
+    ar_kv_sha256: str | None = None
     if isinstance(ar, dict):
         if "decode_seconds" in ar and ar["decode_seconds"] is not None:
             _parse_timing(ar["decode_seconds"], "ar.decode_seconds", path, required=False)
@@ -323,6 +411,36 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
                 path,
                 context=f"pilot.json case {case['key']!r} ar",
             )
+        if "logit_bits" in ar and ar["logit_bits"] is not None:
+            ar_logit_bits = _parse_logit_bits(
+                ar["logit_bits"],
+                "logit_bits",
+                path,
+                context=f"pilot.json case {case['key']!r} ar",
+            )
+        ar_kv_sha256 = _parse_kv_sha256(
+            ar.get("kv_sha256"),
+            "kv_sha256",
+            path,
+            context=f"pilot.json case {case['key']!r} ar",
+        )
+
+    cand_complete = (
+        cand is not None
+        and cand_tokens is not None
+        and len(cand_tokens) > 0
+        and cand_logit_bits is not None
+        and len(cand_logit_bits) == len(cand_tokens)
+        and _is_nonempty_str(cand_kv_sha256)
+    )
+    ar_complete = (
+        ar is not None
+        and ar_tokens is not None
+        and len(ar_tokens) > 0
+        and ar_logit_bits is not None
+        and len(ar_logit_bits) == len(ar_tokens)
+        and _is_nonempty_str(ar_kv_sha256)
+    )
 
     domain = str(case.get("domain") or "workload")
     return {
@@ -334,10 +452,12 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
         "tokens": cand_tokens,
         "ar_tokens": ar_tokens,
         "path": None,
-        "logit_bits": cand.get("logit_bits") if isinstance(cand, dict) else None,
-        "kv_sha256": cand.get("kv_sha256") if isinstance(cand, dict) else None,
+        "logit_bits": cand_logit_bits,
+        "ar_logit_bits": ar_logit_bits,
+        "kv_sha256": cand_kv_sha256,
+        "ar_kv_sha256": ar_kv_sha256,
         "ok": case_ok,
-        "complete": cand is not None and cand_tokens is not None,
+        "complete": bool(cand_complete and ar_complete),
         "file_passed": file_passed,
         "prefill_seconds": prefill,
         "decode_seconds": decode,
@@ -348,10 +468,10 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
     }
 
 
-def load_records(paths: list[Path]) -> list[dict[str, Any]]:
+def load_records(paths: list[Path], *, arm: str | None = None) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for p in paths:
-        records.extend(_load_single_file(p))
+        records.extend(_load_single_file(p, arm=arm))
     return records
 
 
@@ -462,10 +582,16 @@ def _model_comparison(
 def _validate_records(records: list[dict[str, Any]]) -> None:
     for rec in records:
         rid = str(rec.get("id", "<unknown>"))
-        if rec.get("tokens") is not None:
-            _validate_token_list_direct(rec["tokens"], "tokens", rid)
-        if rec.get("ar_tokens") is not None:
-            _validate_token_list_direct(rec["ar_tokens"], "ar_tokens", rid)
+        for lfield in ("tokens", "ar_tokens", "logit_bits", "ar_logit_bits"):
+            if rec.get(lfield) is not None:
+                _validate_token_list_direct(rec[lfield], lfield, rid)
+        for sfield in ("kv_sha256", "ar_kv_sha256"):
+            sval = rec.get(sfield)
+            if sval is not None and not isinstance(sval, str):
+                raise ValueError(
+                    f"record {rid!r} {sfield!r} must be a string, "
+                    f"got {type(sval).__name__} ({sval!r})"
+                )
         reused = rec.get("reused")
         if reused is not None:
             if isinstance(reused, bool) or not isinstance(reused, int) or reused < 0:
@@ -552,9 +678,16 @@ def analyze(
                 "missing_in_pilot": True,
                 "identical": False,
                 "tokens_identical": False,
+                "cand_tokens_identical": False,
+                "ar_tokens_identical": False,
+                "ar_self_identical": False,
                 "path_identical": False,
                 "logit_identical": False,
+                "cand_logit_identical": False,
+                "ar_logit_identical": False,
                 "kv_identical": False,
+                "cand_kv_identical": False,
+                "ar_kv_identical": False,
                 "status_ok": False,
                 "first_diff_index": 0,
                 "rc13_token_count": len(r["tokens"]) if r["tokens"] is not None else None,
@@ -580,32 +713,122 @@ def analyze(
             })
             continue
 
-        both_have_tokens = (r["tokens"] is not None and p["tokens"] is not None)
-        tokens_identical = both_have_tokens and _strict_list_eq(r["tokens"], p["tokens"])
-        ar_self_identical = (
-            _strict_list_eq(p["ar_tokens"], p["tokens"])
-            if (p["ar_tokens"] is not None and p["tokens"] is not None)
-            else True
+        is_raw = (
+            r.get("source_format") == "pilot_cases"
+            or p.get("source_format") == "pilot_cases"
+        )
+        both_have_cand_tokens = (r["tokens"] is not None and p["tokens"] is not None)
+        both_have_ar_tokens = (
+            r.get("ar_tokens") is not None and p.get("ar_tokens") is not None
+        )
+        ar_tokens_identical = (
+            both_have_ar_tokens
+            and len(r["ar_tokens"]) > 0
+            and _strict_list_eq(r["ar_tokens"], p["ar_tokens"])
         )
         path_identical = (r["path"] == p["path"]) if (r["path"] is not None or p["path"] is not None) else True
-        logit_identical = (
-            _strict_list_eq(r["logit_bits"], p["logit_bits"])
-            if (
-                isinstance(r["logit_bits"], list)
-                and isinstance(p["logit_bits"], list)
+
+        def _raw_arm_complete(toks: Any, bits: Any, kv: Any) -> bool:
+            return (
+                isinstance(toks, list)
+                and len(toks) > 0
+                and isinstance(bits, list)
+                and len(bits) == len(toks)
+                and _is_nonempty_str(kv)
             )
-            else (
-                (r["logit_bits"] == p["logit_bits"])
-                if (r["logit_bits"] is not None and p["logit_bits"] is not None)
-                else True
+
+        if is_raw:
+            r_cand_ok = _raw_arm_complete(r.get("tokens"), r.get("logit_bits"), r.get("kv_sha256"))
+            p_cand_ok = _raw_arm_complete(p.get("tokens"), p.get("logit_bits"), p.get("kv_sha256"))
+            r_ar_ok = _raw_arm_complete(r.get("ar_tokens"), r.get("ar_logit_bits"), r.get("ar_kv_sha256"))
+            p_ar_ok = _raw_arm_complete(p.get("ar_tokens"), p.get("ar_logit_bits"), p.get("ar_kv_sha256"))
+
+            cand_tokens_identical = (
+                both_have_cand_tokens
+                and len(r["tokens"]) > 0
+                and _strict_list_eq(r["tokens"], p["tokens"])
             )
-        )
-        kv_identical = (
-            (r["kv_sha256"] == p["kv_sha256"])
-            if (r["kv_sha256"] is not None and p["kv_sha256"] is not None)
-            else True
-        )
-        status_ok = bool(r["ok"] and r["complete"] and p["ok"] and p["complete"])
+            tokens_identical = cand_tokens_identical and ar_tokens_identical
+            cand_logit_identical = (
+                r_cand_ok
+                and p_cand_ok
+                and _strict_list_eq(r["logit_bits"], p["logit_bits"])
+            )
+            ar_logit_identical = (
+                r_ar_ok
+                and p_ar_ok
+                and _strict_list_eq(r["ar_logit_bits"], p["ar_logit_bits"])
+            )
+            cand_kv_identical = (
+                r_cand_ok and p_cand_ok and r["kv_sha256"] == p["kv_sha256"]
+            )
+            ar_kv_identical = (
+                r_ar_ok and p_ar_ok and r["ar_kv_sha256"] == p["ar_kv_sha256"]
+            )
+            logit_identical = cand_logit_identical and ar_logit_identical
+            kv_identical = cand_kv_identical and ar_kv_identical
+            ar_self_identical = (
+                r_cand_ok
+                and r_ar_ok
+                and p_cand_ok
+                and p_ar_ok
+                and _strict_list_eq(r["ar_tokens"], r["tokens"])
+                and _strict_list_eq(r["ar_logit_bits"], r["logit_bits"])
+                and r["ar_kv_sha256"] == r["kv_sha256"]
+                and _strict_list_eq(p["ar_tokens"], p["tokens"])
+                and _strict_list_eq(p["ar_logit_bits"], p["logit_bits"])
+                and p["ar_kv_sha256"] == p["kv_sha256"]
+            )
+            arms_complete = r_cand_ok and r_ar_ok and p_cand_ok and p_ar_ok
+        else:
+            cand_tokens_identical = both_have_cand_tokens and _strict_list_eq(r["tokens"], p["tokens"])
+            tokens_identical = cand_tokens_identical
+            if r.get("ar_tokens") is not None or p.get("ar_tokens") is not None:
+                tokens_identical = cand_tokens_identical and ar_tokens_identical
+            else:
+                ar_tokens_identical = True
+            if r.get("logit_bits") is not None or p.get("logit_bits") is not None:
+                cand_logit_identical = (
+                    _strict_list_eq(r["logit_bits"], p["logit_bits"])
+                    if (isinstance(r.get("logit_bits"), list) and isinstance(p.get("logit_bits"), list))
+                    else False
+                )
+            else:
+                cand_logit_identical = True
+            if r.get("ar_logit_bits") is not None or p.get("ar_logit_bits") is not None:
+                ar_logit_identical = (
+                    _strict_list_eq(r["ar_logit_bits"], p["ar_logit_bits"])
+                    if (isinstance(r.get("ar_logit_bits"), list) and isinstance(p.get("ar_logit_bits"), list))
+                    else False
+                )
+            else:
+                ar_logit_identical = True
+            if r.get("kv_sha256") is not None or p.get("kv_sha256") is not None:
+                cand_kv_identical = (
+                    _is_nonempty_str(r.get("kv_sha256"))
+                    and _is_nonempty_str(p.get("kv_sha256"))
+                    and r["kv_sha256"] == p["kv_sha256"]
+                )
+            else:
+                cand_kv_identical = True
+            if r.get("ar_kv_sha256") is not None or p.get("ar_kv_sha256") is not None:
+                ar_kv_identical = (
+                    _is_nonempty_str(r.get("ar_kv_sha256"))
+                    and _is_nonempty_str(p.get("ar_kv_sha256"))
+                    and r["ar_kv_sha256"] == p["ar_kv_sha256"]
+                )
+            else:
+                ar_kv_identical = True
+            logit_identical = cand_logit_identical and ar_logit_identical
+            kv_identical = cand_kv_identical and ar_kv_identical
+            ar_self_identical = (
+                _strict_list_eq(p["ar_tokens"], p["tokens"])
+                if (p.get("ar_tokens") is not None and p["tokens"] is not None)
+                else (p.get("ar_tokens") is None)
+            )
+            arms_complete = True
+
+        status_ok = bool(r["ok"] and r["complete"] and p["ok"] and p["complete"] and arms_complete)
         identical = (
             tokens_identical
             and ar_self_identical
@@ -614,7 +837,14 @@ def analyze(
             and kv_identical
             and status_ok
         )
-        diff_idx = _first_diff_index(r["tokens"], p["tokens"]) if (both_have_tokens and not tokens_identical) else None
+        if both_have_cand_tokens and not cand_tokens_identical:
+            diff_idx = _first_diff_index(r["tokens"], p["tokens"])
+        elif both_have_ar_tokens and not ar_tokens_identical:
+            diff_idx = _first_diff_index(r["ar_tokens"], p["ar_tokens"])
+        elif p["tokens"] is not None and p.get("ar_tokens") is not None and not _strict_list_eq(p["ar_tokens"], p["tokens"]):
+            diff_idx = _first_diff_index(p["ar_tokens"], p["tokens"])
+        else:
+            diff_idx = None
 
         rc13_reused = r.get("reused")
         pilot_reused = p.get("reused")
@@ -695,10 +925,16 @@ def analyze(
             "missing_in_pilot": False,
             "identical": identical,
             "tokens_identical": tokens_identical,
+            "cand_tokens_identical": cand_tokens_identical,
+            "ar_tokens_identical": ar_tokens_identical,
             "ar_self_identical": ar_self_identical,
             "path_identical": path_identical,
             "logit_identical": logit_identical,
+            "cand_logit_identical": cand_logit_identical,
+            "ar_logit_identical": ar_logit_identical,
             "kv_identical": kv_identical,
+            "cand_kv_identical": cand_kv_identical,
+            "ar_kv_identical": ar_kv_identical,
             "status_ok": status_ok,
             "first_diff_index": diff_idx,
             "rc13_token_count": len(r["tokens"]) if r["tokens"] is not None else None,
@@ -751,9 +987,16 @@ def analyze(
             "occurrence": q["occurrence"],
             "first_diff_index": q["first_diff_index"],
             "tokens_identical": q["tokens_identical"],
+            "cand_tokens_identical": q["cand_tokens_identical"],
+            "ar_tokens_identical": q["ar_tokens_identical"],
+            "ar_self_identical": q["ar_self_identical"],
             "path_identical": q["path_identical"],
             "logit_identical": q["logit_identical"],
+            "cand_logit_identical": q["cand_logit_identical"],
+            "ar_logit_identical": q["ar_logit_identical"],
             "kv_identical": q["kv_identical"],
+            "cand_kv_identical": q["cand_kv_identical"],
+            "ar_kv_identical": q["ar_kv_identical"],
             "status_ok": q["status_ok"],
             "missing_in_pilot": q["missing_in_pilot"],
         }
@@ -1140,6 +1383,18 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("positional", nargs="*", help="Optional positional: RC13_PATH PILOT_PATH [OUT_JSON]")
     ap.add_argument("--rc13", type=Path, nargs="+", help="RC1.3 reference board result file(s)")
     ap.add_argument("--pilot", type=Path, nargs="+", help="Candidate pilot board result file(s)")
+    ap.add_argument(
+        "--rc13-arm",
+        type=str,
+        default=None,
+        help="Wrapper key to select from wrapped RC1.3 archive JSON (e.g. 'shared' or 'rc13')",
+    )
+    ap.add_argument(
+        "--pilot-arm",
+        type=str,
+        default=None,
+        help="Wrapper key to select from wrapped pilot archive JSON",
+    )
     ap.add_argument("--out", type=Path, help="Optional JSON output path")
     ap.add_argument("--min-decode-speedup", type=float, default=MIN_DECODE_SPEEDUP)
     ap.add_argument("--min-e2e-speedup", type=float, default=MIN_E2E_SPEEDUP)
@@ -1162,8 +1417,8 @@ def main(argv: list[str] | None = None) -> int:
         ap.error("Provide --rc13 and --pilot (or two positional paths)")
 
     report = analyze(
-        load_records(rc13_paths),
-        load_records(pilot_paths),
+        load_records(rc13_paths, arm=args.rc13_arm),
+        load_records(pilot_paths, arm=args.pilot_arm),
         min_decode_speedup=args.min_decode_speedup,
         min_e2e_speedup=args.min_e2e_speedup,
     )

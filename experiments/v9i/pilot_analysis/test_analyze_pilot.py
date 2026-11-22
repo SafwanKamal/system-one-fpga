@@ -191,8 +191,8 @@ class AnalyzePilotTest(unittest.TestCase):
                         "domain": "general",
                         "prefill_seconds": 1.0,
                         "identical": True,
-                        "ar": {"tokens": [1, 2], "decode_seconds": 2.0},
-                        "candidate": {"tokens": [1, 2], "decode_seconds": 1.0},
+                        "ar": {"tokens": [1, 2], "logit_bits": [101, 102], "kv_sha256": "kv0", "decode_seconds": 2.0},
+                        "candidate": {"tokens": [1, 2], "logit_bits": [101, 102], "kv_sha256": "kv0", "decode_seconds": 1.0},
                     }
                 ]
             }
@@ -220,8 +220,8 @@ class AnalyzePilotTest(unittest.TestCase):
                             "domain": "general",
                             "prefill_seconds": 0.8,
                             "identical": True,
-                            "ar": {"tokens": [1, 2], "decode_seconds": 1.5},
-                            "candidate": {"tokens": [1, 2], "decode_seconds": 0.7},
+                            "ar": {"tokens": [1, 2], "logit_bits": [101, 102], "kv_sha256": "kv0", "decode_seconds": 1.5},
+                            "candidate": {"tokens": [1, 2], "logit_bits": [101, 102], "kv_sha256": "kv0", "decode_seconds": 0.7},
                         }
                     ],
                 }),
@@ -1234,8 +1234,8 @@ class AnalyzePilotTest(unittest.TestCase):
                         "domain": "general",
                         "prefill_seconds": 1.0,
                         "identical": True,
-                        "ar": {"tokens": [1, 7], "decode_seconds": 2.0},
-                        "candidate": {"tokens": [1, 7], "decode_seconds": 1.0},
+                        "ar": {"tokens": [1, 7], "logit_bits": [11, 12], "kv_sha256": "kv_raw", "decode_seconds": 2.0},
+                        "candidate": {"tokens": [1, 7], "logit_bits": [11, 12], "kv_sha256": "kv_raw", "decode_seconds": 1.0},
                     }
                 ],
             }
@@ -1249,8 +1249,8 @@ class AnalyzePilotTest(unittest.TestCase):
                         "domain": "general",
                         "prefill_seconds": 1.0,
                         "identical": True,
-                        "ar": {"tokens": [1, 7], "decode_seconds": 1.8},
-                        "candidate": {"tokens": [1, 7], "decode_seconds": 0.9},
+                        "ar": {"tokens": [1, 7], "logit_bits": [11, 12], "kv_sha256": "kv_raw", "decode_seconds": 1.8},
+                        "candidate": {"tokens": [1, 7], "logit_bits": [11, 12], "kv_sha256": "kv_raw", "decode_seconds": 0.9},
                     }
                 ],
             }
@@ -1420,16 +1420,16 @@ class AnalyzePilotTest(unittest.TestCase):
                         "domain": "general",
                         "prefill_seconds": 1.0,
                         "identical": True,
-                        "ar": {"tokens": [1, 7], "decode_seconds": 1.0},
-                        "candidate": {"tokens": [1, 7], "decode_seconds": 1.0},
+                        "ar": {"tokens": [1, 7], "logit_bits": [21, 22], "kv_sha256": "kv1", "decode_seconds": 1.0},
+                        "candidate": {"tokens": [1, 7], "logit_bits": [21, 22], "kv_sha256": "kv1", "decode_seconds": 1.0},
                     },
                     {
                         "key": "c2",
                         "domain": "general",
                         "prefill_seconds": 1.0,
                         "identical": True,
-                        "ar": {"tokens": [1, 7], "decode_seconds": 1.0},
-                        "candidate": {"tokens": [1, 7], "decode_seconds": 1.0},
+                        "ar": {"tokens": [1, 7], "logit_bits": [23, 24], "kv_sha256": "kv2", "decode_seconds": 1.0},
+                        "candidate": {"tokens": [1, 7], "logit_bits": [23, 24], "kv_sha256": "kv2", "decode_seconds": 1.0},
                     },
                 ],
             }
@@ -1633,6 +1633,217 @@ class AnalyzePilotTest(unittest.TestCase):
             )
             self.assertEqual(r_tol.returncode, 0, r_tol.stdout + r_tol.stderr)
             self.assertIn("GO:", r_tol.stdout)
+
+    def test_raw_arm_completeness_and_ar_logit_kv_regressions(self) -> None:
+        cases = []
+        for idx in range(0, 180, 5):
+            toks = [100 + idx, 200 + idx, 300 + idx]
+            bits = [0x3F800000 + idx, 0x40000000 + idx, 0x40400000 + idx]
+            kv = f"{idx:064x}"
+            cases.append({
+                "key": f"case-{idx}",
+                "index": idx,
+                "domain": "tool" if idx < 60 else "general",
+                "prefill_seconds": 1.0 + 0.01 * idx,
+                "identical": True,
+                "ar_equal_v9e": True,
+                "candidate_equal_v9e": True,
+                "ar": {
+                    "tokens": list(toks),
+                    "logit_bits": list(bits),
+                    "kv_sha256": kv,
+                    "decode_seconds": 2.5 + 0.01 * idx,
+                },
+                "candidate": {
+                    "tokens": list(toks),
+                    "logit_bits": list(bits),
+                    "kv_sha256": kv,
+                    "decode_seconds": 2.0 + 0.01 * idx,
+                },
+            })
+        ref_doc = {
+            "passed": True,
+            "started_utc": "2026-11-22T00:00:00Z",
+            "finished_utc": "2026-11-22T00:10:00Z",
+            "cases": cases,
+        }
+        pilot_go_doc = json.loads(json.dumps(ref_doc))
+        for c in pilot_go_doc["cases"]:
+            c["prefill_seconds"] *= 0.8
+            c["candidate"]["decode_seconds"] *= 0.8
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            ref_p = tmp / "v9h_ref_36.json"
+            go_p = tmp / "pilot_go_36.json"
+            out_go_p = tmp / "out_go.json"
+            ref_p.write_text(json.dumps(ref_doc), encoding="utf-8")
+            go_p.write_text(json.dumps(pilot_go_doc), encoding="utf-8")
+
+            r_go = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(ref_p), "--pilot", str(go_p), "--out", str(out_go_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_go.returncode, 0, r_go.stdout + r_go.stderr)
+            self.assertIn("GO: 36/36 identical; decode speedup 1.250x", r_go.stdout)
+            self.assertIn("e2e speedup 1.250x", r_go.stdout)
+
+            mutations: list[tuple[str, object, str]] = [
+                ("flip_ar_logit_bit0", lambda d: d["cases"][0]["ar"]["logit_bits"].__setitem__(0, d["cases"][0]["ar"]["logit_bits"][0] ^ 1), "ar_logit_identical"),
+                ("remove_ar_tokens", lambda d: d["cases"][0]["ar"].pop("tokens"), "ar_tokens_identical"),
+                ("remove_candidate_kv_sha256", lambda d: d["cases"][0]["candidate"].pop("kv_sha256"), "cand_kv_identical"),
+                ("remove_ar_kv_sha256", lambda d: d["cases"][0]["ar"].pop("kv_sha256"), "ar_kv_identical"),
+                ("remove_ar_logit_bits", lambda d: d["cases"][0]["ar"].pop("logit_bits"), "ar_logit_identical"),
+                ("remove_candidate_logit_bits", lambda d: d["cases"][0]["candidate"].pop("logit_bits"), "cand_logit_identical"),
+                ("remove_ar_arm", lambda d: d["cases"][0].pop("ar"), "ar_tokens_identical"),
+                ("flip_candidate_logit_bit0", lambda d: d["cases"][0]["candidate"]["logit_bits"].__setitem__(0, d["cases"][0]["candidate"]["logit_bits"][0] ^ 1), "cand_logit_identical"),
+                ("change_ar_token0", lambda d: d["cases"][0]["ar"]["tokens"].__setitem__(0, 99999), "ar_tokens_identical"),
+                ("truncate_ar_logit_bits", lambda d: d["cases"][0]["ar"]["logit_bits"].pop(), "ar_logit_identical"),
+                ("empty_candidate_kv_sha256", lambda d: d["cases"][0]["candidate"].__setitem__("kv_sha256", "  "), "cand_kv_identical"),
+            ]
+
+            for label, mutate, fail_flag in mutations:
+                mut_doc = json.loads(json.dumps(pilot_go_doc))
+                mutate(mut_doc)
+                mut_p = tmp / f"{label}.json"
+                mut_out_p = tmp / f"{label}_out.json"
+                mut_p.write_text(json.dumps(mut_doc), encoding="utf-8")
+                with self.subTest(case=label):
+                    res = subprocess.run(
+                        [sys.executable, str(SCRIPT), "--rc13", str(ref_p), "--pilot", str(mut_p), "--out", str(mut_out_p), "--check"],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertEqual(res.returncode, 1, res.stdout + res.stderr)
+                    self.assertFalse(any(line.startswith("GO:") for line in res.stdout.splitlines()))
+                    self.assertIn("NO-GO: identity failed (35/36 identical)", res.stdout)
+                    rep = json.loads(mut_out_p.read_text(encoding="utf-8"))
+                    self.assertEqual(rep["verdict"], "NO-GO")
+                    self.assertFalse(rep["go"])
+                    self.assertEqual(rep["identity"]["identical_queries"], 35)
+                    self.assertEqual(len(rep["identity"]["failing_queries"]), 1)
+                    fq = rep["identity"]["failing_queries"][0]
+                    self.assertEqual(fq["id"], "case-0")
+                    self.assertFalse(fq[fail_flag])
+
+            # Malformed logit_bits and non-string kv_sha256 are rejected at load time.
+            bad_bits_doc = json.loads(json.dumps(pilot_go_doc))
+            bad_bits_doc["cases"][0]["ar"]["logit_bits"] = [True, 1.5, 3]
+            bad_bits_p = tmp / "bad_bits.json"
+            bad_bits_p.write_text(json.dumps(bad_bits_doc), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                analyze_pilot.load_records([bad_bits_p])
+
+            bad_kv_doc = json.loads(json.dumps(pilot_go_doc))
+            bad_kv_doc["cases"][0]["candidate"]["kv_sha256"] = 12345
+            bad_kv_p = tmp / "bad_kv.json"
+            bad_kv_p.write_text(json.dumps(bad_kv_doc), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                analyze_pilot.load_records([bad_kv_p])
+
+    def test_archived_wrapper_arm_selection_and_57_case_self_compare(self) -> None:
+        rc13_rows = json.loads((FIXTURES / "rc13_bench.json").read_text(encoding="utf-8"))
+        pilot_go_rows = json.loads((FIXTURES / "pilot_go_bench.json").read_text(encoding="utf-8"))
+        raw_cases = []
+        for idx in range(0, 180, 5):
+            toks = [10 + idx, 20 + idx]
+            bits = [1000 + idx, 2000 + idx]
+            kv = f"{idx:064x}"
+            raw_cases.append({
+                "key": f"case-{idx}",
+                "index": idx,
+                "domain": "general",
+                "prefill_seconds": 1.0,
+                "identical": True,
+                "ar": {"tokens": list(toks), "logit_bits": list(bits), "kv_sha256": kv, "decode_seconds": 2.0},
+                "candidate": {"tokens": list(toks), "logit_bits": list(bits), "kv_sha256": kv, "decode_seconds": 1.5},
+            })
+        raw_ref = {
+            "passed": True,
+            "started_utc": "2026-11-22T00:00:00Z",
+            "finished_utc": "2026-11-22T00:05:00Z",
+            "cases": raw_cases,
+        }
+        template_cache_wrapper = {
+            "note": "archived bench-template-cache shape",
+            "before": rc13_rows,
+            "shared": rc13_rows,
+            "reset": rc13_rows,
+        }
+        compare_wrapper = {
+            "rc11": rc13_rows,
+            "rc12": rc13_rows,
+            "rc13": rc13_rows,
+        }
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            tc_p = tmp / "bench-template-cache.json"
+            cmp_p = tmp / "bench-compare.json"
+            raw_p = tmp / "v9h_ref_36.json"
+            go_bench_p = tmp / "pilot_go.json"
+            tc_p.write_text(json.dumps(template_cache_wrapper), encoding="utf-8")
+            cmp_p.write_text(json.dumps(compare_wrapper), encoding="utf-8")
+            raw_p.write_text(json.dumps(raw_ref), encoding="utf-8")
+            go_bench_p.write_text(json.dumps(pilot_go_rows), encoding="utf-8")
+
+            # Without explicit arm, wrapper files fail with an actionable error listing available arms.
+            with self.assertRaises(ValueError) as ctx_tc:
+                analyze_pilot.load_records([tc_p])
+            self.assertIn("shared", str(ctx_tc.exception))
+
+            with self.assertRaises(ValueError) as ctx_cmp:
+                analyze_pilot.load_records([cmp_p])
+            self.assertIn("rc13", str(ctx_cmp.exception))
+
+            r_no_arm = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(tc_p), "--pilot", str(go_bench_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(r_no_arm.returncode, 0)
+            self.assertIn("shared", r_no_arm.stderr)
+
+            # Wrong arm name is rejected cleanly.
+            with self.assertRaises(ValueError):
+                analyze_pilot.load_records([cmp_p], arm="shared")
+
+            # Explicit --rc13-arm rc13 works with pilot bench.
+            r_cmp = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(cmp_p), "--rc13-arm", "rc13", "--pilot", str(go_bench_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_cmp.returncode, 0, r_cmp.stdout + r_cmp.stderr)
+            self.assertIn("GO: 21/21 identical", r_cmp.stdout)
+
+            # Explicit --rc13-arm shared + 36-case raw pilot.json self-compare at 1.0x -> 57/57 GO.
+            r_57 = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(tc_p),
+                    str(raw_p),
+                    "--rc13-arm",
+                    "shared",
+                    "--pilot",
+                    str(tc_p),
+                    str(raw_p),
+                    "--pilot-arm",
+                    "shared",
+                    "--min-decode-speedup",
+                    "1.0",
+                    "--min-e2e-speedup",
+                    "1.0",
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_57.returncode, 0, r_57.stdout + r_57.stderr)
+            self.assertIn("GO: 57/57 identical", r_57.stdout)
 
 
 if __name__ == "__main__":
