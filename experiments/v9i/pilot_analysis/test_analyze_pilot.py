@@ -2279,6 +2279,149 @@ class AnalyzePilotTest(unittest.TestCase):
                     self.assertFalse(any(line.startswith("GO:") for line in res.stdout.splitlines()))
                     self.assertIn("NO-GO:", res.stdout)
 
+    def test_rc14_pilot_md_combined_21_plus_36_schemas_and_source_format_split(self) -> None:
+        paths = ["/proc/sys/kernel/random/boot_id", "/proc/uptime", "/proc/version"]
+        domains = ["general", "maintenance", "long", "tool"]
+        rc13_rows = []
+        v9i_rows = []
+        for i in range(21):
+            p = paths[i % 3]
+            q = f"Read {p} #{i}"
+            rc13_rows.append({
+                "query": q,
+                "ok": True,
+                "complete": True,
+                "speculate": "rc1.3-costaware",
+                "prefix_tokens_reused": 32,
+                "generated_ids": [100, 200, i + 1],
+                "path": p,
+                "prefill_seconds": 0.55,
+                "decode_seconds": 0.50,
+                "elapsed_seconds": 1.07,
+                "wall_seconds": 1.09,
+                "speculation": {"passes": 3, "ar_steps": 0, "drafted": 6, "accepted": 4},
+            })
+            v9i_rows.append({
+                "query": q,
+                "ok": True,
+                "complete": True,
+                "speculate": "rc1.4-costaware",
+                "prefix_tokens_reused": 32,
+                "generated_ids": [100, 200, i + 1],
+                "path": p,
+                "prefill_seconds": 0.54,
+                "decode_seconds": 0.38,
+                "elapsed_seconds": 0.94,
+                "wall_seconds": 0.96,
+                "speculation": {"passes": 2, "ar_steps": 0, "drafted": 6, "accepted": 4},
+            })
+
+        ref_cases = []
+        pilot_cases = []
+        for k, idx in enumerate(range(0, 180, 5)):
+            dom = domains[idx % 4]
+            key = f"tool:Read {paths[k % 3]} #{idx}" if dom == "tool" else f"case-{idx}"
+            toks = [10, 20, 30 + k]
+            bits = [1001, 1002, 1003 + k]
+            kv = f"sha256-{idx}"
+            ref_cases.append({
+                "key": key,
+                "index": idx,
+                "domain": dom,
+                "prompt_tokens": 50 + k,
+                "max_new": 64,
+                "reference": "v9e-ref.json",
+                "prefill_seconds": 1.2,
+                "ar": {"passes": 3, "ar_steps": 3, "drafted": 0, "accepted": 0, "decode_seconds": 2.0, "kv_sha256": kv, "tokens": toks, "logit_bits": bits},
+                "candidate": {"passes": 2, "ar_steps": 0, "drafted": 4, "accepted": 2, "decode_seconds": 1.5, "kv_sha256": kv, "tokens": toks, "logit_bits": bits},
+                "ar_equal_v9e": True,
+                "candidate_equal_v9e": True,
+                "generated": len(toks),
+                "identical": True,
+            })
+            pilot_cases.append({
+                "key": key,
+                "index": idx,
+                "domain": dom,
+                "prompt_tokens": 50 + k,
+                "max_new": 64,
+                "reference": "reference-pilot.json",
+                "prefill_seconds": 1.15,
+                "ar": {"passes": 3, "ar_steps": 3, "drafted": 0, "accepted": 0, "decode_seconds": 1.9, "kv_sha256": kv, "tokens": toks, "logit_bits": bits},
+                "candidate": {"passes": 2, "ar_steps": 0, "drafted": 4, "accepted": 2, "decode_seconds": 1.35, "kv_sha256": kv, "tokens": toks, "logit_bits": bits},
+                "ar_equal_v9e": True,
+                "candidate_equal_v9e": True,
+                "generated": len(toks),
+                "identical": True,
+            })
+
+        ref_doc = {"passed": True, "started_utc": "2026-11-20T00:00:00Z", "finished_utc": "2026-11-20T00:10:00Z", "cases": ref_cases}
+        pilot_doc = {"passed": True, "started_utc": "2026-11-22T00:00:00Z", "finished_utc": "2026-11-22T00:10:00Z", "cases": pilot_cases}
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            rc13_shared = tmp / "bench-rc13-shared.json"
+            ref_pilot = tmp / "reference-pilot.json"
+            bench_v9i = tmp / "bench-v9i.json"
+            bench_log = tmp / "bench-v9i.log"
+            raw_pilot = tmp / "pilot.json"
+            out_json = tmp / "pilot-analysis.json"
+
+            rc13_shared.write_text(json.dumps(rc13_rows), encoding="utf-8")
+            ref_pilot.write_text(json.dumps(ref_doc), encoding="utf-8")
+            bench_v9i.write_text(json.dumps(v9i_rows), encoding="utf-8")
+            bench_log.write_text("info\nBENCH-JSON " + json.dumps(v9i_rows) + "\n", encoding="utf-8")
+            raw_pilot.write_text(json.dumps(pilot_doc), encoding="utf-8")
+
+            res = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(rc13_shared),
+                    str(ref_pilot),
+                    "--pilot",
+                    str(bench_v9i),
+                    str(raw_pilot),
+                    "--out",
+                    str(out_json),
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res.returncode, 0, res.stdout + res.stderr)
+            self.assertIn("GO: 57/57 identical", res.stdout)
+            self.assertIn("SOURCE[bench] (n=21, id=21/21):", res.stdout)
+            self.assertIn("SOURCE[pilot_cases] (n=36, id=36/36):", res.stdout)
+            self.assertIn("Socket Tool E2E:", res.stdout)
+
+            saved = json.loads(out_json.read_text(encoding="utf-8"))
+            self.assertEqual(saved["identity"]["total_queries"], 57)
+            self.assertEqual(set(saved["by_source_format"].keys()), {"bench", "pilot_cases"})
+            self.assertEqual(saved["by_source_format"]["bench"]["n"], 21)
+            self.assertEqual(saved["by_source_format"]["pilot_cases"]["n"], 36)
+            self.assertAlmostEqual(saved["by_source_format"]["bench"]["e2e_speedup"], 1.07 / 0.94, places=6)
+            self.assertAlmostEqual(saved["measured_vs_modelled"]["socket_tool"]["measured_e2e_speedup"], 1.07 / 0.94, places=6)
+            self.assertEqual(saved["measured_vs_modelled"]["scope"]["measured_socket_tool_cases"], 21)
+            self.assertEqual(saved["measured_vs_modelled"]["scope"]["measured_raw_tool_cases"], 9)
+
+            res_log = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(rc13_shared),
+                    "--pilot",
+                    str(bench_log),
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res_log.returncode, 0, res_log.stdout + res_log.stderr)
+            self.assertIn("GO: 21/21 identical", res_log.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

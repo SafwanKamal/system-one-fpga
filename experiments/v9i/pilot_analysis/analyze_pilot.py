@@ -1069,9 +1069,31 @@ def analyze(
         categories.setdefault(q["category"], []).append(q)
 
     by_category = {cat: _summarize_group(items) for cat, items in categories.items()}
+    source_formats: dict[str, list[dict[str, Any]]] = {}
+    for q in matched:
+        sf = (
+            q["rc13_source_format"]
+            if q["rc13_source_format"] == q["pilot_source_format"] and q["rc13_source_format"] is not None
+            else f"{q['rc13_source_format']}->{q['pilot_source_format']}"
+        )
+        source_formats.setdefault(str(sf), []).append(q)
+    by_source_format = {sf: _summarize_group(items) for sf, items in source_formats.items()}
     overall = _summarize_group(matched)
     tool_items = [q for q in matched if q["is_tool"]]
     tool_summary = _summarize_group(tool_items) if tool_items else None
+    socket_tool_items = [
+        q for q in tool_items
+        if q.get("rc13_source_format") == "bench" and q.get("pilot_source_format") == "bench"
+    ]
+    raw_tool_items = [
+        q for q in tool_items
+        if q.get("rc13_source_format") == "pilot_cases" and q.get("pilot_source_format") == "pilot_cases"
+    ]
+    socket_tool_summary = (
+        _summarize_group(socket_tool_items)
+        if (socket_tool_items and raw_tool_items)
+        else None
+    )
 
     identical_count = sum(1 for q in per_query if q["identical"])
     failing_queries = [
@@ -1301,13 +1323,17 @@ def analyze(
         "invalid_timings": invalid_timing_queries,
         "per_query": per_query,
         "by_category": by_category,
+        "by_source_format": by_source_format,
         "overall": overall,
         "measured_vs_modelled": {
             "scope": {
                 "measured_cases": matched_n,
                 "measured_tool_cases": tool_n,
+                "measured_socket_tool_cases": len(socket_tool_items),
+                "measured_raw_tool_cases": len(raw_tool_items),
                 "measured_non_tool_cases": non_tool_n,
                 "measured_categories": sorted(by_category.keys()),
+                "measured_source_formats": sorted(by_source_format.keys()),
                 "modelled_workload_cases": MODELLED_WORKLOAD_CASES,
                 "matches_model_scope": matches_model_scope,
                 "modelled_overall_decode_speedup": MODELLED_OVERALL_DECODE_SPEEDUP,
@@ -1323,6 +1349,19 @@ def analyze(
                 )
                 if tool_summary is not None
                 else None
+            ),
+            **(
+                {
+                    "socket_tool": _model_comparison(
+                        socket_tool_summary["e2e_speedup"],
+                        MODELLED_TOOL_E2E_SPEEDUP,
+                        measured_n=socket_tool_summary["e2e_n"],
+                        measured_scope=f"measured socket tool sample (n={socket_tool_summary['e2e_n']})",
+                        model_scope="tool E2E model vs v9h",
+                    )
+                }
+                if socket_tool_summary is not None
+                else {}
             ),
             "overall": _model_comparison(
                 overall_e2e_sp,
@@ -1413,6 +1452,14 @@ def format_report(report: dict[str, Any]) -> str:
             f"{_fmt_group_timing(stats, 'decode')}, "
             f"{_fmt_group_timing(stats, 'e2e')}"
         )
+    by_sf = report.get("by_source_format") or {}
+    if len(by_sf) > 1:
+        for sf, stats in by_sf.items():
+            lines.append(
+                f"  SOURCE[{sf}] (n={stats['n']}, id={stats['identical']}/{stats['n']}): "
+                f"{_fmt_group_timing(stats, 'decode')}, "
+                f"{_fmt_group_timing(stats, 'e2e')}"
+            )
     ov = report["overall"]
     if not ov or ov.get("n", 0) == 0:
         lines.append("  OVERALL (n=0): no matched queries")
@@ -1511,6 +1558,14 @@ def format_report(report: dict[str, Any]) -> str:
             f"vs modelled {t['modelled_speedup']}x "
             f"(e2e/model={_fmt_opt(t['e2e_measured_over_modelled'], '.4f', 'x')}, "
             f"delta={_fmt_opt(t['e2e_delta_vs_modelled'], '+.4f', 'x')})"
+        )
+    if mvm.get("socket_tool") is not None:
+        st = mvm["socket_tool"]
+        lines.append(
+            f"  Socket Tool E2E: e2e={_fmt_opt(st['measured_e2e_speedup'], '.4f', 'x')} "
+            f"vs modelled {st['modelled_speedup']}x "
+            f"(e2e/model={_fmt_opt(st['e2e_measured_over_modelled'], '.4f', 'x')}, "
+            f"delta={_fmt_opt(st['e2e_delta_vs_modelled'], '+.4f', 'x')})"
         )
     o = mvm["overall"]
     lines.append(
