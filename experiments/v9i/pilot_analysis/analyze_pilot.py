@@ -24,7 +24,7 @@ Supported RC1.3 / pilot board result formats:
 1. `bench-<label>.json`: JSON list produced by `install_rc13.py bench` (21 tool queries).
 2. `BENCH-JSON [...]`: stdout log containing a `BENCH-JSON ` line (`rc12_ship/compare.py`).
 3. `pilot.json`: JSON object with `cases` list and terminal status (`finished_utc` without `error`; `passed=False` completed failures are retained for `NO-GO` reporting, while interrupted/error snapshots are rejected) (`experiments/dual_port/v9h_pilot.py`).
-4. Archived wrapper JSON objects (e.g., `bench-template-cache.json` with `shared` or `bench-compare.json` with `rc13`), selected explicitly via `--rc13-arm` / `--pilot-arm`.
+4. Archived wrapper JSON objects (e.g., `bench-template-cache.json` with `shared` or pre-template-cache `bench-compare.json` with `rc13`), selected explicitly via `--rc13-arm` / `--pilot-arm`. When `--rc13-arm rc13` is used and every row omits `prefix_tokens_reused` (the documented `0cc305b` `install_rc13.py` `reset_cache=True` provenance), RC1.3 rows are treated as cold (`prefix_tokens_reused=0`). Pass `--rc13-cold-baseline` when supplying a standalone extracted `rc13-compare.json` or `0cc305b` `BENCH-JSON` stdout log.
 
 Usage:
     python analyze_pilot.py --rc13 RC13_BENCH --pilot PILOT_BENCH [--out OUT.json]
@@ -194,7 +194,21 @@ def _normalize_pilot_doc(raw: dict[str, Any], path: Path) -> list[dict[str, Any]
     return [_normalize_pilot_case(case, path, file_passed=file_passed) for case in raw["cases"]]
 
 
-def _load_single_file(path: Path, *, arm: str | None = None) -> list[dict[str, Any]]:
+def _all_omit_reused(rows: list[Any]) -> bool:
+    """Return True when every row is a dict omitting the 'prefix_tokens_reused' key."""
+    return bool(rows) and all(
+        isinstance(row, dict) and "prefix_tokens_reused" not in row
+        for row in rows
+    )
+
+
+def _load_single_file(
+    path: Path,
+    *,
+    arm: str | None = None,
+    allow_legacy_cold_arm: bool = False,
+    cold_baseline: bool = False,
+) -> list[dict[str, Any]]:
     text = path.read_text(encoding="utf-8")
     raw: Any = None
     stripped = text.lstrip()
@@ -218,7 +232,11 @@ def _load_single_file(path: Path, *, arm: str | None = None) -> list[dict[str, A
     if isinstance(raw, list):
         if not raw:
             raise ValueError(f"{path}: bench result list is empty")
-        return [_normalize_bench_row(row, path) for row in raw]
+        default_omitted_reused = 0 if (cold_baseline and _all_omit_reused(raw)) else None
+        return [
+            _normalize_bench_row(row, path, default_omitted_reused=default_omitted_reused)
+            for row in raw
+        ]
     if isinstance(raw, dict):
         if _is_pilot_doc(raw) and (arm is None or arm == "cases" or arm not in raw):
             return _normalize_pilot_doc(raw, path)
@@ -242,7 +260,16 @@ def _load_single_file(path: Path, *, arm: str | None = None) -> list[dict[str, A
         if isinstance(selected, list):
             if not selected:
                 raise ValueError(f"{path}: wrapper arm {arm!r} bench result list is empty")
-            return [_normalize_bench_row(row, path) for row in selected]
+            # Pre-template-cache RC1.3 bench-compare.json ('rc13' arm from 0cc305b install_rc13.py)
+            # always used reset_cache=True without emitting prefix_tokens_reused.
+            is_legacy_cold_rc13 = (allow_legacy_cold_arm and arm == "rc13") or cold_baseline
+            default_omitted_reused = (
+                0 if (is_legacy_cold_rc13 and _all_omit_reused(selected)) else None
+            )
+            return [
+                _normalize_bench_row(row, path, default_omitted_reused=default_omitted_reused)
+                for row in selected
+            ]
         if _is_pilot_doc(selected):
             return _normalize_pilot_doc(selected, path)
         raise ValueError(
@@ -252,7 +279,12 @@ def _load_single_file(path: Path, *, arm: str | None = None) -> list[dict[str, A
     raise ValueError(f"{path}: unsupported JSON structure; expected list or dict with 'cases'")
 
 
-def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
+def _normalize_bench_row(
+    row: dict[str, Any],
+    path: Path,
+    *,
+    default_omitted_reused: int | None = None,
+) -> dict[str, Any]:
     if not isinstance(row, dict):
         raise ValueError(f"{path}: bench row must be an object")
     if "query" not in row or not _is_nonempty_str(row["query"]):
@@ -293,9 +325,12 @@ def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
             raw_tokens, token_field, path, context=f"bench row for {row['query']!r}"
         )
 
-    reused = _parse_nonneg_int(
-        row.get("prefix_tokens_reused"), "prefix_tokens_reused", path, required=False
-    )
+    if "prefix_tokens_reused" in row:
+        reused = _parse_nonneg_int(
+            row["prefix_tokens_reused"], "prefix_tokens_reused", path, required=False
+        )
+    else:
+        reused = default_omitted_reused
 
     decode = _parse_timing(row.get("decode_seconds"), "decode_seconds", path, required=row_ok)
     if "prefill_seconds" in row:
@@ -475,10 +510,23 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
     }
 
 
-def load_records(paths: list[Path], *, arm: str | None = None) -> list[dict[str, Any]]:
+def load_records(
+    paths: list[Path],
+    *,
+    arm: str | None = None,
+    allow_legacy_cold_arm: bool = True,
+    cold_baseline: bool = False,
+) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for p in paths:
-        records.extend(_load_single_file(p, arm=arm))
+        records.extend(
+            _load_single_file(
+                p,
+                arm=arm,
+                allow_legacy_cold_arm=allow_legacy_cold_arm,
+                cold_baseline=cold_baseline,
+            )
+        )
     return records
 
 
@@ -1495,6 +1543,14 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="Wrapper key to select from wrapped pilot archive JSON",
     )
+    ap.add_argument(
+        "--rc13-cold-baseline",
+        action="store_true",
+        help=(
+            "Treat uniformly omitted prefix_tokens_reused on --rc13 bench rows as cold (0 reused) "
+            "for extracted pre-template-cache RC1.3 archives/logs (never overrides explicit null or --pilot)"
+        ),
+    )
     ap.add_argument("--out", type=Path, help="Optional JSON output path")
     ap.add_argument("--min-decode-speedup", type=float, default=MIN_DECODE_SPEEDUP)
     ap.add_argument("--min-e2e-speedup", type=float, default=MIN_E2E_SPEEDUP)
@@ -1517,8 +1573,18 @@ def main(argv: list[str] | None = None) -> int:
         ap.error("Provide --rc13 and --pilot (or two positional paths)")
 
     report = analyze(
-        load_records(rc13_paths, arm=args.rc13_arm),
-        load_records(pilot_paths, arm=args.pilot_arm),
+        load_records(
+            rc13_paths,
+            arm=args.rc13_arm,
+            allow_legacy_cold_arm=True,
+            cold_baseline=args.rc13_cold_baseline,
+        ),
+        load_records(
+            pilot_paths,
+            arm=args.pilot_arm,
+            allow_legacy_cold_arm=False,
+            cold_baseline=False,
+        ),
         min_decode_speedup=args.min_decode_speedup,
         min_e2e_speedup=args.min_e2e_speedup,
     )

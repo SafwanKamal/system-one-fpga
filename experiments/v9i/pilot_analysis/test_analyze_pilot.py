@@ -2121,6 +2121,164 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertEqual(r_raw.returncode, 0, r_raw.stdout + r_raw.stderr)
             self.assertIn("GO: 1/1 identical", r_raw.stdout)
 
+    def test_pre_template_cache_rc13_cold_provenance_and_explicit_cold_baseline(self) -> None:
+        rc13_rows = json.loads((FIXTURES / "rc13_bench.json").read_text(encoding="utf-8"))
+        pilot_go_rows = json.loads((FIXTURES / "pilot_go_bench.json").read_text(encoding="utf-8"))
+
+        # Exact reviewer reproducer: pre-template-cache 0cc305b install_rc13.py omitted
+        # prefix_tokens_reused while setting reset_cache=True on every request.
+        legacy_rc13_rows = json.loads(json.dumps(rc13_rows))
+        for row in legacy_rc13_rows:
+            row.pop("prefix_tokens_reused", None)
+
+        cold_pilot_rows = json.loads(json.dumps(pilot_go_rows))
+        for row in cold_pilot_rows:
+            row["prefix_tokens_reused"] = 0
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            legacy_wrap_p = tmp / "bench-compare.json"
+            legacy_list_p = tmp / "rc13-compare.json"
+            legacy_log_p = tmp / "rc13-compare.stdout"
+            cold_pilot_p = tmp / "pilot_cold.json"
+            cached_pilot_p = FIXTURES / "pilot_go_bench.json"
+            out_go_p = tmp / "out_cold_go.json"
+
+            legacy_wrap_p.write_text(json.dumps({"rc13": legacy_rc13_rows}), encoding="utf-8")
+            legacy_list_p.write_text(json.dumps(legacy_rc13_rows), encoding="utf-8")
+            legacy_log_p.write_text("header\nBENCH-JSON " + json.dumps(legacy_rc13_rows) + "\n", encoding="utf-8")
+            cold_pilot_p.write_text(json.dumps(cold_pilot_rows), encoding="utf-8")
+
+            # 1. Documented --rc13-arm rc13 against cold pilot (prefix_tokens_reused=0) -> GO 21/21.
+            r_arm_go = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(legacy_wrap_p),
+                    "--rc13-arm",
+                    "rc13",
+                    "--pilot",
+                    str(cold_pilot_p),
+                    "--out",
+                    str(out_go_p),
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_arm_go.returncode, 0, r_arm_go.stdout + r_arm_go.stderr)
+            self.assertIn("GO: 21/21 identical; decode speedup 1.310x", r_arm_go.stdout)
+            self.assertIn("e2e speedup 1.122x", r_arm_go.stdout)
+            rep_arm_go = json.loads(out_go_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep_arm_go["verdict"], "GO")
+            self.assertTrue(all(q["rc13_prefix_tokens_reused"] == 0 for q in rep_arm_go["per_query"]))
+            self.assertTrue(all(q["pilot_prefix_tokens_reused"] == 0 for q in rep_arm_go["per_query"]))
+            self.assertEqual(rep_arm_go["cache_condition_mismatches"], [])
+
+            # 2. Legacy cold rc13 arm vs template-cached pilot (32) -> NO-GO (0 vs 32 mismatch).
+            r_arm_vs_cached = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(legacy_wrap_p),
+                    "--rc13-arm",
+                    "rc13",
+                    "--pilot",
+                    str(cached_pilot_p),
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_arm_vs_cached.returncode, 1, r_arm_vs_cached.stdout + r_arm_vs_cached.stderr)
+            self.assertIn("mismatched measured cache conditions", r_arm_vs_cached.stdout)
+            self.assertIn("21/21 matched queries", r_arm_vs_cached.stdout)
+
+            # 3. Standalone extracted array without --rc13-cold-baseline stays gated (NO-GO).
+            r_list_no_flag = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(legacy_list_p),
+                    "--pilot",
+                    str(cold_pilot_p),
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_list_no_flag.returncode, 1, r_list_no_flag.stdout + r_list_no_flag.stderr)
+            self.assertIn("NO-GO:", r_list_no_flag.stdout)
+            self.assertIn("mismatched measured cache conditions", r_list_no_flag.stdout)
+
+            # 4. Standalone extracted array and BENCH-JSON log with --rc13-cold-baseline -> GO 21/21.
+            for label, src_p in (("extracted_list", legacy_list_p), ("bench_json_log", legacy_log_p)):
+                with self.subTest(source=label):
+                    r_cold_flag = subprocess.run(
+                        [
+                            sys.executable,
+                            str(SCRIPT),
+                            "--rc13",
+                            str(src_p),
+                            "--rc13-cold-baseline",
+                            "--pilot",
+                            str(cold_pilot_p),
+                            "--check",
+                        ],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertEqual(r_cold_flag.returncode, 0, r_cold_flag.stdout + r_cold_flag.stderr)
+                    self.assertIn("GO: 21/21 identical; decode speedup 1.310x", r_cold_flag.stdout)
+                    self.assertIn("e2e speedup 1.122x", r_cold_flag.stdout)
+
+            # 5. Explicit null, partial omission, non-rc13 arm, and pilot omissions remain gated (NO-GO).
+            null_rc13_rows = json.loads(json.dumps(legacy_rc13_rows))
+            for row in null_rc13_rows:
+                row["prefix_tokens_reused"] = None
+            null_wrap_p = tmp / "null_wrap.json"
+            null_list_p = tmp / "null_list.json"
+            null_wrap_p.write_text(json.dumps({"rc13": null_rc13_rows}), encoding="utf-8")
+            null_list_p.write_text(json.dumps(null_rc13_rows), encoding="utf-8")
+
+            mixed_rc13_rows = json.loads(json.dumps(legacy_rc13_rows))
+            mixed_rc13_rows[1]["prefix_tokens_reused"] = 0
+            mixed_wrap_p = tmp / "mixed_wrap.json"
+            mixed_wrap_p.write_text(json.dumps({"rc13": mixed_rc13_rows}), encoding="utf-8")
+
+            shared_omitted_wrap_p = tmp / "shared_omitted_wrap.json"
+            shared_omitted_wrap_p.write_text(json.dumps({"shared": legacy_rc13_rows}), encoding="utf-8")
+
+            omit_pilot_rows = json.loads(json.dumps(cold_pilot_rows))
+            for row in omit_pilot_rows:
+                row.pop("prefix_tokens_reused", None)
+            omit_pilot_p = tmp / "omit_pilot.json"
+            omit_pilot_wrap_p = tmp / "omit_pilot_wrap.json"
+            omit_pilot_p.write_text(json.dumps(omit_pilot_rows), encoding="utf-8")
+            omit_pilot_wrap_p.write_text(json.dumps({"rc13": omit_pilot_rows}), encoding="utf-8")
+
+            gated_cases = [
+                ("explicit_null_under_rc13_arm", ["--rc13", str(null_wrap_p), "--rc13-arm", "rc13", "--pilot", str(cold_pilot_p)]),
+                ("explicit_null_under_cold_flag", ["--rc13", str(null_list_p), "--rc13-cold-baseline", "--pilot", str(cold_pilot_p)]),
+                ("mixed_omission_under_rc13_arm", ["--rc13", str(mixed_wrap_p), "--rc13-arm", "rc13", "--pilot", str(cold_pilot_p)]),
+                ("non_rc13_shared_arm_omitted", ["--rc13", str(shared_omitted_wrap_p), "--rc13-arm", "shared", "--pilot", str(cold_pilot_p)]),
+                ("pilot_omitted_with_cold_flag", ["--rc13", str(legacy_list_p), "--rc13-cold-baseline", "--pilot", str(omit_pilot_p)]),
+                ("pilot_omitted_under_pilot_arm_rc13", ["--rc13", str(legacy_wrap_p), "--rc13-arm", "rc13", "--pilot", str(omit_pilot_wrap_p), "--pilot-arm", "rc13"]),
+            ]
+            for label, cli_args in gated_cases:
+                with self.subTest(case=label):
+                    res = subprocess.run(
+                        [sys.executable, str(SCRIPT), *cli_args, "--check"],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertEqual(res.returncode, 1, res.stdout + res.stderr)
+                    self.assertFalse(any(line.startswith("GO:") for line in res.stdout.splitlines()))
+                    self.assertIn("NO-GO:", res.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
