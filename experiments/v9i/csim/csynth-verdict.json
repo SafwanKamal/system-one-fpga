@@ -1,0 +1,71 @@
+{
+  "verdict": "PASS",
+  "run": "2d94b549f8e6",
+  "execution": "Claude's routed v9i HLS build, independently confirmed from its XML reports and log",
+  "source": "build/v2/v9i/src",
+  "source_sha256": "225fb69eabbf4bceaa54b3c98df43d3de36942f1bcbbb372aaf7e66a096887d0",
+  "staged_source": "build/v2/v9i/impl/src",
+  "top": "qwen_decoder",
+  "part": "xck26-sfvc784-2LV-c",
+  "vitis_version": "2025.2",
+  "clock_ns": 8,
+  "clock_uncertainty_ns": 1.0,
+  "pipeline_loops": 0,
+  "csynth_wall_seconds": 222,
+  "resources": {
+    "total": {
+      "LUT": 138765,
+      "FF": 238179,
+      "DSP": 666,
+      "BRAM_18K": 234
+    },
+    "attention": {
+      "LUT": 27499,
+      "FF": 27795,
+      "DSP": 135,
+      "BRAM_18K": 12
+    },
+    "matvec": {
+      "LUT": 63447,
+      "FF": 179512,
+      "DSP": 396,
+      "BRAM_18K": 0
+    }
+  },
+  "evidence": "build/v2/v9i/impl",
+  "evidence_sha256": {
+    "attention_csynth.xml": "2d284fd6c8f5a474a8d458c57a7700a154892b994b67cde55ec722e0d111fa87",
+    "hls-console.log": "cdf81bb22b9443e8317e96d170e554f6238dc2521d79f64e5d3792289526c65f",
+    "hls-release.tcl": "2dacf1fb68c905ddaf6461a2cdd53b07d0a9350dbc75f278d611871db424dc53",
+    "matvec_csynth.xml": "b7274f3c9df0c50572ed82a85668618e97bd75a41a2050e38e24960711355ff0",
+    "qwen_decoder_csynth.xml": "3e5bb92140b1bfe68f04a81618d0b1ed915fb135975c806c529a993b3ab72095"
+  },
+  "publication_run": "7b30ba1da0cc",
+  "decode_csim": {
+    "verdict": "STOPPED_AT_CAP",
+    "timeout_seconds": 5400,
+    "superseded_by": "Claude's batch-8 prefill C-sim (experiments/v9i/exactness.md)",
+    "comparison_completed": false,
+    "v9h_positions_logged": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "v9h_driver_wall_seconds": 5094.173,
+    "v9h_driver_exit_code": 4294967295,
+    "v9i_started": false
+  }
+}
