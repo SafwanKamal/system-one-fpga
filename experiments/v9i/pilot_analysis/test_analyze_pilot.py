@@ -141,11 +141,13 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertIn("NO-GO:", r_slow.stdout)
 
     def test_duplicate_query_ids_detects_earlier_token_mismatch(self) -> None:
-        def row(tokens: list[int], dec: float, e2e: float) -> dict:
+        def row(tokens: list[int], dec: float, e2e: float, *, speculate: str = "rc1.3-costaware") -> dict:
             return {
                 "query": "same",
                 "ok": True,
                 "complete": True,
+                "speculate": speculate,
+                "prefix_tokens_reused": 32,
                 "generated_ids": tokens,
                 "path": "/proc/uptime",
                 "prefill_seconds": e2e - dec,
@@ -157,8 +159,20 @@ class AnalyzePilotTest(unittest.TestCase):
             tmp = Path(td)
             rc13_path = tmp / "rc13.json"
             pilot_path = tmp / "pilot.json"
-            rc13_path.write_text(json.dumps([row([7], 2.0, 3.0), row([7], 2.0, 3.0)]), encoding="utf-8")
-            pilot_path.write_text(json.dumps([row([8], 1.0, 2.0), row([7], 1.0, 2.0)]), encoding="utf-8")
+            rc13_path.write_text(
+                json.dumps([
+                    row([7], 2.0, 3.0, speculate="rc1.3-costaware"),
+                    row([7], 2.0, 3.0, speculate="rc1.3-costaware"),
+                ]),
+                encoding="utf-8",
+            )
+            pilot_path.write_text(
+                json.dumps([
+                    row([8], 1.0, 2.0, speculate="rc1.4-costaware"),
+                    row([7], 1.0, 2.0, speculate="rc1.4-costaware"),
+                ]),
+                encoding="utf-8",
+            )
 
             rep = analyze_pilot.analyze(
                 analyze_pilot.load_records([rc13_path]),
@@ -174,7 +188,7 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertEqual(rep["identity"]["failing_queries"][0]["occurrence"], 0)
 
             # Mismatched duplicate counts must also fail identity.
-            pilot_path.write_text(json.dumps([row([7], 1.0, 2.0)]), encoding="utf-8")
+            pilot_path.write_text(json.dumps([row([7], 1.0, 2.0, speculate="rc1.4-costaware")]), encoding="utf-8")
             rep_missing = analyze_pilot.analyze(
                 analyze_pilot.load_records([rc13_path]),
                 analyze_pilot.load_records([pilot_path]),
@@ -276,11 +290,12 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertEqual(rep_ok["verdict"], "GO")
 
     def test_full_precision_gating_no_rounding_false_go(self) -> None:
-        def rec(dec: float, e2e: float) -> dict:
+        def rec(dec: float, e2e: float, *, speculate: str = "rc1.3-costaware") -> dict:
             return {
                 "query": "q1",
                 "ok": True,
                 "complete": True,
+                "speculate": speculate,
                 "prefix_tokens_reused": 32,
                 "generated_ids": [1, 2, 3],
                 "path": "/proc/uptime",
@@ -293,8 +308,8 @@ class AnalyzePilotTest(unittest.TestCase):
             tmp = Path(td)
             rc13_path = tmp / "rc13.json"
             pilot_path = tmp / "pilot.json"
-            rc13_path.write_text(json.dumps([rec(1.02996, 1.99996)]), encoding="utf-8")
-            pilot_path.write_text(json.dumps([rec(1.0, 2.0)]), encoding="utf-8")
+            rc13_path.write_text(json.dumps([rec(1.02996, 1.99996, speculate="rc1.3-costaware")]), encoding="utf-8")
+            pilot_path.write_text(json.dumps([rec(1.0, 2.0, speculate="rc1.4-costaware")]), encoding="utf-8")
 
             rep = analyze_pilot.analyze(
                 analyze_pilot.load_records([rc13_path]),
@@ -309,7 +324,7 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertIn("0.99998", rep["go_line"])
 
             # Exact threshold passes.
-            rc13_path.write_text(json.dumps([rec(1.03, 2.0)]), encoding="utf-8")
+            rc13_path.write_text(json.dumps([rec(1.03, 2.0, speculate="rc1.3-costaware")]), encoding="utf-8")
             rep_pass = analyze_pilot.analyze(
                 analyze_pilot.load_records([rc13_path]),
                 analyze_pilot.load_records([pilot_path]),
@@ -864,6 +879,7 @@ class AnalyzePilotTest(unittest.TestCase):
         def bench_row(
             qid: str,
             *,
+            speculate: str = "rc1.3-costaware",
             reused: object = 32,
             include_reused: bool = True,
             dec: float = 1.0,
@@ -873,6 +889,7 @@ class AnalyzePilotTest(unittest.TestCase):
                 "query": qid,
                 "ok": True,
                 "complete": True,
+                "speculate": speculate,
                 "generated_ids": [1, 7],
                 "path": "/proc/uptime",
                 "prefill_seconds": max(0.0, e2e - dec),
@@ -889,8 +906,8 @@ class AnalyzePilotTest(unittest.TestCase):
             base_p = tmp / "base_cold.json"
             cand_p = tmp / "cand_warm.json"
             out_p = tmp / "out_p1.json"
-            base_p.write_text(json.dumps([bench_row("q1", reused=0, dec=1.0, e2e=2.0)]), encoding="utf-8")
-            cand_p.write_text(json.dumps([bench_row("q1", reused=32, dec=0.9, e2e=0.95)]), encoding="utf-8")
+            base_p.write_text(json.dumps([bench_row("q1", speculate="rc1.3-costaware", reused=0, dec=1.0, e2e=2.0)]), encoding="utf-8")
+            cand_p.write_text(json.dumps([bench_row("q1", speculate="rc1.4-costaware", reused=32, dec=0.9, e2e=0.95)]), encoding="utf-8")
 
             r_repro = subprocess.run(
                 [sys.executable, str(SCRIPT), "--rc13", str(base_p), "--pilot", str(cand_p), "--out", str(out_p), "--check"],
@@ -927,15 +944,15 @@ class AnalyzePilotTest(unittest.TestCase):
             mixed_out = tmp / "mixed_out.json"
             mixed_base.write_text(
                 json.dumps([
-                    bench_row("q1", reused=32, dec=2.0, e2e=3.0),
-                    bench_row("q2", reused=0, dec=1.0, e2e=2.0),
+                    bench_row("q1", speculate="rc1.3-costaware", reused=32, dec=2.0, e2e=3.0),
+                    bench_row("q2", speculate="rc1.3-costaware", reused=0, dec=1.0, e2e=2.0),
                 ]),
                 encoding="utf-8",
             )
             mixed_cand.write_text(
                 json.dumps([
-                    bench_row("q1", reused=32, dec=1.0, e2e=2.0),
-                    bench_row("q2", reused=32, dec=0.5, e2e=0.8),
+                    bench_row("q1", speculate="rc1.4-costaware", reused=32, dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.4-costaware", reused=32, dec=0.5, e2e=0.8),
                 ]),
                 encoding="utf-8",
             )
@@ -960,7 +977,7 @@ class AnalyzePilotTest(unittest.TestCase):
             # One-sided missing prefix_tokens_reused on an ok=True row also blocks GO.
             onesided_cand = tmp / "onesided_cand.json"
             onesided_cand.write_text(
-                json.dumps([bench_row("q1", include_reused=False, dec=0.5, e2e=1.0)]),
+                json.dumps([bench_row("q1", speculate="rc1.4-costaware", include_reused=False, dec=0.5, e2e=1.0)]),
                 encoding="utf-8",
             )
             r_one = subprocess.run(
@@ -973,7 +990,7 @@ class AnalyzePilotTest(unittest.TestCase):
 
             # Matching cold-vs-cold (reused=0 vs reused=0) is comparable and allowed to GO.
             cold_cand = tmp / "cold_cand.json"
-            cold_cand.write_text(json.dumps([bench_row("q1", reused=0, dec=0.8, e2e=1.8)]), encoding="utf-8")
+            cold_cand.write_text(json.dumps([bench_row("q1", speculate="rc1.4-costaware", reused=0, dec=0.8, e2e=1.8)]), encoding="utf-8")
             r_cold_go = subprocess.run(
                 [sys.executable, str(SCRIPT), "--rc13", str(base_p), "--pilot", str(cold_cand), "--check"],
                 capture_output=True,
@@ -1113,6 +1130,7 @@ class AnalyzePilotTest(unittest.TestCase):
         def bench_row(
             qid: str,
             *,
+            speculate: str = "rc1.3-costaware",
             reused: object = None,
             include_reused: bool = True,
             dec: float = 1.0,
@@ -1122,6 +1140,7 @@ class AnalyzePilotTest(unittest.TestCase):
                 "query": qid,
                 "ok": True,
                 "complete": True,
+                "speculate": speculate,
                 "generated_ids": [1, 7],
                 "path": "/proc/uptime",
                 "prefill_seconds": max(0.0, e2e - dec),
@@ -1140,11 +1159,11 @@ class AnalyzePilotTest(unittest.TestCase):
             pilot_null_p = tmp / "pilot_null.json"
             out_null_p = tmp / "out_null.json"
             rc13_null_p.write_text(
-                json.dumps([bench_row("q1", reused=None, dec=1.0, e2e=2.0)]),
+                json.dumps([bench_row("q1", speculate="rc1.3-costaware", reused=None, dec=1.0, e2e=2.0)]),
                 encoding="utf-8",
             )
             pilot_null_p.write_text(
-                json.dumps([bench_row("q1", reused=None, dec=0.9, e2e=0.95)]),
+                json.dumps([bench_row("q1", speculate="rc1.4-costaware", reused=None, dec=0.9, e2e=0.95)]),
                 encoding="utf-8",
             )
             r_null = subprocess.run(
@@ -1177,11 +1196,11 @@ class AnalyzePilotTest(unittest.TestCase):
             rc13_omit_p = tmp / "rc13_omit.json"
             pilot_omit_p = tmp / "pilot_omit.json"
             rc13_omit_p.write_text(
-                json.dumps([bench_row("q1", include_reused=False, dec=1.0, e2e=2.0)]),
+                json.dumps([bench_row("q1", speculate="rc1.3-costaware", include_reused=False, dec=1.0, e2e=2.0)]),
                 encoding="utf-8",
             )
             pilot_omit_p.write_text(
-                json.dumps([bench_row("q1", include_reused=False, dec=0.9, e2e=0.95)]),
+                json.dumps([bench_row("q1", speculate="rc1.4-costaware", include_reused=False, dec=0.9, e2e=0.95)]),
                 encoding="utf-8",
             )
             r_omit = subprocess.run(
@@ -1199,15 +1218,15 @@ class AnalyzePilotTest(unittest.TestCase):
             part_out_p = tmp / "part_out.json"
             part_rc13_p.write_text(
                 json.dumps([
-                    bench_row("q1", reused=32, dec=2.0, e2e=3.0),
-                    bench_row("q2", reused=None, dec=1.0, e2e=2.0),
+                    bench_row("q1", speculate="rc1.3-costaware", reused=32, dec=2.0, e2e=3.0),
+                    bench_row("q2", speculate="rc1.3-costaware", reused=None, dec=1.0, e2e=2.0),
                 ]),
                 encoding="utf-8",
             )
             part_pilot_p.write_text(
                 json.dumps([
-                    bench_row("q1", reused=32, dec=1.0, e2e=2.0),
-                    bench_row("q2", reused=None, dec=0.9, e2e=0.95),
+                    bench_row("q1", speculate="rc1.4-costaware", reused=32, dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.4-costaware", reused=None, dec=0.9, e2e=0.95),
                 ]),
                 encoding="utf-8",
             )
@@ -1270,6 +1289,7 @@ class AnalyzePilotTest(unittest.TestCase):
         def bench_row(
             qid: str,
             *,
+            speculate: str = "rc1.3-costaware",
             tokens: list[int] | None = None,
             dec: float = 1.0,
             e2e: float = 2.0,
@@ -1279,6 +1299,7 @@ class AnalyzePilotTest(unittest.TestCase):
                 "query": qid,
                 "ok": True,
                 "complete": True,
+                "speculate": speculate,
                 "prefix_tokens_reused": 32,
                 "generated_ids": toks,
                 "path": "/proc/uptime",
@@ -1295,11 +1316,17 @@ class AnalyzePilotTest(unittest.TestCase):
             pilot_zero_p = tmp / "pilot_zero.json"
             out_zero_p = tmp / "out_zero.json"
             rc13_p.write_text(
-                json.dumps([bench_row("q1", dec=1.0, e2e=2.0), bench_row("q2", dec=1.0, e2e=2.0)]),
+                json.dumps([
+                    bench_row("q1", speculate="rc1.3-costaware", dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.3-costaware", dec=1.0, e2e=2.0),
+                ]),
                 encoding="utf-8",
             )
             pilot_zero_p.write_text(
-                json.dumps([bench_row("q1", dec=1.0, e2e=2.0), bench_row("q2", dec=0.0, e2e=0.0)]),
+                json.dumps([
+                    bench_row("q1", speculate="rc1.4-costaware", dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.4-costaware", dec=0.0, e2e=0.0),
+                ]),
                 encoding="utf-8",
             )
             r_zero = subprocess.run(
@@ -1332,7 +1359,10 @@ class AnalyzePilotTest(unittest.TestCase):
             # Even when q1 easily beats thresholds (2.0x), zero-duration q2 still blocks GO.
             pilot_fast_plus_zero_p = tmp / "pilot_fast_plus_zero.json"
             pilot_fast_plus_zero_p.write_text(
-                json.dumps([bench_row("q1", dec=0.5, e2e=1.0), bench_row("q2", dec=0.0, e2e=0.0)]),
+                json.dumps([
+                    bench_row("q1", speculate="rc1.4-costaware", dec=0.5, e2e=1.0),
+                    bench_row("q2", speculate="rc1.4-costaware", dec=0.0, e2e=0.0),
+                ]),
                 encoding="utf-8",
             )
             r_fast_zero = subprocess.run(
@@ -1347,7 +1377,10 @@ class AnalyzePilotTest(unittest.TestCase):
             # Zero decode on multi-token query even with positive E2E blocks GO.
             pilot_zero_dec_p = tmp / "pilot_zero_dec.json"
             pilot_zero_dec_p.write_text(
-                json.dumps([bench_row("q1", dec=0.5, e2e=1.5), bench_row("q2", dec=0.0, e2e=1.0)]),
+                json.dumps([
+                    bench_row("q1", speculate="rc1.4-costaware", dec=0.5, e2e=1.5),
+                    bench_row("q2", speculate="rc1.4-costaware", dec=0.0, e2e=1.0),
+                ]),
                 encoding="utf-8",
             )
             r_zero_dec = subprocess.run(
@@ -1360,8 +1393,24 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertIn("invalid non-positive timing", r_zero_dec.stdout)
 
             # Zero-duration on baseline row also blocks GO.
+            base_zero_p = tmp / "base_zero.json"
+            base_zero_p.write_text(
+                json.dumps([
+                    bench_row("q1", speculate="rc1.3-costaware", dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.3-costaware", dec=0.0, e2e=0.0),
+                ]),
+                encoding="utf-8",
+            )
+            pilot_valid_p = tmp / "pilot_valid.json"
+            pilot_valid_p.write_text(
+                json.dumps([
+                    bench_row("q1", speculate="rc1.4-costaware", dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.4-costaware", dec=1.0, e2e=2.0),
+                ]),
+                encoding="utf-8",
+            )
             r_base_zero = subprocess.run(
-                [sys.executable, str(SCRIPT), "--rc13", str(pilot_zero_p), "--pilot", str(rc13_p), "--check"],
+                [sys.executable, str(SCRIPT), "--rc13", str(base_zero_p), "--pilot", str(pilot_valid_p), "--check"],
                 capture_output=True,
                 text=True,
             )
@@ -1375,11 +1424,17 @@ class AnalyzePilotTest(unittest.TestCase):
             pilot_1tok_p = tmp / "pilot_1tok.json"
             out_1tok_p = tmp / "out_1tok.json"
             rc13_1tok_p.write_text(
-                json.dumps([bench_row("q1", tokens=[1, 7], dec=2.0, e2e=3.0), bench_row("q2", tokens=[7], dec=0.0, e2e=1.0)]),
+                json.dumps([
+                    bench_row("q1", speculate="rc1.3-costaware", tokens=[1, 7], dec=2.0, e2e=3.0),
+                    bench_row("q2", speculate="rc1.3-costaware", tokens=[7], dec=0.0, e2e=1.0),
+                ]),
                 encoding="utf-8",
             )
             pilot_1tok_p.write_text(
-                json.dumps([bench_row("q1", tokens=[1, 7], dec=1.0, e2e=2.0), bench_row("q2", tokens=[7], dec=0.0, e2e=1.0)]),
+                json.dumps([
+                    bench_row("q1", speculate="rc1.4-costaware", tokens=[1, 7], dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.4-costaware", tokens=[7], dec=0.0, e2e=1.0),
+                ]),
                 encoding="utf-8",
             )
             r_1tok_ok = subprocess.run(
@@ -1398,7 +1453,10 @@ class AnalyzePilotTest(unittest.TestCase):
             # Single-token query with zero E2E is invalid and blocks GO.
             pilot_1tok_zero_e2e_p = tmp / "pilot_1tok_zero_e2e.json"
             pilot_1tok_zero_e2e_p.write_text(
-                json.dumps([bench_row("q1", tokens=[1, 7], dec=1.0, e2e=2.0), bench_row("q2", tokens=[7], dec=0.0, e2e=0.0)]),
+                json.dumps([
+                    bench_row("q1", speculate="rc1.4-costaware", tokens=[1, 7], dec=1.0, e2e=2.0),
+                    bench_row("q2", speculate="rc1.4-costaware", tokens=[7], dec=0.0, e2e=0.0),
+                ]),
                 encoding="utf-8",
             )
             r_1tok_bad = subprocess.run(
@@ -1453,6 +1511,7 @@ class AnalyzePilotTest(unittest.TestCase):
         def bench_row(
             qid: str,
             *,
+            speculate: str = "rc1.3-costaware",
             prefill: float | None = 0.5,
             dec: float = 1.0,
             e2e: float = 1.6,
@@ -1462,6 +1521,7 @@ class AnalyzePilotTest(unittest.TestCase):
                 "query": qid,
                 "ok": True,
                 "complete": True,
+                "speculate": speculate,
                 "prefix_tokens_reused": 32,
                 "generated_ids": [1, 7],
                 "path": "/proc/uptime",
@@ -1527,8 +1587,8 @@ class AnalyzePilotTest(unittest.TestCase):
             base2_p = tmp / "base2.json"
             base2_p.write_text(
                 json.dumps([
-                    bench_row("q1", prefill=1.0, dec=2.0, e2e=3.2, wall=3.25),
-                    bench_row("q2", prefill=1.0, dec=2.0, e2e=3.2, wall=3.25),
+                    bench_row("q1", speculate="rc1.3-costaware", prefill=1.0, dec=2.0, e2e=3.2, wall=3.25),
+                    bench_row("q2", speculate="rc1.3-costaware", prefill=1.0, dec=2.0, e2e=3.2, wall=3.25),
                 ]),
                 encoding="utf-8",
             )
@@ -1536,8 +1596,8 @@ class AnalyzePilotTest(unittest.TestCase):
             part_stage_out = tmp / "part_stage_out.json"
             part_stage_p.write_text(
                 json.dumps([
-                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
-                    bench_row("q2", prefill=0.6, dec=0.8, e2e=1.2, wall=1.25),
+                    bench_row("q1", speculate="rc1.4-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", speculate="rc1.4-costaware", prefill=0.6, dec=0.8, e2e=1.2, wall=1.25),
                 ]),
                 encoding="utf-8",
             )
@@ -1564,8 +1624,8 @@ class AnalyzePilotTest(unittest.TestCase):
             part_wall_out = tmp / "part_wall_out.json"
             part_wall_p.write_text(
                 json.dumps([
-                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
-                    bench_row("q2", prefill=0.5, dec=1.0, e2e=1.6, wall=1.50),
+                    bench_row("q1", speculate="rc1.4-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", speculate="rc1.4-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.50),
                 ]),
                 encoding="utf-8",
             )
@@ -1585,8 +1645,8 @@ class AnalyzePilotTest(unittest.TestCase):
             no_pre_p = tmp / "no_pre.json"
             no_pre_p.write_text(
                 json.dumps([
-                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
-                    bench_row("q2", prefill=None, dec=1.0, e2e=0.9, wall=1.0),
+                    bench_row("q1", speculate="rc1.4-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", speculate="rc1.4-costaware", prefill=None, dec=1.0, e2e=0.9, wall=1.0),
                 ]),
                 encoding="utf-8",
             )
@@ -1599,16 +1659,24 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertIn("inconsistent socket timing on 1/2", r_nopre.stdout)
 
             # Inconsistent baseline (rc13) row also excluded & forces NO-GO.
+            bad_base_wall_p = tmp / "bad_base_wall.json"
+            bad_base_wall_p.write_text(
+                json.dumps([
+                    bench_row("q1", speculate="rc1.3-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", speculate="rc1.3-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.50),
+                ]),
+                encoding="utf-8",
+            )
             valid_p = tmp / "valid.json"
             valid_p.write_text(
                 json.dumps([
-                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
-                    bench_row("q2", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q1", speculate="rc1.4-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", speculate="rc1.4-costaware", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
                 ]),
                 encoding="utf-8",
             )
             r_bad_base = subprocess.run(
-                [sys.executable, str(SCRIPT), "--rc13", str(part_wall_p), "--pilot", str(valid_p), "--check"],
+                [sys.executable, str(SCRIPT), "--rc13", str(bad_base_wall_p), "--pilot", str(valid_p), "--check"],
                 capture_output=True,
                 text=True,
             )
@@ -1619,11 +1687,11 @@ class AnalyzePilotTest(unittest.TestCase):
             tol_rc13_p = tmp / "tol_rc13.json"
             tol_pilot_p = tmp / "tol_pilot.json"
             tol_rc13_p.write_text(
-                json.dumps([bench_row("q1", prefill=0.2, dec=0.4, e2e=0.6, wall=None)]),
+                json.dumps([bench_row("q1", speculate="rc1.3-costaware", prefill=0.2, dec=0.4, e2e=0.6, wall=None)]),
                 encoding="utf-8",
             )
             tol_pilot_p.write_text(
-                json.dumps([bench_row("q1", prefill=0.1, dec=0.2, e2e=0.3, wall=None)]),
+                json.dumps([bench_row("q1", speculate="rc1.4-costaware", prefill=0.1, dec=0.2, e2e=0.3, wall=None)]),
                 encoding="utf-8",
             )
             r_tol = subprocess.run(
@@ -1776,15 +1844,20 @@ class AnalyzePilotTest(unittest.TestCase):
             "rc12": rc13_rows,
             "rc13": rc13_rows,
         }
+        pilot_wrapper = {
+            "v9i": pilot_go_rows,
+        }
 
         with tempfile.TemporaryDirectory() as td:
             tmp = Path(td)
             tc_p = tmp / "bench-template-cache.json"
             cmp_p = tmp / "bench-compare.json"
+            pilot_wrap_p = tmp / "bench-pilot-wrapper.json"
             raw_p = tmp / "v9h_ref_36.json"
             go_bench_p = tmp / "pilot_go.json"
             tc_p.write_text(json.dumps(template_cache_wrapper), encoding="utf-8")
             cmp_p.write_text(json.dumps(compare_wrapper), encoding="utf-8")
+            pilot_wrap_p.write_text(json.dumps(pilot_wrapper), encoding="utf-8")
             raw_p.write_text(json.dumps(raw_ref), encoding="utf-8")
             go_bench_p.write_text(json.dumps(pilot_go_rows), encoding="utf-8")
 
@@ -1818,8 +1891,8 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertEqual(r_cmp.returncode, 0, r_cmp.stdout + r_cmp.stderr)
             self.assertIn("GO: 21/21 identical", r_cmp.stdout)
 
-            # Explicit --rc13-arm shared + 36-case raw pilot.json self-compare at 1.0x -> 57/57 GO.
-            r_57 = subprocess.run(
+            # Self-comparing RC1.3 as pilot is blocked because pilot socket rows carry rc1.3-costaware instead of rc1.4-costaware.
+            r_self_nogo = subprocess.run(
                 [
                     sys.executable,
                     str(SCRIPT),
@@ -1842,8 +1915,211 @@ class AnalyzePilotTest(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
+            self.assertEqual(r_self_nogo.returncode, 1, r_self_nogo.stdout + r_self_nogo.stderr)
+            self.assertIn("NO-GO:", r_self_nogo.stdout)
+            self.assertIn("unexpected socket speculate mode", r_self_nogo.stdout)
+
+            # Explicit --rc13-arm shared + --pilot-arm v9i + 36-case raw pilot.json -> 57/57 GO (raw cases unaffected).
+            r_57 = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(tc_p),
+                    str(raw_p),
+                    "--rc13-arm",
+                    "shared",
+                    "--pilot",
+                    str(pilot_wrap_p),
+                    str(raw_p),
+                    "--pilot-arm",
+                    "v9i",
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
             self.assertEqual(r_57.returncode, 0, r_57.stdout + r_57.stderr)
             self.assertIn("GO: 57/57 identical", r_57.stdout)
+
+    def test_socket_speculate_label_validated_per_side_and_raw_unaffected(self) -> None:
+        rc13_rows = json.loads((FIXTURES / "rc13_bench.json").read_text(encoding="utf-8"))
+        pilot_go_rows = json.loads((FIXTURES / "pilot_go_bench.json").read_text(encoding="utf-8"))
+        rc13_fixture_p = FIXTURES / "rc13_bench.json"
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+
+            # Exact reviewer reproducer: bundled rc13_bench.json vs pilot_go_bench.json
+            # with only pilot row 0 `speculate` edited from "rc1.4-costaware" to False.
+            bad_pilot_rows = json.loads(json.dumps(pilot_go_rows))
+            bad_pilot_rows[0]["speculate"] = False
+            bad_pilot_p = tmp / "pilot_row0_speculate_false.json"
+            bad_out_p = tmp / "pilot_row0_speculate_false_out.json"
+            bad_pilot_p.write_text(json.dumps(bad_pilot_rows), encoding="utf-8")
+
+            r_repro = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(rc13_fixture_p),
+                    "--pilot",
+                    str(bad_pilot_p),
+                    "--out",
+                    str(bad_out_p),
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_repro.returncode, 1, r_repro.stdout + r_repro.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_repro.stdout.splitlines()))
+            self.assertIn("NO-GO:", r_repro.stdout)
+            self.assertIn("[SPECULATE-MISMATCH]", r_repro.stdout)
+            self.assertIn("EXCLUDED (unexpected speculate mode): Read /proc/sys/kernel/random/boot_id", r_repro.stdout)
+            self.assertIn("unexpected socket speculate mode on 1/21 matched queries: Read /proc/sys/kernel/random/boot_id", r_repro.stdout)
+
+            rep = json.loads(bad_out_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep["verdict"], "NO-GO")
+            self.assertFalse(rep["go"])
+            self.assertFalse(rep["identity"]["passed"])
+            self.assertEqual(rep["identity"]["identical_queries"], 20)
+            self.assertEqual(len(rep["identity"]["failing_queries"]), 1)
+            self.assertEqual(rep["identity"]["failing_queries"][0]["id"], "Read /proc/sys/kernel/random/boot_id")
+            self.assertFalse(rep["identity"]["failing_queries"][0]["speculate_ok"])
+            self.assertEqual(rep["identity"]["failing_queries"][0]["pilot_speculate"], False)
+            self.assertFalse(rep["per_query"][0]["status_ok"])
+            self.assertFalse(rep["per_query"][0]["speculate_ok"])
+            self.assertFalse(rep["per_query"][0]["decode_comparable"])
+            self.assertFalse(rep["per_query"][0]["e2e_comparable"])
+            self.assertIsNone(rep["per_query"][0]["decode_speedup"])
+            self.assertIsNone(rep["per_query"][0]["e2e_speedup"])
+            self.assertEqual(rep["overall"]["n"], 21)
+            self.assertEqual(rep["overall"]["decode_n"], 20)
+            self.assertEqual(rep["overall"]["e2e_n"], 20)
+            self.assertEqual(len(rep["speculate_mismatches"]), 1)
+            self.assertEqual(rep["speculate_mismatches"][0]["id"], "Read /proc/sys/kernel/random/boot_id")
+            self.assertEqual(rep["speculate_mismatches"][0]["rc13_speculate"], "rc1.3-costaware")
+            self.assertEqual(rep["speculate_mismatches"][0]["pilot_speculate"], False)
+
+            # Other invalid pilot speculate values (omitted, None, wrong-side label, adaptive, True) also fail --check.
+            for label, mutator in (
+                ("pilot_none", lambda r: r[0].__setitem__("speculate", None)),
+                ("pilot_omitted", lambda r: r[0].pop("speculate", None)),
+                ("pilot_wrong_side_rc13", lambda r: r[0].__setitem__("speculate", "rc1.3-costaware")),
+                ("pilot_adaptive", lambda r: r[0].__setitem__("speculate", "adaptive")),
+                ("pilot_bool_true", lambda r: r[0].__setitem__("speculate", True)),
+            ):
+                mut_rows = json.loads(json.dumps(pilot_go_rows))
+                mutator(mut_rows)
+                mut_p = tmp / f"{label}.json"
+                mut_p.write_text(json.dumps(mut_rows), encoding="utf-8")
+                with self.subTest(case=label):
+                    res = subprocess.run(
+                        [sys.executable, str(SCRIPT), "--rc13", str(rc13_fixture_p), "--pilot", str(mut_p), "--check"],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertEqual(res.returncode, 1, res.stdout + res.stderr)
+                    self.assertFalse(any(line.startswith("GO:") for line in res.stdout.splitlines()))
+                    self.assertIn("unexpected socket speculate mode", res.stdout)
+
+            # Invalid RC1.3 baseline speculate values (false, wrong-side rc1.4-costaware, None) also fail --check.
+            pilot_fixture_p = FIXTURES / "pilot_go_bench.json"
+            for label, val in (
+                ("rc13_false", False),
+                ("rc13_wrong_side_rc14", "rc1.4-costaware"),
+                ("rc13_none", None),
+            ):
+                mut_rc13 = json.loads(json.dumps(rc13_rows))
+                mut_rc13[2]["speculate"] = val
+                mut_rc13_p = tmp / f"{label}.json"
+                mut_rc13_p.write_text(json.dumps(mut_rc13), encoding="utf-8")
+                with self.subTest(case=label):
+                    res = subprocess.run(
+                        [sys.executable, str(SCRIPT), "--rc13", str(mut_rc13_p), "--pilot", str(pilot_fixture_p), "--check"],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertEqual(res.returncode, 1, res.stdout + res.stderr)
+                    self.assertFalse(any(line.startswith("GO:") for line in res.stdout.splitlines()))
+                    self.assertIn("Read /proc/version", res.stdout)
+                    self.assertIn("unexpected socket speculate mode", res.stdout)
+
+            # All 21 pilot rows invalid -> decode_n=0, e2e_n=0, OVERALL N/A, NO-GO without spurious speedup unavailable.
+            all_bad = json.loads(json.dumps(pilot_go_rows))
+            for r in all_bad:
+                r["speculate"] = False
+            all_bad_p = tmp / "all_bad_speculate.json"
+            all_bad_out_p = tmp / "all_bad_speculate_out.json"
+            all_bad_p.write_text(json.dumps(all_bad), encoding="utf-8")
+            r_all_bad = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_fixture_p), "--pilot", str(all_bad_p), "--out", str(all_bad_out_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_all_bad.returncode, 1, r_all_bad.stdout + r_all_bad.stderr)
+            self.assertIn("OVERALL (n=21): decode N/A, e2e N/A", r_all_bad.stdout)
+            self.assertNotIn("speedup unavailable", r_all_bad.stdout)
+            rep_all_bad = json.loads(all_bad_out_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep_all_bad["overall"]["decode_n"], 0)
+            self.assertEqual(rep_all_bad["overall"]["e2e_n"], 0)
+            self.assertEqual(len(rep_all_bad["speculate_mismatches"]), 21)
+
+            # BENCH-JSON stdout format enforces the same socket speculate check.
+            bench_log_p = tmp / "pilot_bad.stdout"
+            bench_log_p.write_text("header\nBENCH-JSON " + json.dumps(bad_pilot_rows) + "\n", encoding="utf-8")
+            r_log = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_fixture_p), "--pilot", str(bench_log_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_log.returncode, 1, r_log.stdout + r_log.stderr)
+            self.assertIn("unexpected socket speculate mode", r_log.stdout)
+
+            # Raw pilot.json cases have no speculate field and remain completely unaffected (still GO).
+            raw_rc13 = {
+                "passed": True,
+                "started_utc": "2026-11-22T00:00:00Z",
+                "finished_utc": "2026-11-22T00:01:00Z",
+                "cases": [
+                    {
+                        "key": "case-0",
+                        "domain": "general",
+                        "prefill_seconds": 1.0,
+                        "identical": True,
+                        "ar": {"tokens": [1, 2], "logit_bits": [10, 20], "kv_sha256": "kv0", "decode_seconds": 2.0},
+                        "candidate": {"tokens": [1, 2], "logit_bits": [10, 20], "kv_sha256": "kv0", "decode_seconds": 1.5},
+                    }
+                ],
+            }
+            raw_pilot = {
+                "passed": True,
+                "started_utc": "2026-11-22T00:00:00Z",
+                "finished_utc": "2026-11-22T00:01:00Z",
+                "cases": [
+                    {
+                        "key": "case-0",
+                        "domain": "general",
+                        "prefill_seconds": 0.9,
+                        "identical": True,
+                        "ar": {"tokens": [1, 2], "logit_bits": [10, 20], "kv_sha256": "kv0", "decode_seconds": 1.9},
+                        "candidate": {"tokens": [1, 2], "logit_bits": [10, 20], "kv_sha256": "kv0", "decode_seconds": 1.1},
+                    }
+                ],
+            }
+            raw_rc13_p = tmp / "raw_rc13.json"
+            raw_pilot_p = tmp / "raw_pilot.json"
+            raw_rc13_p.write_text(json.dumps(raw_rc13), encoding="utf-8")
+            raw_pilot_p.write_text(json.dumps(raw_pilot), encoding="utf-8")
+            r_raw = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(raw_rc13_p), "--pilot", str(raw_pilot_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_raw.returncode, 0, r_raw.stdout + r_raw.stderr)
+            self.assertIn("GO: 1/1 identical", r_raw.stdout)
 
 
 if __name__ == "__main__":

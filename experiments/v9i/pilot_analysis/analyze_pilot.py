@@ -4,7 +4,12 @@ GO / NO-GO thresholds (explicitly stated here; override via CLI flags if needed)
 - REQUIRE_EXACT_IDENTITY = True
     100% output identity vs RC1.3 across every query/case (exact `generated_ids` /
     `tokens`, matching `path` / `logit_bits` / `kv_sha256` when present, and
-    `ok=True`, `complete=True`). Any single token difference fails the pilot.
+    `ok=True`, `complete=True`; socket bench rows additionally require the expected
+    per-side `speculate` mode labels). Any single token difference fails the pilot.
+- EXPECTED_RC13_SPECULATE = "rc1.3-costaware"
+    Expected `speculate` label on RC1.3 socket (`bench`) rows.
+- EXPECTED_PILOT_SPECULATE = "rc1.4-costaware"
+    Expected `speculate` label on candidate pilot socket (`bench`) rows.
 - MIN_DECODE_SPEEDUP = 1.03
     Minimum aggregate decode speedup vs RC1.3 (v9h) across the evaluated run.
 - MIN_E2E_SPEEDUP = 1.00
@@ -39,6 +44,8 @@ from typing import Any
 REQUIRE_EXACT_IDENTITY = True
 MIN_DECODE_SPEEDUP = 1.03
 MIN_E2E_SPEEDUP = 1.00
+EXPECTED_RC13_SPECULATE = "rc1.3-costaware"
+EXPECTED_PILOT_SPECULATE = "rc1.4-costaware"
 
 # --- Modelled speedups vs v9h (docs/research/2026-11-21-attention-reclaim.md) ---
 # 1.31x (tool) and 1.065x (overall, 181-case workload) are end-to-end (E2E) values;
@@ -646,6 +653,8 @@ def analyze(
     min_decode_speedup: float = MIN_DECODE_SPEEDUP,
     min_e2e_speedup: float = MIN_E2E_SPEEDUP,
     require_exact_identity: bool = REQUIRE_EXACT_IDENTITY,
+    expected_rc13_speculate: str = EXPECTED_RC13_SPECULATE,
+    expected_pilot_speculate: str = EXPECTED_PILOT_SPECULATE,
 ) -> dict[str, Any]:
     if not rc13_records or not pilot_records:
         raise ValueError("Both RC1.3 and pilot inputs must contain at least one record")
@@ -669,6 +678,13 @@ def analyze(
         p_list = pilot_groups.get(rid, [])
         p = p_list[occ] if occ < len(p_list) else None
         if p is None:
+            rc13_speculate_ok = (
+                r.get("source_format") != "bench"
+                or (
+                    isinstance(r.get("speculate"), str)
+                    and r.get("speculate") == expected_rc13_speculate
+                )
+            )
             missing_in_pilot.append(rid)
             per_query.append({
                 "id": rid,
@@ -689,6 +705,11 @@ def analyze(
                 "cand_kv_identical": False,
                 "ar_kv_identical": False,
                 "status_ok": False,
+                "rc13_source_format": r.get("source_format"),
+                "pilot_source_format": None,
+                "rc13_speculate": r.get("speculate"),
+                "pilot_speculate": None,
+                "speculate_ok": rc13_speculate_ok,
                 "first_diff_index": 0,
                 "rc13_token_count": len(r["tokens"]) if r["tokens"] is not None else None,
                 "pilot_token_count": 0,
@@ -828,7 +849,24 @@ def analyze(
             )
             arms_complete = True
 
-        status_ok = bool(r["ok"] and r["complete"] and p["ok"] and p["complete"] and arms_complete)
+        rc13_speculate_ok = (
+            r.get("source_format") != "bench"
+            or (
+                isinstance(r.get("speculate"), str)
+                and r.get("speculate") == expected_rc13_speculate
+            )
+        )
+        pilot_speculate_ok = (
+            p.get("source_format") != "bench"
+            or (
+                isinstance(p.get("speculate"), str)
+                and p.get("speculate") == expected_pilot_speculate
+            )
+        )
+        speculate_ok = rc13_speculate_ok and pilot_speculate_ok
+
+        row_status_ok = bool(r["ok"] and r["complete"] and p["ok"] and p["complete"] and arms_complete)
+        status_ok = bool(row_status_ok and speculate_ok)
         identical = (
             tokens_identical
             and ar_self_identical
@@ -864,7 +902,7 @@ def analyze(
         )
         cache_comparable = not (
             (reused_differs or missing_measured_reused)
-            and (status_ok or has_any_timings or (rc13_reused is not None and pilot_reused is not None))
+            and (row_status_ok or has_any_timings or (rc13_reused is not None and pilot_reused is not None))
         )
         timing_boundary_comparable = (r.get("source_format") == p.get("source_format"))
 
@@ -884,7 +922,7 @@ def analyze(
             (r["decode_seconds"] is not None and r["decode_seconds"] <= 0.0)
             or (p["decode_seconds"] is not None and p["decode_seconds"] <= 0.0)
         )
-        nonpositive_timing = status_ok and (nonpositive_e2e or nonpositive_decode_required)
+        nonpositive_timing = row_status_ok and (nonpositive_e2e or nonpositive_decode_required)
         socket_timing_inconsistent = bool(_socket_timing_issues(r) or _socket_timing_issues(p))
         timing_issues: list[str] = []
         if nonpositive_timing:
@@ -894,13 +932,15 @@ def analyze(
         timing_valid = not timing_issues
 
         decode_comparable = (
-            cache_comparable
+            speculate_ok
+            and cache_comparable
             and timing_valid
             and not nonpositive_e2e
             and not nonpositive_decode_any
         )
         e2e_comparable = (
-            timing_boundary_comparable
+            speculate_ok
+            and timing_boundary_comparable
             and cache_comparable
             and timing_valid
             and not nonpositive_e2e
@@ -936,6 +976,11 @@ def analyze(
             "cand_kv_identical": cand_kv_identical,
             "ar_kv_identical": ar_kv_identical,
             "status_ok": status_ok,
+            "rc13_source_format": r.get("source_format"),
+            "pilot_source_format": p.get("source_format"),
+            "rc13_speculate": r.get("speculate"),
+            "pilot_speculate": p.get("speculate"),
+            "speculate_ok": speculate_ok,
             "first_diff_index": diff_idx,
             "rc13_token_count": len(r["tokens"]) if r["tokens"] is not None else None,
             "pilot_token_count": len(p["tokens"]) if p["tokens"] is not None else None,
@@ -998,6 +1043,9 @@ def analyze(
             "cand_kv_identical": q["cand_kv_identical"],
             "ar_kv_identical": q["ar_kv_identical"],
             "status_ok": q["status_ok"],
+            "speculate_ok": q["speculate_ok"],
+            "rc13_speculate": q["rc13_speculate"],
+            "pilot_speculate": q["pilot_speculate"],
             "missing_in_pilot": q["missing_in_pilot"],
         }
         for q in per_query
@@ -1047,6 +1095,23 @@ def analyze(
         if not q.get("timing_valid", True)
     ]
 
+    speculate_mismatches = [
+        {
+            "id": q["id"],
+            "occurrence": q["occurrence"],
+            "rc13_speculate": q["rc13_speculate"],
+            "pilot_speculate": q["pilot_speculate"],
+            "expected_rc13_speculate": (
+                expected_rc13_speculate if q.get("rc13_source_format") == "bench" else None
+            ),
+            "expected_pilot_speculate": (
+                expected_pilot_speculate if q.get("pilot_source_format") == "bench" else None
+            ),
+        }
+        for q in matched
+        if not q.get("speculate_ok", True)
+    ]
+
     overall_dec_sp = overall["decode_speedup"]
     overall_e2e_sp = overall["e2e_speedup"]
     speed_ok = (
@@ -1055,6 +1120,7 @@ def analyze(
         and not mixed_timing_boundaries
         and not cache_condition_mismatches
         and not invalid_timing_queries
+        and not speculate_mismatches
         and overall_dec_sp is not None
         and overall_e2e_sp is not None
         and overall_dec_sp >= min_decode_speedup
@@ -1071,6 +1137,17 @@ def analyze(
         suffix = f", {', '.join(detail_parts)}" if detail_parts else ""
         reasons.append(f"identity failed ({identical_count}/{len(per_query)} identical{suffix})")
     if not speed_ok:
+        if speculate_mismatches:
+            affected = ", ".join(
+                f"{m['id']} (rc13={m['rc13_speculate']!r}, pilot={m['pilot_speculate']!r})"
+                for m in speculate_mismatches[:3]
+            )
+            if len(speculate_mismatches) > 3:
+                affected += f", +{len(speculate_mismatches) - 3} more"
+            reasons.append(
+                f"unexpected socket speculate mode on {len(speculate_mismatches)}/{len(matched)} "
+                f"matched queries: {affected}"
+            )
         if mixed_timing_boundaries:
             reasons.append("mixed timing boundaries (matched RC1.3 and pilot records use different source formats)")
         if cache_condition_mismatches:
@@ -1112,7 +1189,12 @@ def analyze(
         if missing_decode_on_ok or missing_e2e_on_ok:
             reasons.append("speedup unavailable (missing required timing on successful matched query)")
         elif overall_dec_sp is None or overall_e2e_sp is None:
-            if not mixed_timing_boundaries and not cache_condition_mismatches and not invalid_timing_queries:
+            if (
+                not mixed_timing_boundaries
+                and not cache_condition_mismatches
+                and not invalid_timing_queries
+                and not speculate_mismatches
+            ):
                 reasons.append("speedup unavailable (no matched queries or non-positive pilot duration)")
         elif overall_dec_sp < min_decode_speedup or overall_e2e_sp < min_e2e_speedup:
             reasons.append(
@@ -1148,6 +1230,8 @@ def analyze(
             "require_exact_identity": require_exact_identity,
             "min_decode_speedup": min_decode_speedup,
             "min_e2e_speedup": min_e2e_speedup,
+            "expected_rc13_speculate": expected_rc13_speculate,
+            "expected_pilot_speculate": expected_pilot_speculate,
             "modelled_tool_e2e_speedup": MODELLED_TOOL_E2E_SPEEDUP,
             "modelled_overall_e2e_speedup": MODELLED_OVERALL_E2E_SPEEDUP,
             "modelled_overall_decode_speedup": MODELLED_OVERALL_DECODE_SPEEDUP,
@@ -1164,6 +1248,7 @@ def analyze(
             "passed": identity_ok,
             "failing_queries": failing_queries,
         },
+        "speculate_mismatches": speculate_mismatches,
         "cache_condition_mismatches": cache_condition_mismatches,
         "invalid_timings": invalid_timing_queries,
         "per_query": per_query,
@@ -1259,11 +1344,17 @@ def format_report(report: dict[str, Any]) -> str:
                 cache_flag = ""
             cache_suffix = f" | reused={_fmt_tok(rc13_reused)}/{_fmt_tok(pilot_reused)}{cache_flag}"
         timing_suffix = " [INVALID-TIMING]" if not q.get("timing_valid", True) else ""
+        speculate_suffix = ""
+        if not q.get("speculate_ok", True):
+            speculate_suffix = (
+                f" | speculate={q.get('rc13_speculate')!r}/{q.get('pilot_speculate')!r} "
+                "[SPECULATE-MISMATCH]"
+            )
         lines.append(
             f"  [{status}] {q['id']} | cat={q['category']} | "
             f"tokens={_fmt_tok(q['rc13_token_count'])}/{_fmt_tok(q['pilot_token_count'])} | "
             f"dec={_fmt_opt(q['rc13_decode_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_decode_seconds'], '.3f', 's')} ({_fmt_opt(q['decode_speedup'], '.4f', 'x')}) | "
-            f"e2e={_fmt_opt(q['rc13_e2e_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_e2e_seconds'], '.3f', 's')} ({_fmt_opt(q['e2e_speedup'], '.4f', 'x')}){cache_suffix}{timing_suffix}"
+            f"e2e={_fmt_opt(q['rc13_e2e_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_e2e_seconds'], '.3f', 's')} ({_fmt_opt(q['e2e_speedup'], '.4f', 'x')}){cache_suffix}{timing_suffix}{speculate_suffix}"
         )
 
     lines.append("")
@@ -1350,6 +1441,15 @@ def format_report(report: dict[str, Any]) -> str:
             lines.append(
                 f"  EXCLUDED (inconsistent socket timing): {summary_items}"
             )
+    spec_mismatches = report.get("speculate_mismatches") or []
+    if spec_mismatches:
+        summary_items = ", ".join(
+            f"{m['id']} (rc13={m['rc13_speculate']!r} vs pilot={m['pilot_speculate']!r})"
+            for m in spec_mismatches
+        )
+        lines.append(
+            f"  EXCLUDED (unexpected speculate mode): {summary_items}"
+        )
 
     lines.append("")
     lines.append("=== (c) Measured vs Modelled E2E Speedup (vs v9h) ===")
