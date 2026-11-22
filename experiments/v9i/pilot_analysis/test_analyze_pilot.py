@@ -658,6 +658,207 @@ class AnalyzePilotTest(unittest.TestCase):
         bad_flag["cases"][0]["candidate_equal_v9e"] = "false"
         assert_rejected(bad_flag, "pilot_nonbool_candidate_equal_v9e")
 
+    def test_no_fabricated_e2e_or_prefill_and_no_mixed_timing_boundaries(self) -> None:
+        ref_bench = [
+            {
+                "query": "q1",
+                "ok": True,
+                "complete": True,
+                "generated_ids": [1, 2],
+                "path": "/proc/uptime",
+                "prefill_seconds": 1.0,
+                "decode_seconds": 1.0,
+                "elapsed_seconds": 2.2,
+            }
+        ]
+        ref_raw = {
+            "passed": True,
+            "started_utc": "2026-11-22T00:00:00Z",
+            "finished_utc": "2026-11-22T00:01:00Z",
+            "cases": [
+                {
+                    "key": "q1",
+                    "domain": "general",
+                    "prefill_seconds": 1.0,
+                    "identical": True,
+                    "ar": {"tokens": [1, 2], "decode_seconds": 1.0},
+                    "candidate": {"tokens": [1, 2], "decode_seconds": 1.0},
+                }
+            ],
+        }
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            ref_bench_p = tmp / "ref_bench.json"
+            ref_raw_p = tmp / "ref_raw.json"
+            ref_bench_p.write_text(json.dumps(ref_bench), encoding="utf-8")
+            ref_raw_p.write_text(json.dumps(ref_raw), encoding="utf-8")
+
+            # (1a) Bench missing elapsed_seconds and wall_seconds (previously fabricated 1.8s -> 1.222x GO).
+            bench_no_elapsed = [
+                {
+                    "query": "q1",
+                    "ok": True,
+                    "complete": True,
+                    "generated_ids": [1, 2],
+                    "path": "/proc/uptime",
+                    "prefill_seconds": 1.0,
+                    "decode_seconds": 0.8,
+                }
+            ]
+            # (1b) Bench missing elapsed_seconds with wall_seconds present.
+            bench_wall_only = [dict(bench_no_elapsed[0], wall_seconds=1.9)]
+            # (1c) Bench with null elapsed_seconds and wall_seconds present.
+            bench_null_elapsed = [dict(bench_no_elapsed[0], elapsed_seconds=None, wall_seconds=1.9)]
+
+            for label, payload in (
+                ("bench_no_elapsed", bench_no_elapsed),
+                ("bench_wall_only", bench_wall_only),
+                ("bench_null_elapsed", bench_null_elapsed),
+            ):
+                p = tmp / f"{label}.json"
+                p.write_text(json.dumps(payload), encoding="utf-8")
+                with self.subTest(case=label):
+                    with self.assertRaises(ValueError):
+                        analyze_pilot.load_records([p])
+                    res = subprocess.run(
+                        [sys.executable, str(SCRIPT), "--rc13", str(ref_bench_p), "--pilot", str(p), "--check"],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertNotEqual(res.returncode, 0)
+                    self.assertNotIn("GO:", res.stdout)
+
+            # Failed bench row with prefill+decode and no elapsed must keep e2e_seconds=None.
+            bench_fail_no_elapsed = tmp / "bench_fail_no_elapsed.json"
+            bench_fail_no_elapsed.write_text(
+                json.dumps([
+                    {
+                        "query": "q1",
+                        "ok": False,
+                        "complete": False,
+                        "generated_ids": [1, 2],
+                        "path": "/proc/uptime",
+                        "prefill_seconds": 0.4,
+                        "decode_seconds": 0.5,
+                        "elapsed_seconds": None,
+                        "wall_seconds": 0.95,
+                    }
+                ]),
+                encoding="utf-8",
+            )
+            fail_recs = analyze_pilot.load_records([bench_fail_no_elapsed])
+            self.assertIsNone(fail_recs[0]["e2e_seconds"])
+
+            # (1d) Raw pilot.json case missing prefill_seconds (previously fabricated 0.0s -> 2.500x GO).
+            raw_no_prefill = {
+                "passed": True,
+                "started_utc": "2026-11-22T00:00:00Z",
+                "finished_utc": "2026-11-22T00:01:00Z",
+                "cases": [
+                    {
+                        "key": "q1",
+                        "domain": "general",
+                        "identical": True,
+                        "ar": {"tokens": [1, 2], "decode_seconds": 1.0},
+                        "candidate": {"tokens": [1, 2], "decode_seconds": 0.8},
+                    }
+                ],
+            }
+            raw_no_prefill_p = tmp / "raw_no_prefill.json"
+            raw_no_prefill_p.write_text(json.dumps(raw_no_prefill), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                analyze_pilot.load_records([raw_no_prefill_p])
+            res_raw = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(ref_raw_p), "--pilot", str(raw_no_prefill_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(res_raw.returncode, 0)
+            self.assertNotIn("GO:", res_raw.stdout)
+
+            # Failed raw case without prefill_seconds must keep prefill_seconds=None and e2e_seconds=None.
+            raw_fail_no_prefill = json.loads(json.dumps(raw_no_prefill))
+            raw_fail_no_prefill["passed"] = False
+            raw_fail_no_prefill["cases"][0]["identical"] = False
+            raw_fail_p = tmp / "raw_fail_no_prefill.json"
+            raw_fail_p.write_text(json.dumps(raw_fail_no_prefill), encoding="utf-8")
+            raw_fail_recs = analyze_pilot.load_records([raw_fail_p])
+            self.assertIsNone(raw_fail_recs[0]["prefill_seconds"])
+            self.assertIsNone(raw_fail_recs[0]["e2e_seconds"])
+
+            # (1e) Mixed timing boundaries: bench reference vs raw pilot_cases for same ID must force NO-GO.
+            raw_valid = json.loads(json.dumps(raw_no_prefill))
+            raw_valid["cases"][0]["prefill_seconds"] = 0.8
+            raw_valid_p = tmp / "raw_valid.json"
+            raw_valid_p.write_text(json.dumps(raw_valid), encoding="utf-8")
+            res_mixed = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(ref_bench_p), "--pilot", str(raw_valid_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res_mixed.returncode, 1)
+            self.assertIn("NO-GO:", res_mixed.stdout)
+            self.assertIn("mixed timing boundaries", res_mixed.stdout)
+
+            # Direct analyze() call with missing E2E on one successful row must force NO-GO.
+            r1 = dict(analyze_pilot.load_records([ref_bench_p])[0])
+            r2 = dict(r1, id="q2", label="q2")
+            p1 = dict(r1, decode_seconds=0.5, e2e_seconds=1.5)
+            p2 = dict(r2, decode_seconds=0.5, e2e_seconds=None)
+            rep_partial = analyze_pilot.analyze([r1, r2], [p1, p2])
+            self.assertEqual(rep_partial["verdict"], "NO-GO")
+            self.assertFalse(rep_partial["go"])
+
+    def test_empty_files_rejected_even_alongside_passing_files(self) -> None:
+        rc13_p = FIXTURES / "rc13_bench.json"
+        pilot_go_p = FIXTURES / "pilot_go_bench.json"
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            empty_failed_pilot = tmp / "empty_failed_pilot.json"
+            empty_failed_pilot.write_text(
+                json.dumps({
+                    "started_utc": "start",
+                    "finished_utc": "finish",
+                    "passed": False,
+                    "cases": [],
+                }),
+                encoding="utf-8",
+            )
+            empty_passed_pilot = tmp / "empty_passed_pilot.json"
+            empty_passed_pilot.write_text(
+                json.dumps({
+                    "started_utc": "start",
+                    "finished_utc": "finish",
+                    "passed": True,
+                    "cases": [],
+                }),
+                encoding="utf-8",
+            )
+            empty_list = tmp / "empty_list.json"
+            empty_list.write_text("[]", encoding="utf-8")
+
+            for empty_p in (empty_failed_pilot, empty_passed_pilot, empty_list):
+                with self.subTest(empty_file=empty_p.name):
+                    with self.assertRaises(ValueError):
+                        analyze_pilot.load_records([pilot_go_p, empty_p])
+                    res_pilot = subprocess.run(
+                        [sys.executable, str(SCRIPT), "--rc13", str(rc13_p), "--pilot", str(pilot_go_p), str(empty_p), "--check"],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertNotEqual(res_pilot.returncode, 0)
+                    self.assertNotIn("GO:", res_pilot.stdout)
+
+                    res_rc13 = subprocess.run(
+                        [sys.executable, str(SCRIPT), "--rc13", str(rc13_p), str(empty_p), "--pilot", str(pilot_go_p), "--check"],
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertNotEqual(res_rc13.returncode, 0)
+                    self.assertNotIn("GO:", res_rc13.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

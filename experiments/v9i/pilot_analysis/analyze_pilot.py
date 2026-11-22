@@ -109,9 +109,13 @@ def _load_single_file(path: Path) -> list[dict[str, Any]]:
         raw = bench_rows
 
     if isinstance(raw, list):
+        if not raw:
+            raise ValueError(f"{path}: bench result list is empty")
         return [_normalize_bench_row(row, path) for row in raw]
     if isinstance(raw, dict) and isinstance(raw.get("cases"), list):
         _validate_pilot_file_status(raw, path)
+        if not raw["cases"]:
+            raise ValueError(f"{path}: pilot.json contains zero cases")
         file_passed = raw["passed"]
         return [_normalize_pilot_case(case, path, file_passed=file_passed) for case in raw["cases"]]
     raise ValueError(f"{path}: unsupported JSON structure; expected list or dict with 'cases'")
@@ -159,20 +163,9 @@ def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
     if "prefill_seconds" in row:
         prefill = _parse_timing(row["prefill_seconds"], "prefill_seconds", path, required=row_ok)
     else:
-        prefill = 0.0 if row_ok else None
-
-    elapsed_val = _parse_timing(row.get("elapsed_seconds"), "elapsed_seconds", path, required=False)
-    wall_val = _parse_timing(row.get("wall_seconds"), "wall_seconds", path, required=False)
-    if elapsed_val is not None:
-        e2e: float | None = elapsed_val
-    elif row_ok and wall_val is not None:
-        e2e = wall_val
-    elif row_ok and "elapsed_seconds" in row and row["elapsed_seconds"] is None:
-        raise ValueError(f"{path}: bench row for {row['query']!r} has null 'elapsed_seconds' with ok=True, complete=True")
-    elif prefill is not None and decode is not None:
-        e2e = prefill + decode
-    else:
-        e2e = None
+        prefill = None
+    _parse_timing(row.get("wall_seconds"), "wall_seconds", path, required=False)
+    e2e = _parse_timing(row.get("elapsed_seconds"), "elapsed_seconds", path, required=row_ok)
 
     category = row.get("domain") or row.get("category") or row.get("path") or "tool"
     return {
@@ -244,11 +237,7 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
         cand_tokens = None
         decode = None
 
-    if "prefill_seconds" in case:
-        prefill = _parse_timing(case["prefill_seconds"], "prefill_seconds", path, required=strict_case)
-    else:
-        prefill = 0.0 if (strict_case or decode is not None) else None
-
+    prefill = _parse_timing(case.get("prefill_seconds"), "prefill_seconds", path, required=strict_case)
     e2e = (prefill + decode) if (prefill is not None and decode is not None) else None
 
     ar = case.get("ar")
@@ -336,7 +325,9 @@ def _summarize_group(items: list[dict[str, Any]]) -> dict[str, Any]:
     ]
     e2e_pairs = [
         x for x in items
-        if x["rc13_e2e_seconds"] is not None and x["pilot_e2e_seconds"] is not None
+        if x.get("e2e_comparable", True)
+        and x["rc13_e2e_seconds"] is not None
+        and x["pilot_e2e_seconds"] is not None
     ]
     rc13_dec_tot, pilot_dec_tot, dec_speedup, rc13_dec_med, pilot_dec_med, dec_med_speedup = _summarize_timings(
         dec_pairs, "rc13_decode_seconds", "pilot_decode_seconds"
@@ -473,9 +464,10 @@ def analyze(
             if (r["decode_seconds"] is not None and p["decode_seconds"] is not None)
             else None
         )
+        e2e_comparable = (r.get("source_format") == p.get("source_format"))
         e2e_sp = (
             _safe_ratio(r["e2e_seconds"], p["e2e_seconds"])
-            if (r["e2e_seconds"] is not None and p["e2e_seconds"] is not None)
+            if (e2e_comparable and r["e2e_seconds"] is not None and p["e2e_seconds"] is not None)
             else None
         )
 
@@ -502,6 +494,7 @@ def analyze(
             "decode_speedup": dec_sp,
             "rc13_e2e_seconds": r["e2e_seconds"],
             "pilot_e2e_seconds": p["e2e_seconds"],
+            "e2e_comparable": e2e_comparable,
             "e2e_speedup": e2e_sp,
         })
 
@@ -547,10 +540,23 @@ def analyze(
         p.get("file_passed", True) for p in pilot_records
     )
     identity_ok = same_id_set and (identical_count == len(per_query)) and files_passed
+    missing_decode_on_ok = any(
+        q["status_ok"] and (q["rc13_decode_seconds"] is None or q["pilot_decode_seconds"] is None)
+        for q in matched
+    )
+    missing_e2e_on_ok = any(
+        q["status_ok"] and (q["rc13_e2e_seconds"] is None or q["pilot_e2e_seconds"] is None)
+        for q in matched
+    )
+    mixed_timing_boundaries = any(not q.get("e2e_comparable", True) for q in matched)
+
     overall_dec_sp = overall["decode_speedup"]
     overall_e2e_sp = overall["e2e_speedup"]
     speed_ok = (
-        overall_dec_sp is not None
+        not missing_decode_on_ok
+        and not missing_e2e_on_ok
+        and not mixed_timing_boundaries
+        and overall_dec_sp is not None
         and overall_e2e_sp is not None
         and overall_dec_sp >= min_decode_speedup
         and overall_e2e_sp >= min_e2e_speedup
@@ -566,7 +572,11 @@ def analyze(
         suffix = f", {', '.join(detail_parts)}" if detail_parts else ""
         reasons.append(f"identity failed ({identical_count}/{len(per_query)} identical{suffix})")
     if not speed_ok:
-        if overall_dec_sp is None or overall_e2e_sp is None:
+        if mixed_timing_boundaries:
+            reasons.append("mixed timing boundaries (matched RC1.3 and pilot records use different source formats)")
+        elif missing_decode_on_ok or missing_e2e_on_ok:
+            reasons.append("speedup unavailable (missing required timing on successful matched query)")
+        elif overall_dec_sp is None or overall_e2e_sp is None:
             reasons.append("speedup unavailable (no matched queries or non-positive pilot duration)")
         else:
             reasons.append(
