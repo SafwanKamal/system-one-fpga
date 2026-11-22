@@ -1,0 +1,548 @@
+[
+  {
+    "query": "Read /proc/sys/kernel/random/boot_id",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      256,
+      1024,
+      3333,
+      151658
+    ],
+    "path": "/proc/sys/kernel/random/boot_id",
+    "prefill_seconds": 0.54,
+    "decode_seconds": 0.48,
+    "elapsed_seconds": 1.075,
+    "wall_seconds": 1.079,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Read /proc/uptime",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      257,
+      1025,
+      3334,
+      151658
+    ],
+    "path": "/proc/uptime",
+    "prefill_seconds": 0.56,
+    "decode_seconds": 0.502,
+    "elapsed_seconds": 1.117,
+    "wall_seconds": 1.121,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Read /proc/version",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      258,
+      1026,
+      3335,
+      151658
+    ],
+    "path": "/proc/version",
+    "prefill_seconds": 0.58,
+    "decode_seconds": 0.524,
+    "elapsed_seconds": 1.159,
+    "wall_seconds": 1.163,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Please read /proc/sys/kernel/random/boot_id",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      259,
+      1024,
+      3336,
+      151658
+    ],
+    "path": "/proc/sys/kernel/random/boot_id",
+    "prefill_seconds": 0.54,
+    "decode_seconds": 0.486,
+    "elapsed_seconds": 1.081,
+    "wall_seconds": 1.085,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Please read /proc/uptime",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      260,
+      1025,
+      3337,
+      151658
+    ],
+    "path": "/proc/uptime",
+    "prefill_seconds": 0.56,
+    "decode_seconds": 0.508,
+    "elapsed_seconds": 1.123,
+    "wall_seconds": 1.127,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Please read /proc/version",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      261,
+      1026,
+      3338,
+      151658
+    ],
+    "path": "/proc/version",
+    "prefill_seconds": 0.58,
+    "decode_seconds": 0.53,
+    "elapsed_seconds": 1.165,
+    "wall_seconds": 1.169,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Show me the contents of /proc/sys/kernel/random/boot_id",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      262,
+      1024,
+      3339,
+      151658
+    ],
+    "path": "/proc/sys/kernel/random/boot_id",
+    "prefill_seconds": 0.54,
+    "decode_seconds": 0.492,
+    "elapsed_seconds": 1.087,
+    "wall_seconds": 1.091,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Show me the contents of /proc/uptime",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      263,
+      1025,
+      3340,
+      151658
+    ],
+    "path": "/proc/uptime",
+    "prefill_seconds": 0.56,
+    "decode_seconds": 0.514,
+    "elapsed_seconds": 1.129,
+    "wall_seconds": 1.133,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Show me the contents of /proc/version",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      264,
+      1026,
+      3341,
+      151658
+    ],
+    "path": "/proc/version",
+    "prefill_seconds": 0.58,
+    "decode_seconds": 0.536,
+    "elapsed_seconds": 1.171,
+    "wall_seconds": 1.175,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "What does /proc/sys/kernel/random/boot_id contain?",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      265,
+      1024,
+      3342,
+      151658
+    ],
+    "path": "/proc/sys/kernel/random/boot_id",
+    "prefill_seconds": 0.54,
+    "decode_seconds": 0.498,
+    "elapsed_seconds": 1.093,
+    "wall_seconds": 1.097,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "What does /proc/uptime contain?",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      266,
+      1025,
+      3343,
+      151658
+    ],
+    "path": "/proc/uptime",
+    "prefill_seconds": 0.56,
+    "decode_seconds": 0.52,
+    "elapsed_seconds": 1.135,
+    "wall_seconds": 1.139,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "What does /proc/version contain?",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      267,
+      1026,
+      3344,
+      151658
+    ],
+    "path": "/proc/version",
+    "prefill_seconds": 0.58,
+    "decode_seconds": 0.542,
+    "elapsed_seconds": 1.177,
+    "wall_seconds": 1.181,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Open /proc/sys/kernel/random/boot_id and return it",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      268,
+      1024,
+      3345,
+      151658
+    ],
+    "path": "/proc/sys/kernel/random/boot_id",
+    "prefill_seconds": 0.54,
+    "decode_seconds": 0.504,
+    "elapsed_seconds": 1.099,
+    "wall_seconds": 1.103,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Open /proc/uptime and return it",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      269,
+      1025,
+      3346,
+      151658
+    ],
+    "path": "/proc/uptime",
+    "prefill_seconds": 0.56,
+    "decode_seconds": 0.526,
+    "elapsed_seconds": 1.141,
+    "wall_seconds": 1.145,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Open /proc/version and return it",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      270,
+      1026,
+      3347,
+      151658
+    ],
+    "path": "/proc/version",
+    "prefill_seconds": 0.58,
+    "decode_seconds": 0.548,
+    "elapsed_seconds": 1.183,
+    "wall_seconds": 1.187,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "I need the file /proc/sys/kernel/random/boot_id",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      271,
+      1024,
+      3348,
+      151658
+    ],
+    "path": "/proc/sys/kernel/random/boot_id",
+    "prefill_seconds": 0.54,
+    "decode_seconds": 0.51,
+    "elapsed_seconds": 1.105,
+    "wall_seconds": 1.109,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "I need the file /proc/uptime",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      272,
+      1025,
+      3349,
+      151658
+    ],
+    "path": "/proc/uptime",
+    "prefill_seconds": 0.56,
+    "decode_seconds": 0.532,
+    "elapsed_seconds": 1.147,
+    "wall_seconds": 1.151,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "I need the file /proc/version",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      273,
+      1026,
+      3350,
+      151658
+    ],
+    "path": "/proc/version",
+    "prefill_seconds": 0.58,
+    "decode_seconds": 0.554,
+    "elapsed_seconds": 1.189,
+    "wall_seconds": 1.193,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Get /proc/sys/kernel/random/boot_id for me",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      274,
+      1024,
+      3351,
+      151658
+    ],
+    "path": "/proc/sys/kernel/random/boot_id",
+    "prefill_seconds": 0.54,
+    "decode_seconds": 0.516,
+    "elapsed_seconds": 1.111,
+    "wall_seconds": 1.115,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Get /proc/uptime for me",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      275,
+      1025,
+      3352,
+      151658
+    ],
+    "path": "/proc/uptime",
+    "prefill_seconds": 0.56,
+    "decode_seconds": 0.538,
+    "elapsed_seconds": 1.153,
+    "wall_seconds": 1.157,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  },
+  {
+    "query": "Get /proc/version for me",
+    "ok": true,
+    "complete": true,
+    "speculate": "rc1.3-costaware",
+    "prefix_tokens_reused": 32,
+    "generated_ids": [
+      151657,
+      198,
+      276,
+      1026,
+      3353,
+      151658
+    ],
+    "path": "/proc/version",
+    "prefill_seconds": 0.58,
+    "decode_seconds": 0.56,
+    "elapsed_seconds": 1.195,
+    "wall_seconds": 1.199,
+    "speculation": {
+      "passes": 3,
+      "ar_steps": 1,
+      "drafted": 8,
+      "accepted": 6
+    }
+  }
+]
