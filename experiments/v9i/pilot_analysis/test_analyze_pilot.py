@@ -859,6 +859,255 @@ class AnalyzePilotTest(unittest.TestCase):
                     self.assertNotEqual(res_rc13.returncode, 0)
                     self.assertNotIn("GO:", res_rc13.stdout)
 
+    def test_prefix_tokens_reused_mismatch_excluded_and_blocks_go(self) -> None:
+        def bench_row(
+            qid: str,
+            *,
+            reused: object = 32,
+            include_reused: bool = True,
+            dec: float = 1.0,
+            e2e: float = 2.0,
+        ) -> dict:
+            row = {
+                "query": qid,
+                "ok": True,
+                "complete": True,
+                "generated_ids": [1, 7],
+                "path": "/proc/uptime",
+                "prefill_seconds": max(0.0, e2e - dec),
+                "decode_seconds": dec,
+                "elapsed_seconds": e2e,
+            }
+            if include_reused:
+                row["prefix_tokens_reused"] = reused
+            return row
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            # Exact P1 reproducer: baseline reused=0, dec=1.0, e2e=2.0 vs candidate reused=32, dec=0.9, e2e=0.95.
+            base_p = tmp / "base_cold.json"
+            cand_p = tmp / "cand_warm.json"
+            out_p = tmp / "out_p1.json"
+            base_p.write_text(json.dumps([bench_row("q1", reused=0, dec=1.0, e2e=2.0)]), encoding="utf-8")
+            cand_p.write_text(json.dumps([bench_row("q1", reused=32, dec=0.9, e2e=0.95)]), encoding="utf-8")
+
+            r_repro = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(base_p), "--pilot", str(cand_p), "--out", str(out_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_repro.returncode, 1, r_repro.stdout + r_repro.stderr)
+            self.assertIn("NO-GO:", r_repro.stdout)
+            self.assertIn("mismatched measured cache conditions", r_repro.stdout)
+            self.assertIn("[CACHE-MISMATCH]", r_repro.stdout)
+            self.assertIn("reused=0/32", r_repro.stdout)
+            self.assertIn("EXCLUDED (mismatched prefix_tokens_reused): q1 (0 vs 32)", r_repro.stdout)
+            self.assertIn("OVERALL (n=1): decode N/A, e2e N/A", r_repro.stdout)
+
+            rep = json.loads(out_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep["verdict"], "NO-GO")
+            self.assertFalse(rep["go"])
+            self.assertEqual(rep["per_query"][0]["rc13_prefix_tokens_reused"], 0)
+            self.assertEqual(rep["per_query"][0]["pilot_prefix_tokens_reused"], 32)
+            self.assertFalse(rep["per_query"][0]["cache_comparable"])
+            self.assertFalse(rep["per_query"][0]["decode_comparable"])
+            self.assertFalse(rep["per_query"][0]["e2e_comparable"])
+            self.assertIsNone(rep["per_query"][0]["decode_speedup"])
+            self.assertIsNone(rep["per_query"][0]["e2e_speedup"])
+            self.assertEqual(rep["overall"]["decode_n"], 0)
+            self.assertEqual(rep["overall"]["e2e_n"], 0)
+            self.assertIsNone(rep["overall"]["decode_speedup"])
+            self.assertIsNone(rep["overall"]["e2e_speedup"])
+            self.assertEqual(len(rep["cache_condition_mismatches"]), 1)
+
+            # Partial mismatch: q1 matches (32 vs 32), q2 mismatches (0 vs 32) -> q2 excluded from totals/speedup & GO blocked.
+            mixed_base = tmp / "mixed_base.json"
+            mixed_cand = tmp / "mixed_cand.json"
+            mixed_out = tmp / "mixed_out.json"
+            mixed_base.write_text(
+                json.dumps([
+                    bench_row("q1", reused=32, dec=2.0, e2e=3.0),
+                    bench_row("q2", reused=0, dec=1.0, e2e=2.0),
+                ]),
+                encoding="utf-8",
+            )
+            mixed_cand.write_text(
+                json.dumps([
+                    bench_row("q1", reused=32, dec=1.0, e2e=2.0),
+                    bench_row("q2", reused=32, dec=0.5, e2e=0.8),
+                ]),
+                encoding="utf-8",
+            )
+            r_mixed = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(mixed_base), "--pilot", str(mixed_cand), "--out", str(mixed_out), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_mixed.returncode, 1, r_mixed.stdout + r_mixed.stderr)
+            mixed_rep = json.loads(mixed_out.read_text(encoding="utf-8"))
+            self.assertEqual(mixed_rep["verdict"], "NO-GO")
+            self.assertEqual(mixed_rep["overall"]["n"], 2)
+            self.assertEqual(mixed_rep["overall"]["decode_n"], 1)
+            self.assertEqual(mixed_rep["overall"]["e2e_n"], 1)
+            self.assertAlmostEqual(mixed_rep["overall"]["rc13_decode_total_s"], 2.0)
+            self.assertAlmostEqual(mixed_rep["overall"]["pilot_decode_total_s"], 1.0)
+            self.assertAlmostEqual(mixed_rep["overall"]["rc13_e2e_total_s"], 3.0)
+            self.assertAlmostEqual(mixed_rep["overall"]["pilot_e2e_total_s"], 2.0)
+            self.assertEqual(mixed_rep["measured_vs_modelled"]["overall"]["measured_n"], 1)
+            self.assertEqual([m["id"] for m in mixed_rep["cache_condition_mismatches"]], ["q2"])
+
+            # One-sided missing prefix_tokens_reused on an ok=True row also blocks GO.
+            onesided_cand = tmp / "onesided_cand.json"
+            onesided_cand.write_text(
+                json.dumps([bench_row("q1", include_reused=False, dec=0.5, e2e=1.0)]),
+                encoding="utf-8",
+            )
+            r_one = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(base_p), "--pilot", str(onesided_cand), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_one.returncode, 1)
+            self.assertIn("mismatched measured cache conditions", r_one.stdout)
+
+            # Matching cold-vs-cold (reused=0 vs reused=0) is comparable and allowed to GO.
+            cold_cand = tmp / "cold_cand.json"
+            cold_cand.write_text(json.dumps([bench_row("q1", reused=0, dec=0.8, e2e=1.8)]), encoding="utf-8")
+            r_cold_go = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(base_p), "--pilot", str(cold_cand), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_cold_go.returncode, 0, r_cold_go.stdout + r_cold_go.stderr)
+            self.assertIn("GO:", r_cold_go.stdout)
+
+            # Invalid prefix_tokens_reused values are rejected.
+            for bad_reused in (True, 32.0, -1, "32"):
+                bad_p = tmp / "bad_reused.json"
+                bad_p.write_text(json.dumps([bench_row("q1", reused=bad_reused)]), encoding="utf-8")
+                with self.subTest(bad_reused=bad_reused):
+                    with self.assertRaises(ValueError):
+                        analyze_pilot.load_records([bad_p])
+
+    def test_malformed_token_ids_rejected_across_formats_and_direct_analyze(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            rc13_bench = tmp / "rc13_bench.json"
+            rc13_bench.write_text(
+                json.dumps([
+                    {
+                        "query": "q1",
+                        "ok": True,
+                        "complete": True,
+                        "generated_ids": [1, 7],
+                        "prefill_seconds": 0.5,
+                        "decode_seconds": 1.0,
+                        "elapsed_seconds": 1.5,
+                    }
+                ]),
+                encoding="utf-8",
+            )
+            rc13_pilot = tmp / "rc13_pilot.json"
+            rc13_pilot.write_text(
+                json.dumps({
+                    "passed": True,
+                    "started_utc": "2026-11-22T00:00:00Z",
+                    "finished_utc": "2026-11-22T00:01:00Z",
+                    "cases": [
+                        {
+                            "key": "case-0",
+                            "domain": "general",
+                            "prefill_seconds": 0.5,
+                            "identical": True,
+                            "ar": {"tokens": [1, 7], "decode_seconds": 1.0},
+                            "candidate": {"tokens": [1, 7], "decode_seconds": 1.0},
+                        }
+                    ],
+                }),
+                encoding="utf-8",
+            )
+
+            malformed_lists: list[tuple[str, object]] = [
+                ("bool_and_float_repro", [True, 7.0]),
+                ("bool_only", [True, 7]),
+                ("float_only", [1, 7.0]),
+                ("negative_int", [-1, 7]),
+                ("string_token", ["1", 7]),
+                ("null_token", [None, 7]),
+            ]
+
+            for label, bad_tokens in malformed_lists:
+                # Bench generated_ids and tokens fallback (both ok=True and ok=False).
+                for key, ok_val, comp_val in (
+                    ("generated_ids", True, True),
+                    ("tokens", True, True),
+                    ("generated_ids", False, False),
+                ):
+                    cand_bench = tmp / f"bench_{label}_{key}_{ok_val}.json"
+                    cand_bench.write_text(
+                        json.dumps([
+                            {
+                                "query": "q1",
+                                "ok": ok_val,
+                                "complete": comp_val,
+                                key: bad_tokens,
+                                "prefill_seconds": 0.4,
+                                "decode_seconds": 0.5,
+                                "elapsed_seconds": 0.9,
+                            }
+                        ]),
+                        encoding="utf-8",
+                    )
+                    with self.subTest(format="bench", label=label, key=key, ok=ok_val):
+                        with self.assertRaises(ValueError):
+                            analyze_pilot.load_records([cand_bench])
+                        res = subprocess.run(
+                            [sys.executable, str(SCRIPT), "--rc13", str(rc13_bench), "--pilot", str(cand_bench), "--check"],
+                            capture_output=True,
+                            text=True,
+                        )
+                        self.assertNotEqual(res.returncode, 0)
+                        self.assertNotIn("GO:", res.stdout)
+
+                # pilot.json candidate.tokens and raw ar.tokens.
+                for target in ("candidate", "ar"):
+                    cand_pilot = tmp / f"pilot_{label}_{target}.json"
+                    doc = {
+                        "passed": True,
+                        "started_utc": "2026-11-22T00:00:00Z",
+                        "finished_utc": "2026-11-22T00:01:00Z",
+                        "cases": [
+                            {
+                                "key": "case-0",
+                                "domain": "general",
+                                "prefill_seconds": 0.4,
+                                "identical": True,
+                                "ar": {"tokens": bad_tokens if target == "ar" else [1, 7], "decode_seconds": 1.0},
+                                "candidate": {"tokens": bad_tokens if target == "candidate" else [1, 7], "decode_seconds": 0.5},
+                            }
+                        ],
+                    }
+                    cand_pilot.write_text(json.dumps(doc), encoding="utf-8")
+                    with self.subTest(format="pilot_json", label=label, target=target):
+                        with self.assertRaises(ValueError):
+                            analyze_pilot.load_records([cand_pilot])
+                        res = subprocess.run(
+                            [sys.executable, str(SCRIPT), "--rc13", str(rc13_pilot), "--pilot", str(cand_pilot), "--check"],
+                            capture_output=True,
+                            text=True,
+                        )
+                        self.assertNotEqual(res.returncode, 0)
+                        self.assertNotIn("GO:", res.stdout)
+
+            # Direct analyze() call with [True, 7.0] tokens or ar_tokens must also fail validation.
+            base_rec = analyze_pilot.load_records([rc13_bench])[0]
+            bad_tok_rec = dict(base_rec, tokens=[True, 7.0], decode_seconds=0.5, e2e_seconds=1.0)
+            with self.assertRaises(ValueError):
+                analyze_pilot.analyze([base_rec], [bad_tok_rec])
+            bad_ar_rec = dict(base_rec, ar_tokens=[True, 7.0], decode_seconds=0.5, e2e_seconds=1.0)
+            with self.assertRaises(ValueError):
+                analyze_pilot.analyze([base_rec], [bad_ar_rec])
+
 
 if __name__ == "__main__":
     unittest.main()

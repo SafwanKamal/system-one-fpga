@@ -54,6 +54,58 @@ def _is_nonempty_str(value: Any) -> bool:
     return isinstance(value, str) and value.strip() != ""
 
 
+def _parse_nonneg_int(
+    value: Any, field: str, path: Path, *, required: bool = False
+) -> int | None:
+    if value is None:
+        if required:
+            raise ValueError(f"{path}: missing or null required integer {field!r}")
+        return None
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ValueError(
+            f"{path}: {field!r} must be an integer, got {type(value).__name__} ({value!r})"
+        )
+    if value < 0:
+        raise ValueError(f"{path}: {field!r} must be non-negative, got {value!r}")
+    return value
+
+
+def _parse_token_ids(
+    value: Any, field: str, path: Path, *, context: str
+) -> list[int]:
+    if not isinstance(value, list):
+        raise ValueError(f"{path}: {context} {field!r} must be a list")
+    out: list[int] = []
+    for idx, tok in enumerate(value):
+        if isinstance(tok, bool) or not isinstance(tok, int):
+            raise ValueError(
+                f"{path}: {context} {field!r}[{idx}] must be an integer token ID, "
+                f"got {type(tok).__name__} ({tok!r})"
+            )
+        if tok < 0:
+            raise ValueError(
+                f"{path}: {context} {field!r}[{idx}] must be non-negative, got {tok!r}"
+            )
+        out.append(tok)
+    return out
+
+
+def _validate_token_list_direct(value: Any, field: str, record_id: str) -> list[int]:
+    if not isinstance(value, list):
+        raise ValueError(f"record {record_id!r} {field!r} must be a list")
+    for idx, tok in enumerate(value):
+        if isinstance(tok, bool) or not isinstance(tok, int):
+            raise ValueError(
+                f"record {record_id!r} {field!r}[{idx}] must be an integer token ID, "
+                f"got {type(tok).__name__} ({tok!r})"
+            )
+        if tok < 0:
+            raise ValueError(
+                f"record {record_id!r} {field!r}[{idx}] must be non-negative, got {tok!r}"
+            )
+    return list(value)
+
+
 def _parse_timing(value: Any, field: str, path: Path, *, required: bool) -> float | None:
     if value is None:
         if required:
@@ -142,22 +194,29 @@ def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
     row_ok = ok_val and complete_bool
 
     if "generated_ids" in row:
+        token_field = "generated_ids"
         raw_tokens = row["generated_ids"]
     elif "tokens" in row:
+        token_field = "tokens"
         raw_tokens = row["tokens"]
     elif row_ok:
         raise ValueError(f"{path}: bench row for {row['query']!r} missing 'generated_ids'")
     else:
+        token_field = "generated_ids"
         raw_tokens = None
 
     if raw_tokens is None:
         if row_ok:
             raise ValueError(f"{path}: bench row for {row['query']!r} has null 'generated_ids' with ok=True, complete=True")
-        tokens: list[Any] | None = None
+        tokens: list[int] | None = None
     else:
-        if not isinstance(raw_tokens, list):
-            raise ValueError(f"{path}: bench row for {row['query']!r} 'generated_ids' must be a list")
-        tokens = list(raw_tokens)
+        tokens = _parse_token_ids(
+            raw_tokens, token_field, path, context=f"bench row for {row['query']!r}"
+        )
+
+    reused = _parse_nonneg_int(
+        row.get("prefix_tokens_reused"), "prefix_tokens_reused", path, required=False
+    )
 
     decode = _parse_timing(row.get("decode_seconds"), "decode_seconds", path, required=row_ok)
     if "prefill_seconds" in row:
@@ -185,7 +244,7 @@ def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
         "prefill_seconds": prefill,
         "decode_seconds": decode,
         "e2e_seconds": e2e,
-        "reused": row.get("prefix_tokens_reused"),
+        "reused": reused,
         "speculate": row.get("speculate"),
     }
 
@@ -227,11 +286,14 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
         if raw_cand_tokens is None:
             if strict_case:
                 raise ValueError(f"{path}: pilot.json case {case['key']!r} has null candidate 'tokens'")
-            cand_tokens: list[Any] | None = None
+            cand_tokens: list[int] | None = None
         else:
-            if not isinstance(raw_cand_tokens, list):
-                raise ValueError(f"{path}: pilot.json case {case['key']!r} candidate 'tokens' must be a list")
-            cand_tokens = list(raw_cand_tokens)
+            cand_tokens = _parse_token_ids(
+                raw_cand_tokens,
+                "tokens",
+                path,
+                context=f"pilot.json case {case['key']!r} candidate",
+            )
         decode = _parse_timing(cand.get("decode_seconds"), "candidate.decode_seconds", path, required=strict_case)
     else:
         cand_tokens = None
@@ -243,14 +305,17 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
     ar = case.get("ar")
     if ar is not None and not isinstance(ar, dict):
         raise ValueError(f"{path}: pilot.json case {case['key']!r} 'ar' must be an object")
-    ar_tokens: list[Any] | None = None
+    ar_tokens: list[int] | None = None
     if isinstance(ar, dict):
         if "decode_seconds" in ar and ar["decode_seconds"] is not None:
             _parse_timing(ar["decode_seconds"], "ar.decode_seconds", path, required=False)
         if "tokens" in ar and ar["tokens"] is not None:
-            if not isinstance(ar["tokens"], list):
-                raise ValueError(f"{path}: pilot.json case {case['key']!r} ar 'tokens' must be a list")
-            ar_tokens = list(ar["tokens"])
+            ar_tokens = _parse_token_ids(
+                ar["tokens"],
+                "tokens",
+                path,
+                context=f"pilot.json case {case['key']!r} ar",
+            )
 
     domain = str(case.get("domain") or "workload")
     return {
@@ -284,11 +349,15 @@ def load_records(paths: list[Path]) -> list[dict[str, Any]]:
 
 def _first_diff_index(a: list[Any], b: list[Any]) -> int | None:
     for idx, (x, y) in enumerate(zip(a, b)):
-        if x != y:
+        if type(x) is not type(y) or x != y:
             return idx
     if len(a) != len(b):
         return min(len(a), len(b))
     return None
+
+
+def _strict_list_eq(a: list[Any], b: list[Any]) -> bool:
+    return len(a) == len(b) and all(type(x) is type(y) and x == y for x, y in zip(a, b))
 
 
 def _safe_ratio(num: float, den: float) -> float | None:
@@ -321,7 +390,9 @@ def _summarize_timings(
 def _summarize_group(items: list[dict[str, Any]]) -> dict[str, Any]:
     dec_pairs = [
         x for x in items
-        if x["rc13_decode_seconds"] is not None and x["pilot_decode_seconds"] is not None
+        if x.get("decode_comparable", True)
+        and x["rc13_decode_seconds"] is not None
+        and x["pilot_decode_seconds"] is not None
     ]
     e2e_pairs = [
         x for x in items
@@ -376,6 +447,22 @@ def _model_comparison(
     }
 
 
+def _validate_records(records: list[dict[str, Any]]) -> None:
+    for rec in records:
+        rid = str(rec.get("id", "<unknown>"))
+        if rec.get("tokens") is not None:
+            _validate_token_list_direct(rec["tokens"], "tokens", rid)
+        if rec.get("ar_tokens") is not None:
+            _validate_token_list_direct(rec["ar_tokens"], "ar_tokens", rid)
+        reused = rec.get("reused")
+        if reused is not None:
+            if isinstance(reused, bool) or not isinstance(reused, int) or reused < 0:
+                raise ValueError(
+                    f"record {rid!r} 'reused' must be a non-negative integer, "
+                    f"got {type(reused).__name__} ({reused!r})"
+                )
+
+
 def analyze(
     rc13_records: list[dict[str, Any]],
     pilot_records: list[dict[str, Any]],
@@ -386,6 +473,8 @@ def analyze(
 ) -> dict[str, Any]:
     if not rc13_records or not pilot_records:
         raise ValueError("Both RC1.3 and pilot inputs must contain at least one record")
+    _validate_records(rc13_records)
+    _validate_records(pilot_records)
 
     rc13_groups: dict[str, list[dict[str, Any]]] = {}
     for r in rc13_records:
@@ -420,6 +509,11 @@ def analyze(
                 "first_diff_index": 0,
                 "rc13_token_count": len(r["tokens"]) if r["tokens"] is not None else None,
                 "pilot_token_count": 0,
+                "rc13_prefix_tokens_reused": r.get("reused"),
+                "pilot_prefix_tokens_reused": None,
+                "cache_comparable": True,
+                "timing_boundary_comparable": True,
+                "decode_comparable": True,
                 "rc13_prefill_seconds": r["prefill_seconds"],
                 "pilot_prefill_seconds": None,
                 "rc13_decode_seconds": r["decode_seconds"],
@@ -427,22 +521,30 @@ def analyze(
                 "decode_speedup": None,
                 "rc13_e2e_seconds": r["e2e_seconds"],
                 "pilot_e2e_seconds": None,
+                "e2e_comparable": True,
                 "e2e_speedup": None,
             })
             continue
 
         both_have_tokens = (r["tokens"] is not None and p["tokens"] is not None)
-        tokens_identical = both_have_tokens and (r["tokens"] == p["tokens"])
+        tokens_identical = both_have_tokens and _strict_list_eq(r["tokens"], p["tokens"])
         ar_self_identical = (
-            (p["ar_tokens"] == p["tokens"])
+            _strict_list_eq(p["ar_tokens"], p["tokens"])
             if (p["ar_tokens"] is not None and p["tokens"] is not None)
             else True
         )
         path_identical = (r["path"] == p["path"]) if (r["path"] is not None or p["path"] is not None) else True
         logit_identical = (
-            (r["logit_bits"] == p["logit_bits"])
-            if (r["logit_bits"] is not None and p["logit_bits"] is not None)
-            else True
+            _strict_list_eq(r["logit_bits"], p["logit_bits"])
+            if (
+                isinstance(r["logit_bits"], list)
+                and isinstance(p["logit_bits"], list)
+            )
+            else (
+                (r["logit_bits"] == p["logit_bits"])
+                if (r["logit_bits"] is not None and p["logit_bits"] is not None)
+                else True
+            )
         )
         kv_identical = (
             (r["kv_sha256"] == p["kv_sha256"])
@@ -459,12 +561,27 @@ def analyze(
             and status_ok
         )
         diff_idx = _first_diff_index(r["tokens"], p["tokens"]) if (both_have_tokens and not tokens_identical) else None
+
+        rc13_reused = r.get("reused")
+        pilot_reused = p.get("reused")
+        has_any_timings = (
+            (r["decode_seconds"] is not None and p["decode_seconds"] is not None)
+            or (r["e2e_seconds"] is not None and p["e2e_seconds"] is not None)
+        )
+        reused_differs = (rc13_reused != pilot_reused)
+        cache_comparable = not (
+            reused_differs
+            and (status_ok or has_any_timings or (rc13_reused is not None and pilot_reused is not None))
+        )
+        timing_boundary_comparable = (r.get("source_format") == p.get("source_format"))
+        decode_comparable = cache_comparable
+        e2e_comparable = timing_boundary_comparable and cache_comparable
+
         dec_sp = (
             _safe_ratio(r["decode_seconds"], p["decode_seconds"])
-            if (r["decode_seconds"] is not None and p["decode_seconds"] is not None)
+            if (decode_comparable and r["decode_seconds"] is not None and p["decode_seconds"] is not None)
             else None
         )
-        e2e_comparable = (r.get("source_format") == p.get("source_format"))
         e2e_sp = (
             _safe_ratio(r["e2e_seconds"], p["e2e_seconds"])
             if (e2e_comparable and r["e2e_seconds"] is not None and p["e2e_seconds"] is not None)
@@ -487,6 +604,11 @@ def analyze(
             "first_diff_index": diff_idx,
             "rc13_token_count": len(r["tokens"]) if r["tokens"] is not None else None,
             "pilot_token_count": len(p["tokens"]) if p["tokens"] is not None else None,
+            "rc13_prefix_tokens_reused": rc13_reused,
+            "pilot_prefix_tokens_reused": pilot_reused,
+            "cache_comparable": cache_comparable,
+            "timing_boundary_comparable": timing_boundary_comparable,
+            "decode_comparable": decode_comparable,
             "rc13_prefill_seconds": r["prefill_seconds"],
             "pilot_prefill_seconds": p["prefill_seconds"],
             "rc13_decode_seconds": r["decode_seconds"],
@@ -548,7 +670,19 @@ def analyze(
         q["status_ok"] and (q["rc13_e2e_seconds"] is None or q["pilot_e2e_seconds"] is None)
         for q in matched
     )
-    mixed_timing_boundaries = any(not q.get("e2e_comparable", True) for q in matched)
+    mixed_timing_boundaries = any(
+        not q.get("timing_boundary_comparable", True) for q in matched
+    )
+    cache_condition_mismatches = [
+        {
+            "id": q["id"],
+            "occurrence": q["occurrence"],
+            "rc13_prefix_tokens_reused": q["rc13_prefix_tokens_reused"],
+            "pilot_prefix_tokens_reused": q["pilot_prefix_tokens_reused"],
+        }
+        for q in matched
+        if not q.get("cache_comparable", True)
+    ]
 
     overall_dec_sp = overall["decode_speedup"]
     overall_e2e_sp = overall["e2e_speedup"]
@@ -556,6 +690,7 @@ def analyze(
         not missing_decode_on_ok
         and not missing_e2e_on_ok
         and not mixed_timing_boundaries
+        and not cache_condition_mismatches
         and overall_dec_sp is not None
         and overall_e2e_sp is not None
         and overall_dec_sp >= min_decode_speedup
@@ -574,11 +709,17 @@ def analyze(
     if not speed_ok:
         if mixed_timing_boundaries:
             reasons.append("mixed timing boundaries (matched RC1.3 and pilot records use different source formats)")
-        elif missing_decode_on_ok or missing_e2e_on_ok:
+        if cache_condition_mismatches:
+            reasons.append(
+                f"mismatched measured cache conditions (prefix_tokens_reused mismatch on "
+                f"{len(cache_condition_mismatches)}/{len(matched)} matched queries)"
+            )
+        if missing_decode_on_ok or missing_e2e_on_ok:
             reasons.append("speedup unavailable (missing required timing on successful matched query)")
         elif overall_dec_sp is None or overall_e2e_sp is None:
-            reasons.append("speedup unavailable (no matched queries or non-positive pilot duration)")
-        else:
+            if not mixed_timing_boundaries and not cache_condition_mismatches:
+                reasons.append("speedup unavailable (no matched queries or non-positive pilot duration)")
+        elif overall_dec_sp < min_decode_speedup or overall_e2e_sp < min_e2e_speedup:
             reasons.append(
                 f"slower than threshold (decode={overall_dec_sp:.6g}x < {min_decode_speedup:.2f}x "
                 f"or e2e={overall_e2e_sp:.6g}x < {min_e2e_speedup:.2f}x)"
@@ -597,6 +738,8 @@ def analyze(
 
     matched_n = overall["n"]
     tool_n = tool_summary["n"] if tool_summary is not None else 0
+    tool_e2e_n = tool_summary["e2e_n"] if tool_summary is not None else 0
+    overall_e2e_n = overall["e2e_n"]
     non_tool_n = matched_n - tool_n
     matches_model_scope = (matched_n == MODELLED_WORKLOAD_CASES)
     coverage_note = (
@@ -626,6 +769,7 @@ def analyze(
             "passed": identity_ok,
             "failing_queries": failing_queries,
         },
+        "cache_condition_mismatches": cache_condition_mismatches,
         "per_query": per_query,
         "by_category": by_category,
         "overall": overall,
@@ -644,8 +788,8 @@ def analyze(
                 _model_comparison(
                     tool_summary["e2e_speedup"],
                     MODELLED_TOOL_E2E_SPEEDUP,
-                    measured_n=tool_n,
-                    measured_scope=f"measured tool sample (n={tool_n})",
+                    measured_n=tool_e2e_n,
+                    measured_scope=f"measured tool sample (n={tool_e2e_n})",
                     model_scope="tool E2E model vs v9h",
                 )
                 if tool_summary is not None
@@ -654,8 +798,8 @@ def analyze(
             "overall": _model_comparison(
                 overall_e2e_sp,
                 MODELLED_OVERALL_E2E_SPEEDUP,
-                measured_n=matched_n,
-                measured_scope=f"measured sample (n={matched_n}, tool={tool_n}, non_tool={non_tool_n})",
+                measured_n=overall_e2e_n,
+                measured_scope=f"measured sample (n={overall_e2e_n}, tool={tool_e2e_n}, non_tool={non_tool_n})",
                 model_scope=f"{MODELLED_WORKLOAD_CASES}-case workload E2E model vs v9h (decode modelled separately at {MODELLED_OVERALL_DECODE_SPEEDUP}x)",
             ),
         },
@@ -705,11 +849,17 @@ def format_report(report: dict[str, Any]) -> str:
             status = "FAIL(status)"
         else:
             status = "DIFF"
+        cache_suffix = ""
+        rc13_reused = q.get("rc13_prefix_tokens_reused")
+        pilot_reused = q.get("pilot_prefix_tokens_reused")
+        if rc13_reused is not None or pilot_reused is not None or not q.get("cache_comparable", True):
+            cache_flag = " [CACHE-MISMATCH]" if not q.get("cache_comparable", True) else ""
+            cache_suffix = f" | reused={_fmt_tok(rc13_reused)}/{_fmt_tok(pilot_reused)}{cache_flag}"
         lines.append(
             f"  [{status}] {q['id']} | cat={q['category']} | "
             f"tokens={_fmt_tok(q['rc13_token_count'])}/{_fmt_tok(q['pilot_token_count'])} | "
             f"dec={_fmt_opt(q['rc13_decode_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_decode_seconds'], '.3f', 's')} ({_fmt_opt(q['decode_speedup'], '.4f', 'x')}) | "
-            f"e2e={_fmt_opt(q['rc13_e2e_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_e2e_seconds'], '.3f', 's')} ({_fmt_opt(q['e2e_speedup'], '.4f', 'x')})"
+            f"e2e={_fmt_opt(q['rc13_e2e_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_e2e_seconds'], '.3f', 's')} ({_fmt_opt(q['e2e_speedup'], '.4f', 'x')}){cache_suffix}"
         )
 
     lines.append("")
@@ -743,6 +893,15 @@ def format_report(report: dict[str, Any]) -> str:
             )
         )
         lines.append(f"  OVERALL (n={ov['n']}): {dec_part}, {e2e_part}")
+    cache_mismatches = report.get("cache_condition_mismatches") or []
+    if cache_mismatches:
+        summary_items = ", ".join(
+            f"{m['id']} ({_fmt_tok(m['rc13_prefix_tokens_reused'])} vs {_fmt_tok(m['pilot_prefix_tokens_reused'])})"
+            for m in cache_mismatches
+        )
+        lines.append(
+            f"  EXCLUDED (mismatched prefix_tokens_reused): {summary_items}"
+        )
 
     lines.append("")
     lines.append("=== (c) Measured vs Modelled E2E Speedup (vs v9h) ===")
