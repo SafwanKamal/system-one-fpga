@@ -1,0 +1,80 @@
+=== (a) Output Identity vs RC1.3 ===
+Identical: 57/57 (pass=True)
+  [MATCH] Read /proc/sys/kernel/random/boot_id | cat=/proc/sys/kernel/random/boot_id | tokens=16/16 | dec=0.580s->0.619s (0.9381x) | e2e=1.173s->1.055s (1.1126x) | reused=32/32
+  [MATCH] Read /proc/uptime | cat=/proc/uptime | tokens=13/13 | dec=0.465s->0.390s (1.1921x) | e2e=1.046s->0.805s (1.2987x) | reused=32/32
+  [MATCH] Read /proc/version | cat=/proc/version | tokens=12/12 | dec=0.457s->0.375s (1.2168x) | e2e=0.969s->0.784s (1.2359x) | reused=32/32
+  [MATCH] Please read /proc/sys/kernel/random/boot_id | cat=/proc/sys/kernel/random/boot_id | tokens=16/16 | dec=0.581s->0.408s (1.4240x) | e2e=1.249s->0.920s (1.3579x) | reused=32/32
+  [MATCH] Please read /proc/uptime | cat=/proc/uptime | tokens=13/13 | dec=0.461s->0.387s (1.1903x) | e2e=1.044s->0.809s (1.2904x) | reused=32/32
+  [MATCH] Please read /proc/version | cat=/proc/version | tokens=12/12 | dec=0.454s->0.384s (1.1797x) | e2e=1.034s->0.800s (1.2926x) | reused=32/32
+  [MATCH] Show me the contents of /proc/sys/kernel/random/boot_id | cat=/proc/sys/kernel/random/boot_id | tokens=16/16 | dec=0.581s->0.411s (1.4139x) | e2e=1.270s->0.943s (1.3466x) | reused=32/32
+  [MATCH] Show me the contents of /proc/uptime | cat=/proc/uptime | tokens=13/13 | dec=0.460s->0.419s (1.0984x) | e2e=1.149s->0.930s (1.2358x) | reused=32/32
+  [MATCH] Show me the contents of /proc/version | cat=/proc/version | tokens=12/12 | dec=0.454s->0.387s (1.1730x) | e2e=1.048s->0.823s (1.2727x) | reused=32/32
+  [MATCH] What does /proc/sys/kernel/random/boot_id contain? | cat=/proc/sys/kernel/random/boot_id | tokens=16/16 | dec=0.580s->0.411s (1.4125x) | e2e=1.260s->0.938s (1.3437x) | reused=32/32
+  [MATCH] What does /proc/uptime contain? | cat=/proc/uptime | tokens=13/13 | dec=0.460s->0.418s (1.1020x) | e2e=1.054s->0.853s (1.2352x) | reused=32/32
+  [MATCH] What does /proc/version contain? | cat=/proc/version | tokens=12/12 | dec=0.454s->0.386s (1.1766x) | e2e=1.047s->0.818s (1.2797x) | reused=32/32
+  [MATCH] Open /proc/sys/kernel/random/boot_id and return it | cat=/proc/sys/kernel/random/boot_id | tokens=16/16 | dec=0.581s->0.410s (1.4170x) | e2e=1.260s->0.936s (1.3456x) | reused=32/32
+  [MATCH] Open /proc/uptime and return it | cat=/proc/uptime | tokens=13/13 | dec=0.460s->0.418s (1.1012x) | e2e=1.055s->0.854s (1.2353x) | reused=32/32
+  [MATCH] Open /proc/version and return it | cat=/proc/version | tokens=12/12 | dec=0.454s->0.386s (1.1745x) | e2e=1.044s->0.817s (1.2779x) | reused=32/32
+  [MATCH] I need the file /proc/sys/kernel/random/boot_id | cat=/proc/sys/kernel/random/boot_id | tokens=16/16 | dec=0.586s->0.410s (1.4310x) | e2e=1.265s->0.936s (1.3509x) | reused=32/32
+  [MATCH] I need the file /proc/uptime | cat=/proc/uptime | tokens=13/13 | dec=0.461s->0.417s (1.1066x) | e2e=1.054s->0.851s (1.2387x) | reused=32/32
+  [MATCH] I need the file /proc/version | cat=/proc/version | tokens=12/12 | dec=0.454s->0.386s (1.1765x) | e2e=1.044s->0.816s (1.2790x) | reused=32/32
+  [MATCH] Get /proc/sys/kernel/random/boot_id for me | cat=/proc/sys/kernel/random/boot_id | tokens=16/16 | dec=0.581s->0.410s (1.4163x) | e2e=1.257s->0.927s (1.3559x) | reused=32/32
+  [MATCH] Get /proc/uptime for me | cat=/proc/uptime | tokens=13/13 | dec=0.461s->0.417s (1.1042x) | e2e=1.104s->0.849s (1.3005x) | reused=32/32
+  [MATCH] Get /proc/version for me | cat=/proc/version | tokens=12/12 | dec=0.454s->0.386s (1.1776x) | e2e=1.038s->0.860s (1.2077x) | reused=32/32
+  [MATCH] 25ad5dfb6fc5c13c2af2ffe5ecb0eddbfa36ac423214a8e295b2c03ecdd1af7d | cat=general | tokens=96/96 | dec=7.780s->9.369s (0.8304x) | e2e=22.098s->22.041s (1.0026x)
+  [MATCH] 16d7efe9138e8bee901e6d8a374250d08b8b3e648ec5474977eacbe50d3d6e4d | cat=maintenance | tokens=96/96 | dec=7.414s->8.104s (0.9148x) | e2e=17.373s->16.412s (1.0586x)
+  [MATCH] 1ba2af1ed0b3bfbbea2a9680421872495dabc91e8552396e41832644bf65c62b | cat=long | tokens=64/64 | dec=7.474s->9.549s (0.7827x) | e2e=52.635s->59.163s (0.8897x)
+  [MATCH] tool:Please read /proc/sys/kernel/random/boot_id | cat=tool | tokens=18/18 | dec=1.522s->1.166s (1.3057x) | e2e=2.818s->2.072s (1.3598x)
+  [MATCH] 325c5585f6eeff7a7069cc70eb44b72edfe3edda10025cf570dde6a284c1ea26 | cat=general | tokens=2/2 | dec=0.118s->0.117s (1.0120x) | e2e=5.388s->4.142s (1.3008x)
+  [MATCH] 20b9e83a5fcb24986f616b2714d870e017e48e302dd2cc0360365b3f26ed205b | cat=maintenance | tokens=85/85 | dec=6.248s->7.357s (0.8493x) | e2e=32.094s->32.979s (0.9732x)
+  [MATCH] fa37f05b8744696648904db62a5378d081966de38a1cce48bc136c309c6ad2ae | cat=long | tokens=42/42 | dec=3.873s->4.984s (0.7772x) | e2e=55.310s->62.810s (0.8806x)
+  [MATCH] tool:Show me the contents of /proc/version | cat=tool | tokens=14/14 | dec=0.765s->0.553s (1.3830x) | e2e=1.987s->1.387s (1.4327x)
+  [MATCH] 403156a3c1d972f5738a86d7d7d6c26a736ef2dd4376652a7f8c920626529d6e | cat=general | tokens=6/6 | dec=0.517s->0.486s (1.0635x) | e2e=6.824s->5.440s (1.2545x)
+  [MATCH] 279e87e99dd84450e58baecf31669f61baaaa40eec68fbfcb29ec2dfe2562cb6 | cat=maintenance | tokens=96/96 | dec=3.869s->3.717s (1.0409x) | e2e=13.921s->12.130s (1.1477x)
+  [MATCH] 03eb452d95da37038cd56e7822b13711a3cc1f790f1c9d07a84e652b24d4f93e | cat=long | tokens=64/64 | dec=5.892s->7.370s (0.7995x) | e2e=51.634s->57.686s (0.8951x)
+  [MATCH] tool:Open /proc/uptime and return it | cat=tool | tokens=15/15 | dec=0.765s->0.553s (1.3835x) | e2e=1.986s->1.386s (1.4331x)
+  [MATCH] 4ddc1edb17e646bb53d68525213306375c868aca373b46d58c1f662068a11930 | cat=general | tokens=2/2 | dec=0.121s->0.120s (1.0094x) | e2e=4.895s->3.717s (1.3171x)
+  [MATCH] 32b9cb887d08571c2e5569625483e1572c55169734585fa7bb8b74e9926c55f9 | cat=maintenance | tokens=69/69 | dec=5.637s->6.000s (0.9396x) | e2e=24.068s->23.175s (1.0385x)
+  [MATCH] 3ff34a1b29a4d02bfef9e31c7a9e8bf9f4fd507dfabf9755277a39f3936c4970 | cat=long | tokens=28/28 | dec=7.242s->9.579s (0.7560x) | e2e=73.109s->86.709s (0.8432x)
+  [MATCH] tool:Get /proc/sys/kernel/random/boot_id for me | cat=tool | tokens=18/18 | dec=0.662s->0.450s (1.4724x) | e2e=1.966s->1.364s (1.4409x)
+  [MATCH] 571fd434c587e2a4ffd8b0b3670da0cf203c5460bd8fd42aa449063b0bc6ec9a | cat=general | tokens=2/2 | dec=0.121s->0.123s (0.9857x) | e2e=5.389s->4.152s (1.2980x)
+  [MATCH] 5abb949f7ccec6890ec2948eb12dd8f482695c32160a4d597b169193831f7676 | cat=general | tokens=2/2 | dec=0.142s->0.140s (1.0127x) | e2e=10.771s->9.083s (1.1858x)
+  [MATCH] 3fe4d5377677da594195fc3f8a76d23c13a9e1bbe2b0aa0cb09e3d663e0e09ad | cat=maintenance | tokens=68/68 | dec=4.501s->4.852s (0.9276x) | e2e=23.034s->22.084s (1.0430x)
+  [MATCH] 692bda4d242fc874f7529df75fad4f7e893a53ec8dac2c62db9febaa7138093c | cat=general | tokens=73/73 | dec=9.029s->9.656s (0.9350x) | e2e=16.836s->15.939s (1.0563x)
+  [MATCH] 4d38942905f9ddee8fad288b3d535c8e410045a0af84b71d87fa5d653d97ae3f | cat=maintenance | tokens=96/96 | dec=7.905s->9.111s (0.8676x) | e2e=34.065s->35.096s (0.9706x)
+  [MATCH] 74b432771e44695f3e42a87a6c3f7a72e59477101ef0a99ba616829ad31b89d5 | cat=general | tokens=2/2 | dec=0.152s->0.151s (1.0058x) | e2e=13.687s->12.032s (1.1376x)
+  [MATCH] 5a4a23a899ae995840a6a854b4b49e1f98029acd9dbcc491452a789d6bc9cca0 | cat=maintenance | tokens=68/68 | dec=6.414s->7.027s (0.9128x) | e2e=24.956s->24.263s (1.0285x)
+  [MATCH] 8244cd3a76ac2bf9c9bb32227ad908a21a1242363c7f0a2057eeed4ee847a554 | cat=general | tokens=6/6 | dec=0.389s->0.364s (1.0697x) | e2e=6.896s->5.476s (1.2592x)
+  [MATCH] 5fac414de6b92cb9a1e912e674ccf6bea3762d7101c1292e44c82fdb15f362f3 | cat=maintenance | tokens=21/21 | dec=2.756s->2.866s (0.9615x) | e2e=21.020s->19.791s (1.0621x)
+  [MATCH] 855935c7064c1860701ddd41b57b624ef94f47b615d077ec1abd1364b822792a | cat=general | tokens=2/2 | dec=0.128s->0.128s (0.9978x) | e2e=7.163s->5.678s (1.2616x)
+  [MATCH] 69b842e4632274fb60b1ad1dd8f568094cfafbac1f8b998c24e3a5ea6aca31cf | cat=maintenance | tokens=52/52 | dec=5.031s->5.762s (0.8731x) | e2e=30.559s->30.951s (0.9874x)
+  [MATCH] 8b8c97943c84e67fe9950898735504f9d36c493682d848f7837dd59c9d18087e | cat=general | tokens=2/2 | dec=0.131s->0.130s (1.0138x) | e2e=7.721s->6.213s (1.2428x)
+  [MATCH] 712ea5747631d783b252ee2ad6ea7503a2c8f7bdc957487097edd6aac603f521 | cat=maintenance | tokens=96/96 | dec=3.994s->3.784s (1.0553x) | e2e=13.937s->12.088s (1.1530x)
+  [MATCH] 93f6c35c1e6950c82d9f513ca4559f69ac36171a0a9b15736af85113d0f44bb7 | cat=general | tokens=80/80 | dec=11.345s->12.032s (0.9429x) | e2e=27.073s->26.246s (1.0315x)
+  [MATCH] 7e2deaff20a54152403ea1c378e99180254be1d7f6d3720e3c37ad345a80db5d | cat=maintenance | tokens=22/22 | dec=3.033s->3.403s (0.8912x) | e2e=20.751s->19.734s (1.0515x)
+  [MATCH] 98d000af0fbd6fe11f0ff74a6de580e92213eb82aa5f554543c3e7c33510ddd7 | cat=general | tokens=2/2 | dec=0.166s->0.164s (1.0115x) | e2e=18.707s->17.402s (1.0750x)
+  [MATCH] 90268c92526ec768717861162c8b79e940980e5b1490f57527d151708079c68b | cat=maintenance | tokens=37/37 | dec=2.854s->2.896s (0.9855x) | e2e=12.334s->10.754s (1.1469x)
+  [MATCH] a620cf27620eed6362d7a23b300abde4c435ffaf1b27d582d3c4a2b863ecce03 | cat=general | tokens=82/82 | dec=8.348s->8.641s (0.9660x) | e2e=16.485s->15.226s (1.0827x)
+  [MATCH] 948f995c5cbcdee66dee534dd53291f5856262abccb914860059efc5ebf776da | cat=maintenance | tokens=77/77 | dec=3.263s->3.097s (1.0534x) | e2e=12.869s->11.108s (1.1586x)
+  [MATCH] ae75f4b4841edbaff16b605ffe297b5b4fb956cce9b9ddcc4b842903b1522e13 | cat=general | tokens=33/33 | dec=3.145s->3.563s (0.8827x) | e2e=24.104s->23.559s (1.0231x)
+
+=== (b) Decode & End-to-End Time per Category vs RC1.3 ===
+  /proc/sys/kernel/random/boot_id (n=7, id=7/7): decode 4.069s -> 3.077s (1.3224x), e2e 8.734s -> 6.655s (1.3124x)
+  /proc/uptime (n=7, id=7/7): decode 3.228s -> 2.865s (1.1265x), e2e 7.506s -> 5.951s (1.2612x)
+  /proc/version (n=7, id=7/7): decode 3.179s -> 2.690s (1.1820x), e2e 7.223s -> 5.717s (1.2633x)
+  general (n=15, id=15/15): decode 41.633s -> 45.184s (0.9214x), e2e 194.039s -> 176.347s (1.1003x)
+  maintenance (n=13, id=13/13): decode 62.917s -> 67.976s (0.9256x), e2e 280.982s -> 270.565s (1.0385x)
+  long (n=4, id=4/4): decode 24.482s -> 31.482s (0.7777x), e2e 232.688s -> 266.368s (0.8736x)
+  tool (n=4, id=4/4): decode 3.714s -> 2.721s (1.3648x), e2e 8.757s -> 6.209s (1.4102x)
+  SOURCE[bench] (n=21, id=21/21): decode 10.476s -> 8.632s (1.2136x), e2e 23.462s -> 18.323s (1.2805x)
+  SOURCE[pilot_cases] (n=36, id=36/36): decode 132.746s -> 147.364s (0.9008x), e2e 716.466s -> 719.489s (0.9958x)
+  OVERALL (n=57): decode 143.222s -> 155.996s (0.9181x, med 1.3855x), e2e 739.929s -> 737.813s (1.0029x, med 1.2545x)
+
+=== (c) Measured vs Modelled E2E Speedup (vs v9h) ===
+  Scope:       measured sample covers n=57 matched queries (tool=25, non_tool=32) vs 181-case full-workload E2E model; 1.31x (tool) and 1.065x (overall) are E2E values vs v9h (0.884x separately modelled overall speculative decode)
+  Tool E2E:    e2e=1.3133x vs modelled 1.31x (e2e/model=1.0025x, delta=+0.0033x)
+  Socket Tool E2E: e2e=1.2805x vs modelled 1.31x (e2e/model=0.9775x, delta=-0.0295x)
+  Overall E2E: e2e=1.0029x vs modelled 1.065x (e2e/model=0.9417x, delta=-0.0621x)
+
+=== (d) Decision ===
+NO-GO: slower than threshold (decode=0.918114x < 1.03x or e2e=1.00287x < 1.00x)

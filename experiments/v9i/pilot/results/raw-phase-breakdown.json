@@ -1,0 +1,51 @@
+{
+  "source": "raw/pilot.json vs rc14/check/reference-pilot.json (36 cases, seconds)",
+  "note": "drafted arm uses the v9h qualification drafter (coef_dev, P=4) in both images",
+  "by_domain": {
+    "general": {
+      "n": 15,
+      "prefill_v9h": 152.406,
+      "prefill_v9i": 131.163,
+      "ar_decode_v9h": 54.008,
+      "ar_decode_v9i": 53.742,
+      "drafted_decode_v9h": 41.633,
+      "drafted_decode_v9i": 45.184
+    },
+    "all": {
+      "n": 36,
+      "prefill_v9h": 583.721,
+      "prefill_v9i": 572.126,
+      "ar_decode_v9h": 240.402,
+      "ar_decode_v9i": 239.244,
+      "drafted_decode_v9h": 132.746,
+      "drafted_decode_v9i": 147.364
+    },
+    "maintenance": {
+      "n": 13,
+      "prefill_v9h": 218.065,
+      "prefill_v9i": 202.589,
+      "ar_decode_v9h": 135.254,
+      "ar_decode_v9i": 134.61,
+      "drafted_decode_v9h": 62.917,
+      "drafted_decode_v9i": 67.976
+    },
+    "long": {
+      "n": 4,
+      "prefill_v9h": 208.206,
+      "prefill_v9i": 234.886,
+      "ar_decode_v9h": 45.04,
+      "ar_decode_v9i": 44.763,
+      "drafted_decode_v9h": 24.482,
+      "drafted_decode_v9i": 31.482
+    },
+    "tool": {
+      "n": 4,
+      "prefill_v9h": 5.043,
+      "prefill_v9i": 3.488,
+      "ar_decode_v9h": 6.1,
+      "ar_decode_v9i": 6.129,
+      "drafted_decode_v9h": 3.714,
+      "drafted_decode_v9i": 2.721
+    }
+  }
+}
