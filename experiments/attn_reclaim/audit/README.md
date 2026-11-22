@@ -4,7 +4,7 @@ Word-for-word Vitis HLS C-simulation exactness harness for comparing Qwen3-0.6B 
 
 ## Files
 
-- `audit.py`: Driver that hashes sources, snapshots and hashes `meta.bin` once per audit into an immutable subst-relative fixture, caches the baseline dump, serializes Vitis HLS `csim_design` runs on `S:\`, compares dumps word-for-word per position, derives optional `groups` metadata, and emits a JSON verdict on stdout.
+- `audit.py`: Driver that hashes sources, snapshots and hashes `meta.bin` once per audit into an immutable subst-relative fixture, allocates unique per-invocation subst-relative run directories under `runs/` (retained through comparison), atomically publishes cached baseline dumps/results, serializes Vitis HLS `csim_design` staging and execution under `VitisLock` on `S:\`, compares dumps word-for-word per position, derives optional `groups` metadata, and emits a JSON verdict on stdout.
 - `testbench.cpp`: Shared C-sim testbench derived from `experiments/dual_port/testbench_s1.cpp`. Supports both `prefill` (batch-`N` groups, `N in {8, 16}`, default `8`) and `decode` (single-token steps) across all 28 layers, including a deterministic-KV-seeded crossing of the 256-row attention `TILE` boundary. Preserves the original `results.json` schema (`mode`, `tile_boundary_crossed`, `tile_boundary_method`, `positions`, `tokens`, `kv_nan_values`, `elapsed_seconds`).
 - `run_csim.tcl`: Reference Vitis HLS Tcl script (per-run Tcl scripts are generated dynamically under `<source checkout>/build/v2/attn-reclaim/gemini/runs/`).
 
@@ -42,7 +42,7 @@ Options:
 - `--no-tile-cross`: run only the cold prefix positions (`0..n-1`) without crossing `TILE=256`
 - `--out PATH`: also write the JSON verdict to `PATH`
 - `--strict-exit`: exit with code `1` when `verdict` is `FAIL`
-- `--self-test`: run offline unit tests (dump parsing, per-position comparison, localization, hashing, `N=16` argument handling, position grouping, Tcl rendering, and subst-drive `cwd`)
+- `--self-test`: run offline unit tests (dump parsing, per-position comparison, localization, hashing, `N=16` argument handling, position grouping, Tcl rendering, subst-drive `cwd`, mocked overlapping-run isolation, lock-ordered staging, and atomic cache publication)
 
 ## Comparing When Group Boundaries Differ (Per-Position, Not Per-Group)
 

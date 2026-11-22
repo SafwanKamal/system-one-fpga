@@ -207,7 +207,10 @@ def snapshot_meta(source_checkout: Path) -> tuple[Path, str]:
     fixtures_dir = src_root / "build/v2/attn-reclaim/gemini/fixtures"
     fixtures_dir.mkdir(parents=True, exist_ok=True)
     snapshot_path = fixtures_dir / f"meta_{digest}.bin"
-    if not snapshot_path.is_file() or snapshot_path.read_bytes() != raw_bytes:
+    if (
+        not snapshot_path.is_file()
+        or hashlib.sha256(snapshot_path.read_bytes()).hexdigest() != digest
+    ):
         fd, tmp_name = tempfile.mkstemp(
             dir=fixtures_dir, prefix=".meta_", suffix=".tmp"
         )
@@ -215,7 +218,14 @@ def snapshot_meta(source_checkout: Path) -> tuple[Path, str]:
         try:
             with os.fdopen(fd, "wb") as fh:
                 fh.write(raw_bytes)
-            os.replace(tmp_path, snapshot_path)
+            try:
+                os.replace(tmp_path, snapshot_path)
+            except PermissionError:
+                if (
+                    not snapshot_path.is_file()
+                    or hashlib.sha256(snapshot_path.read_bytes()).hexdigest() != digest
+                ):
+                    raise
         finally:
             if tmp_path.exists():
                 tmp_path.unlink(missing_ok=True)
@@ -292,46 +302,108 @@ def active_vitis_processes() -> list[str]:
     return running
 
 
+class FileLock:
+    """Cross-process advisory file lock (Windows msvcrt, POSIX fcntl fallback)."""
+
+    def __init__(
+        self,
+        lock_path: Path,
+        poll_seconds: float = 0.05,
+        wait_message: str | None = None,
+    ):
+        self.lock_path = lock_path
+        self.poll_seconds = poll_seconds
+        self.wait_message = wait_message
+        self.fh = None
+
+    def __enter__(self):
+        self.lock_path.parent.mkdir(parents=True, exist_ok=True)
+        self.fh = open(self.lock_path, "a+")
+        if os.name == "nt":
+            import msvcrt
+
+            while True:
+                try:
+                    self.fh.seek(0)
+                    msvcrt.locking(self.fh.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    if self.wait_message:
+                        log(self.wait_message)
+                    time.sleep(self.poll_seconds)
+        else:
+            import fcntl
+
+            while True:
+                try:
+                    fcntl.flock(self.fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    break
+                except OSError:
+                    if self.wait_message:
+                        log(self.wait_message)
+                    time.sleep(self.poll_seconds)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.fh is not None:
+            try:
+                if os.name == "nt":
+                    import msvcrt
+
+                    self.fh.seek(0)
+                    msvcrt.locking(self.fh.fileno(), msvcrt.LK_UNLCK, 1)
+                else:
+                    import fcntl
+
+                    fcntl.flock(self.fh.fileno(), fcntl.LOCK_UN)
+            finally:
+                self.fh.close()
+                self.fh = None
+
+
 class VitisLock:
     """Serialize Vitis HLS runs on this 14 GB machine via lockfile + process check."""
 
     def __init__(self, lock_path: Path, poll_seconds: float = 5.0):
         self.lock_path = lock_path
         self.poll_seconds = poll_seconds
-        self.fh = None
+        self._file_lock = FileLock(
+            lock_path,
+            poll_seconds=poll_seconds,
+            wait_message="Waiting for existing audit Vitis lock...",
+        )
 
     def __enter__(self):
-        import msvcrt
-
-        self.lock_path.parent.mkdir(parents=True, exist_ok=True)
-        self.fh = open(self.lock_path, "a+")
-        while True:
-            try:
-                self.fh.seek(0)
-                msvcrt.locking(self.fh.fileno(), msvcrt.LK_NBLCK, 1)
-                break
-            except OSError:
-                log("Waiting for existing audit Vitis lock...")
+        self._file_lock.__enter__()
+        try:
+            while True:
+                procs = active_vitis_processes()
+                if not procs:
+                    break
+                log(f"Waiting for active Vitis/HLS process(es): {', '.join(procs)}")
                 time.sleep(self.poll_seconds)
-
-        while True:
-            procs = active_vitis_processes()
-            if not procs:
-                break
-            log(f"Waiting for active Vitis/HLS process(es): {', '.join(procs)}")
-            time.sleep(self.poll_seconds)
+        except BaseException:
+            self._file_lock.__exit__(None, None, None)
+            raise
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        import msvcrt
+        self._file_lock.__exit__(exc_type, exc_val, exc_tb)
 
-        if self.fh is not None:
-            try:
-                self.fh.seek(0)
-                msvcrt.locking(self.fh.fileno(), msvcrt.LK_UNLCK, 1)
-            finally:
-                self.fh.close()
-                self.fh = None
+
+def allocate_run_dir(
+    source_checkout: Path,
+    role: str,
+    mode: str,
+    batch: int,
+    src_hash: str,
+) -> Path:
+    """Allocate a unique per-invocation subst-relative run directory."""
+    runs_root = source_checkout.resolve() / "build/v2/attn-reclaim/gemini/runs"
+    runs_root.mkdir(parents=True, exist_ok=True)
+    b = validate_batch(batch)
+    prefix = f"{role}_{mode}_b{b}_{src_hash[:12]}_"
+    return Path(tempfile.mkdtemp(dir=runs_root, prefix=prefix))
 
 
 def render_tcl(
@@ -374,56 +446,67 @@ def render_tcl(
 
 def run_csim(
     src_dir: Path,
-    run_dir: Path,
+    run_dir: Path | None,
     source_checkout: Path,
     mode: str,
     tile_cross: bool,
     drive: str = "S",
     batch: int = DEFAULT_BATCH,
     meta_snapshot: Path | None = None,
+    role: str = "run",
 ) -> tuple[Path, Path]:
     b = validate_batch(batch)
     if not VITIS_RUN.is_file():
         raise FileNotFoundError(f"Vitis launcher not found: {VITIS_RUN}")
+    src_files = collect_source_files(src_dir)
+    single_port = is_single_port(src_dir)
     d = ensure_subst(source_checkout, drive)
     if meta_snapshot is None:
         meta_snapshot, _ = snapshot_meta(source_checkout)
+    if run_dir is None:
+        run_dir = allocate_run_dir(
+            source_checkout, role, mode, b, compute_source_hash(src_dir)
+        )
 
-    if run_dir.exists():
-        shutil.rmtree(run_dir)
-    (run_dir / "src").mkdir(parents=True)
-    (run_dir / "tb").mkdir(parents=True)
-
-    for p in collect_source_files(src_dir):
-        dst = run_dir / "src" / p.relative_to(src_dir)
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(p, dst)
-    shutil.copyfile(TESTBENCH_PATH, run_dir / "tb" / "testbench.cpp")
-
-    rel_from_root = run_dir.resolve().relative_to(source_checkout.resolve()).as_posix()
-    run_rel_drive = f"{d}:/{rel_from_root}"
-    meta_rel_from_root = (
-        meta_snapshot.resolve().relative_to(source_checkout.resolve()).as_posix()
-    )
+    src_root = source_checkout.resolve()
+    meta_rel_from_root = meta_snapshot.resolve().relative_to(src_root).as_posix()
     meta_rel_drive = f"{d}:/{meta_rel_from_root}"
-    single_port = is_single_port(src_dir)
-    tcl_path = run_dir / "run_csim.tcl"
-    tcl_path.write_text(
-        render_tcl(
-            run_rel_drive,
-            mode,
-            tile_cross,
-            single_port,
-            drive=d,
-            batch=b,
-            meta_rel_drive=meta_rel_drive,
-        ),
-        encoding="utf-8",
-    )
 
     lock_path = source_checkout / "build/v2/attn-reclaim/gemini/.vitis.lock"
     log_path = run_dir / "csim-console.log"
     with VitisLock(lock_path):
+        if run_dir.exists():
+            for entry in list(run_dir.iterdir()):
+                if entry.is_dir() and not entry.is_symlink():
+                    shutil.rmtree(entry)
+                else:
+                    entry.unlink()
+        else:
+            run_dir.mkdir(parents=True, exist_ok=True)
+        (run_dir / "src").mkdir(parents=True, exist_ok=True)
+        (run_dir / "tb").mkdir(parents=True, exist_ok=True)
+
+        for p in src_files:
+            dst = run_dir / "src" / p.relative_to(src_dir)
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(p, dst)
+        shutil.copyfile(TESTBENCH_PATH, run_dir / "tb" / "testbench.cpp")
+
+        rel_from_root = run_dir.resolve().relative_to(src_root).as_posix()
+        run_rel_drive = f"{d}:/{rel_from_root}"
+        tcl_path = run_dir / "run_csim.tcl"
+        tcl_path.write_text(
+            render_tcl(
+                run_rel_drive,
+                mode,
+                tile_cross,
+                single_port,
+                drive=d,
+                batch=b,
+                meta_rel_drive=meta_rel_drive,
+            ),
+            encoding="utf-8",
+        )
         log(
             f"Running csim_design ({mode}, batch={b}, single_port={single_port}, drive={d}:) for {src_dir}"
         )
@@ -644,6 +727,46 @@ def compare_dumps(
     return fields_out, total_diff, first_overall
 
 
+def _is_complete_cache_dir(cache_dir: Path) -> bool:
+    return (
+        (cache_dir / "dump.bin").is_file()
+        and (cache_dir / "results.json").is_file()
+        and (cache_dir / "cache_info.json").is_file()
+    )
+
+
+def publish_cache(
+    cache_dir: Path,
+    dump_path: Path,
+    results_path: Path,
+    cache_info: dict,
+    lock_path: Path,
+) -> tuple[Path, Path]:
+    """Stage dump.bin, results.json, and cache_info.json and publish them together atomically."""
+    cache_parent = cache_dir.parent
+    cache_parent.mkdir(parents=True, exist_ok=True)
+    stage_dir = Path(
+        tempfile.mkdtemp(dir=cache_parent, prefix=f".stage_{cache_dir.name}_")
+    )
+    try:
+        shutil.copyfile(dump_path, stage_dir / "dump.bin")
+        shutil.copyfile(results_path, stage_dir / "results.json")
+        (stage_dir / "cache_info.json").write_text(
+            json.dumps(cache_info, indent=2),
+            encoding="utf-8",
+        )
+        with FileLock(lock_path):
+            if _is_complete_cache_dir(cache_dir):
+                return cache_dir / "dump.bin", cache_dir / "results.json"
+            if cache_dir.exists():
+                shutil.rmtree(cache_dir)
+            os.replace(stage_dir, cache_dir)
+        return cache_dir / "dump.bin", cache_dir / "results.json"
+    finally:
+        if stage_dir.exists():
+            shutil.rmtree(stage_dir, ignore_errors=True)
+
+
 def obtain_baseline(
     base_dir: Path,
     source_checkout: Path,
@@ -679,15 +802,11 @@ def obtain_baseline(
     cached_dump = cache_dir / "dump.bin"
     cached_results = cache_dir / "results.json"
 
-    if use_cache and cached_dump.is_file() and cached_results.is_file():
+    if use_cache and _is_complete_cache_dir(cache_dir):
         log(f"Baseline cache hit: {cache_dir}")
         return cached_dump, cached_results, base_hash, True
 
-    run_dir = (
-        source_checkout
-        / "build/v2/attn-reclaim/gemini/runs"
-        / f"baseline_{mode}_b{b}_{base_hash[:12]}"
-    )
+    run_dir = allocate_run_dir(source_checkout, "baseline", mode, b, base_hash)
     dump_path, results_path = run_csim(
         base_dir,
         run_dir,
@@ -697,29 +816,28 @@ def obtain_baseline(
         drive=drive,
         batch=b,
         meta_snapshot=meta_snapshot,
+        role="baseline",
     )
     if use_cache:
-        cache_dir.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(dump_path, cached_dump)
-        shutil.copyfile(results_path, cached_results)
-        (cache_dir / "cache_info.json").write_text(
-            json.dumps(
-                {
-                    "src_dir": str(base_dir),
-                    "source_hash": base_hash,
-                    "tb_hash": tb_hash,
-                    "meta_hash": meta_hash,
-                    "meta_path": str(meta_snapshot),
-                    "mode": mode,
-                    "batch": b,
-                    "tile_cross": tile_cross,
-                    "cached_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                },
-                indent=2,
-            ),
-            encoding="utf-8",
+        cache_lock = source_checkout / "build/v2/attn-reclaim/gemini/.cache.lock"
+        pub_dump, pub_results = publish_cache(
+            cache_dir,
+            dump_path,
+            results_path,
+            {
+                "src_dir": str(base_dir),
+                "source_hash": base_hash,
+                "tb_hash": tb_hash,
+                "meta_hash": meta_hash,
+                "meta_path": str(meta_snapshot),
+                "mode": mode,
+                "batch": b,
+                "tile_cross": tile_cross,
+                "cached_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            },
+            cache_lock,
         )
-        return cached_dump, cached_results, base_hash, False
+        return pub_dump, pub_results, base_hash, False
     return dump_path, results_path, base_hash, False
 
 
@@ -766,10 +884,8 @@ def run_audit(
         var_same_source = True
     else:
         var_same_source = False
-        run_dir = (
-            source_checkout
-            / "build/v2/attn-reclaim/gemini/runs"
-            / f"variant_{mode}_b{var_batch}_{var_hash[:12]}"
+        run_dir = allocate_run_dir(
+            source_checkout, "variant", mode, var_batch, var_hash
         )
         var_dump, var_results_path = run_csim(
             var_dir,
@@ -780,6 +896,7 @@ def run_audit(
             drive=drive,
             batch=var_batch,
             meta_snapshot=meta_snapshot,
+            role="variant",
         )
         var_res = json.loads(var_results_path.read_text(encoding="utf-8"))
 
@@ -1417,6 +1534,303 @@ def self_test() -> None:
         ]
         assert captured["launches"][0][2] == captured["launches"][1][2]
         assert captured["launches"][0][3] == ids_b and captured["launches"][1][3] == ids_b
+
+        # [P1-ter] Overlapping-run isolation, lock-ordered staging, and atomic cache publication
+        ids_a_ov = list(range(50, 74))
+        ids_b_ov = list(range(150, 174))
+        write_meta_bin(meta_file, ids_a_ov)
+        hash_a_ov = compute_meta_hash(meta_file)
+        write_meta_bin(meta_file, ids_b_ov)
+        hash_b_ov = compute_meta_hash(meta_file)
+
+        s_ov_base = td / "src_ov_base"
+        s_ov_var = td / "src_ov_var"
+        s_ov_base.mkdir()
+        s_ov_var.mkdir()
+        (s_ov_base / "qwen_decoder.cpp").write_text(
+            'extern "C" void qwen_decoder(weight_word *model, weight_word *model_b) { /* base */ }\n'
+        )
+        (s_ov_var / "qwen_decoder.cpp").write_text(
+            'extern "C" void qwen_decoder(weight_word *model, weight_word *model_b) { /* var */ }\n'
+        )
+
+        ov_run_dirs: list[Path] = []
+
+        def fake_ov_subprocess_run(cmd, **kwargs):
+            run_path = resolve_subst_arg(str(kwargs["cwd"]))
+            ov_run_dirs.append(run_path)
+            tcl_txt = (run_path / "run_csim.tcl").read_text(encoding="utf-8")
+            m_argv = re.search(r'-argv "([^"]+)"', tcl_txt)
+            assert m_argv is not None
+            argv_parts = m_argv.group(1).split()
+            meta_arg = argv_parts[1]
+            mode_name = argv_parts[-3]
+            tc = argv_parts[-2] != "0"
+            b_val = int(argv_parts[-1])
+            staged_meta = resolve_subst_arg(meta_arg)
+            meta_bytes = staged_meta.read_bytes()
+            n_meta = struct.unpack_from("<I", meta_bytes, (3 + NL * 11) * 4)[0]
+            ids_meta = list(struct.unpack_from(f"<{n_meta}I", meta_bytes, (4 + NL * 11) * 4))
+            pos_list = expected_positions(mode_name, n_meta, batch=b_val, tile_cross=tc)
+            m_len = len(pos_list)
+            # Fixture A: batch 8 emits 111s, batch 16 emits 222s; Fixture B: both emit 222s.
+            tok_val = 111 if (ids_meta[0] == ids_a_ov[0] and b_val == 8) else 222
+            toks = [tok_val] * m_len
+            make_dump(
+                run_path / "dump.bin",
+                [0x3F800000] * (NL * m_len * H),
+                [0x3F803F80] * (NL * 2 * NK * m_len * KV_WORDS_PER_ROW),
+                [0x40000000] * (m_len * H),
+                toks,
+                [0x41200000] * m_len,
+            )
+            (run_path / "results.json").write_text(
+                json.dumps(
+                    {
+                        "mode": mode_name,
+                        "tile_boundary_crossed": tc,
+                        "tile_boundary_method": "deterministic_kv_seed" if tc else "none",
+                        "positions": pos_list,
+                        "tokens": toks,
+                        "kv_nan_values": 0,
+                        "elapsed_seconds": 0.1,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            return subprocess.CompletedProcess(cmd, 0)
+
+        # Standalone fixture A batch-8 vs batch-16 -> FAIL with 24 differing tokens (111 vs 222)
+        write_meta_bin(meta_file, ids_a_ov)
+        ov_run_dirs.clear()
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_ov_subprocess_run),
+        ):
+            v_standalone_a = run_audit(
+                str(s_ov_base),
+                str(s_ov_var),
+                "prefill",
+                space_checkout,
+                tile_cross=False,
+                use_cache=False,
+                drive="S",
+                batch=16,
+                baseline_batch=8,
+            )
+        assert v_standalone_a["verdict"] == "FAIL"
+        assert v_standalone_a["fields"]["token"]["differing"] == 24
+        assert int(v_standalone_a["first_mismatch"]["baseline_word"], 16) == 111
+        assert int(v_standalone_a["first_mismatch"]["variant_word"], 16) == 222
+        assert len(ov_run_dirs) == 2 and len(set(ov_run_dirs)) == 2
+
+        # Interleaved overlapping audit on fixture B right after A's baseline returns
+        # (and before A's variant runs): A must still retain its own baseline dump and FAIL.
+        ov_run_dirs.clear()
+        orig_run_csim = run_csim
+        interleave_state = {"done": False, "inner_verdict": None}
+
+        def interleaved_run_csim(*args, **kwargs):
+            # Trigger overlap after A's baseline returned, right as A's variant begins (before VitisLock).
+            if not interleave_state["done"] and kwargs.get("role") == "variant":
+                interleave_state["done"] = True
+                write_meta_bin(meta_file, ids_b_ov)
+                interleave_state["inner_verdict"] = run_audit(
+                    str(s_ov_base),
+                    str(s_ov_var),
+                    "prefill",
+                    space_checkout,
+                    tile_cross=False,
+                    use_cache=False,
+                    drive="S",
+                    batch=16,
+                    baseline_batch=8,
+                )
+            return orig_run_csim(*args, **kwargs)
+
+        write_meta_bin(meta_file, ids_a_ov)
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_ov_subprocess_run),
+            mock.patch.object(sys.modules[__name__], "run_csim", side_effect=interleaved_run_csim),
+        ):
+            v_outer_a = run_audit(
+                str(s_ov_base),
+                str(s_ov_var),
+                "prefill",
+                space_checkout,
+                tile_cross=False,
+                use_cache=False,
+                drive="S",
+                batch=16,
+                baseline_batch=8,
+            )
+        v_inner_b = interleave_state["inner_verdict"]
+        assert v_inner_b is not None and v_inner_b["verdict"] == "PASS"
+        assert v_inner_b["meta_hash"] == hash_b_ov
+        assert v_outer_a["verdict"] == "FAIL", v_outer_a
+        assert v_outer_a["meta_hash"] == hash_a_ov
+        assert v_outer_a["fields"]["token"]["differing"] == 24
+        assert int(v_outer_a["first_mismatch"]["baseline_word"], 16) == 111
+        assert int(v_outer_a["first_mismatch"]["variant_word"], 16) == 222
+        assert len(ov_run_dirs) == 4 and len(set(ov_run_dirs)) == 4
+        assert all((d / "dump.bin").is_file() and (d / "results.json").is_file() for d in ov_run_dirs)
+
+        # Identical-input overlapping runs (use_cache=False) still get unique run directories
+        ov_run_dirs.clear()
+        write_meta_bin(meta_file, ids_b_ov)
+        interleave_same = {"done": False, "inner_verdict": None}
+
+        def interleaved_same_run_csim(*args, **kwargs):
+            if not interleave_same["done"] and kwargs.get("role") == "variant":
+                interleave_same["done"] = True
+                interleave_same["inner_verdict"] = run_audit(
+                    str(s_ov_base),
+                    str(s_ov_var),
+                    "prefill",
+                    space_checkout,
+                    tile_cross=False,
+                    use_cache=False,
+                    drive="S",
+                    batch=16,
+                    baseline_batch=8,
+                )
+            return orig_run_csim(*args, **kwargs)
+
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_ov_subprocess_run),
+            mock.patch.object(sys.modules[__name__], "run_csim", side_effect=interleaved_same_run_csim),
+        ):
+            v_same_outer = run_audit(
+                str(s_ov_base),
+                str(s_ov_var),
+                "prefill",
+                space_checkout,
+                tile_cross=False,
+                use_cache=False,
+                drive="S",
+                batch=16,
+                baseline_batch=8,
+            )
+        assert v_same_outer["verdict"] == "PASS"
+        assert interleave_same["inner_verdict"]["verdict"] == "PASS"
+        assert len(ov_run_dirs) == 4 and len(set(ov_run_dirs)) == 4
+        assert v_same_outer["baseline"]["dump_path"] != interleave_same["inner_verdict"]["baseline"]["dump_path"]
+
+        # run_csim must not delete or stage run_dir before entering VitisLock
+        explicit_run = space_checkout / "build/v2/attn-reclaim/gemini/runs/explicit_lock_order"
+        explicit_run.mkdir(parents=True, exist_ok=True)
+        sentinel = explicit_run / "preexisting_sentinel.txt"
+        sentinel.write_text("keep until locked", encoding="utf-8")
+        lock_observations: list[tuple[bool, bool]] = []
+        orig_vitis_enter = VitisLock.__enter__
+
+        def spy_vitis_enter(self):
+            lock_observations.append((sentinel.exists(), (explicit_run / "run_csim.tcl").exists()))
+            return orig_vitis_enter(self)
+
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_ov_subprocess_run),
+            mock.patch.object(VitisLock, "__enter__", autospec=True, side_effect=spy_vitis_enter),
+        ):
+            orig_run_csim(
+                s_ov_base,
+                explicit_run,
+                space_checkout,
+                "prefill",
+                False,
+                drive="S",
+                batch=8,
+            )
+        assert lock_observations == [(True, False)], lock_observations
+        assert not sentinel.exists()
+        assert (explicit_run / "run_csim.tcl").is_file()
+
+        # Atomic cache publication: incomplete cache dir is ignored and replaced atomically,
+        # and concurrent publish_cache calls preserve complete dump/results/cache_info together.
+        snap_ov, snap_ov_hash = snapshot_meta(space_checkout)
+        ov_base_hash = compute_source_hash(s_ov_base)
+        ov_tb_hash = compute_tb_hash(
+            fake_tb.read_bytes(), "prefill", False, is_single_port(s_ov_base), batch=8
+        )
+        incomplete_cache = (
+            space_checkout
+            / "build/v2/attn-reclaim/gemini/cache"
+            / "prefill"
+            / f"{ov_base_hash[:16]}_{ov_tb_hash[:12]}_{snap_ov_hash[:12]}"
+        )
+        incomplete_cache.mkdir(parents=True, exist_ok=True)
+        (incomplete_cache / "dump.bin").write_bytes(b"corrupt")
+        assert not _is_complete_cache_dir(incomplete_cache)
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_ov_subprocess_run),
+        ):
+            pub_dump, pub_res, _, hit_first = obtain_baseline(
+                s_ov_base,
+                space_checkout,
+                "prefill",
+                False,
+                use_cache=True,
+                drive="S",
+                batch=8,
+                meta_snapshot=snap_ov,
+                meta_hash=snap_ov_hash,
+            )
+            assert hit_first is False
+            assert _is_complete_cache_dir(incomplete_cache)
+            assert pub_dump.read_bytes() != b"corrupt"
+            assert json.loads((incomplete_cache / "cache_info.json").read_text(encoding="utf-8"))["meta_hash"] == snap_ov_hash
+            pub_dump2, _, _, hit_second = obtain_baseline(
+                s_ov_base,
+                space_checkout,
+                "prefill",
+                False,
+                use_cache=True,
+                drive="S",
+                batch=8,
+                meta_snapshot=snap_ov,
+                meta_hash=snap_ov_hash,
+            )
+            assert hit_second is True and pub_dump2 == pub_dump
+
+        # Concurrent publish_cache race keeps the first complete directory intact without partial state
+        race_cache_dir = space_checkout / "build/v2/attn-reclaim/gemini/cache/prefill/race_entry"
+        race_lock = space_checkout / "build/v2/attn-reclaim/gemini/.cache.lock"
+        race_src_a = td / "race_a"
+        race_src_b = td / "race_b"
+        race_src_a.mkdir()
+        race_src_b.mkdir()
+        (race_src_a / "dump.bin").write_bytes(b"DUMP_A")
+        (race_src_a / "results.json").write_text('{"id":"A"}', encoding="utf-8")
+        (race_src_b / "dump.bin").write_bytes(b"DUMP_B")
+        (race_src_b / "results.json").write_text('{"id":"B"}', encoding="utf-8")
+        p1_d, p1_r = publish_cache(
+            race_cache_dir, race_src_a / "dump.bin", race_src_a / "results.json", {"winner": "A"}, race_lock
+        )
+        p2_d, p2_r = publish_cache(
+            race_cache_dir, race_src_b / "dump.bin", race_src_b / "results.json", {"winner": "B"}, race_lock
+        )
+        assert p1_d == p2_d and p1_r == p2_r
+        assert p1_d.read_bytes() == b"DUMP_A" and p1_r.read_text(encoding="utf-8") == '{"id":"A"}'
+        assert json.loads((race_cache_dir / "cache_info.json").read_text(encoding="utf-8"))["winner"] == "A"
 
         # [P2] Reject mixed-size prefill with tile_cross=True before cache lookup or simulation
         with (
