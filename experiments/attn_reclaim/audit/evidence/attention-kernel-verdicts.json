@@ -1,0 +1,84 @@
+{
+  "scope": "Compiled attention() outputs only; the separate full decoder audit is running.",
+  "toolchain": "AMD/Xilinx clang 16, Vitis 2025.2 simulation headers and math libraries, -O1 -ffp-contract=off",
+  "fixtures": {
+    "decode": {
+      "starts": [
+        0,
+        23,
+        255,
+        256,
+        257
+      ],
+      "words": 10240
+    },
+    "prefill": {
+      "starts": [
+        0,
+        16,
+        248,
+        252
+      ],
+      "batch": 8,
+      "words": 65536
+    }
+  },
+  "source_pairs": {
+    "p2": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "perturbed-add-order": {
+      "decode_differing_words": 5084,
+      "prefill_differing_words": 36466,
+      "csv_sha256": "51f1c2fd259b4cb21822d772f6dcce4c790a7495de1a0ac39699424ecea0c6c6"
+    },
+    "v9h-repeat": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "base": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "aux": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "aux-lim": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "bram": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "bram-tmx-aux": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "p2-aux": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "p2-aux-lim": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    },
+    "tmx": {
+      "decode_differing_words": 0,
+      "prefill_differing_words": 0,
+      "csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+    }
+  },
+  "baseline_csv_sha256": "6a0d101af7b1cd9b499be004b4a7070d84c659e8f7d9c92fe55763be79564ae2"
+}

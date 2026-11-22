@@ -1,0 +1,78 @@
+{
+  "verdict": "PASS",
+  "exact_match": true,
+  "mode": "prefill",
+  "tile_boundary_crossed": false,
+  "tile_boundary_method": "none",
+  "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "baseline": {
+    "src_dir": "build/v2/dual-port-study/src-s2",
+    "source_hash": "b6d301bd84f19e9db5dc8779ba352ca069902750ccc543dd82c025a01f5dc135",
+    "cache_hit": false,
+    "dump_path": "build/v2/attn-reclaim/gemini/cache/prefill/b6d301bd84f19e9d_006f9f9a6b4e/dump.bin",
+    "kv_nan_values": 0,
+    "elapsed_seconds": 4204.34
+  },
+  "variant": {
+    "src_dir": "build/v2/v9i/src",
+    "source_hash": "225fb69eabbf4bceaa54b3c98df43d3de36942f1bcbbb372aaf7e66a096887d0",
+    "same_source_as_baseline": false,
+    "dump_path": "build/v2/attn-reclaim/gemini/runs/variant_prefill_225fb69eabbf/dump.bin",
+    "kv_nan_values": 0,
+    "elapsed_seconds": 4630.73
+  },
+  "fields": {
+    "hidden": {
+      "words": 688128,
+      "differing": 0,
+      "first_mismatch": null
+    },
+    "kv": {
+      "words": 688128,
+      "differing": 0,
+      "first_mismatch": null
+    },
+    "norm": {
+      "words": 24576,
+      "differing": 0,
+      "first_mismatch": null
+    },
+    "token": {
+      "words": 24,
+      "differing": 0,
+      "first_mismatch": null
+    },
+    "logit": {
+      "words": 24,
+      "differing": 0,
+      "first_mismatch": null
+    }
+  },
+  "total_differing_words": 0,
+  "first_mismatch": null
+}
