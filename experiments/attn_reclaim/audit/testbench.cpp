@@ -1,13 +1,16 @@
 // C-sim exactness audit testbench for Qwen3-0.6B HLS decoder variants.
 // Derived from experiments/dual_port/testbench_s1.cpp.
 //
-// Runs either prefill (batch-8 groups) or decode (single-token steps) over all
-// 28 layers, including a deterministic-KV-seeded crossing of the 256-row
-// attention TILE boundary, and writes a binary dump of hidden states, K/V
-// cache rows, final norm outputs, winning tokens, and raw logit bits.
+// Runs either prefill (batch-N groups, N in {8,16}) or decode (single-token
+// steps) over all 28 layers, including a deterministic-KV-seeded crossing of
+// the 256-row attention TILE boundary, and writes a binary dump of hidden
+// states, K/V cache rows, final norm outputs, winning tokens, and raw logit
+// bits indexed per kept position (not per group) so runs with different batch
+// sizes over the same prompt positions are directly comparable token by token.
 //
-// argv: <gguf> <meta.bin> <rope.bin> <results.json> <dump.bin> <prefill|decode> [tile_cross:1|0]
+// argv: <gguf> <meta.bin> <rope.bin> <results.json> <dump.bin> <prefill|decode> [tile_cross:1|0] [batch:8|16]
 
+#include <algorithm>
 #include <ap_int.h>
 #include <chrono>
 #include <cstring>
@@ -144,18 +147,25 @@ static double now() {
       .count();
 }
 
+static unsigned parse_batch(const std::string& s) {
+  if (s == "8") return 8u;
+  if (s == "16") return 16u;
+  throw std::runtime_error("batch must be 8 or 16, got: " + s);
+}
+
 int main(int argc, char** argv) {
   try {
-    if (argc < 7 || argc > 8) {
+    if (argc < 7 || argc > 9) {
       throw std::runtime_error(
           "usage: <gguf> <meta.bin> <rope.bin> <results.json> <dump.bin> "
-          "<prefill|decode> [tile_cross:1|0]");
+          "<prefill|decode> [tile_cross:1|0] [batch:8|16]");
     }
     const std::string mode = argv[6];
     if (mode != "prefill" && mode != "decode") {
       throw std::runtime_error("mode must be prefill or decode, got: " + mode);
     }
-    const bool tile_cross = (argc == 8) ? (std::string(argv[7]) != "0") : true;
+    const bool tile_cross = (argc >= 8) ? (std::string(argv[7]) != "0") : true;
+    const unsigned batch = (argc == 9) ? parse_batch(argv[8]) : 8u;
 
     auto mb = slurp(argv[2]);
     std::vector<uint32_t> meta(mb.size() / 4);
@@ -165,8 +175,8 @@ int main(int argc, char** argv) {
     const uint32_t* layer_offsets = &meta[3];
     const unsigned n = meta[3 + NL * 11];
     const uint32_t* ids = &meta[4 + NL * 11];
-    if (n != 24) {
-      throw std::runtime_error("expected 24 base positions in meta.bin");
+    if (n == 0 || n >= NC || mb.size() < (4 + size_t(NL) * 11 + n) * 4) {
+      throw std::runtime_error("invalid base position count in meta.bin");
     }
 
     const unsigned chunks = (extent + (1u << 24) - 1) >> 24;
@@ -227,28 +237,44 @@ int main(int argc, char** argv) {
     auto real = [&](unsigned start, unsigned count) {
       return std::vector<uint32_t>(ids + start, ids + start + count);
     };
+    auto cyclic_real = [&](unsigned count) {
+      std::vector<uint32_t> out(count);
+      for (unsigned i = 0; i < count; i++) out[i] = ids[i % n];
+      return out;
+    };
 
     std::vector<Group> groups;
     if (mode == "prefill") {
-      groups.push_back({0, real(0, 8), 8, true, false, 0, 0});
-      groups.push_back({8, real(8, 8), 8, true, false, 0, 0});
-      groups.push_back({16, real(16, 8), 8, true, false, 0, 0});
+      for (unsigned start = 0; start < n; start += batch) {
+        unsigned count = std::min(batch, n - start);
+        groups.push_back({start, real(start, count), count, true, false, 0, 0});
+      }
       if (tile_cross) {
-        // Seed KV rows 24..251, then run a batch-8 group at position 252..259
-        // which straddles the 256-row attention TILE boundary within one call
-        // and exercises both P=4 passes (252..255 in tile 0; 256..259 across
-        // tile 0 -> tile 1).
-        groups.push_back({252, real(0, 8), 8, true, true, 24, 252});
+        const unsigned tile_start = 256u - batch / 2u;
+        if (n > tile_start) {
+          throw std::runtime_error(
+              "base positions overlap tile_cross window");
+        }
+        // Seed KV rows n..(tile_start-1), then run a batch-N group at
+        // position tile_start..(tile_start+N-1) straddling the 256-row
+        // attention TILE boundary within one call (half in tile 0, half in
+        // tile 1; rows >= tile_start+N remain poisoned with 0x7fc0 NaN).
+        groups.push_back({tile_start, cyclic_real(batch), batch, true, true, n,
+                          tile_start});
       }
     } else {
       for (unsigned p = 0; p < n; p++) {
         groups.push_back({p, real(p, 1), 1, false, false, 0, 0});
       }
       if (tile_cross) {
-        // Seed KV rows 24..254, then run single-token decode across 255 -> 257.
-        groups.push_back({255, real(0, 1), 1, false, true, 24, 255});
-        groups.push_back({256, real(1, 1), 1, false, false, 0, 0});
-        groups.push_back({257, real(2, 1), 1, false, false, 0, 0});
+        if (n > 255u) {
+          throw std::runtime_error(
+              "base positions overlap decode tile_cross window");
+        }
+        // Seed KV rows n..254, then run single-token decode across 255 -> 257.
+        groups.push_back({255, real(0, 1), 1, false, true, n, 255});
+        groups.push_back({256, real(1 % n, 1), 1, false, false, 0, 0});
+        groups.push_back({257, real(2 % n, 1), 1, false, false, 0, 0});
       }
     }
 
@@ -365,10 +391,18 @@ int main(int argc, char** argv) {
     if (!json) throw std::runtime_error("cannot write json " + std::string(argv[4]));
     json << "{\n"
          << "  \"mode\": \"" << mode << "\",\n"
+         << "  \"batch\": " << batch << ",\n"
          << "  \"tile_boundary_crossed\": " << (tile_cross ? "true" : "false")
          << ",\n"
          << "  \"tile_boundary_method\": \""
          << (tile_cross ? "deterministic_kv_seed" : "none") << "\",\n"
+         << "  \"groups\": [";
+    for (size_t i = 0; i < groups.size(); i++) {
+      json << (i ? "," : "") << "{\"start\":" << groups[i].start
+           << ",\"size\":" << groups[i].ids.size()
+           << ",\"keep\":" << groups[i].keep << "}";
+    }
+    json << "],\n"
          << "  \"positions\": [";
     for (size_t i = 0; i < M; i++) json << (i ? "," : "") << kept_positions[i];
     json << "],\n"

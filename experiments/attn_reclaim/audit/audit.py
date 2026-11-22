@@ -7,7 +7,8 @@ caches baseline dumps by source+testbench hash, compares dumps word-for-word
 with differing word counts per field and the first mismatch location.
 
 Usage:
-  python audit.py --baseline SRC_DIR --variant SRC_DIR [--mode decode|prefill]
+  python audit.py --baseline SRC_DIR --variant SRC_DIR [--mode decode|prefill] [--batch 8|16]
+  python audit.py --baseline V9I_DIR --variant V9K_DIR --mode prefill --baseline-batch 8 --batch 16 --no-tile-cross
   python audit.py --self-test
 """
 
@@ -35,6 +36,8 @@ NL = 28
 NK = 8
 H = 1024
 KV_WORDS_PER_ROW = 64
+DEFAULT_BATCH = 8
+SUPPORTED_BATCHES = (8, 16)
 FIELDS = ("hidden", "kv", "norm", "token", "logit")
 VITIS_PROCESS_NAMES = {
     "vitis_hls.exe",
@@ -82,17 +85,92 @@ def compute_source_hash(src_dir: Path) -> str:
     return h.hexdigest()
 
 
+def validate_batch(batch: int) -> int:
+    if isinstance(batch, bool) or batch not in SUPPORTED_BATCHES:
+        raise ValueError(
+            f"Unsupported batch size {batch!r}; expected one of {SUPPORTED_BATCHES}"
+        )
+    return int(batch)
+
+
+def plan_groups(
+    mode: str, n_base: int, batch: int = DEFAULT_BATCH, tile_cross: bool = True
+) -> list[dict]:
+    """Mirror testbench.cpp position grouping for prefill and decode."""
+    if mode not in ("decode", "prefill"):
+        raise ValueError(f"Unsupported mode: {mode!r}")
+    b = validate_batch(batch)
+    if n_base <= 0 or n_base >= 2048:
+        raise ValueError(f"Invalid base position count: {n_base}")
+    groups: list[dict] = []
+    if mode == "prefill":
+        for start in range(0, n_base, b):
+            count = min(b, n_base - start)
+            groups.append(
+                {"start": start, "size": count, "keep": count, "seed_before": False}
+            )
+        if tile_cross:
+            tile_start = 256 - b // 2
+            if n_base > tile_start:
+                raise ValueError("base positions overlap tile_cross window")
+            groups.append(
+                {
+                    "start": tile_start,
+                    "size": b,
+                    "keep": b,
+                    "seed_before": True,
+                    "seed_from": n_base,
+                    "seed_to": tile_start,
+                }
+            )
+    else:
+        for p in range(n_base):
+            groups.append({"start": p, "size": 1, "keep": 1, "seed_before": False})
+        if tile_cross:
+            if n_base > 255:
+                raise ValueError("base positions overlap decode tile_cross window")
+            groups.append(
+                {
+                    "start": 255,
+                    "size": 1,
+                    "keep": 1,
+                    "seed_before": True,
+                    "seed_from": n_base,
+                    "seed_to": 255,
+                }
+            )
+            groups.append({"start": 256, "size": 1, "keep": 1, "seed_before": False})
+            groups.append({"start": 257, "size": 1, "keep": 1, "seed_before": False})
+    return groups
+
+
+def expected_positions(
+    mode: str, n_base: int, batch: int = DEFAULT_BATCH, tile_cross: bool = True
+) -> list[int]:
+    positions: list[int] = []
+    for g in plan_groups(mode, n_base, batch=batch, tile_cross=tile_cross):
+        positions.extend(range(g["start"], g["start"] + g["keep"]))
+    return positions
+
+
 def is_single_port(src_dir: Path) -> bool:
     txt = (src_dir / "qwen_decoder.cpp").read_text(errors="replace")
     return re.search(r"weight_word\s*\*\s*model_b\b", txt) is None
 
 
 def compute_tb_hash(
-    testbench_bytes: bytes, mode: str, tile_cross: bool, single_port: bool
+    testbench_bytes: bytes,
+    mode: str,
+    tile_cross: bool,
+    single_port: bool,
+    batch: int = DEFAULT_BATCH,
 ) -> str:
+    b = validate_batch(batch)
     h = hashlib.sha256()
     h.update(testbench_bytes)
-    h.update(f"\0{mode}\0{int(tile_cross)}\0{int(single_port)}".encode("utf-8"))
+    h.update(
+        f"\0{mode}\0{int(tile_cross)}\0{int(single_port)}\0{b}".encode("utf-8")
+    )
     return h.hexdigest()
 
 
@@ -190,8 +268,10 @@ def render_tcl(
     tile_cross: bool,
     single_port: bool,
     drive: str = "S",
+    batch: int = DEFAULT_BATCH,
 ) -> str:
     d = normalize_drive(drive)
+    b = validate_batch(batch)
     tb_cflags = "-std=c++14 -DSINGLE_PORT" if single_port else "-std=c++14"
     argv = (
         f"{d}:/models/Qwen3-0.6B-GGUF/Qwen3-0.6B-Q8_0.gguf "
@@ -199,7 +279,7 @@ def render_tcl(
         f"{d}:/build/v2/qwen-fpga-decoder-v9e/rope.bin "
         f"{run_rel_drive}/results.json "
         f"{run_rel_drive}/dump.bin "
-        f"{mode} {1 if tile_cross else 0}"
+        f"{mode} {1 if tile_cross else 0} {b}"
     )
     return "\n".join(
         [
@@ -225,7 +305,9 @@ def run_csim(
     mode: str,
     tile_cross: bool,
     drive: str = "S",
+    batch: int = DEFAULT_BATCH,
 ) -> tuple[Path, Path]:
+    b = validate_batch(batch)
     if not VITIS_RUN.is_file():
         raise FileNotFoundError(f"Vitis launcher not found: {VITIS_RUN}")
     d = ensure_subst(source_checkout, drive)
@@ -246,14 +328,18 @@ def run_csim(
     single_port = is_single_port(src_dir)
     tcl_path = run_dir / "run_csim.tcl"
     tcl_path.write_text(
-        render_tcl(run_rel_drive, mode, tile_cross, single_port, drive=d),
+        render_tcl(
+            run_rel_drive, mode, tile_cross, single_port, drive=d, batch=b
+        ),
         encoding="utf-8",
     )
 
     lock_path = source_checkout / "build/v2/attn-reclaim/gemini/.vitis.lock"
     log_path = run_dir / "csim-console.log"
     with VitisLock(lock_path):
-        log(f"Running csim_design ({mode}, single_port={single_port}, drive={d}:) for {src_dir}")
+        log(
+            f"Running csim_design ({mode}, batch={b}, single_port={single_port}, drive={d}:) for {src_dir}"
+        )
         with open(log_path, "w", encoding="utf-8") as lf:
             rc = subprocess.run(
                 [
@@ -367,14 +453,49 @@ def decode_mismatch_location(
     return loc
 
 
+def _word_index_for_pos(
+    field: str, base_idx: int, m: int, perm: list[int]
+) -> int:
+    """Map a baseline flat word index to the matching variant flat word index by position."""
+    if field == "hidden":
+        layer = base_idx // (m * H)
+        pos_idx = (base_idx // H) % m
+        elem = base_idx % H
+        return (layer * m + perm[pos_idx]) * H + elem
+    if field == "kv":
+        word_in_row = base_idx % KV_WORDS_PER_ROW
+        pos_idx = (base_idx // KV_WORDS_PER_ROW) % m
+        rem = base_idx // (KV_WORDS_PER_ROW * m)
+        return (rem * m + perm[pos_idx]) * KV_WORDS_PER_ROW + word_in_row
+    if field == "norm":
+        pos_idx = base_idx // H
+        elem = base_idx % H
+        return perm[pos_idx] * H + elem
+    return perm[base_idx]
+
+
 def compare_dumps(
-    base_dump: Path, var_dump: Path, positions: list[int]
+    base_dump: Path,
+    var_dump: Path,
+    positions: list[int],
+    var_positions: list[int] | None = None,
 ) -> tuple[dict, int, dict | None]:
     a = load_dump(base_dump)
     b = load_dump(var_dump)
     fields_out: dict[str, dict] = {}
     total_diff = 0
     first_overall: dict | None = None
+
+    same_order = var_positions is None or var_positions == positions
+    perm: list[int] | None = None
+    if not same_order:
+        if len(var_positions) != len(positions) or len(set(var_positions)) != len(var_positions):
+            raise ValueError("Baseline and variant tested different position counts")
+        if set(var_positions) != set(positions):
+            raise ValueError("Baseline and variant tested different positions")
+        var_pos_to_idx = {pos: idx for idx, pos in enumerate(var_positions)}
+        perm = [var_pos_to_idx[pos] for pos in positions]
+    m = len(positions)
 
     for name in FIELDS:
         xa, xb = a[name], b[name]
@@ -383,7 +504,7 @@ def compare_dumps(
                 f"Field {name} byte length mismatch: baseline={len(xa)} vs variant={len(xb)}"
             )
         words = len(xa) // 4
-        if xa == xb:
+        if same_order and xa == xb:
             fields_out[name] = {
                 "words": words,
                 "differing": 0,
@@ -395,13 +516,34 @@ def compare_dumps(
         vb = memoryview(xb).cast("I")
         diff_count = 0
         first_idx = -1
-        for i in range(words):
-            if va[i] != vb[i]:
-                if first_idx < 0:
-                    first_idx = i
-                diff_count += 1
+        first_var_word = 0
+        if same_order:
+            for i in range(words):
+                if va[i] != vb[i]:
+                    if first_idx < 0:
+                        first_idx = i
+                        first_var_word = int(vb[i])
+                    diff_count += 1
+        else:
+            assert perm is not None
+            for i in range(words):
+                vi = _word_index_for_pos(name, i, m, perm)
+                if va[i] != vb[vi]:
+                    if first_idx < 0:
+                        first_idx = i
+                        first_var_word = int(vb[vi])
+                    diff_count += 1
+
+        if diff_count == 0:
+            fields_out[name] = {
+                "words": words,
+                "differing": 0,
+                "first_mismatch": None,
+            }
+            continue
+
         loc = decode_mismatch_location(
-            name, first_idx, int(va[first_idx]), int(vb[first_idx]), positions
+            name, first_idx, int(va[first_idx]), first_var_word, positions
         )
         fields_out[name] = {
             "words": words,
@@ -422,10 +564,16 @@ def obtain_baseline(
     tile_cross: bool,
     use_cache: bool,
     drive: str = "S",
+    batch: int = DEFAULT_BATCH,
 ) -> tuple[Path, Path, str, bool]:
+    b = validate_batch(batch)
     base_hash = compute_source_hash(base_dir)
     tb_hash = compute_tb_hash(
-        TESTBENCH_PATH.read_bytes(), mode, tile_cross, is_single_port(base_dir)
+        TESTBENCH_PATH.read_bytes(),
+        mode,
+        tile_cross,
+        is_single_port(base_dir),
+        batch=b,
     )
     cache_dir = (
         source_checkout
@@ -443,10 +591,10 @@ def obtain_baseline(
     run_dir = (
         source_checkout
         / "build/v2/attn-reclaim/gemini/runs"
-        / f"baseline_{mode}_{base_hash[:12]}"
+        / f"baseline_{mode}_b{b}_{base_hash[:12]}"
     )
     dump_path, results_path = run_csim(
-        base_dir, run_dir, source_checkout, mode, tile_cross, drive=drive
+        base_dir, run_dir, source_checkout, mode, tile_cross, drive=drive, batch=b
     )
     if use_cache:
         cache_dir.mkdir(parents=True, exist_ok=True)
@@ -459,6 +607,7 @@ def obtain_baseline(
                     "source_hash": base_hash,
                     "tb_hash": tb_hash,
                     "mode": mode,
+                    "batch": b,
                     "tile_cross": tile_cross,
                     "cached_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 },
@@ -478,17 +627,27 @@ def run_audit(
     tile_cross: bool,
     use_cache: bool,
     drive: str = "S",
+    batch: int = DEFAULT_BATCH,
+    baseline_batch: int | None = None,
 ) -> dict:
+    var_batch = validate_batch(batch)
+    base_batch = validate_batch(var_batch if baseline_batch is None else baseline_batch)
     base_dir = resolve_src_dir(baseline_arg, source_checkout)
     var_dir = resolve_src_dir(variant_arg, source_checkout)
     var_hash = compute_source_hash(var_dir)
 
     base_dump, base_results_path, base_hash, cache_hit = obtain_baseline(
-        base_dir, source_checkout, mode, tile_cross, use_cache, drive=drive
+        base_dir,
+        source_checkout,
+        mode,
+        tile_cross,
+        use_cache,
+        drive=drive,
+        batch=base_batch,
     )
     base_res = json.loads(base_results_path.read_text(encoding="utf-8"))
 
-    if base_hash == var_hash:
+    if base_hash == var_hash and base_batch == var_batch:
         var_dump = base_dump
         var_res = base_res
         var_same_source = True
@@ -497,19 +656,31 @@ def run_audit(
         run_dir = (
             source_checkout
             / "build/v2/attn-reclaim/gemini/runs"
-            / f"variant_{mode}_{var_hash[:12]}"
+            / f"variant_{mode}_b{var_batch}_{var_hash[:12]}"
         )
         var_dump, var_results_path = run_csim(
-            var_dir, run_dir, source_checkout, mode, tile_cross, drive=drive
+            var_dir,
+            run_dir,
+            source_checkout,
+            mode,
+            tile_cross,
+            drive=drive,
+            batch=var_batch,
         )
         var_res = json.loads(var_results_path.read_text(encoding="utf-8"))
 
     positions = base_res["positions"]
-    if var_res["positions"] != positions:
-        raise RuntimeError("Baseline and variant tested different positions")
+    var_positions = var_res["positions"]
+    if len(var_positions) != len(positions) or set(var_positions) != set(positions):
+        raise RuntimeError(
+            "Baseline and variant tested different positions "
+            f"(baseline={len(positions)} @ batch={base_batch}, "
+            f"variant={len(var_positions)} @ batch={var_batch}; "
+            "pass --no-tile-cross when comparing different batch sizes)"
+        )
 
     fields_out, total_diff, first_overall = compare_dumps(
-        base_dump, var_dump, positions
+        base_dump, var_dump, positions, var_positions=var_positions
     )
     nan_ok = (base_res.get("kv_nan_values", 0) == 0) and (
         var_res.get("kv_nan_values", 0) == 0
@@ -520,12 +691,16 @@ def run_audit(
         "verdict": "PASS" if passed else "FAIL",
         "exact_match": total_diff == 0,
         "mode": mode,
+        "batch": var_batch,
+        "baseline_batch": base_batch,
         "tile_boundary_crossed": bool(base_res.get("tile_boundary_crossed")),
         "tile_boundary_method": base_res.get("tile_boundary_method", "none"),
         "positions": positions,
         "baseline": {
             "src_dir": str(base_dir),
             "source_hash": base_hash,
+            "batch": base_batch,
+            "groups": base_res.get("groups"),
             "cache_hit": cache_hit,
             "dump_path": str(base_dump),
             "kv_nan_values": base_res.get("kv_nan_values"),
@@ -534,6 +709,8 @@ def run_audit(
         "variant": {
             "src_dir": str(var_dir),
             "source_hash": var_hash,
+            "batch": var_batch,
+            "groups": var_res.get("groups"),
             "same_source_as_baseline": var_same_source,
             "dump_path": str(var_dump),
             "kv_nan_values": var_res.get("kv_nan_values"),
@@ -612,6 +789,139 @@ def self_test() -> None:
         assert first["layer"] == 1 and first["kv"] == "V" and first["head"] == 3
         assert first["position"] == 256 and first["word_in_row"] == 19
 
+        # N=16 argument handling and validation
+        import contextlib
+        import io
+
+        parser = build_parser()
+        args_default = parser.parse_args(["--baseline", "a", "--variant", "b"])
+        assert args_default.batch == 8 and args_default.baseline_batch is None
+        args_b16 = parser.parse_args(
+            [
+                "--baseline",
+                "a",
+                "--variant",
+                "b",
+                "--mode",
+                "prefill",
+                "--baseline-batch",
+                "8",
+                "--batch",
+                "16",
+                "--no-tile-cross",
+            ]
+        )
+        assert args_b16.batch == 16 and args_b16.baseline_batch == 8
+        assert args_b16.no_tile_cross is True
+        for bad_batch in ("4", "12", "32"):
+            try:
+                with contextlib.redirect_stderr(io.StringIO()):
+                    parser.parse_args(["--baseline", "a", "--variant", "b", "--batch", bad_batch])
+                raise AssertionError(f"Expected invalid --batch {bad_batch} to fail")
+            except SystemExit:
+                pass
+        for bad_val in (0, 4, 12, 32, True):
+            try:
+                validate_batch(bad_val)  # type: ignore[arg-type]
+                raise AssertionError(f"Expected validate_batch({bad_val!r}) to fail")
+            except ValueError:
+                pass
+
+        # Position grouping for N=8 vs N=16 across 24 and 32 prompt positions
+        g8_24 = plan_groups("prefill", 24, batch=8, tile_cross=False)
+        g16_24 = plan_groups("prefill", 24, batch=16, tile_cross=False)
+        assert [(g["start"], g["size"]) for g in g8_24] == [(0, 8), (8, 8), (16, 8)]
+        assert [(g["start"], g["size"]) for g in g16_24] == [(0, 16), (16, 8)]
+        assert expected_positions("prefill", 24, batch=8, tile_cross=False) == list(range(24))
+        assert expected_positions("prefill", 24, batch=16, tile_cross=False) == list(range(24))
+
+        g8_32 = plan_groups("prefill", 32, batch=8, tile_cross=False)
+        g16_32 = plan_groups("prefill", 32, batch=16, tile_cross=False)
+        assert [(g["start"], g["size"]) for g in g8_32] == [
+            (0, 8),
+            (8, 8),
+            (16, 8),
+            (24, 8),
+        ]
+        assert [(g["start"], g["size"]) for g in g16_32] == [(0, 16), (16, 16)]
+        assert expected_positions("prefill", 32, batch=8, tile_cross=False) == list(range(32))
+        assert expected_positions("prefill", 32, batch=16, tile_cross=False) == list(range(32))
+
+        g8_tc = plan_groups("prefill", 24, batch=8, tile_cross=True)
+        g16_tc = plan_groups("prefill", 24, batch=16, tile_cross=True)
+        assert [(g["start"], g["size"]) for g in g8_tc] == [
+            (0, 8),
+            (8, 8),
+            (16, 8),
+            (252, 8),
+        ]
+        assert g8_tc[-1]["seed_from"] == 24 and g8_tc[-1]["seed_to"] == 252
+        assert [(g["start"], g["size"]) for g in g16_tc] == [
+            (0, 16),
+            (16, 8),
+            (248, 16),
+        ]
+        assert g16_tc[-1]["seed_from"] == 24 and g16_tc[-1]["seed_to"] == 248
+        assert expected_positions("prefill", 24, batch=8, tile_cross=True) == (
+            list(range(24)) + list(range(252, 260))
+        )
+        assert expected_positions("prefill", 24, batch=16, tile_cross=True) == (
+            list(range(24)) + list(range(248, 264))
+        )
+
+        # Per-position comparison even when group boundaries or position order differ
+        pos24 = list(range(24))
+        m24 = len(pos24)
+        h24 = [0x3F800000 + (i % m24) for i in range(NL * m24 * H)]
+        k24 = [0x3F803F80 + ((i // KV_WORDS_PER_ROW) % m24) for i in range(NL * 2 * NK * m24 * KV_WORDS_PER_ROW)]
+        n24 = [0x40000000 + (i // H) for i in range(m24 * H)]
+        t24 = [500 + p for p in pos24]
+        l24 = [0x41200000 + p for p in pos24]
+        # Give each position distinct values in hidden/norm/kv so reordering proves per-position lookup
+        for layer in range(NL):
+            for pidx in range(m24):
+                h24[(layer * m24 + pidx) * H] = 0x3F800000 + layer * 100 + pidx
+        d_b8_24 = td / "b8_24.bin"
+        d_b16_24 = td / "b16_24.bin"
+        make_dump(d_b8_24, h24, k24, n24, t24, l24)
+        # Reorder variant positions to verify per-position (not positional-slot) mapping
+        perm_pos = list(reversed(pos24))
+        h24_perm = list(h24)
+        k24_perm = list(k24)
+        n24_perm = list(n24)
+        for layer in range(NL):
+            for new_i, old_i in enumerate(reversed(range(m24))):
+                s0 = (layer * m24 + old_i) * H
+                d0 = (layer * m24 + new_i) * H
+                h24_perm[d0 : d0 + H] = h24[s0 : s0 + H]
+        for layer in range(NL):
+            for kv in range(2):
+                for head in range(NK):
+                    for new_i, old_i in enumerate(reversed(range(m24))):
+                        s0 = (((layer * 2 + kv) * NK + head) * m24 + old_i) * KV_WORDS_PER_ROW
+                        d0 = (((layer * 2 + kv) * NK + head) * m24 + new_i) * KV_WORDS_PER_ROW
+                        k24_perm[d0 : d0 + KV_WORDS_PER_ROW] = k24[s0 : s0 + KV_WORDS_PER_ROW]
+        for new_i, old_i in enumerate(reversed(range(m24))):
+            n24_perm[new_i * H : (new_i + 1) * H] = n24[old_i * H : (old_i + 1) * H]
+        t24_perm = list(reversed(t24))
+        l24_perm = list(reversed(l24))
+        make_dump(d_b16_24, h24_perm, k24_perm, n24_perm, t24_perm, l24_perm)
+        f_perm, tot_perm, first_perm = compare_dumps(
+            d_b8_24, d_b16_24, pos24, var_positions=perm_pos
+        )
+        assert tot_perm == 0 and first_perm is None
+        assert all(f_perm[f]["differing"] == 0 for f in FIELDS)
+        # Flip position 16 (group 2 in batch-8, group 1 in batch-16) and verify exact localization
+        t24_perm_diff = list(t24_perm)
+        t24_perm_diff[perm_pos.index(16)] ^= 1
+        d_b16_24_diff = td / "b16_24_diff.bin"
+        make_dump(d_b16_24_diff, h24_perm, k24_perm, n24_perm, t24_perm_diff, l24_perm)
+        f_pdiff, tot_pdiff, first_pdiff = compare_dumps(
+            d_b8_24, d_b16_24_diff, pos24, var_positions=perm_pos
+        )
+        assert tot_pdiff == 1 and first_pdiff is not None
+        assert first_pdiff["field"] == "token" and first_pdiff["position"] == 16
+
         # Source hashing and port detection
         s1 = td / "src1"
         s1.mkdir()
@@ -633,12 +943,20 @@ def self_test() -> None:
         assert is_single_port(s_single)
         tcl = render_tcl("S:/build/v2/attn-reclaim/gemini/runs/test", "decode", True, True)
         assert "-DSINGLE_PORT" in tcl
-        assert "decode 1" in tcl
-        tcl_t = render_tcl("T:/build/v2/attn-reclaim/gemini/runs/test", "prefill", True, False, drive="T:")
+        assert "decode 1 8" in tcl
+        tcl_t = render_tcl(
+            "T:/build/v2/attn-reclaim/gemini/runs/test",
+            "prefill",
+            False,
+            False,
+            drive="T:",
+            batch=16,
+        )
         assert "T:/models/Qwen3-0.6B-GGUF/Qwen3-0.6B-Q8_0.gguf" in tcl_t
+        assert "prefill 0 16" in tcl_t
         assert normalize_drive("t:") == "T"
 
-        # Cache key differentiation
+        # Cache key differentiation (mode, tile_cross, single_port, batch)
         tb_b = b"tb"
         assert compute_tb_hash(tb_b, "decode", True, False) != compute_tb_hash(
             tb_b, "prefill", True, False
@@ -646,18 +964,42 @@ def self_test() -> None:
         assert compute_tb_hash(tb_b, "prefill", True, False) != compute_tb_hash(
             tb_b, "prefill", False, False
         )
+        assert compute_tb_hash(tb_b, "prefill", False, False, batch=8) != compute_tb_hash(
+            tb_b, "prefill", False, False, batch=16
+        )
 
-        # Windows subst output parsing
+        # Windows subst output parsing and ensure_subst
         subs = parse_subst_output(
             "S:\\: => C:\\Users\\user\\OneDrive - Texas Tech University\\Desktop\\Code\\FPGA Project\\system-one-fpga\\system-one-fpga\n"
         )
         assert subs["S"].endswith("system-one-fpga")
 
-        # run_csim() must launch vitis-run with cwd=run_rel_drive (no spaces), not run_dir
         from unittest import mock
 
         space_checkout = td / "OneDrive - Space Test" / "system-one-fpga"
         space_checkout.mkdir(parents=True)
+        with mock.patch.object(
+            subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(
+                ["subst"], 0, stdout=f"T:\\: => {space_checkout}\n", stderr=""
+            ),
+        ):
+            assert ensure_subst(space_checkout, "t:") == "T"
+        with mock.patch.object(
+            subprocess,
+            "run",
+            return_value=subprocess.CompletedProcess(
+                ["subst"], 0, stdout="T:\\: => C:\\Other\\Path\n", stderr=""
+            ),
+        ):
+            try:
+                ensure_subst(space_checkout, "T")
+                raise AssertionError("Expected conflicting subst mapping to raise")
+            except RuntimeError:
+                pass
+
+        # run_csim() must launch vitis-run with cwd=run_rel_drive (no spaces), not run_dir
         space_run = space_checkout / "build/v2/attn-reclaim/gemini/runs/csim_cwd_test"
         fake_vitis = td / "vitis-run.bat"
         fake_vitis.write_text("@echo off\n", encoding="utf-8")
@@ -668,11 +1010,31 @@ def self_test() -> None:
         def fake_subprocess_run(cmd, **kwargs):
             captured["cmd"] = cmd
             captured["cwd"] = kwargs.get("cwd")
-            make_dump(space_run / "dump.bin", h0, k0, n0, t0, l0)
-            (space_run / "results.json").write_text(
-                json.dumps({"positions": positions, "kv_nan_values": 0}),
-                encoding="utf-8",
-            )
+            run_path = Path(str(kwargs["cwd"]).replace("S:/", str(space_checkout) + "/").replace("T:/", str(space_checkout) + "/"))
+            tcl_txt = (run_path / "run_csim.tcl").read_text(encoding="utf-8")
+            is_b16_no_tc = "prefill 0 16" in tcl_txt
+            is_b8_no_tc = "prefill 0 8" in tcl_txt
+            if is_b16_no_tc or is_b8_no_tc:
+                make_dump(run_path / "dump.bin", h24, k24, n24, t24, l24)
+                (run_path / "results.json").write_text(
+                    json.dumps(
+                        {
+                            "positions": pos24,
+                            "batch": 16 if is_b16_no_tc else 8,
+                            "groups": [{"start": 0, "size": 16, "keep": 16}, {"start": 16, "size": 8, "keep": 8}]
+                            if is_b16_no_tc
+                            else [{"start": 0, "size": 8, "keep": 8}, {"start": 8, "size": 8, "keep": 8}, {"start": 16, "size": 8, "keep": 8}],
+                            "kv_nan_values": 0,
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+            else:
+                make_dump(run_path / "dump.bin", h0, k0, n0, t0, l0)
+                (run_path / "results.json").write_text(
+                    json.dumps({"positions": positions, "batch": 8, "kv_nan_values": 0}),
+                    encoding="utf-8",
+                )
             return subprocess.CompletedProcess(cmd, 0)
 
         with (
@@ -691,10 +1053,59 @@ def self_test() -> None:
         assert captured["cmd"][-1] == f"{expected_rel_drive}/run_csim.tcl"
         assert dump_out == space_run / "dump.bin" and res_out == space_run / "results.json"
 
+        # Verify N=16 subst-drive cwd and run_audit comparing batch=8 baseline vs batch=16 variant
+        space_run_b16 = space_checkout / "build/v2/attn-reclaim/gemini/runs/csim_cwd_b16_test"
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="T"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_subprocess_run),
+        ):
+            dump_b16, res_b16 = run_csim(
+                s1,
+                space_run_b16,
+                space_checkout,
+                "prefill",
+                False,
+                drive="T:",
+                batch=16,
+            )
+        expected_b16_drive = "T:/build/v2/attn-reclaim/gemini/runs/csim_cwd_b16_test"
+        assert captured["cwd"] == expected_b16_drive, captured
+        assert " " not in str(captured["cwd"])
+        assert captured["cmd"][-1] == f"{expected_b16_drive}/run_csim.tcl"
+        assert "prefill 0 16" in (space_run_b16 / "run_csim.tcl").read_text(encoding="utf-8")
+        assert dump_b16 == space_run_b16 / "dump.bin" and res_b16 == space_run_b16 / "results.json"
+
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_subprocess_run),
+        ):
+            verdict = run_audit(
+                str(s1),
+                str(s1),
+                "prefill",
+                space_checkout,
+                tile_cross=False,
+                use_cache=True,
+                drive="S",
+                batch=16,
+                baseline_batch=8,
+            )
+        assert verdict["verdict"] == "PASS"
+        assert verdict["baseline_batch"] == 8 and verdict["batch"] == 16
+        assert verdict["variant"]["same_source_as_baseline"] is False
+        assert verdict["positions"] == pos24
+        assert verdict["total_differing_words"] == 0
+
     print(json.dumps({"self_test": "PASS"}, indent=2))
 
 
-def main() -> int:
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--baseline", help="Baseline HLS source directory")
     ap.add_argument("--variant", help="Variant HLS source directory")
@@ -703,6 +1114,20 @@ def main() -> int:
         choices=("decode", "prefill"),
         default="prefill",
         help="Execution mode (default: prefill)",
+    )
+    ap.add_argument(
+        "--batch",
+        type=int,
+        choices=SUPPORTED_BATCHES,
+        default=DEFAULT_BATCH,
+        help="Prefill batch size N (8 or 16; default: 8)",
+    )
+    ap.add_argument(
+        "--baseline-batch",
+        type=int,
+        choices=SUPPORTED_BATCHES,
+        default=None,
+        help="Optional baseline batch size N (defaults to --batch); e.g. --baseline-batch 8 --batch 16",
     )
     ap.add_argument(
         "--source-checkout",
@@ -723,7 +1148,7 @@ def main() -> int:
     ap.add_argument(
         "--no-tile-cross",
         action="store_true",
-        help="Run only the 24-position cold prefix without crossing TILE=256",
+        help="Run only the cold prefix positions without crossing TILE=256",
     )
     ap.add_argument("--out", type=Path, help="Optional path to save JSON verdict")
     ap.add_argument(
@@ -736,6 +1161,11 @@ def main() -> int:
         action="store_true",
         help="Run offline Python unit tests without invoking Vitis",
     )
+    return ap
+
+
+def main() -> int:
+    ap = build_parser()
     args = ap.parse_args()
 
     if args.self_test:
@@ -753,6 +1183,8 @@ def main() -> int:
         tile_cross=not args.no_tile_cross,
         use_cache=not args.no_cache,
         drive=args.drive,
+        batch=args.batch,
+        baseline_batch=args.baseline_batch,
     )
     rendered = json.dumps(verdict, indent=2)
     if args.out:
