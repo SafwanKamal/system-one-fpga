@@ -29,10 +29,10 @@ python experiments/v9i/pilot_analysis/analyze_pilot.py \
 
 ## Thresholds (defined at top of `analyze_pilot.py`)
 
-- `REQUIRE_EXACT_IDENTITY = True`: every query must match RC1.3 in `generated_ids`/`tokens` (and `path`, `logit_bits`, `kv_sha256` when present), with `ok=True` and `complete=True`. Any single token difference fails the pilot.
-- `MIN_DECODE_SPEEDUP = 1.03`: minimum aggregate decode speedup vs RC1.3 (v9h).
-- `MIN_E2E_SPEEDUP = 1.00`: minimum aggregate end-to-end speedup vs RC1.3 (v9h).
-- Modelled reference speedups vs v9h (`docs/research/2026-11-21-attention-reclaim.md`): `1.31x` tool, `1.065x` overall.
+- `REQUIRE_EXACT_IDENTITY = True`: every query occurrence must match RC1.3 in `generated_ids`/`tokens` (and `path`, `logit_bits`, `kv_sha256` when present), with `ok=True` and `complete=True`, and `pilot.json` inputs must have terminal `passed=True` status without errors or missing completion fields. Any single token difference fails the pilot.
+- `MIN_DECODE_SPEEDUP = 1.03`: minimum aggregate decode speedup vs RC1.3 (v9h), computed and gated at full precision.
+- `MIN_E2E_SPEEDUP = 1.00`: minimum aggregate end-to-end speedup vs RC1.3 (v9h), computed and gated at full precision.
+- Modelled E2E reference speedups vs v9h (`docs/research/2026-11-21-attention-reclaim.md`): `1.31x` E2E tool, `1.065x` E2E overall across the 181-case workload (`0.884x` is separately modelled for overall speculative decode). Measured-vs-modelled comparisons are restricted to E2E and report the scope difference between the measured sample and the 181-case model.
 
 ## Synthetic fixtures & tests
 
