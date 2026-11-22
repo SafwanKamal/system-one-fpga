@@ -4,7 +4,7 @@ Word-for-word Vitis HLS C-simulation exactness harness for comparing Qwen3-0.6B 
 
 ## Files
 
-- `audit.py`: Driver that hashes sources and the `meta.bin` prompt fixture, caches the baseline dump, serializes Vitis HLS `csim_design` runs on `S:\`, compares dumps word-for-word per position, derives optional `groups` metadata, and emits a JSON verdict on stdout.
+- `audit.py`: Driver that hashes sources, snapshots and hashes `meta.bin` once per audit into an immutable subst-relative fixture, caches the baseline dump, serializes Vitis HLS `csim_design` runs on `S:\`, compares dumps word-for-word per position, derives optional `groups` metadata, and emits a JSON verdict on stdout.
 - `testbench.cpp`: Shared C-sim testbench derived from `experiments/dual_port/testbench_s1.cpp`. Supports both `prefill` (batch-`N` groups, `N in {8, 16}`, default `8`) and `decode` (single-token steps) across all 28 layers, including a deterministic-KV-seeded crossing of the 256-row attention `TILE` boundary. Preserves the original `results.json` schema (`mode`, `tile_boundary_crossed`, `tile_boundary_method`, `positions`, `tokens`, `kv_nan_values`, `elapsed_seconds`).
 - `run_csim.tcl`: Reference Vitis HLS Tcl script (per-run Tcl scripts are generated dynamically under `<source checkout>/build/v2/attn-reclaim/gemini/runs/`).
 

@@ -181,14 +181,48 @@ def derive_groups(
     ]
 
 
-def compute_meta_hash(meta_path: Path) -> str:
+def compute_meta_bytes_hash(meta_bytes: bytes) -> str:
     h = hashlib.sha256()
-    if meta_path.is_file():
-        h.update(b"present\0")
-        h.update(meta_path.read_bytes())
-    else:
-        h.update(b"missing\0")
+    h.update(b"present\0")
+    h.update(meta_bytes)
     return h.hexdigest()
+
+
+def compute_meta_hash(meta_path: Path) -> str:
+    if meta_path.is_file():
+        return compute_meta_bytes_hash(meta_path.read_bytes())
+    h = hashlib.sha256()
+    h.update(b"missing\0")
+    return h.hexdigest()
+
+
+def snapshot_meta(source_checkout: Path) -> tuple[Path, str]:
+    """Stage an immutable per-content snapshot of meta.bin and hash the staged bytes."""
+    src_root = source_checkout.resolve()
+    meta_src = src_root / META_REL_PATH
+    if not meta_src.is_file():
+        raise FileNotFoundError(f"Prompt fixture not found: {meta_src}")
+    raw_bytes = meta_src.read_bytes()
+    digest = hashlib.sha256(raw_bytes).hexdigest()
+    fixtures_dir = src_root / "build/v2/attn-reclaim/gemini/fixtures"
+    fixtures_dir.mkdir(parents=True, exist_ok=True)
+    snapshot_path = fixtures_dir / f"meta_{digest}.bin"
+    if not snapshot_path.is_file() or snapshot_path.read_bytes() != raw_bytes:
+        fd, tmp_name = tempfile.mkstemp(
+            dir=fixtures_dir, prefix=".meta_", suffix=".tmp"
+        )
+        tmp_path = Path(tmp_name)
+        try:
+            with os.fdopen(fd, "wb") as fh:
+                fh.write(raw_bytes)
+            os.replace(tmp_path, snapshot_path)
+        finally:
+            if tmp_path.exists():
+                tmp_path.unlink(missing_ok=True)
+    staged_bytes = snapshot_path.read_bytes()
+    if hashlib.sha256(staged_bytes).hexdigest() != digest:
+        raise RuntimeError(f"Staged fixture snapshot mismatch: {snapshot_path}")
+    return snapshot_path, compute_meta_bytes_hash(staged_bytes)
 
 
 def is_single_port(src_dir: Path) -> bool:
@@ -307,13 +341,15 @@ def render_tcl(
     single_port: bool,
     drive: str = "S",
     batch: int = DEFAULT_BATCH,
+    meta_rel_drive: str | None = None,
 ) -> str:
     d = normalize_drive(drive)
     b = validate_batch(batch)
+    meta_arg = meta_rel_drive or f"{d}:/{META_REL_PATH.as_posix()}"
     tb_cflags = "-std=c++14 -DSINGLE_PORT" if single_port else "-std=c++14"
     argv = (
         f"{d}:/models/Qwen3-0.6B-GGUF/Qwen3-0.6B-Q8_0.gguf "
-        f"{d}:/build/v2/schedule-invariance-audit/meta.bin "
+        f"{meta_arg} "
         f"{d}:/build/v2/qwen-fpga-decoder-v9e/rope.bin "
         f"{run_rel_drive}/results.json "
         f"{run_rel_drive}/dump.bin "
@@ -344,11 +380,14 @@ def run_csim(
     tile_cross: bool,
     drive: str = "S",
     batch: int = DEFAULT_BATCH,
+    meta_snapshot: Path | None = None,
 ) -> tuple[Path, Path]:
     b = validate_batch(batch)
     if not VITIS_RUN.is_file():
         raise FileNotFoundError(f"Vitis launcher not found: {VITIS_RUN}")
     d = ensure_subst(source_checkout, drive)
+    if meta_snapshot is None:
+        meta_snapshot, _ = snapshot_meta(source_checkout)
 
     if run_dir.exists():
         shutil.rmtree(run_dir)
@@ -363,11 +402,21 @@ def run_csim(
 
     rel_from_root = run_dir.resolve().relative_to(source_checkout.resolve()).as_posix()
     run_rel_drive = f"{d}:/{rel_from_root}"
+    meta_rel_from_root = (
+        meta_snapshot.resolve().relative_to(source_checkout.resolve()).as_posix()
+    )
+    meta_rel_drive = f"{d}:/{meta_rel_from_root}"
     single_port = is_single_port(src_dir)
     tcl_path = run_dir / "run_csim.tcl"
     tcl_path.write_text(
         render_tcl(
-            run_rel_drive, mode, tile_cross, single_port, drive=d, batch=b
+            run_rel_drive,
+            mode,
+            tile_cross,
+            single_port,
+            drive=d,
+            batch=b,
+            meta_rel_drive=meta_rel_drive,
         ),
         encoding="utf-8",
     )
@@ -603,11 +652,17 @@ def obtain_baseline(
     use_cache: bool,
     drive: str = "S",
     batch: int = DEFAULT_BATCH,
+    meta_snapshot: Path | None = None,
+    meta_hash: str | None = None,
 ) -> tuple[Path, Path, str, bool]:
     b = validate_batch(batch)
     base_hash = compute_source_hash(base_dir)
-    meta_path = source_checkout / META_REL_PATH
-    meta_hash = compute_meta_hash(meta_path)
+    if meta_snapshot is None:
+        meta_snapshot, meta_hash = snapshot_meta(source_checkout)
+    elif meta_hash is None:
+        if not meta_snapshot.is_file():
+            raise FileNotFoundError(f"Prompt fixture snapshot not found: {meta_snapshot}")
+        meta_hash = compute_meta_bytes_hash(meta_snapshot.read_bytes())
     tb_hash = compute_tb_hash(
         TESTBENCH_PATH.read_bytes(),
         mode,
@@ -634,7 +689,14 @@ def obtain_baseline(
         / f"baseline_{mode}_b{b}_{base_hash[:12]}"
     )
     dump_path, results_path = run_csim(
-        base_dir, run_dir, source_checkout, mode, tile_cross, drive=drive, batch=b
+        base_dir,
+        run_dir,
+        source_checkout,
+        mode,
+        tile_cross,
+        drive=drive,
+        batch=b,
+        meta_snapshot=meta_snapshot,
     )
     if use_cache:
         cache_dir.mkdir(parents=True, exist_ok=True)
@@ -647,7 +709,7 @@ def obtain_baseline(
                     "source_hash": base_hash,
                     "tb_hash": tb_hash,
                     "meta_hash": meta_hash,
-                    "meta_path": str(meta_path),
+                    "meta_path": str(meta_snapshot),
                     "mode": mode,
                     "batch": b,
                     "tile_cross": tile_cross,
@@ -683,6 +745,7 @@ def run_audit(
     base_dir = resolve_src_dir(baseline_arg, source_checkout)
     var_dir = resolve_src_dir(variant_arg, source_checkout)
     var_hash = compute_source_hash(var_dir)
+    meta_snapshot, meta_hash = snapshot_meta(source_checkout)
 
     base_dump, base_results_path, base_hash, cache_hit = obtain_baseline(
         base_dir,
@@ -692,6 +755,8 @@ def run_audit(
         use_cache,
         drive=drive,
         batch=base_batch,
+        meta_snapshot=meta_snapshot,
+        meta_hash=meta_hash,
     )
     base_res = json.loads(base_results_path.read_text(encoding="utf-8"))
 
@@ -714,6 +779,7 @@ def run_audit(
             tile_cross,
             drive=drive,
             batch=var_batch,
+            meta_snapshot=meta_snapshot,
         )
         var_res = json.loads(var_results_path.read_text(encoding="utf-8"))
 
@@ -747,6 +813,8 @@ def run_audit(
         "mode": mode,
         "batch": var_batch,
         "baseline_batch": base_batch,
+        "meta_hash": meta_hash,
+        "meta_snapshot": str(meta_snapshot),
         "tile_boundary_crossed": bool(base_res.get("tile_boundary_crossed")),
         "tile_boundary_method": base_res.get("tile_boundary_method", "none"),
         "positions": positions,
@@ -1066,14 +1134,21 @@ def self_test() -> None:
             words = [0] * (3 + NL * 11) + [len(tok_ids)] + list(tok_ids)
             path.write_bytes(struct.pack(f"<{len(words)}I", *words))
 
-        def make_dummy_dump_and_results(run_path: Path, pos_list: list[int], mode_name: str, tc: bool) -> None:
+        def make_dummy_dump_and_results(
+            run_path: Path,
+            pos_list: list[int],
+            mode_name: str,
+            tc: bool,
+            ids_meta: list[int],
+        ) -> None:
             m_len = len(pos_list)
+            toks = [ids_meta[p % len(ids_meta)] + p for p in pos_list]
             make_dump(
                 run_path / "dump.bin",
                 [0x3F800000] * (NL * m_len * H),
                 [0x3F803F80] * (NL * 2 * NK * m_len * KV_WORDS_PER_ROW),
                 [0x40000000] * (m_len * H),
-                [100 + p for p in pos_list],
+                toks,
                 [0x41200000] * m_len,
             )
             (run_path / "results.json").write_text(
@@ -1083,7 +1158,7 @@ def self_test() -> None:
                         "tile_boundary_crossed": tc,
                         "tile_boundary_method": "deterministic_kv_seed" if tc else "none",
                         "positions": pos_list,
-                        "tokens": [100 + p for p in pos_list],
+                        "tokens": toks,
                         "kv_nan_values": 0,
                         "elapsed_seconds": 0.1,
                     }
@@ -1094,26 +1169,35 @@ def self_test() -> None:
         meta_file = space_checkout / META_REL_PATH
         write_meta_bin(meta_file, list(range(10, 34)))
 
+        def resolve_subst_arg(arg_path: str) -> Path:
+            assert re.match(r"^[A-Za-z]:/", arg_path), arg_path
+            return space_checkout / arg_path[3:]
+
         def fake_subprocess_run(cmd, **kwargs):
             captured["cmd"] = cmd
             captured["cwd"] = kwargs.get("cwd")
             captured["calls"] = captured.get("calls", 0) + 1
-            run_path = Path(
-                str(kwargs["cwd"])
-                .replace("S:/", str(space_checkout) + "/")
-                .replace("T:/", str(space_checkout) + "/")
-            )
+            run_path = resolve_subst_arg(str(kwargs["cwd"]))
             tcl_txt = (run_path / "run_csim.tcl").read_text(encoding="utf-8")
             m_argv = re.search(r'-argv "([^"]+)"', tcl_txt)
             assert m_argv is not None
             argv_parts = m_argv.group(1).split()
+            meta_arg = argv_parts[1]
+            assert "/build/v2/attn-reclaim/gemini/fixtures/meta_" in meta_arg, meta_arg
+            assert META_REL_PATH.as_posix() not in meta_arg, meta_arg
             mode_name = argv_parts[-3]
             tc = argv_parts[-2] != "0"
             b_val = int(argv_parts[-1])
-            meta_bytes = meta_file.read_bytes()
+            staged_meta_path = resolve_subst_arg(meta_arg)
+            meta_bytes = staged_meta_path.read_bytes()
             n_meta = struct.unpack_from("<I", meta_bytes, (3 + NL * 11) * 4)[0]
+            ids_meta = list(struct.unpack_from(f"<{n_meta}I", meta_bytes, (4 + NL * 11) * 4))
+            captured.setdefault("launches", []).append((b_val, ids_meta[0], meta_arg, list(ids_meta)))
             pos_list = expected_positions(mode_name, n_meta, batch=b_val, tile_cross=tc)
-            make_dummy_dump_and_results(run_path, pos_list, mode_name, tc)
+            make_dummy_dump_and_results(run_path, pos_list, mode_name, tc, ids_meta)
+            hook = captured.get("on_launch")
+            if hook is not None:
+                hook(captured["calls"], b_val, meta_arg)
             return subprocess.CompletedProcess(cmd, 0)
 
         with (
@@ -1258,6 +1342,81 @@ def self_test() -> None:
             )
             assert v_32_b["baseline"]["cache_hit"] is False
             assert captured["calls"] == 3
+
+        # [P1-bis] Rewriting shared meta.bin between baseline and variant launches must not split inputs
+        ids_a = list(range(10, 34))
+        ids_b = list(range(100, 124))
+        write_meta_bin(meta_file, ids_a)
+        expected_hash_a = compute_meta_hash(meta_file)
+        captured["calls"] = 0
+        captured["launches"] = []
+
+        def rewrite_between_launches(call_num: int, _b: int, _meta_arg: str) -> None:
+            if call_num == 1:
+                write_meta_bin(meta_file, ids_b)
+
+        captured["on_launch"] = rewrite_between_launches
+        try:
+            with (
+                mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+                mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+                mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+                mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+                mock.patch.object(subprocess, "run", side_effect=fake_subprocess_run),
+            ):
+                v_split_nocache = run_audit(
+                    str(s1),
+                    str(s1),
+                    "prefill",
+                    space_checkout,
+                    tile_cross=False,
+                    use_cache=False,
+                    drive="S",
+                    batch=16,
+                    baseline_batch=8,
+                )
+        finally:
+            captured["on_launch"] = None
+
+        assert v_split_nocache["verdict"] == "PASS"
+        assert v_split_nocache["meta_hash"] == expected_hash_a
+        assert len(captured["launches"]) == 2
+        assert [(b, first_id) for b, first_id, _, _ in captured["launches"]] == [
+            (8, 10),
+            (16, 10),
+        ]
+        assert captured["launches"][0][2] == captured["launches"][1][2]
+        assert captured["launches"][0][3] == ids_a and captured["launches"][1][3] == ids_a
+
+        # Subsequent audit picks up the rewritten shared meta.bin (ids_b) as a new snapshot
+        captured["launches"] = []
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_subprocess_run),
+        ):
+            v_after_rewrite = run_audit(
+                str(s1),
+                str(s1),
+                "prefill",
+                space_checkout,
+                tile_cross=False,
+                use_cache=True,
+                drive="S",
+                batch=16,
+                baseline_batch=8,
+            )
+        assert v_after_rewrite["verdict"] == "PASS"
+        assert v_after_rewrite["baseline"]["cache_hit"] is False
+        assert v_after_rewrite["meta_hash"] == compute_meta_hash(meta_file)
+        assert [(b, first_id) for b, first_id, _, _ in captured["launches"]] == [
+            (8, 100),
+            (16, 100),
+        ]
+        assert captured["launches"][0][2] == captured["launches"][1][2]
+        assert captured["launches"][0][3] == ids_b and captured["launches"][1][3] == ids_b
 
         # [P2] Reject mixed-size prefill with tile_cross=True before cache lookup or simulation
         with (

@@ -168,16 +168,20 @@ int main(int argc, char** argv) {
     const unsigned batch = (argc == 9) ? parse_batch(argv[8]) : 8u;
 
     auto mb = slurp(argv[2]);
+    const size_t header_words = 4 + size_t(NL) * 11;
+    if (mb.size() < header_words * 4) {
+      throw std::runtime_error("meta.bin too small for header");
+    }
     std::vector<uint32_t> meta(mb.size() / 4);
     std::memcpy(meta.data(), mb.data(), meta.size() * 4);
     const uint32_t extent = meta[0], embedding = meta[1],
                    output_norm = meta[2];
     const uint32_t* layer_offsets = &meta[3];
     const unsigned n = meta[3 + NL * 11];
-    const uint32_t* ids = &meta[4 + NL * 11];
-    if (n == 0 || n >= NC || mb.size() < (4 + size_t(NL) * 11 + n) * 4) {
+    if (n == 0 || n >= NC || mb.size() < (header_words + size_t(n)) * 4) {
       throw std::runtime_error("invalid base position count in meta.bin");
     }
+    const uint32_t* ids = &meta[header_words];
 
     const unsigned chunks = (extent + (1u << 24) - 1) >> 24;
     std::vector<weight_word> model(size_t(chunks) << 19);
