@@ -393,12 +393,16 @@ def _summarize_group(items: list[dict[str, Any]]) -> dict[str, Any]:
         if x.get("decode_comparable", True)
         and x["rc13_decode_seconds"] is not None
         and x["pilot_decode_seconds"] is not None
+        and x["rc13_decode_seconds"] > 0.0
+        and x["pilot_decode_seconds"] > 0.0
     ]
     e2e_pairs = [
         x for x in items
         if x.get("e2e_comparable", True)
         and x["rc13_e2e_seconds"] is not None
         and x["pilot_e2e_seconds"] is not None
+        and x["rc13_e2e_seconds"] > 0.0
+        and x["pilot_e2e_seconds"] > 0.0
     ]
     rc13_dec_tot, pilot_dec_tot, dec_speedup, rc13_dec_med, pilot_dec_med, dec_med_speedup = _summarize_timings(
         dec_pairs, "rc13_decode_seconds", "pilot_decode_seconds"
@@ -513,6 +517,7 @@ def analyze(
                 "pilot_prefix_tokens_reused": None,
                 "cache_comparable": True,
                 "timing_boundary_comparable": True,
+                "timing_valid": True,
                 "decode_comparable": True,
                 "rc13_prefill_seconds": r["prefill_seconds"],
                 "pilot_prefill_seconds": None,
@@ -568,14 +573,52 @@ def analyze(
             (r["decode_seconds"] is not None and p["decode_seconds"] is not None)
             or (r["e2e_seconds"] is not None and p["e2e_seconds"] is not None)
         )
+        # Raw pilot.json cases explicitly run full prefill with no prefix cache; socket bench rows
+        # must have measured non-negative prefix_tokens_reused on both sides to be comparable.
+        requires_measured_cache = (
+            r.get("source_format") != "pilot_cases"
+            or p.get("source_format") != "pilot_cases"
+        )
         reused_differs = (rc13_reused != pilot_reused)
+        missing_measured_reused = requires_measured_cache and (
+            rc13_reused is None or pilot_reused is None
+        )
         cache_comparable = not (
-            reused_differs
+            (reused_differs or missing_measured_reused)
             and (status_ok or has_any_timings or (rc13_reused is not None and pilot_reused is not None))
         )
         timing_boundary_comparable = (r.get("source_format") == p.get("source_format"))
-        decode_comparable = cache_comparable
-        e2e_comparable = timing_boundary_comparable and cache_comparable
+
+        requires_decode = (
+            (r["tokens"] is not None and len(r["tokens"]) > 1)
+            or (p["tokens"] is not None and len(p["tokens"]) > 1)
+        )
+        nonpositive_e2e = (
+            (r["e2e_seconds"] is not None and r["e2e_seconds"] <= 0.0)
+            or (p["e2e_seconds"] is not None and p["e2e_seconds"] <= 0.0)
+        )
+        nonpositive_decode_required = requires_decode and (
+            (r["decode_seconds"] is not None and r["decode_seconds"] <= 0.0)
+            or (p["decode_seconds"] is not None and p["decode_seconds"] <= 0.0)
+        )
+        nonpositive_decode_any = (
+            (r["decode_seconds"] is not None and r["decode_seconds"] <= 0.0)
+            or (p["decode_seconds"] is not None and p["decode_seconds"] <= 0.0)
+        )
+        timing_valid = not (status_ok and (nonpositive_e2e or nonpositive_decode_required))
+
+        decode_comparable = (
+            cache_comparable
+            and timing_valid
+            and not nonpositive_e2e
+            and not nonpositive_decode_any
+        )
+        e2e_comparable = (
+            timing_boundary_comparable
+            and cache_comparable
+            and timing_valid
+            and not nonpositive_e2e
+        )
 
         dec_sp = (
             _safe_ratio(r["decode_seconds"], p["decode_seconds"])
@@ -608,6 +651,7 @@ def analyze(
             "pilot_prefix_tokens_reused": pilot_reused,
             "cache_comparable": cache_comparable,
             "timing_boundary_comparable": timing_boundary_comparable,
+            "timing_valid": timing_valid,
             "decode_comparable": decode_comparable,
             "rc13_prefill_seconds": r["prefill_seconds"],
             "pilot_prefill_seconds": p["prefill_seconds"],
@@ -683,6 +727,18 @@ def analyze(
         for q in matched
         if not q.get("cache_comparable", True)
     ]
+    invalid_timing_queries = [
+        {
+            "id": q["id"],
+            "occurrence": q["occurrence"],
+            "rc13_decode_seconds": q["rc13_decode_seconds"],
+            "pilot_decode_seconds": q["pilot_decode_seconds"],
+            "rc13_e2e_seconds": q["rc13_e2e_seconds"],
+            "pilot_e2e_seconds": q["pilot_e2e_seconds"],
+        }
+        for q in matched
+        if not q.get("timing_valid", True)
+    ]
 
     overall_dec_sp = overall["decode_speedup"]
     overall_e2e_sp = overall["e2e_speedup"]
@@ -691,6 +747,7 @@ def analyze(
         and not missing_e2e_on_ok
         and not mixed_timing_boundaries
         and not cache_condition_mismatches
+        and not invalid_timing_queries
         and overall_dec_sp is not None
         and overall_e2e_sp is not None
         and overall_dec_sp >= min_decode_speedup
@@ -710,14 +767,32 @@ def analyze(
         if mixed_timing_boundaries:
             reasons.append("mixed timing boundaries (matched RC1.3 and pilot records use different source formats)")
         if cache_condition_mismatches:
+            mismatched_cache_items = [
+                m for m in cache_condition_mismatches
+                if m["rc13_prefix_tokens_reused"] != m["pilot_prefix_tokens_reused"]
+            ]
+            unmeasured_cache_items = [
+                m for m in cache_condition_mismatches
+                if m["rc13_prefix_tokens_reused"] is None and m["pilot_prefix_tokens_reused"] is None
+            ]
+            if mismatched_cache_items:
+                reasons.append(
+                    f"mismatched measured cache conditions (prefix_tokens_reused mismatch on "
+                    f"{len(mismatched_cache_items)}/{len(matched)} matched queries)"
+                )
+            if unmeasured_cache_items:
+                reasons.append(
+                    f"unmeasured cache conditions (missing prefix_tokens_reused on "
+                    f"{len(unmeasured_cache_items)}/{len(matched)} matched queries)"
+                )
+        if invalid_timing_queries:
             reasons.append(
-                f"mismatched measured cache conditions (prefix_tokens_reused mismatch on "
-                f"{len(cache_condition_mismatches)}/{len(matched)} matched queries)"
+                f"invalid non-positive timing on {len(invalid_timing_queries)}/{len(matched)} successful matched queries"
             )
         if missing_decode_on_ok or missing_e2e_on_ok:
             reasons.append("speedup unavailable (missing required timing on successful matched query)")
         elif overall_dec_sp is None or overall_e2e_sp is None:
-            if not mixed_timing_boundaries and not cache_condition_mismatches:
+            if not mixed_timing_boundaries and not cache_condition_mismatches and not invalid_timing_queries:
                 reasons.append("speedup unavailable (no matched queries or non-positive pilot duration)")
         elif overall_dec_sp < min_decode_speedup or overall_e2e_sp < min_e2e_speedup:
             reasons.append(
@@ -770,6 +845,7 @@ def analyze(
             "failing_queries": failing_queries,
         },
         "cache_condition_mismatches": cache_condition_mismatches,
+        "invalid_timings": invalid_timing_queries,
         "per_query": per_query,
         "by_category": by_category,
         "overall": overall,
@@ -853,13 +929,21 @@ def format_report(report: dict[str, Any]) -> str:
         rc13_reused = q.get("rc13_prefix_tokens_reused")
         pilot_reused = q.get("pilot_prefix_tokens_reused")
         if rc13_reused is not None or pilot_reused is not None or not q.get("cache_comparable", True):
-            cache_flag = " [CACHE-MISMATCH]" if not q.get("cache_comparable", True) else ""
+            if not q.get("cache_comparable", True):
+                cache_flag = (
+                    " [CACHE-UNMEASURED]"
+                    if (rc13_reused is None and pilot_reused is None)
+                    else " [CACHE-MISMATCH]"
+                )
+            else:
+                cache_flag = ""
             cache_suffix = f" | reused={_fmt_tok(rc13_reused)}/{_fmt_tok(pilot_reused)}{cache_flag}"
+        timing_suffix = " [INVALID-TIMING]" if not q.get("timing_valid", True) else ""
         lines.append(
             f"  [{status}] {q['id']} | cat={q['category']} | "
             f"tokens={_fmt_tok(q['rc13_token_count'])}/{_fmt_tok(q['pilot_token_count'])} | "
             f"dec={_fmt_opt(q['rc13_decode_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_decode_seconds'], '.3f', 's')} ({_fmt_opt(q['decode_speedup'], '.4f', 'x')}) | "
-            f"e2e={_fmt_opt(q['rc13_e2e_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_e2e_seconds'], '.3f', 's')} ({_fmt_opt(q['e2e_speedup'], '.4f', 'x')}){cache_suffix}"
+            f"e2e={_fmt_opt(q['rc13_e2e_seconds'], '.3f', 's')}->{_fmt_opt(q['pilot_e2e_seconds'], '.3f', 's')} ({_fmt_opt(q['e2e_speedup'], '.4f', 'x')}){cache_suffix}{timing_suffix}"
         )
 
     lines.append("")
@@ -895,12 +979,36 @@ def format_report(report: dict[str, Any]) -> str:
         lines.append(f"  OVERALL (n={ov['n']}): {dec_part}, {e2e_part}")
     cache_mismatches = report.get("cache_condition_mismatches") or []
     if cache_mismatches:
+        mismatched = [
+            m for m in cache_mismatches
+            if m["rc13_prefix_tokens_reused"] != m["pilot_prefix_tokens_reused"]
+        ]
+        unmeasured = [
+            m for m in cache_mismatches
+            if m["rc13_prefix_tokens_reused"] is None and m["pilot_prefix_tokens_reused"] is None
+        ]
+        if mismatched:
+            summary_items = ", ".join(
+                f"{m['id']} ({_fmt_tok(m['rc13_prefix_tokens_reused'])} vs {_fmt_tok(m['pilot_prefix_tokens_reused'])})"
+                for m in mismatched
+            )
+            lines.append(
+                f"  EXCLUDED (mismatched prefix_tokens_reused): {summary_items}"
+            )
+        if unmeasured:
+            summary_items = ", ".join(m["id"] for m in unmeasured)
+            lines.append(
+                f"  EXCLUDED (missing prefix_tokens_reused): {summary_items}"
+            )
+    invalid_timings = report.get("invalid_timings") or []
+    if invalid_timings:
         summary_items = ", ".join(
-            f"{m['id']} ({_fmt_tok(m['rc13_prefix_tokens_reused'])} vs {_fmt_tok(m['pilot_prefix_tokens_reused'])})"
-            for m in cache_mismatches
+            f"{m['id']} (dec={_fmt_opt(m['rc13_decode_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_decode_seconds'], '.3f', 's')}, "
+            f"e2e={_fmt_opt(m['rc13_e2e_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_e2e_seconds'], '.3f', 's')})"
+            for m in invalid_timings
         )
         lines.append(
-            f"  EXCLUDED (mismatched prefix_tokens_reused): {summary_items}"
+            f"  EXCLUDED (non-positive timing): {summary_items}"
         )
 
     lines.append("")

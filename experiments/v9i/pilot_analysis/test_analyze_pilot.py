@@ -281,6 +281,7 @@ class AnalyzePilotTest(unittest.TestCase):
                 "query": "q1",
                 "ok": True,
                 "complete": True,
+                "prefix_tokens_reused": 32,
                 "generated_ids": [1, 2, 3],
                 "path": "/proc/uptime",
                 "prefill_seconds": e2e - dec,
@@ -1107,6 +1108,346 @@ class AnalyzePilotTest(unittest.TestCase):
             bad_ar_rec = dict(base_rec, ar_tokens=[True, 7.0], decode_seconds=0.5, e2e_seconds=1.0)
             with self.assertRaises(ValueError):
                 analyze_pilot.analyze([base_rec], [bad_ar_rec])
+
+    def test_both_socket_rows_missing_prefix_tokens_reused_blocks_go_while_raw_pilot_cases_allowed(self) -> None:
+        def bench_row(
+            qid: str,
+            *,
+            reused: object = None,
+            include_reused: bool = True,
+            dec: float = 1.0,
+            e2e: float = 2.0,
+        ) -> dict:
+            row = {
+                "query": qid,
+                "ok": True,
+                "complete": True,
+                "generated_ids": [1, 7],
+                "path": "/proc/uptime",
+                "prefill_seconds": max(0.0, e2e - dec),
+                "decode_seconds": dec,
+                "elapsed_seconds": e2e,
+            }
+            if include_reused:
+                row["prefix_tokens_reused"] = reused
+            return row
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            # Exact reviewer reproducer (1): both socket rows have prefix_tokens_reused=null,
+            # RC1.3 dec/e2e = 1.0/2.0 s, pilot dec/e2e = 0.9/0.95 s -> must NOT GO.
+            rc13_null_p = tmp / "rc13_null.json"
+            pilot_null_p = tmp / "pilot_null.json"
+            out_null_p = tmp / "out_null.json"
+            rc13_null_p.write_text(
+                json.dumps([bench_row("q1", reused=None, dec=1.0, e2e=2.0)]),
+                encoding="utf-8",
+            )
+            pilot_null_p.write_text(
+                json.dumps([bench_row("q1", reused=None, dec=0.9, e2e=0.95)]),
+                encoding="utf-8",
+            )
+            r_null = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_null_p), "--pilot", str(pilot_null_p), "--out", str(out_null_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_null.returncode, 1, r_null.stdout + r_null.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_null.stdout.splitlines()))
+            self.assertIn("NO-GO:", r_null.stdout)
+            self.assertIn("unmeasured cache conditions", r_null.stdout)
+            self.assertIn("[CACHE-UNMEASURED]", r_null.stdout)
+            self.assertIn("EXCLUDED (missing prefix_tokens_reused): q1", r_null.stdout)
+            self.assertIn("OVERALL (n=1): decode N/A, e2e N/A", r_null.stdout)
+
+            rep_null = json.loads(out_null_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep_null["verdict"], "NO-GO")
+            self.assertFalse(rep_null["go"])
+            self.assertFalse(rep_null["per_query"][0]["cache_comparable"])
+            self.assertFalse(rep_null["per_query"][0]["decode_comparable"])
+            self.assertFalse(rep_null["per_query"][0]["e2e_comparable"])
+            self.assertIsNone(rep_null["per_query"][0]["decode_speedup"])
+            self.assertIsNone(rep_null["per_query"][0]["e2e_speedup"])
+            self.assertEqual(rep_null["overall"]["decode_n"], 0)
+            self.assertEqual(rep_null["overall"]["e2e_n"], 0)
+            self.assertIsNone(rep_null["overall"]["decode_speedup"])
+            self.assertIsNone(rep_null["overall"]["e2e_speedup"])
+
+            # Omitting prefix_tokens_reused on both socket rows also blocks GO.
+            rc13_omit_p = tmp / "rc13_omit.json"
+            pilot_omit_p = tmp / "pilot_omit.json"
+            rc13_omit_p.write_text(
+                json.dumps([bench_row("q1", include_reused=False, dec=1.0, e2e=2.0)]),
+                encoding="utf-8",
+            )
+            pilot_omit_p.write_text(
+                json.dumps([bench_row("q1", include_reused=False, dec=0.9, e2e=0.95)]),
+                encoding="utf-8",
+            )
+            r_omit = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_omit_p), "--pilot", str(pilot_omit_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_omit.returncode, 1, r_omit.stdout + r_omit.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_omit.stdout.splitlines()))
+            self.assertIn("NO-GO:", r_omit.stdout)
+
+            # Partial unmeasured reuse: q1 matches (32 vs 32), q2 has null vs null -> q2 excluded & GO blocked.
+            part_rc13_p = tmp / "part_rc13.json"
+            part_pilot_p = tmp / "part_pilot.json"
+            part_out_p = tmp / "part_out.json"
+            part_rc13_p.write_text(
+                json.dumps([
+                    bench_row("q1", reused=32, dec=2.0, e2e=3.0),
+                    bench_row("q2", reused=None, dec=1.0, e2e=2.0),
+                ]),
+                encoding="utf-8",
+            )
+            part_pilot_p.write_text(
+                json.dumps([
+                    bench_row("q1", reused=32, dec=1.0, e2e=2.0),
+                    bench_row("q2", reused=None, dec=0.9, e2e=0.95),
+                ]),
+                encoding="utf-8",
+            )
+            r_part = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(part_rc13_p), "--pilot", str(part_pilot_p), "--out", str(part_out_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_part.returncode, 1, r_part.stdout + r_part.stderr)
+            rep_part = json.loads(part_out_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep_part["verdict"], "NO-GO")
+            self.assertEqual(rep_part["overall"]["decode_n"], 1)
+            self.assertEqual(rep_part["overall"]["e2e_n"], 1)
+            self.assertAlmostEqual(rep_part["overall"]["e2e_speedup"], 1.5)
+
+            # Raw pilot.json cases explicitly run full prefill and remain distinct (reused=None allowed to GO).
+            raw_rc13 = {
+                "passed": True,
+                "started_utc": "2026-11-22T00:00:00Z",
+                "finished_utc": "2026-11-22T00:01:00Z",
+                "cases": [
+                    {
+                        "key": "case-0",
+                        "domain": "general",
+                        "prefill_seconds": 1.0,
+                        "identical": True,
+                        "ar": {"tokens": [1, 7], "decode_seconds": 2.0},
+                        "candidate": {"tokens": [1, 7], "decode_seconds": 1.0},
+                    }
+                ],
+            }
+            raw_pilot = {
+                "passed": True,
+                "started_utc": "2026-11-22T00:00:00Z",
+                "finished_utc": "2026-11-22T00:01:00Z",
+                "cases": [
+                    {
+                        "key": "case-0",
+                        "domain": "general",
+                        "prefill_seconds": 1.0,
+                        "identical": True,
+                        "ar": {"tokens": [1, 7], "decode_seconds": 1.8},
+                        "candidate": {"tokens": [1, 7], "decode_seconds": 0.9},
+                    }
+                ],
+            }
+            raw_rc13_p = tmp / "raw_rc13.json"
+            raw_pilot_p = tmp / "raw_pilot.json"
+            raw_rc13_p.write_text(json.dumps(raw_rc13), encoding="utf-8")
+            raw_pilot_p.write_text(json.dumps(raw_pilot), encoding="utf-8")
+            r_raw = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(raw_rc13_p), "--pilot", str(raw_pilot_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_raw.returncode, 0, r_raw.stdout + r_raw.stderr)
+            self.assertIn("GO:", r_raw.stdout)
+
+    def test_zero_duration_successful_rows_invalidated_and_block_go(self) -> None:
+        def bench_row(
+            qid: str,
+            *,
+            tokens: list[int] | None = None,
+            dec: float = 1.0,
+            e2e: float = 2.0,
+        ) -> dict:
+            toks = [1, 7] if tokens is None else tokens
+            return {
+                "query": qid,
+                "ok": True,
+                "complete": True,
+                "prefix_tokens_reused": 32,
+                "generated_ids": toks,
+                "path": "/proc/uptime",
+                "prefill_seconds": max(0.0, e2e - dec),
+                "decode_seconds": dec,
+                "elapsed_seconds": e2e,
+            }
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            # Exact reviewer reproducer (2): two queries generating [1, 7] with reuse=32,
+            # baseline 1.0/2.0 s twice, pilot 1.0/2.0 s and 0/0 s -> must NOT GO at 2.000x.
+            rc13_p = tmp / "rc13.json"
+            pilot_zero_p = tmp / "pilot_zero.json"
+            out_zero_p = tmp / "out_zero.json"
+            rc13_p.write_text(
+                json.dumps([bench_row("q1", dec=1.0, e2e=2.0), bench_row("q2", dec=1.0, e2e=2.0)]),
+                encoding="utf-8",
+            )
+            pilot_zero_p.write_text(
+                json.dumps([bench_row("q1", dec=1.0, e2e=2.0), bench_row("q2", dec=0.0, e2e=0.0)]),
+                encoding="utf-8",
+            )
+            r_zero = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_p), "--pilot", str(pilot_zero_p), "--out", str(out_zero_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_zero.returncode, 1, r_zero.stdout + r_zero.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_zero.stdout.splitlines()))
+            self.assertIn("NO-GO:", r_zero.stdout)
+            self.assertIn("invalid non-positive timing", r_zero.stdout)
+            self.assertIn("[INVALID-TIMING]", r_zero.stdout)
+            self.assertIn("EXCLUDED (non-positive timing): q2", r_zero.stdout)
+
+            rep_zero = json.loads(out_zero_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep_zero["verdict"], "NO-GO")
+            self.assertFalse(rep_zero["go"])
+            self.assertEqual(rep_zero["overall"]["n"], 2)
+            self.assertEqual(rep_zero["overall"]["decode_n"], 1)
+            self.assertEqual(rep_zero["overall"]["e2e_n"], 1)
+            self.assertAlmostEqual(rep_zero["overall"]["decode_speedup"], 1.0)
+            self.assertAlmostEqual(rep_zero["overall"]["e2e_speedup"], 1.0)
+            self.assertFalse(rep_zero["per_query"][1]["timing_valid"])
+            self.assertFalse(rep_zero["per_query"][1]["decode_comparable"])
+            self.assertFalse(rep_zero["per_query"][1]["e2e_comparable"])
+            self.assertIsNone(rep_zero["per_query"][1]["decode_speedup"])
+            self.assertIsNone(rep_zero["per_query"][1]["e2e_speedup"])
+            self.assertEqual([x["id"] for x in rep_zero["invalid_timings"]], ["q2"])
+
+            # Even when q1 easily beats thresholds (2.0x), zero-duration q2 still blocks GO.
+            pilot_fast_plus_zero_p = tmp / "pilot_fast_plus_zero.json"
+            pilot_fast_plus_zero_p.write_text(
+                json.dumps([bench_row("q1", dec=0.5, e2e=1.0), bench_row("q2", dec=0.0, e2e=0.0)]),
+                encoding="utf-8",
+            )
+            r_fast_zero = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_p), "--pilot", str(pilot_fast_plus_zero_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_fast_zero.returncode, 1, r_fast_zero.stdout + r_fast_zero.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_fast_zero.stdout.splitlines()))
+            self.assertIn("NO-GO: invalid non-positive timing", r_fast_zero.stdout)
+
+            # Zero decode on multi-token query even with positive E2E blocks GO.
+            pilot_zero_dec_p = tmp / "pilot_zero_dec.json"
+            pilot_zero_dec_p.write_text(
+                json.dumps([bench_row("q1", dec=0.5, e2e=1.5), bench_row("q2", dec=0.0, e2e=1.0)]),
+                encoding="utf-8",
+            )
+            r_zero_dec = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_p), "--pilot", str(pilot_zero_dec_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_zero_dec.returncode, 1, r_zero_dec.stdout + r_zero_dec.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_zero_dec.stdout.splitlines()))
+            self.assertIn("invalid non-positive timing", r_zero_dec.stdout)
+
+            # Zero-duration on baseline row also blocks GO.
+            r_base_zero = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(pilot_zero_p), "--pilot", str(rc13_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_base_zero.returncode, 1, r_base_zero.stdout + r_base_zero.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_base_zero.stdout.splitlines()))
+            self.assertIn("invalid non-positive timing", r_base_zero.stdout)
+
+            # Single-token query requires no decode work: dec=0.0 with positive E2E does not block GO
+            # when another query measures >= 1.03x decode speedup, while dec=0.0 is excluded from decode_n.
+            rc13_1tok_p = tmp / "rc13_1tok.json"
+            pilot_1tok_p = tmp / "pilot_1tok.json"
+            out_1tok_p = tmp / "out_1tok.json"
+            rc13_1tok_p.write_text(
+                json.dumps([bench_row("q1", tokens=[1, 7], dec=2.0, e2e=3.0), bench_row("q2", tokens=[7], dec=0.0, e2e=1.0)]),
+                encoding="utf-8",
+            )
+            pilot_1tok_p.write_text(
+                json.dumps([bench_row("q1", tokens=[1, 7], dec=1.0, e2e=2.0), bench_row("q2", tokens=[7], dec=0.0, e2e=1.0)]),
+                encoding="utf-8",
+            )
+            r_1tok_ok = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_1tok_p), "--pilot", str(pilot_1tok_p), "--out", str(out_1tok_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_1tok_ok.returncode, 0, r_1tok_ok.stdout + r_1tok_ok.stderr)
+            self.assertIn("GO:", r_1tok_ok.stdout)
+            rep_1tok = json.loads(out_1tok_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep_1tok["overall"]["decode_n"], 1)
+            self.assertEqual(rep_1tok["overall"]["e2e_n"], 2)
+            self.assertAlmostEqual(rep_1tok["overall"]["decode_speedup"], 2.0)
+            self.assertAlmostEqual(rep_1tok["overall"]["e2e_speedup"], 4.0 / 3.0)
+
+            # Single-token query with zero E2E is invalid and blocks GO.
+            pilot_1tok_zero_e2e_p = tmp / "pilot_1tok_zero_e2e.json"
+            pilot_1tok_zero_e2e_p.write_text(
+                json.dumps([bench_row("q1", tokens=[1, 7], dec=1.0, e2e=2.0), bench_row("q2", tokens=[7], dec=0.0, e2e=0.0)]),
+                encoding="utf-8",
+            )
+            r_1tok_bad = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(rc13_1tok_p), "--pilot", str(pilot_1tok_zero_e2e_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_1tok_bad.returncode, 1, r_1tok_bad.stdout + r_1tok_bad.stderr)
+            self.assertIn("invalid non-positive timing", r_1tok_bad.stdout)
+
+            # Raw pilot.json zero-duration row also blocked on CLI.
+            raw_ref = {
+                "passed": True,
+                "started_utc": "2026-11-22T00:00:00Z",
+                "finished_utc": "2026-11-22T00:01:00Z",
+                "cases": [
+                    {
+                        "key": "c1",
+                        "domain": "general",
+                        "prefill_seconds": 1.0,
+                        "identical": True,
+                        "ar": {"tokens": [1, 7], "decode_seconds": 1.0},
+                        "candidate": {"tokens": [1, 7], "decode_seconds": 1.0},
+                    },
+                    {
+                        "key": "c2",
+                        "domain": "general",
+                        "prefill_seconds": 1.0,
+                        "identical": True,
+                        "ar": {"tokens": [1, 7], "decode_seconds": 1.0},
+                        "candidate": {"tokens": [1, 7], "decode_seconds": 1.0},
+                    },
+                ],
+            }
+            raw_zero = json.loads(json.dumps(raw_ref))
+            raw_zero["cases"][1]["prefill_seconds"] = 0.0
+            raw_zero["cases"][1]["candidate"]["decode_seconds"] = 0.0
+            raw_ref_p = tmp / "raw_ref.json"
+            raw_zero_p = tmp / "raw_zero.json"
+            raw_ref_p.write_text(json.dumps(raw_ref), encoding="utf-8")
+            raw_zero_p.write_text(json.dumps(raw_zero), encoding="utf-8")
+            r_raw_zero = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(raw_ref_p), "--pilot", str(raw_zero_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_raw_zero.returncode, 1, r_raw_zero.stdout + r_raw_zero.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_raw_zero.stdout.splitlines()))
+            self.assertIn("invalid non-positive timing", r_raw_zero.stdout)
 
 
 if __name__ == "__main__":
