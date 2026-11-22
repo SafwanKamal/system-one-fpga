@@ -125,13 +125,20 @@ drafter. Keep the socket service stopped during the raw check so the checker
 can acquire the inference lock and exclusive DMA lease. Run in a session
 with enough time to finish the ordered workload.
 
+Run `stop` and `up` in the foreground. Never background them: on 2026-11-22 a trailing
+`&` put the whole chain in the background, the SSH command returned, and `up` was killed between
+`xmutil unloadapp` and `loadapp`, leaving no app loaded. The fix was `xmutil loadapp
+sysone-qwen-decoder-v9e` and then `up` again. The check itself takes 15-20 min. Launch it as a
+transient systemd unit so a dropped SSH session cannot kill it, then poll for `raw.rc`.
+
 ```bash
 systemctl stop sysone-rc1.service
-python3 "$b/rc14_image.py" up
-python3 -u "$b/check_v9i.py" \
-  --package "$b/package" --workload "$b/check/workload.json" \
-  --expected "$b/check/expected.json" --reference "$b/check/reference-pilot.json" \
-  --out "$E/raw" 2>&1 | tee "$E/raw.log"
+python3 "$b/rc14_image.py" up 2>&1 | tee "$E/image-up.log"   # must print "after": "...v9i.bit.bin"
+systemd-run --unit=spec-qual-v9i-raw --collect --property=KillMode=process /bin/bash -c \
+  "python3 -u $b/check_v9i.py --package $b/package --workload $b/check/workload.json \
+   --expected $b/check/expected.json --reference $b/check/reference-pilot.json \
+   --out $E/raw > $E/raw.log 2>&1; echo \$? > $E/raw.rc"
+while [ ! -f "$E/raw.rc" ]; do sleep 15; done; tail -3 "$E/raw.log"; cat "$E/raw.rc"
 ```
 
 Check the return status of each command before proceeding. `up` requires
