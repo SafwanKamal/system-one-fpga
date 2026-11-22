@@ -1449,6 +1449,191 @@ class AnalyzePilotTest(unittest.TestCase):
             self.assertFalse(any(line.startswith("GO:") for line in r_raw_zero.stdout.splitlines()))
             self.assertIn("invalid non-positive timing", r_raw_zero.stdout)
 
+    def test_inconsistent_socket_timings_excluded_and_block_go(self) -> None:
+        def bench_row(
+            qid: str,
+            *,
+            prefill: float | None = 0.5,
+            dec: float = 1.0,
+            e2e: float = 1.6,
+            wall: float | None = 1.65,
+        ) -> dict:
+            row: dict[str, object] = {
+                "query": qid,
+                "ok": True,
+                "complete": True,
+                "prefix_tokens_reused": 32,
+                "generated_ids": [1, 7],
+                "path": "/proc/uptime",
+                "decode_seconds": dec,
+                "elapsed_seconds": e2e,
+            }
+            if prefill is not None:
+                row["prefill_seconds"] = prefill
+            if wall is not None:
+                row["wall_seconds"] = wall
+            return row
+
+        pilot_go_rows = json.loads((FIXTURES / "pilot_go_bench.json").read_text(encoding="utf-8"))
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            # Exact reviewer reproducer: checked-in rc13_bench.json and pilot_go_bench.json with all
+            # pilot elapsed_seconds=0.01 and wall_seconds=0.02 (leaving tokens, cache, stage timings untouched).
+            tampered_pilot = json.loads(json.dumps(pilot_go_rows))
+            for row in tampered_pilot:
+                row["elapsed_seconds"] = 0.01
+                row["wall_seconds"] = 0.02
+            tampered_p = tmp / "pilot_tampered_elapsed.json"
+            tampered_out_p = tmp / "tampered_out.json"
+            tampered_p.write_text(json.dumps(tampered_pilot), encoding="utf-8")
+
+            r_repro = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "--rc13",
+                    str(FIXTURES / "rc13_bench.json"),
+                    "--pilot",
+                    str(tampered_p),
+                    "--out",
+                    str(tampered_out_p),
+                    "--check",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_repro.returncode, 1, r_repro.stdout + r_repro.stderr)
+            self.assertFalse(any(line.startswith("GO:") for line in r_repro.stdout.splitlines()))
+            self.assertIn("NO-GO: inconsistent socket timing on 21/21", r_repro.stdout)
+            self.assertIn("[INVALID-TIMING]", r_repro.stdout)
+            self.assertIn("EXCLUDED (inconsistent socket timing):", r_repro.stdout)
+            self.assertIn("OVERALL (n=21): decode N/A, e2e N/A", r_repro.stdout)
+
+            rep_repro = json.loads(tampered_out_p.read_text(encoding="utf-8"))
+            self.assertEqual(rep_repro["verdict"], "NO-GO")
+            self.assertFalse(rep_repro["go"])
+            self.assertEqual(rep_repro["overall"]["n"], 21)
+            self.assertEqual(rep_repro["overall"]["decode_n"], 0)
+            self.assertEqual(rep_repro["overall"]["e2e_n"], 0)
+            self.assertIsNone(rep_repro["overall"]["decode_speedup"])
+            self.assertIsNone(rep_repro["overall"]["e2e_speedup"])
+            self.assertEqual(len(rep_repro["invalid_timings"]), 21)
+            self.assertFalse(rep_repro["per_query"][0]["timing_valid"])
+            self.assertFalse(rep_repro["per_query"][0]["decode_comparable"])
+            self.assertFalse(rep_repro["per_query"][0]["e2e_comparable"])
+
+            # Partial invalidation: q1 valid (2.0x), q2 has elapsed < prefill+decode -> q2 excluded & NO-GO.
+            base2_p = tmp / "base2.json"
+            base2_p.write_text(
+                json.dumps([
+                    bench_row("q1", prefill=1.0, dec=2.0, e2e=3.2, wall=3.25),
+                    bench_row("q2", prefill=1.0, dec=2.0, e2e=3.2, wall=3.25),
+                ]),
+                encoding="utf-8",
+            )
+            part_stage_p = tmp / "part_stage.json"
+            part_stage_out = tmp / "part_stage_out.json"
+            part_stage_p.write_text(
+                json.dumps([
+                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", prefill=0.6, dec=0.8, e2e=1.2, wall=1.25),
+                ]),
+                encoding="utf-8",
+            )
+            r_part = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(base2_p), "--pilot", str(part_stage_p), "--out", str(part_stage_out), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_part.returncode, 1, r_part.stdout + r_part.stderr)
+            self.assertIn("NO-GO: inconsistent socket timing on 1/2", r_part.stdout)
+            rep_part = json.loads(part_stage_out.read_text(encoding="utf-8"))
+            self.assertEqual(rep_part["verdict"], "NO-GO")
+            self.assertEqual(rep_part["overall"]["n"], 2)
+            self.assertEqual(rep_part["overall"]["decode_n"], 1)
+            self.assertEqual(rep_part["overall"]["e2e_n"], 1)
+            self.assertAlmostEqual(rep_part["overall"]["rc13_decode_total_s"], 2.0)
+            self.assertAlmostEqual(rep_part["overall"]["pilot_decode_total_s"], 1.0)
+            self.assertAlmostEqual(rep_part["overall"]["rc13_e2e_total_s"], 3.2)
+            self.assertAlmostEqual(rep_part["overall"]["pilot_e2e_total_s"], 1.6)
+            self.assertEqual([x["id"] for x in rep_part["invalid_timings"]], ["q2"])
+
+            # wall_seconds < elapsed_seconds (even when elapsed >= prefill+decode) excluded & forces NO-GO.
+            part_wall_p = tmp / "part_wall.json"
+            part_wall_out = tmp / "part_wall_out.json"
+            part_wall_p.write_text(
+                json.dumps([
+                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", prefill=0.5, dec=1.0, e2e=1.6, wall=1.50),
+                ]),
+                encoding="utf-8",
+            )
+            r_wall = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(base2_p), "--pilot", str(part_wall_p), "--out", str(part_wall_out), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_wall.returncode, 1, r_wall.stdout + r_wall.stderr)
+            self.assertIn("NO-GO: inconsistent socket timing on 1/2", r_wall.stdout)
+            rep_wall = json.loads(part_wall_out.read_text(encoding="utf-8"))
+            self.assertEqual(rep_wall["overall"]["decode_n"], 1)
+            self.assertEqual(rep_wall["overall"]["e2e_n"], 1)
+            self.assertEqual([x["id"] for x in rep_wall["invalid_timings"]], ["q2"])
+
+            # Omitted prefill_seconds still enforces elapsed >= decode.
+            no_pre_p = tmp / "no_pre.json"
+            no_pre_p.write_text(
+                json.dumps([
+                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", prefill=None, dec=1.0, e2e=0.9, wall=1.0),
+                ]),
+                encoding="utf-8",
+            )
+            r_nopre = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(base2_p), "--pilot", str(no_pre_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_nopre.returncode, 1, r_nopre.stdout + r_nopre.stderr)
+            self.assertIn("inconsistent socket timing on 1/2", r_nopre.stdout)
+
+            # Inconsistent baseline (rc13) row also excluded & forces NO-GO.
+            valid_p = tmp / "valid.json"
+            valid_p.write_text(
+                json.dumps([
+                    bench_row("q1", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                    bench_row("q2", prefill=0.5, dec=1.0, e2e=1.6, wall=1.65),
+                ]),
+                encoding="utf-8",
+            )
+            r_bad_base = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(part_wall_p), "--pilot", str(valid_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_bad_base.returncode, 1, r_bad_base.stdout + r_bad_base.stderr)
+            self.assertIn("inconsistent socket timing on 1/2", r_bad_base.stdout)
+
+            # Binary float rounding (0.1 + 0.2 = 0.30000000000000004 > 0.3) and omitted wall_seconds pass cleanly.
+            tol_rc13_p = tmp / "tol_rc13.json"
+            tol_pilot_p = tmp / "tol_pilot.json"
+            tol_rc13_p.write_text(
+                json.dumps([bench_row("q1", prefill=0.2, dec=0.4, e2e=0.6, wall=None)]),
+                encoding="utf-8",
+            )
+            tol_pilot_p.write_text(
+                json.dumps([bench_row("q1", prefill=0.1, dec=0.2, e2e=0.3, wall=None)]),
+                encoding="utf-8",
+            )
+            r_tol = subprocess.run(
+                [sys.executable, str(SCRIPT), "--rc13", str(tol_rc13_p), "--pilot", str(tol_pilot_p), "--check"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(r_tol.returncode, 0, r_tol.stdout + r_tol.stderr)
+            self.assertIn("GO:", r_tol.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -50,6 +50,12 @@ MODELLED_TOOL_SPEEDUP = MODELLED_TOOL_E2E_SPEEDUP
 MODELLED_OVERALL_SPEEDUP = MODELLED_OVERALL_E2E_SPEEDUP
 
 
+# --- Timing consistency tolerance ---
+# Allow tiny floating-point / serialization rounding tolerance when checking
+# nested socket timing intervals (elapsed >= prefill + decode, wall >= elapsed).
+TIMING_ROUNDING_TOLERANCE = 1e-6
+
+
 def _is_nonempty_str(value: Any) -> bool:
     return isinstance(value, str) and value.strip() != ""
 
@@ -223,7 +229,7 @@ def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
         prefill = _parse_timing(row["prefill_seconds"], "prefill_seconds", path, required=row_ok)
     else:
         prefill = None
-    _parse_timing(row.get("wall_seconds"), "wall_seconds", path, required=False)
+    wall = _parse_timing(row.get("wall_seconds"), "wall_seconds", path, required=False)
     e2e = _parse_timing(row.get("elapsed_seconds"), "elapsed_seconds", path, required=row_ok)
 
     category = row.get("domain") or row.get("category") or row.get("path") or "tool"
@@ -244,6 +250,7 @@ def _normalize_bench_row(row: dict[str, Any], path: Path) -> dict[str, Any]:
         "prefill_seconds": prefill,
         "decode_seconds": decode,
         "e2e_seconds": e2e,
+        "wall_seconds": wall,
         "reused": reused,
         "speculate": row.get("speculate"),
     }
@@ -335,6 +342,7 @@ def _normalize_pilot_case(case: dict[str, Any], path: Path, *, file_passed: bool
         "prefill_seconds": prefill,
         "decode_seconds": decode,
         "e2e_seconds": e2e,
+        "wall_seconds": None,
         "reused": None,
         "speculate": None,
     }
@@ -465,6 +473,44 @@ def _validate_records(records: list[dict[str, Any]]) -> None:
                     f"record {rid!r} 'reused' must be a non-negative integer, "
                     f"got {type(reused).__name__} ({reused!r})"
                 )
+        for tfield in ("prefill_seconds", "decode_seconds", "e2e_seconds", "wall_seconds"):
+            tval = rec.get(tfield)
+            if tval is not None:
+                if isinstance(tval, bool) or not isinstance(tval, (int, float)):
+                    raise ValueError(
+                        f"record {rid!r} {tfield!r} must be a number, "
+                        f"got {type(tval).__name__} ({tval!r})"
+                    )
+                ftval = float(tval)
+                if not math.isfinite(ftval) or ftval < 0.0:
+                    raise ValueError(
+                        f"record {rid!r} {tfield!r} must be finite and non-negative, got {tval!r}"
+                    )
+
+
+def _socket_timing_issues(
+    rec: dict[str, Any], tol: float = TIMING_ROUNDING_TOLERANCE
+) -> list[str]:
+    """Return nested-interval consistency errors for a successful socket ('bench') record."""
+    if rec.get("source_format") != "bench":
+        return []
+    if not (rec.get("ok") and rec.get("complete")):
+        return []
+    issues: list[str] = []
+    elapsed = rec.get("e2e_seconds")
+    prefill = rec.get("prefill_seconds")
+    decode = rec.get("decode_seconds")
+    wall = rec.get("wall_seconds")
+    if elapsed is not None:
+        if prefill is not None or decode is not None:
+            stage_sum = (prefill if prefill is not None else 0.0) + (
+                decode if decode is not None else 0.0
+            )
+            if elapsed + tol < stage_sum:
+                issues.append("elapsed_lt_stage_sum")
+        if wall is not None and wall + tol < elapsed:
+            issues.append("wall_lt_elapsed")
+    return issues
 
 
 def analyze(
@@ -518,6 +564,7 @@ def analyze(
                 "cache_comparable": True,
                 "timing_boundary_comparable": True,
                 "timing_valid": True,
+                "timing_issues": [],
                 "decode_comparable": True,
                 "rc13_prefill_seconds": r["prefill_seconds"],
                 "pilot_prefill_seconds": None,
@@ -526,6 +573,8 @@ def analyze(
                 "decode_speedup": None,
                 "rc13_e2e_seconds": r["e2e_seconds"],
                 "pilot_e2e_seconds": None,
+                "rc13_wall_seconds": r.get("wall_seconds"),
+                "pilot_wall_seconds": None,
                 "e2e_comparable": True,
                 "e2e_speedup": None,
             })
@@ -605,7 +654,14 @@ def analyze(
             (r["decode_seconds"] is not None and r["decode_seconds"] <= 0.0)
             or (p["decode_seconds"] is not None and p["decode_seconds"] <= 0.0)
         )
-        timing_valid = not (status_ok and (nonpositive_e2e or nonpositive_decode_required))
+        nonpositive_timing = status_ok and (nonpositive_e2e or nonpositive_decode_required)
+        socket_timing_inconsistent = bool(_socket_timing_issues(r) or _socket_timing_issues(p))
+        timing_issues: list[str] = []
+        if nonpositive_timing:
+            timing_issues.append("nonpositive")
+        if socket_timing_inconsistent:
+            timing_issues.append("inconsistent_socket")
+        timing_valid = not timing_issues
 
         decode_comparable = (
             cache_comparable
@@ -652,6 +708,7 @@ def analyze(
             "cache_comparable": cache_comparable,
             "timing_boundary_comparable": timing_boundary_comparable,
             "timing_valid": timing_valid,
+            "timing_issues": timing_issues,
             "decode_comparable": decode_comparable,
             "rc13_prefill_seconds": r["prefill_seconds"],
             "pilot_prefill_seconds": p["prefill_seconds"],
@@ -660,6 +717,8 @@ def analyze(
             "decode_speedup": dec_sp,
             "rc13_e2e_seconds": r["e2e_seconds"],
             "pilot_e2e_seconds": p["e2e_seconds"],
+            "rc13_wall_seconds": r.get("wall_seconds"),
+            "pilot_wall_seconds": p.get("wall_seconds"),
             "e2e_comparable": e2e_comparable,
             "e2e_speedup": e2e_sp,
         })
@@ -731,10 +790,15 @@ def analyze(
         {
             "id": q["id"],
             "occurrence": q["occurrence"],
+            "rc13_prefill_seconds": q["rc13_prefill_seconds"],
+            "pilot_prefill_seconds": q["pilot_prefill_seconds"],
             "rc13_decode_seconds": q["rc13_decode_seconds"],
             "pilot_decode_seconds": q["pilot_decode_seconds"],
             "rc13_e2e_seconds": q["rc13_e2e_seconds"],
             "pilot_e2e_seconds": q["pilot_e2e_seconds"],
+            "rc13_wall_seconds": q.get("rc13_wall_seconds"),
+            "pilot_wall_seconds": q.get("pilot_wall_seconds"),
+            "timing_issues": q.get("timing_issues", []),
         }
         for q in matched
         if not q.get("timing_valid", True)
@@ -786,9 +850,22 @@ def analyze(
                     f"{len(unmeasured_cache_items)}/{len(matched)} matched queries)"
                 )
         if invalid_timing_queries:
-            reasons.append(
-                f"invalid non-positive timing on {len(invalid_timing_queries)}/{len(matched)} successful matched queries"
-            )
+            nonpositive_items = [
+                m for m in invalid_timing_queries
+                if "nonpositive" in (m.get("timing_issues") or [])
+            ]
+            inconsistent_items = [
+                m for m in invalid_timing_queries
+                if "inconsistent_socket" in (m.get("timing_issues") or [])
+            ]
+            if nonpositive_items:
+                reasons.append(
+                    f"invalid non-positive timing on {len(nonpositive_items)}/{len(matched)} successful matched queries"
+                )
+            if inconsistent_items:
+                reasons.append(
+                    f"inconsistent socket timing on {len(inconsistent_items)}/{len(matched)} matched queries"
+                )
         if missing_decode_on_ok or missing_e2e_on_ok:
             reasons.append("speedup unavailable (missing required timing on successful matched query)")
         elif overall_dec_sp is None or overall_e2e_sp is None:
@@ -1002,14 +1079,34 @@ def format_report(report: dict[str, Any]) -> str:
             )
     invalid_timings = report.get("invalid_timings") or []
     if invalid_timings:
-        summary_items = ", ".join(
-            f"{m['id']} (dec={_fmt_opt(m['rc13_decode_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_decode_seconds'], '.3f', 's')}, "
-            f"e2e={_fmt_opt(m['rc13_e2e_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_e2e_seconds'], '.3f', 's')})"
-            for m in invalid_timings
-        )
-        lines.append(
-            f"  EXCLUDED (non-positive timing): {summary_items}"
-        )
+        nonpositive_timings = [
+            m for m in invalid_timings
+            if "nonpositive" in (m.get("timing_issues") or []) or not m.get("timing_issues")
+        ]
+        inconsistent_timings = [
+            m for m in invalid_timings
+            if "inconsistent_socket" in (m.get("timing_issues") or [])
+        ]
+        if nonpositive_timings:
+            summary_items = ", ".join(
+                f"{m['id']} (dec={_fmt_opt(m['rc13_decode_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_decode_seconds'], '.3f', 's')}, "
+                f"e2e={_fmt_opt(m['rc13_e2e_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_e2e_seconds'], '.3f', 's')})"
+                for m in nonpositive_timings
+            )
+            lines.append(
+                f"  EXCLUDED (non-positive timing): {summary_items}"
+            )
+        if inconsistent_timings:
+            summary_items = ", ".join(
+                f"{m['id']} (pre={_fmt_opt(m.get('rc13_prefill_seconds'), '.3f', 's')}/{_fmt_opt(m.get('pilot_prefill_seconds'), '.3f', 's')}, "
+                f"dec={_fmt_opt(m['rc13_decode_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_decode_seconds'], '.3f', 's')}, "
+                f"e2e={_fmt_opt(m['rc13_e2e_seconds'], '.3f', 's')}/{_fmt_opt(m['pilot_e2e_seconds'], '.3f', 's')}, "
+                f"wall={_fmt_opt(m.get('rc13_wall_seconds'), '.3f', 's')}/{_fmt_opt(m.get('pilot_wall_seconds'), '.3f', 's')})"
+                for m in inconsistent_timings
+            )
+            lines.append(
+                f"  EXCLUDED (inconsistent socket timing): {summary_items}"
+            )
 
     lines.append("")
     lines.append("=== (c) Measured vs Modelled E2E Speedup (vs v9h) ===")
