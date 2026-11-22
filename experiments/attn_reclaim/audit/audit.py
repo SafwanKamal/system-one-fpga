@@ -38,6 +38,7 @@ H = 1024
 KV_WORDS_PER_ROW = 64
 DEFAULT_BATCH = 8
 SUPPORTED_BATCHES = (8, 16)
+META_REL_PATH = Path("build/v2/schedule-invariance-audit/meta.bin")
 FIELDS = ("hidden", "kv", "norm", "token", "logit")
 VITIS_PROCESS_NAMES = {
     "vitis_hls.exe",
@@ -151,6 +152,43 @@ def expected_positions(
     for g in plan_groups(mode, n_base, batch=batch, tile_cross=tile_cross):
         positions.extend(range(g["start"], g["start"] + g["keep"]))
     return positions
+
+
+def derive_groups(
+    mode: str,
+    positions: list[int],
+    batch: int = DEFAULT_BATCH,
+    tile_cross: bool = True,
+) -> list[dict] | None:
+    b = validate_batch(batch)
+    tail_len = 0
+    if tile_cross:
+        tail_len = b if mode == "prefill" else 3
+    n_base = len(positions) - tail_len
+    if n_base <= 0 or n_base >= 2048:
+        return None
+    try:
+        groups = plan_groups(mode, n_base, batch=b, tile_cross=tile_cross)
+    except ValueError:
+        return None
+    expected: list[int] = []
+    for g in groups:
+        expected.extend(range(g["start"], g["start"] + g["keep"]))
+    if positions != expected:
+        return None
+    return [
+        {"start": g["start"], "size": g["size"], "keep": g["keep"]} for g in groups
+    ]
+
+
+def compute_meta_hash(meta_path: Path) -> str:
+    h = hashlib.sha256()
+    if meta_path.is_file():
+        h.update(b"present\0")
+        h.update(meta_path.read_bytes())
+    else:
+        h.update(b"missing\0")
+    return h.hexdigest()
 
 
 def is_single_port(src_dir: Path) -> bool:
@@ -568,6 +606,8 @@ def obtain_baseline(
 ) -> tuple[Path, Path, str, bool]:
     b = validate_batch(batch)
     base_hash = compute_source_hash(base_dir)
+    meta_path = source_checkout / META_REL_PATH
+    meta_hash = compute_meta_hash(meta_path)
     tb_hash = compute_tb_hash(
         TESTBENCH_PATH.read_bytes(),
         mode,
@@ -579,7 +619,7 @@ def obtain_baseline(
         source_checkout
         / "build/v2/attn-reclaim/gemini/cache"
         / mode
-        / f"{base_hash[:16]}_{tb_hash[:12]}"
+        / f"{base_hash[:16]}_{tb_hash[:12]}_{meta_hash[:12]}"
     )
     cached_dump = cache_dir / "dump.bin"
     cached_results = cache_dir / "results.json"
@@ -606,6 +646,8 @@ def obtain_baseline(
                     "src_dir": str(base_dir),
                     "source_hash": base_hash,
                     "tb_hash": tb_hash,
+                    "meta_hash": meta_hash,
+                    "meta_path": str(meta_path),
                     "mode": mode,
                     "batch": b,
                     "tile_cross": tile_cross,
@@ -632,6 +674,12 @@ def run_audit(
 ) -> dict:
     var_batch = validate_batch(batch)
     base_batch = validate_batch(var_batch if baseline_batch is None else baseline_batch)
+    if mode == "prefill" and tile_cross and base_batch != var_batch:
+        raise ValueError(
+            f"Mixed-size prefill (--baseline-batch {base_batch} vs --batch {var_batch}) "
+            "with TILE crossing enabled cannot compare equal position sets; "
+            "pass --no-tile-cross when comparing different batch sizes"
+        )
     base_dir = resolve_src_dir(baseline_arg, source_checkout)
     var_dir = resolve_src_dir(variant_arg, source_checkout)
     var_hash = compute_source_hash(var_dir)
@@ -686,6 +734,12 @@ def run_audit(
         var_res.get("kv_nan_values", 0) == 0
     )
     passed = (total_diff == 0) and nan_ok
+    base_groups = base_res.get("groups") or derive_groups(
+        mode, positions, batch=base_batch, tile_cross=tile_cross
+    )
+    var_groups = var_res.get("groups") or derive_groups(
+        mode, var_positions, batch=var_batch, tile_cross=tile_cross
+    )
 
     return {
         "verdict": "PASS" if passed else "FAIL",
@@ -700,7 +754,7 @@ def run_audit(
             "src_dir": str(base_dir),
             "source_hash": base_hash,
             "batch": base_batch,
-            "groups": base_res.get("groups"),
+            "groups": base_groups,
             "cache_hit": cache_hit,
             "dump_path": str(base_dump),
             "kv_nan_values": base_res.get("kv_nan_values"),
@@ -710,7 +764,7 @@ def run_audit(
             "src_dir": str(var_dir),
             "source_hash": var_hash,
             "batch": var_batch,
-            "groups": var_res.get("groups"),
+            "groups": var_groups,
             "same_source_as_baseline": var_same_source,
             "dump_path": str(var_dump),
             "kv_nan_values": var_res.get("kv_nan_values"),
@@ -1007,34 +1061,59 @@ def self_test() -> None:
         fake_tb.write_text("int main() { return 0; }\n", encoding="utf-8")
         captured: dict = {}
 
+        def write_meta_bin(path: Path, tok_ids: list[int]) -> None:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            words = [0] * (3 + NL * 11) + [len(tok_ids)] + list(tok_ids)
+            path.write_bytes(struct.pack(f"<{len(words)}I", *words))
+
+        def make_dummy_dump_and_results(run_path: Path, pos_list: list[int], mode_name: str, tc: bool) -> None:
+            m_len = len(pos_list)
+            make_dump(
+                run_path / "dump.bin",
+                [0x3F800000] * (NL * m_len * H),
+                [0x3F803F80] * (NL * 2 * NK * m_len * KV_WORDS_PER_ROW),
+                [0x40000000] * (m_len * H),
+                [100 + p for p in pos_list],
+                [0x41200000] * m_len,
+            )
+            (run_path / "results.json").write_text(
+                json.dumps(
+                    {
+                        "mode": mode_name,
+                        "tile_boundary_crossed": tc,
+                        "tile_boundary_method": "deterministic_kv_seed" if tc else "none",
+                        "positions": pos_list,
+                        "tokens": [100 + p for p in pos_list],
+                        "kv_nan_values": 0,
+                        "elapsed_seconds": 0.1,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+        meta_file = space_checkout / META_REL_PATH
+        write_meta_bin(meta_file, list(range(10, 34)))
+
         def fake_subprocess_run(cmd, **kwargs):
             captured["cmd"] = cmd
             captured["cwd"] = kwargs.get("cwd")
-            run_path = Path(str(kwargs["cwd"]).replace("S:/", str(space_checkout) + "/").replace("T:/", str(space_checkout) + "/"))
+            captured["calls"] = captured.get("calls", 0) + 1
+            run_path = Path(
+                str(kwargs["cwd"])
+                .replace("S:/", str(space_checkout) + "/")
+                .replace("T:/", str(space_checkout) + "/")
+            )
             tcl_txt = (run_path / "run_csim.tcl").read_text(encoding="utf-8")
-            is_b16_no_tc = "prefill 0 16" in tcl_txt
-            is_b8_no_tc = "prefill 0 8" in tcl_txt
-            if is_b16_no_tc or is_b8_no_tc:
-                make_dump(run_path / "dump.bin", h24, k24, n24, t24, l24)
-                (run_path / "results.json").write_text(
-                    json.dumps(
-                        {
-                            "positions": pos24,
-                            "batch": 16 if is_b16_no_tc else 8,
-                            "groups": [{"start": 0, "size": 16, "keep": 16}, {"start": 16, "size": 8, "keep": 8}]
-                            if is_b16_no_tc
-                            else [{"start": 0, "size": 8, "keep": 8}, {"start": 8, "size": 8, "keep": 8}, {"start": 16, "size": 8, "keep": 8}],
-                            "kv_nan_values": 0,
-                        }
-                    ),
-                    encoding="utf-8",
-                )
-            else:
-                make_dump(run_path / "dump.bin", h0, k0, n0, t0, l0)
-                (run_path / "results.json").write_text(
-                    json.dumps({"positions": positions, "batch": 8, "kv_nan_values": 0}),
-                    encoding="utf-8",
-                )
+            m_argv = re.search(r'-argv "([^"]+)"', tcl_txt)
+            assert m_argv is not None
+            argv_parts = m_argv.group(1).split()
+            mode_name = argv_parts[-3]
+            tc = argv_parts[-2] != "0"
+            b_val = int(argv_parts[-1])
+            meta_bytes = meta_file.read_bytes()
+            n_meta = struct.unpack_from("<I", meta_bytes, (3 + NL * 11) * 4)[0]
+            pos_list = expected_positions(mode_name, n_meta, batch=b_val, tile_cross=tc)
+            make_dummy_dump_and_results(run_path, pos_list, mode_name, tc)
             return subprocess.CompletedProcess(cmd, 0)
 
         with (
@@ -1078,6 +1157,7 @@ def self_test() -> None:
         assert "prefill 0 16" in (space_run_b16 / "run_csim.tcl").read_text(encoding="utf-8")
         assert dump_b16 == space_run_b16 / "dump.bin" and res_b16 == space_run_b16 / "results.json"
 
+        # Original results.json schema (no batch/groups keys) still derives groups in verdict
         with (
             mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
             mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
@@ -1098,9 +1178,137 @@ def self_test() -> None:
             )
         assert verdict["verdict"] == "PASS"
         assert verdict["baseline_batch"] == 8 and verdict["batch"] == 16
+        assert verdict["baseline"]["groups"] == [
+            {"start": 0, "size": 8, "keep": 8},
+            {"start": 8, "size": 8, "keep": 8},
+            {"start": 16, "size": 8, "keep": 8},
+        ]
+        assert verdict["variant"]["groups"] == [
+            {"start": 0, "size": 16, "keep": 16},
+            {"start": 16, "size": 8, "keep": 8},
+        ]
         assert verdict["variant"]["same_source_as_baseline"] is False
         assert verdict["positions"] == pos24
         assert verdict["total_differing_words"] == 0
+
+        # [P1] Baseline cache must include meta.bin content digest before same-source reuse
+        captured["calls"] = 0
+        write_meta_bin(meta_file, list(range(100, 124)))
+        with (
+            mock.patch.object(sys.modules[__name__], "VITIS_RUN", fake_vitis),
+            mock.patch.object(sys.modules[__name__], "TESTBENCH_PATH", fake_tb),
+            mock.patch.object(sys.modules[__name__], "ensure_subst", return_value="S"),
+            mock.patch.object(sys.modules[__name__], "active_vitis_processes", return_value=[]),
+            mock.patch.object(subprocess, "run", side_effect=fake_subprocess_run),
+        ):
+            v_24_a = run_audit(
+                str(s1),
+                str(s1),
+                "prefill",
+                space_checkout,
+                tile_cross=True,
+                use_cache=True,
+                drive="S",
+                batch=8,
+            )
+            assert v_24_a["baseline"]["cache_hit"] is False
+            assert captured["calls"] == 1
+            assert len(v_24_a["positions"]) == 32
+
+            v_24_b = run_audit(
+                str(s1),
+                str(s1),
+                "prefill",
+                space_checkout,
+                tile_cross=True,
+                use_cache=True,
+                drive="S",
+                batch=8,
+            )
+            assert v_24_b["baseline"]["cache_hit"] is True
+            assert captured["calls"] == 1
+
+            # Rewrite meta.bin to 32 positions and different token IDs -> cache miss + rerun
+            write_meta_bin(meta_file, list(range(200, 232)))
+            v_32_a = run_audit(
+                str(s1),
+                str(s1),
+                "prefill",
+                space_checkout,
+                tile_cross=True,
+                use_cache=True,
+                drive="S",
+                batch=8,
+            )
+            assert v_32_a["baseline"]["cache_hit"] is False
+            assert captured["calls"] == 2
+            assert len(v_32_a["positions"]) == 40
+
+            # Same 32-position length but different token IDs -> cache miss + rerun
+            write_meta_bin(meta_file, list(range(300, 332)))
+            v_32_b = run_audit(
+                str(s1),
+                str(s1),
+                "prefill",
+                space_checkout,
+                tile_cross=True,
+                use_cache=True,
+                drive="S",
+                batch=8,
+            )
+            assert v_32_b["baseline"]["cache_hit"] is False
+            assert captured["calls"] == 3
+
+        # [P2] Reject mixed-size prefill with tile_cross=True before cache lookup or simulation
+        with (
+            mock.patch.object(sys.modules[__name__], "obtain_baseline") as m_cache,
+            mock.patch.object(sys.modules[__name__], "run_csim") as m_csim,
+        ):
+            try:
+                run_audit(
+                    str(s1),
+                    str(s1),
+                    "prefill",
+                    space_checkout,
+                    tile_cross=True,
+                    use_cache=True,
+                    drive="S",
+                    batch=16,
+                    baseline_batch=8,
+                )
+                raise AssertionError("Expected mixed-size prefill with tile_cross=True to fail")
+            except ValueError as exc:
+                assert "--no-tile-cross" in str(exc)
+            assert m_cache.call_count == 0 and m_csim.call_count == 0
+
+            cli_err = io.StringIO()
+            with (
+                mock.patch.object(
+                    sys,
+                    "argv",
+                    [
+                        "audit.py",
+                        "--baseline",
+                        str(s1),
+                        "--variant",
+                        str(s1),
+                        "--mode",
+                        "prefill",
+                        "--baseline-batch",
+                        "8",
+                        "--batch",
+                        "16",
+                    ],
+                ),
+                contextlib.redirect_stderr(cli_err),
+            ):
+                try:
+                    main()
+                    raise AssertionError("Expected CLI mixed-size prefill without --no-tile-cross to fail")
+                except SystemExit as exc:
+                    assert exc.code != 0
+            assert "--no-tile-cross" in cli_err.getvalue()
+            assert m_cache.call_count == 0 and m_csim.call_count == 0
 
     print(json.dumps({"self_test": "PASS"}, indent=2))
 
@@ -1174,6 +1382,18 @@ def main() -> int:
 
     if not args.baseline or not args.variant:
         ap.error("--baseline and --variant are required unless --self-test is specified")
+
+    if (
+        args.mode == "prefill"
+        and not args.no_tile_cross
+        and args.baseline_batch is not None
+        and args.baseline_batch != args.batch
+    ):
+        ap.error(
+            f"Mixed-size prefill (--baseline-batch {args.baseline_batch} vs --batch {args.batch}) "
+            "with TILE crossing enabled cannot compare equal position sets; "
+            "pass --no-tile-cross when comparing different batch sizes"
+        )
 
     verdict = run_audit(
         args.baseline,

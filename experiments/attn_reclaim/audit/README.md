@@ -4,8 +4,8 @@ Word-for-word Vitis HLS C-simulation exactness harness for comparing Qwen3-0.6B 
 
 ## Files
 
-- `audit.py`: Driver that hashes sources, caches the baseline dump, serializes Vitis HLS `csim_design` runs on `S:\`, compares dumps word-for-word per position, and emits a JSON verdict on stdout.
-- `testbench.cpp`: Shared C-sim testbench derived from `experiments/dual_port/testbench_s1.cpp`. Supports both `prefill` (batch-`N` groups, `N in {8, 16}`, default `8`) and `decode` (single-token steps) across all 28 layers, including a deterministic-KV-seeded crossing of the 256-row attention `TILE` boundary.
+- `audit.py`: Driver that hashes sources and the `meta.bin` prompt fixture, caches the baseline dump, serializes Vitis HLS `csim_design` runs on `S:\`, compares dumps word-for-word per position, derives optional `groups` metadata, and emits a JSON verdict on stdout.
+- `testbench.cpp`: Shared C-sim testbench derived from `experiments/dual_port/testbench_s1.cpp`. Supports both `prefill` (batch-`N` groups, `N in {8, 16}`, default `8`) and `decode` (single-token steps) across all 28 layers, including a deterministic-KV-seeded crossing of the 256-row attention `TILE` boundary. Preserves the original `results.json` schema (`mode`, `tile_boundary_crossed`, `tile_boundary_method`, `positions`, `tokens`, `kv_nan_values`, `elapsed_seconds`).
 - `run_csim.tcl`: Reference Vitis HLS Tcl script (per-run Tcl scripts are generated dynamically under `<source checkout>/build/v2/attn-reclaim/gemini/runs/`).
 
 ## Usage
@@ -52,7 +52,7 @@ Options:
 
 Even though group boundaries differ, `testbench.cpp` indexes every output buffer (`hidden`, `kv`, `norm`, `token`, `logit`) by the global kept position index `pidx = pos_to_idx[position]` (`0..M-1`), not by group or lane index. `audit.py`'s `compare_dumps()` therefore compares every field **per prompt position** (token by token) across the two runs and reports any mismatch by `(layer, position_index, position, element/word_in_row)`.
 
-When comparing `--baseline-batch 8` against `--batch 16`, pass `--no-tile-cross`: with tile crossing enabled, batch-8 runs `252..259` (`M = n + 8`) while batch-16 runs `248..263` (`M = n + 16`), so the two runs would not cover the same position set.
+When comparing `--baseline-batch 8` against `--batch 16` in `prefill`, pass `--no-tile-cross` (`audit.py` rejects mixed-size `prefill` with tile crossing enabled before cache lookup or simulation): with tile crossing enabled, batch-8 runs `252..259` (`M = n + 8`) while batch-16 runs `248..263` (`M = n + 16`), so the two runs would not cover the same position set.
 
 ## Coverage and Limits
 

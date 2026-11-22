@@ -391,18 +391,10 @@ int main(int argc, char** argv) {
     if (!json) throw std::runtime_error("cannot write json " + std::string(argv[4]));
     json << "{\n"
          << "  \"mode\": \"" << mode << "\",\n"
-         << "  \"batch\": " << batch << ",\n"
          << "  \"tile_boundary_crossed\": " << (tile_cross ? "true" : "false")
          << ",\n"
          << "  \"tile_boundary_method\": \""
          << (tile_cross ? "deterministic_kv_seed" : "none") << "\",\n"
-         << "  \"groups\": [";
-    for (size_t i = 0; i < groups.size(); i++) {
-      json << (i ? "," : "") << "{\"start\":" << groups[i].start
-           << ",\"size\":" << groups[i].ids.size()
-           << ",\"keep\":" << groups[i].keep << "}";
-    }
-    json << "],\n"
          << "  \"positions\": [";
     for (size_t i = 0; i < M; i++) json << (i ? "," : "") << kept_positions[i];
     json << "],\n"
