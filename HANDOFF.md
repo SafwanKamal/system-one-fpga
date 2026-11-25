@@ -1,3 +1,5 @@
+> **Start with [docs/HANDOFF.md](docs/HANDOFF.md)** (updated 2026-11-24): current state (RC1.3 live, RC1.4 staged), what Claude/Codex/Gemini did, rules, next steps. This file is the older dated history.
+
 # CURRENT BASELINE: RC1 — ADOPTED 2026-11-08
 
 RC1 is now the supported **KR260 hardware/runtime baseline**, including the default
